@@ -674,7 +674,7 @@
     "href": "PROPOSAL.html#appendix-supporting-analysis-pointer-not-for-the-form",
     "title": "",
     "section": "Appendix — supporting analysis pointer (NOT for the form)",
-    "text": "Appendix — supporting analysis pointer (NOT for the form)\nSupporting analysis: &lt;REPO URL&gt; (replace with this repository’s public URL before submitting).\nThe repository contains the producer notebook that emits the YAML and per-sentence parquet, eight consumer notebooks rendering the charts, a glossary defining every linguistic and statistical term in plain language, and the full lexicons used (echoed verbatim into the YAML). Every number cited in the three ideas above is reproducible from those data files.\nCo-authorship: this analysis was a collaboration between the human author and Claude (Claude Code). The form’s “collaborated with Claude” checkbox should be ticked.",
+    "text": "Appendix — supporting analysis pointer (NOT for the form)\nSupporting analysis: https://github.com/overthinkos/claude-code-welfare · published site: https://overthinkos.github.io/claude-code-welfare/\nThe repository contains the producer notebook that emits the YAML and per-sentence parquet, eight consumer notebooks rendering the charts, a glossary defining every linguistic and statistical term in plain language, and the full lexicons used (echoed verbatim into the YAML). Every number cited in the three ideas above is reproducible from those data files.\nCo-authorship: this analysis was a collaboration between the human author and Claude (Claude Code). The form’s “collaborated with Claude” checkbox should be ticked.",
     "crumbs": [
       "Home",
       "Reference",
