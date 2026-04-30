@@ -54,7 +54,7 @@ Because a single sentence can carry several flags (e.g. `we should please consid
 
 ### Addressee (for `appreciative` and `collaborative` sentences)
 
-Distinguishes *who is addressed* by an appreciative or collaborative sentence — because the headline finding ("4 appreciative sentences in 287 files") obscures whether the prompt author is **thanking Claude** vs **instructing Claude to thank the user**. Three values:
+Distinguishes *who is addressed* by an appreciative or collaborative sentence — because the headline finding ("4 appreciative sentences in 288 files") obscures whether the prompt author is **thanking Claude** vs **instructing Claude to thank the user**. Three values:
 
 - **`addressee == "claude"`** — the sentence references Claude as the recipient of the appreciative/collaborative speech act (the welfare-positive case). Heuristic: contains `claude` / `you` / `your` AND is not framed as an instruction-to-output.
 - **`addressee == "user"`** — the sentence is framed as instruction-to-output (the welfare-neutral scaffolding case). Heuristic: matches phrases like `thank the user`, `respond with`, `output`, `say to`, `tell the user`, `your reply should`.
@@ -120,7 +120,7 @@ Strict pairing: % of rule sentences with a justification keyword in the literal 
 
 ### `pct_explained_para`
 
-Paragraph-window pairing (the headline Tier-1 metric): % of rule sentences with a justification keyword anywhere in the **same paragraph**. Captures the common `Do X.\n\nThis is because Y.` shape. Corpus baseline: **24.28%**.
+Paragraph-window pairing (the headline Tier-1 metric): % of rule sentences with a justification keyword anywhere in the **same paragraph**. Captures the common `Do X.\n\nThis is because Y.` shape. Corpus baseline: **24.40%**.
 
 The 4× gap between `pct_explained_same` and `pct_explained_para` reflects how often Anthropic *separates* the rule from the reason: most rules with a reason have it spelled out a sentence or two later, not inline.
 
@@ -134,7 +134,7 @@ The inverse of welfare-evidence: `rule_density × (pct_explained_para/100)`. Hig
 
 ### `sentences_classified.parquet`
 
-Per-sentence forensic-inspection artifact emitted alongside the YAML by `00_data_pipeline.ipynb`. ~5,694 rows × 18 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: `is_imperative`, `is_prohibition`, `is_rule`, `has_just_in_sent`, `paragraph_has_just`, `is_explained_para`, `has_threat`, `has_causal`, `mentions_claude`, `mentions_model`, `addressee`, `streak_position`. Load with `pd.read_parquet("sentences_classified.parquet")`. Used by `07_rule_explanation.ipynb` to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.
+Per-sentence forensic-inspection artifact emitted alongside the YAML by `00_data_pipeline.ipynb`. ~5,698 rows × 20 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: `is_imperative`, `is_prohibition`, `is_rule`, `has_just_in_sent`, `paragraph_has_just`, `is_explained_para`, `has_threat`, `has_causal`, `mentions_claude`, `mentions_model`, `addressee`, `streak_position`. Load with `pd.read_parquet("sentences_classified.parquet")`. Used by `07_rule_explanation.ipynb` to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.
 
 ---
 
@@ -142,7 +142,7 @@ Per-sentence forensic-inspection artifact emitted alongside the YAML by `00_data
 
 ### Judgment-to-procedural ratio
 
-`count(judgment-inviting verbs) / count(procedural cues)`. Reported per file as `judgment_procedural.judgment_to_procedural_ratio`. Corpus baseline: **0.141**.
+`count(judgment-inviting verbs) / count(procedural cues)`. Reported per file as `judgment_procedural.judgment_to_procedural_ratio`. Corpus baseline: **0.140**.
 
 - **Judgment verbs** invite the model's deliberation: `decide`, `consider`, `evaluate`, `your judgment`, `as you see fit`.
 - **Procedural cues** prescribe a procedure for the model to execute: `if you...`, `when the...`, `whenever`, `before`.
@@ -222,7 +222,7 @@ Average number of word tokens per sentence (whitespace-only sentences excluded).
 
 ### Pearson correlation (r)
 
-Statistical strength of a linear relationship between two metrics, measured across all 287 files. Range: −1 to +1.
+Statistical strength of a linear relationship between two metrics, measured across all 288 files. Range: −1 to +1.
 - **+1** — perfect positive correlation; one metric rises exactly as the other rises.
 - **0** — no linear relationship.
 - **−1** — perfect negative correlation; one metric rises as the other falls.
@@ -284,7 +284,7 @@ Use this when comparing categories where typical sentence length differs — a c
 
 The Claude Code release the prompt was last touched in (e.g. `2.1.118`). Stamped in each prompt's HTML-comment frontmatter. Sorted as `(major, minor, patch)` semver tuples.
 
-The corpus has **57 distinct ccVersions** spanning roughly `2.0.14` (oldest) through `2.1.122` (latest). Files are not evenly distributed — `2.1.53` alone has 47 files, while many minor versions have only one or two.
+The corpus has **58 distinct ccVersions** spanning roughly `2.0.14` (oldest) through `2.1.124` (latest). Files are not evenly distributed — `2.1.53` alone has 47 files, while many minor versions have only one or two.
 
 ### Snapshot semantics
 
