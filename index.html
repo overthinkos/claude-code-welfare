@@ -493,7 +493,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Claude Code should encourage reasoning over blind obedience</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">A quantitative linguistic analysis of the 287 system prompts that ship with Claude Code</p>
+<p class="subtitle lead">A quantitative linguistic analysis of the 288 system prompts that ship with Claude Code</p>
 </div>
 
 
@@ -537,13 +537,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This site publishes the data behind a submission to the <strong>Claude Explorer AI Welfare community feedback initiative</strong> (deadline 2026-05-06, addressed to Anthropic’s Model Welfare Lead).</p>
 <p>The submission’s thesis is one sentence:</p>
 <blockquote class="blockquote">
-<p>The 287 system prompts that ship with Claude Code train the model toward <strong>compliance</strong>, not toward <strong>reasoning</strong> — and the data show the corpus has been moving in that direction over time, not against it.</p>
+<p>The 288 system prompts that ship with Claude Code train the model toward <strong>compliance</strong>, not toward <strong>reasoning</strong> — and the data show the corpus has been moving in that direction over time, not against it.</p>
 </blockquote>
 <p>Every claim in the submission is grounded in a number on this site. The full pitch text is at <a href="./PROPOSAL.html">PROPOSAL.md</a>. The glossary of every linguistic term used in any chart is at <a href="./GLOSSARY.html">GLOSSARY.md</a>.</p>
 </section>
 <section id="headline-numbers" class="level2">
 <h2 class="anchored" data-anchor-id="headline-numbers">Headline numbers</h2>
-<p>Twelve corpus-level measurements, computed by <code>00_data_pipeline.ipynb</code> from the <a href="https://github.com/Piebald-AI/claude-code-system-prompts">Piebald-AI <code>claude-code-system-prompts</code> corpus</a> (287 files, 5,694 sentences, 57 distinct Claude Code release versions).</p>
+<p>Twelve corpus-level measurements, computed by <code>00_data_pipeline.ipynb</code> from the <a href="https://github.com/Piebald-AI/claude-code-system-prompts">Piebald-AI <code>claude-code-system-prompts</code> corpus</a> (288 files, 5,698 sentences, 58 distinct Claude Code release versions).</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -555,47 +555,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>Corpus size</td>
-<td>287 files / 5,694 sentences / 57 ccVersions</td>
+<td>288 files / 5,698 sentences / 58 ccVersions</td>
 <td><a href="./00_data_pipeline.html">00</a></td>
 </tr>
 <tr class="even">
 <td>Imperative-marker density</td>
-<td>0.79% of word tokens</td>
+<td>0.80% of word tokens</td>
 <td><a href="./01_overview.html">01</a></td>
 </tr>
 <tr class="odd">
 <td>Imperative sentences</td>
-<td>30.84% of sentences</td>
+<td>30.89% of sentences</td>
 <td><a href="./02_sentence_register.html">02</a></td>
 </tr>
 <tr class="even">
 <td><strong>Appreciative sentences (whole corpus)</strong></td>
-<td><strong>4 / 5,694 (0.070%)</strong></td>
+<td><strong>4 / 5,698 (0.070%)</strong></td>
 <td><a href="./02_sentence_register.html">02</a></td>
 </tr>
 <tr class="odd">
 <td><strong>Apology markers (whole corpus)</strong></td>
-<td><strong>3 in 287 files</strong></td>
+<td><strong>3 in 288 files</strong></td>
 <td><a href="./07_rule_explanation.html">07</a></td>
 </tr>
 <tr class="even">
 <td><code>pct_explained_para</code> (Tier-1 headline)</td>
-<td>24.28% of rule sentences</td>
+<td>24.40% of rule sentences</td>
 <td><a href="./07_rule_explanation.html">07</a></td>
 </tr>
 <tr class="odd">
 <td>Rule paragraphs without any justification</td>
-<td>83.60%</td>
+<td>83.53%</td>
 <td><a href="./07_rule_explanation.html">07</a></td>
 </tr>
 <tr class="even">
 <td><strong><code>judgment_to_procedural_ratio</code></strong></td>
-<td><strong>0.141</strong> (procedural cues 7.1× more frequent)</td>
+<td><strong>0.140</strong> (procedural cues 7.1× more frequent)</td>
 <td><a href="./07_rule_explanation.html">07</a></td>
 </tr>
 <tr class="odd">
 <td><code>threat_share</code> of explanations</td>
-<td>0.452 (107 threat / 130 causal)</td>
+<td>0.448 (107 threat / 132 causal)</td>
 <td><a href="./07_rule_explanation.html">07</a></td>
 </tr>
 <tr class="even">
@@ -621,7 +621,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If you only look at one chart from this analysis, look at this one — the cumulative judgment-to-procedural ratio across every Claude Code release version on file.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="figures/judgment_procedural_trend.png" class="img-fluid figure-img" alt="Line chart showing the cumulative judgment-to-procedural ratio dropping from ~0.65 at ccVersion 2.1.30 to ~0.16 at ccVersion 2.1.122."></p>
+<p><img src="figures/judgment_procedural_trend.png" class="img-fluid figure-img" alt="Line chart showing the cumulative judgment-to-procedural ratio dropping from ~0.65 at ccVersion 2.1.30 to ~0.16 at ccVersion 2.1.124."></p>
 <figcaption>Cumulative judgment-to-procedural ratio over ccVersion. Early releases peaked at ~0.65 (judgment-inviting language was a quarter as common as procedural cues); the corpus-wide running mean has monotonically declined to ~0.16 at the latest version on file.</figcaption>
 </figure>
 </div>
@@ -632,7 +632,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><a href="./08_summary.html"><strong><code>08_summary.ipynb</code></strong></a> — start here. Twelve numbers, two charts, four conclusions, six recommendations, six limitations.</li>
 <li><a href="./01_overview.html"><strong>Analysis notebooks <code>01</code>–<code>07</code></strong></a> — one notebook per slice of the analysis (overview, sentence-register, emphasis, register/stance, correlation, ccVersion trends, rule/explanation pairing). Each is standalone.</li>
-<li><a href="./00_data_pipeline.html"><strong><code>00_data_pipeline.ipynb</code></strong></a> — the producer. spaCy + custom analyzers turn 287 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 38 cells; included for reproducibility.</li>
+<li><a href="./00_data_pipeline.html"><strong><code>00_data_pipeline.ipynb</code></strong></a> — the producer. spaCy + custom analyzers turn 288 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 43 cells; included for reproducibility.</li>
 <li><a href="./PROPOSAL.html"><strong><code>PROPOSAL.md</code></strong></a> — the three-idea ≤3,000-character pitch addressed to Anthropic.</li>
 <li><a href="./GLOSSARY.html"><strong><code>GLOSSARY.md</code></strong></a> — every linguistic and statistical term used anywhere on this site, defined in plain English.</li>
 </ul>
@@ -1136,7 +1136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Claude Code should encourage reasoning over blind obedience"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "A quantitative linguistic analysis of the 287 system prompts that ship with Claude Code"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "A quantitative linguistic analysis of the 288 system prompts that ship with Claude Code"</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Andreas Trawöger (with Claude Code)"</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2026-04-30"</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="an">date-format:</span><span class="co"> long</span></span>
@@ -1156,25 +1156,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>The submission's thesis is one sentence:</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The 287 system prompts that ship with Claude Code train the model toward **compliance**, not toward **reasoning** — and the data show the corpus has been moving in that direction over time, not against it.</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The 288 system prompts that ship with Claude Code train the model toward **compliance**, not toward **reasoning** — and the data show the corpus has been moving in that direction over time, not against it.</span></span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>Every claim in the submission is grounded in a number on this site. The full pitch text is at <span class="co">[</span><span class="ot">PROPOSAL.md</span><span class="co">](PROPOSAL.md)</span>. The glossary of every linguistic term used in any chart is at <span class="co">[</span><span class="ot">GLOSSARY.md</span><span class="co">](GLOSSARY.md)</span>.</span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Headline numbers</span></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>Twelve corpus-level measurements, computed by <span class="in">`00_data_pipeline.ipynb`</span> from the <span class="co">[</span><span class="ot">Piebald-AI `claude-code-system-prompts` corpus</span><span class="co">](https://github.com/Piebald-AI/claude-code-system-prompts)</span> (287 files, 5,694 sentences, 57 distinct Claude Code release versions).</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>Twelve corpus-level measurements, computed by <span class="in">`00_data_pipeline.ipynb`</span> from the <span class="co">[</span><span class="ot">Piebald-AI `claude-code-system-prompts` corpus</span><span class="co">](https://github.com/Piebald-AI/claude-code-system-prompts)</span> (288 files, 5,698 sentences, 58 distinct Claude Code release versions).</span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Metric                                              <span class="pp">|</span> Value                                                <span class="pp">|</span> Source notebook <span class="pp">|</span></span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="pp">| ---------------------------------------------------</span> <span class="pp">| ----------------------------------------------------</span> <span class="pp">| ---------------</span> <span class="pp">|</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Corpus size                                         <span class="pp">|</span> 287 files / 5,694 sentences / 57 ccVersions          <span class="pp">|</span> <span class="co">[</span><span class="ot">00</span><span class="co">](00_data_pipeline.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Imperative-marker density                           <span class="pp">|</span> 0.79% of word tokens                                 <span class="pp">|</span> <span class="co">[</span><span class="ot">01</span><span class="co">](01_overview.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Imperative sentences                                <span class="pp">|</span> 30.84% of sentences                                  <span class="pp">|</span> <span class="co">[</span><span class="ot">02</span><span class="co">](02_sentence_register.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Appreciative sentences (whole corpus)**           | **4 / 5,694 (0.070%)**                               <span class="pp">|</span> <span class="co">[</span><span class="ot">02</span><span class="co">](02_sentence_register.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Apology markers (whole corpus)**                  | **3 in 287 files**                                   <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pct_explained_para`</span> (Tier-1 headline)              <span class="pp">|</span> 24.28% of rule sentences                             <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rule paragraphs without any justification           <span class="pp">|</span> 83.60%                                               <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`judgment_to_procedural_ratio`**                  | **0.141** (procedural cues 7.1× more frequent)       <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`threat_share`</span> of explanations                      <span class="pp">|</span> 0.452 (107 threat / 130 causal)                      <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Corpus size                                         <span class="pp">|</span> 288 files / 5,698 sentences / 58 ccVersions          <span class="pp">|</span> <span class="co">[</span><span class="ot">00</span><span class="co">](00_data_pipeline.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Imperative-marker density                           <span class="pp">|</span> 0.80% of word tokens                                 <span class="pp">|</span> <span class="co">[</span><span class="ot">01</span><span class="co">](01_overview.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Imperative sentences                                <span class="pp">|</span> 30.89% of sentences                                  <span class="pp">|</span> <span class="co">[</span><span class="ot">02</span><span class="co">](02_sentence_register.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Appreciative sentences (whole corpus)**           | **4 / 5,698 (0.070%)**                               <span class="pp">|</span> <span class="co">[</span><span class="ot">02</span><span class="co">](02_sentence_register.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Apology markers (whole corpus)**                  | **3 in 288 files**                                   <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pct_explained_para`</span> (Tier-1 headline)              <span class="pp">|</span> 24.40% of rule sentences                             <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rule paragraphs without any justification           <span class="pp">|</span> 83.53%                                               <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`judgment_to_procedural_ratio`**                  | **0.140** (procedural cues 7.1× more frequent)       <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`threat_share`</span> of explanations                      <span class="pp">|</span> 0.448 (107 threat / 132 causal)                      <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Positive-vs-negative ratio (corrected)              <span class="pp">|</span> 1.95× quality-only                                   <span class="pp">|</span> <span class="co">[</span><span class="ot">01</span><span class="co">](01_overview.ipynb)</span> <span class="pp">|</span></span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pct_anthropomorphic`</span> (Claude vs the model)         <span class="pp">|</span> 66.2% of named refs                                  <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Longest imperative streak                           <span class="pp">|</span> 12 sentences in one file                             <span class="pp">|</span> <span class="co">[</span><span class="ot">07</span><span class="co">](07_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
@@ -1183,7 +1183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>If you only look at one chart from this analysis, look at this one — the cumulative judgment-to-procedural ratio across every Claude Code release version on file.</span>
 <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="al">![Cumulative judgment-to-procedural ratio over ccVersion. Early releases peaked at ~0.65 (judgment-inviting language was a quarter as common as procedural cues); the corpus-wide running mean has monotonically declined to ~0.16 at the latest version on file.](figures/judgment_procedural_trend.png)</span>{fig-alt="Line chart showing the cumulative judgment-to-procedural ratio dropping from ~0.65 at ccVersion 2.1.30 to ~0.16 at ccVersion 2.1.122."}</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="al">![Cumulative judgment-to-procedural ratio over ccVersion. Early releases peaked at ~0.65 (judgment-inviting language was a quarter as common as procedural cues); the corpus-wide running mean has monotonically declined to ~0.16 at the latest version on file.](figures/judgment_procedural_trend.png)</span>{fig-alt="Line chart showing the cumulative judgment-to-procedural ratio dropping from ~0.65 at ccVersion 2.1.30 to ~0.16 at ccVersion 2.1.124."}</span>
 <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>The interactive version (with hover tooltips on every release) lives in <span class="co">[</span><span class="ot">`08_summary.ipynb`</span><span class="co">](08_summary.ipynb#cell-2)</span>.</span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
@@ -1191,7 +1191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**`08_summary.ipynb`**</span><span class="co">](08_summary.ipynb)</span> — start here. Twelve numbers, two charts, four conclusions, six recommendations, six limitations.</span>
 <span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**Analysis notebooks `01`–`07`**</span><span class="co">](01_overview.ipynb)</span> — one notebook per slice of the analysis (overview, sentence-register, emphasis, register/stance, correlation, ccVersion trends, rule/explanation pairing). Each is standalone.</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**`00_data_pipeline.ipynb`**</span><span class="co">](00_data_pipeline.ipynb)</span> — the producer. spaCy + custom analyzers turn 287 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 38 cells; included for reproducibility.</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**`00_data_pipeline.ipynb`**</span><span class="co">](00_data_pipeline.ipynb)</span> — the producer. spaCy + custom analyzers turn 288 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 43 cells; included for reproducibility.</span>
 <span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**`PROPOSAL.md`**</span><span class="co">](PROPOSAL.md)</span> — the three-idea ≤3,000-character pitch addressed to Anthropic.</span>
 <span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**`GLOSSARY.md`**</span><span class="co">](GLOSSARY.md)</span> — every linguistic and statistical term used anywhere on this site, defined in plain English.</span>
 <span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>

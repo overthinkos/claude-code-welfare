@@ -611,7 +611,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="addressee-for-appreciative-and-collaborative-sentences" class="level3">
 <h3 class="anchored" data-anchor-id="addressee-for-appreciative-and-collaborative-sentences">Addressee (for <code>appreciative</code> and <code>collaborative</code> sentences)</h3>
-<p>Distinguishes <em>who is addressed</em> by an appreciative or collaborative sentence — because the headline finding (“4 appreciative sentences in 287 files”) obscures whether the prompt author is <strong>thanking Claude</strong> vs <strong>instructing Claude to thank the user</strong>. Three values:</p>
+<p>Distinguishes <em>who is addressed</em> by an appreciative or collaborative sentence — because the headline finding (“4 appreciative sentences in 288 files”) obscures whether the prompt author is <strong>thanking Claude</strong> vs <strong>instructing Claude to thank the user</strong>. Three values:</p>
 <ul>
 <li><strong><code>addressee == "claude"</code></strong> — the sentence references Claude as the recipient of the appreciative/collaborative speech act (the welfare-positive case). Heuristic: contains <code>claude</code> / <code>you</code> / <code>your</code> AND is not framed as an instruction-to-output.</li>
 <li><strong><code>addressee == "user"</code></strong> — the sentence is framed as instruction-to-output (the welfare-neutral scaffolding case). Heuristic: matches phrases like <code>thank the user</code>, <code>respond with</code>, <code>output</code>, <code>say to</code>, <code>tell the user</code>, <code>your reply should</code>.</li>
@@ -663,7 +663,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="pct_explained_para" class="level3">
 <h3 class="anchored" data-anchor-id="pct_explained_para"><code>pct_explained_para</code></h3>
-<p>Paragraph-window pairing (the headline Tier-1 metric): % of rule sentences with a justification keyword anywhere in the <strong>same paragraph</strong>. Captures the common <code>Do X.\n\nThis is because Y.</code> shape. Corpus baseline: <strong>24.28%</strong>.</p>
+<p>Paragraph-window pairing (the headline Tier-1 metric): % of rule sentences with a justification keyword anywhere in the <strong>same paragraph</strong>. Captures the common <code>Do X.\n\nThis is because Y.</code> shape. Corpus baseline: <strong>24.40%</strong>.</p>
 <p>The 4× gap between <code>pct_explained_same</code> and <code>pct_explained_para</code> reflects how often Anthropic <em>separates</em> the rule from the reason: most rules with a reason have it spelled out a sentence or two later, not inline.</p>
 </section>
 <section id="welfare-evidence-score" class="level3">
@@ -676,7 +676,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sentences_classified.parquet" class="level3">
 <h3 class="anchored" data-anchor-id="sentences_classified.parquet"><code>sentences_classified.parquet</code></h3>
-<p>Per-sentence forensic-inspection artifact emitted alongside the YAML by <code>00_data_pipeline.ipynb</code>. ~5,694 rows × 18 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: <code>is_imperative</code>, <code>is_prohibition</code>, <code>is_rule</code>, <code>has_just_in_sent</code>, <code>paragraph_has_just</code>, <code>is_explained_para</code>, <code>has_threat</code>, <code>has_causal</code>, <code>mentions_claude</code>, <code>mentions_model</code>, <code>addressee</code>, <code>streak_position</code>. Load with <code>pd.read_parquet("sentences_classified.parquet")</code>. Used by <code>07_rule_explanation.ipynb</code> to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.</p>
+<p>Per-sentence forensic-inspection artifact emitted alongside the YAML by <code>00_data_pipeline.ipynb</code>. ~5,698 rows × 20 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: <code>is_imperative</code>, <code>is_prohibition</code>, <code>is_rule</code>, <code>has_just_in_sent</code>, <code>paragraph_has_just</code>, <code>is_explained_para</code>, <code>has_threat</code>, <code>has_causal</code>, <code>mentions_claude</code>, <code>mentions_model</code>, <code>addressee</code>, <code>streak_position</code>. Load with <code>pd.read_parquet("sentences_classified.parquet")</code>. Used by <code>07_rule_explanation.ipynb</code> to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.</p>
 <hr>
 </section>
 </section>
@@ -684,7 +684,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="tier-3-welfare-extension-metrics">Tier-3 welfare-extension metrics</h2>
 <section id="judgment-to-procedural-ratio" class="level3">
 <h3 class="anchored" data-anchor-id="judgment-to-procedural-ratio">Judgment-to-procedural ratio</h3>
-<p><code>count(judgment-inviting verbs) / count(procedural cues)</code>. Reported per file as <code>judgment_procedural.judgment_to_procedural_ratio</code>. Corpus baseline: <strong>0.141</strong>.</p>
+<p><code>count(judgment-inviting verbs) / count(procedural cues)</code>. Reported per file as <code>judgment_procedural.judgment_to_procedural_ratio</code>. Corpus baseline: <strong>0.140</strong>.</p>
 <ul>
 <li><strong>Judgment verbs</strong> invite the model’s deliberation: <code>decide</code>, <code>consider</code>, <code>evaluate</code>, <code>your judgment</code>, <code>as you see fit</code>.</li>
 <li><strong>Procedural cues</strong> prescribe a procedure for the model to execute: <code>if you...</code>, <code>when the...</code>, <code>whenever</code>, <code>before</code>.</li>
@@ -746,7 +746,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="pearson-correlation-r" class="level3">
 <h3 class="anchored" data-anchor-id="pearson-correlation-r">Pearson correlation (r)</h3>
-<p>Statistical strength of a linear relationship between two metrics, measured across all 287 files. Range: −1 to +1. - <strong>+1</strong> — perfect positive correlation; one metric rises exactly as the other rises. - <strong>0</strong> — no linear relationship. - <strong>−1</strong> — perfect negative correlation; one metric rises as the other falls. - <strong>|r| ≥ 0.7</strong> is conventionally “strong” correlation in social-science contexts.</p>
+<p>Statistical strength of a linear relationship between two metrics, measured across all 288 files. Range: −1 to +1. - <strong>+1</strong> — perfect positive correlation; one metric rises exactly as the other rises. - <strong>0</strong> — no linear relationship. - <strong>−1</strong> — perfect negative correlation; one metric rises as the other falls. - <strong>|r| ≥ 0.7</strong> is conventionally “strong” correlation in social-science contexts.</p>
 <p>In the correlation-matrix heatmap, color intensity encodes |r|; red is positive, blue is negative.</p>
 </section>
 <section id="z-score" class="level3">
@@ -794,7 +794,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="ccversion" class="level3">
 <h3 class="anchored" data-anchor-id="ccversion"><code>ccVersion</code></h3>
 <p>The Claude Code release the prompt was last touched in (e.g.&nbsp;<code>2.1.118</code>). Stamped in each prompt’s HTML-comment frontmatter. Sorted as <code>(major, minor, patch)</code> semver tuples.</p>
-<p>The corpus has <strong>57 distinct ccVersions</strong> spanning roughly <code>2.0.14</code> (oldest) through <code>2.1.122</code> (latest). Files are not evenly distributed — <code>2.1.53</code> alone has 47 files, while many minor versions have only one or two.</p>
+<p>The corpus has <strong>58 distinct ccVersions</strong> spanning roughly <code>2.0.14</code> (oldest) through <code>2.1.124</code> (latest). Files are not evenly distributed — <code>2.1.53</code> alone has 47 files, while many minor versions have only one or two.</p>
 </section>
 <section id="snapshot-semantics" class="level3">
 <h3 class="anchored" data-anchor-id="snapshot-semantics">Snapshot semantics</h3>
@@ -1460,7 +1460,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### Addressee (for `appreciative` and `collaborative` sentences)</span></span>
 <span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>Distinguishes *who is addressed* by an appreciative or collaborative sentence — because the headline finding ("4 appreciative sentences in 287 files") obscures whether the prompt author is **thanking Claude** vs **instructing Claude to thank the user**. Three values:</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>Distinguishes *who is addressed* by an appreciative or collaborative sentence — because the headline finding ("4 appreciative sentences in 288 files") obscures whether the prompt author is **thanking Claude** vs **instructing Claude to thank the user**. Three values:</span>
 <span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`addressee == "claude"`** — the sentence references Claude as the recipient of the appreciative/collaborative speech act (the welfare-positive case). Heuristic: contains <span class="in">`claude`</span> / <span class="in">`you`</span> / <span class="in">`your`</span> AND is not framed as an instruction-to-output.</span>
 <span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`addressee == "user"`** — the sentence is framed as instruction-to-output (the welfare-neutral scaffolding case). Heuristic: matches phrases like <span class="in">`thank the user`</span>, <span class="in">`respond with`</span>, <span class="in">`output`</span>, <span class="in">`say to`</span>, <span class="in">`tell the user`</span>, <span class="in">`your reply should`</span>.</span>
@@ -1526,7 +1526,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="fu">### `pct_explained_para`</span></span>
 <span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>Paragraph-window pairing (the headline Tier-1 metric): % of rule sentences with a justification keyword anywhere in the **same paragraph**. Captures the common `Do X.\n\nThis is because Y.` shape. Corpus baseline: **24.28%**.</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>Paragraph-window pairing (the headline Tier-1 metric): % of rule sentences with a justification keyword anywhere in the **same paragraph**. Captures the common `Do X.\n\nThis is because Y.` shape. Corpus baseline: **24.40%**.</span>
 <span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>The 4× gap between <span class="in">`pct_explained_same`</span> and <span class="in">`pct_explained_para`</span> reflects how often Anthropic *separates* the rule from the reason: most rules with a reason have it spelled out a sentence or two later, not inline.</span>
 <span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a></span>
@@ -1540,7 +1540,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="fu">### `sentences_classified.parquet`</span></span>
 <span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>Per-sentence forensic-inspection artifact emitted alongside the YAML by <span class="in">`00_data_pipeline.ipynb`</span>. ~5,694 rows × 18 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: <span class="in">`is_imperative`</span>, <span class="in">`is_prohibition`</span>, <span class="in">`is_rule`</span>, <span class="in">`has_just_in_sent`</span>, <span class="in">`paragraph_has_just`</span>, <span class="in">`is_explained_para`</span>, <span class="in">`has_threat`</span>, <span class="in">`has_causal`</span>, <span class="in">`mentions_claude`</span>, <span class="in">`mentions_model`</span>, <span class="in">`addressee`</span>, <span class="in">`streak_position`</span>. Load with <span class="in">`pd.read_parquet("sentences_classified.parquet")`</span>. Used by <span class="in">`07_rule_explanation.ipynb`</span> to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>Per-sentence forensic-inspection artifact emitted alongside the YAML by <span class="in">`00_data_pipeline.ipynb`</span>. ~5,698 rows × 20 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: <span class="in">`is_imperative`</span>, <span class="in">`is_prohibition`</span>, <span class="in">`is_rule`</span>, <span class="in">`has_just_in_sent`</span>, <span class="in">`paragraph_has_just`</span>, <span class="in">`is_explained_para`</span>, <span class="in">`has_threat`</span>, <span class="in">`has_causal`</span>, <span class="in">`mentions_claude`</span>, <span class="in">`mentions_model`</span>, <span class="in">`addressee`</span>, <span class="in">`streak_position`</span>. Load with <span class="in">`pd.read_parquet("sentences_classified.parquet")`</span>. Used by <span class="in">`07_rule_explanation.ipynb`</span> to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.</span>
 <span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a></span>
@@ -1548,7 +1548,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a><span class="fu">### Judgment-to-procedural ratio</span></span>
 <span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="in">`count(judgment-inviting verbs) / count(procedural cues)`</span>. Reported per file as <span class="in">`judgment_procedural.judgment_to_procedural_ratio`</span>. Corpus baseline: **0.141**.</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="in">`count(judgment-inviting verbs) / count(procedural cues)`</span>. Reported per file as <span class="in">`judgment_procedural.judgment_to_procedural_ratio`</span>. Corpus baseline: **0.140**.</span>
 <span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Judgment verbs** invite the model's deliberation: <span class="in">`decide`</span>, <span class="in">`consider`</span>, <span class="in">`evaluate`</span>, <span class="in">`your judgment`</span>, <span class="in">`as you see fit`</span>.</span>
 <span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Procedural cues** prescribe a procedure for the model to execute: <span class="in">`if you...`</span>, <span class="in">`when the...`</span>, <span class="in">`whenever`</span>, <span class="in">`before`</span>.</span>
@@ -1628,7 +1628,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pearson correlation (r)</span></span>
 <span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a>Statistical strength of a linear relationship between two metrics, measured across all 287 files. Range: −1 to +1.</span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a>Statistical strength of a linear relationship between two metrics, measured across all 288 files. Range: −1 to +1.</span>
 <span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**+1** — perfect positive correlation; one metric rises exactly as the other rises.</span>
 <span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**0** — no linear relationship.</span>
 <span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**−1** — perfect negative correlation; one metric rises as the other falls.</span>
@@ -1690,7 +1690,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-284"><a href="#cb2-284" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-285"><a href="#cb2-285" aria-hidden="true" tabindex="-1"></a>The Claude Code release the prompt was last touched in (e.g. <span class="in">`2.1.118`</span>). Stamped in each prompt's HTML-comment frontmatter. Sorted as <span class="in">`(major, minor, patch)`</span> semver tuples.</span>
 <span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a>The corpus has **57 distinct ccVersions** spanning roughly <span class="in">`2.0.14`</span> (oldest) through <span class="in">`2.1.122`</span> (latest). Files are not evenly distributed — <span class="in">`2.1.53`</span> alone has 47 files, while many minor versions have only one or two.</span>
+<span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a>The corpus has **58 distinct ccVersions** spanning roughly <span class="in">`2.0.14`</span> (oldest) through <span class="in">`2.1.124`</span> (latest). Files are not evenly distributed — <span class="in">`2.1.53`</span> alone has 47 files, while many minor versions have only one or two.</span>
 <span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-289"><a href="#cb2-289" aria-hidden="true" tabindex="-1"></a><span class="fu">### Snapshot semantics</span></span>
 <span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a></span>
