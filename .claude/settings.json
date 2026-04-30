@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "ov-core@ov-plugins": true,
+    "ov-jupyter@ov-plugins": true
+  }
+}

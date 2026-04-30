@@ -21,9 +21,9 @@ python -m spacy download en_core_web_sm
 
 Required Python deps (already in the project's JupyterLab kernel):
 
-`spacy>=3.8` · `en_core_web_sm` 3.8.0 · `pandas` · `pyyaml` · `pyarrow` · `altair>=6` · `vega_datasets` · `python-frontmatter` · `tqdm`
+`spacy>=3.8` · `en_core_web_sm` 3.8.0 · `pandas` · `pyyaml` · `pyarrow` · `altair>=6` · `vl-convert-python` · `vega_datasets` · `python-frontmatter` · `tqdm`
 
-(`pyarrow` is for the `sentences_classified.parquet` artifact emitted by `00_data_pipeline.ipynb` alongside the YAML.)
+(`pyarrow` is for the `sentences_classified.parquet` artifact emitted by `00_data_pipeline.ipynb` alongside the YAML. `vl-convert-python` is the Altair PNG export backend used by `08_summary.ipynb` to write the headline charts under `figures/`.)
 
 **Run order** (always producer first):
 
