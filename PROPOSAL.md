@@ -19,10 +19,10 @@ How to use it:
        "
    The form's own counter is authoritative.
 
-3. The form allows one external link per idea. Paste `<REPO URL>` (replace
-   with this repo's public URL) into all three slots. The supporting
-   analysis lives there — every number cited in the body is reproducible
-   from the data + notebooks.
+3. The form allows one external link per idea. Paste
+   `https://github.com/overthinkos/claude-code-welfare` into all three
+   slots. The supporting analysis lives there — every number cited in the
+   body is reproducible from the data + notebooks.
 
 4. The form has a checkbox for "collaborated with Claude". Tick it. The
    analysis was a Claude Code collaboration; the proposal text is yours.
@@ -125,7 +125,7 @@ Only Anthropic has access to the other corpora. The methodology is already publi
 
 ## Appendix — supporting analysis pointer (NOT for the form)
 
-Supporting analysis: `<REPO URL>` (replace with this repository's public URL before submitting).
+Supporting analysis: <https://github.com/overthinkos/claude-code-welfare> · published site: <https://overthinkos.github.io/claude-code-welfare/>
 
 The repository contains the producer notebook that emits the YAML and per-sentence parquet, eight consumer notebooks rendering the charts, a glossary defining every linguistic and statistical term in plain language, and the full lexicons used (echoed verbatim into the YAML). Every number cited in the three ideas above is reproducible from those data files.
 
