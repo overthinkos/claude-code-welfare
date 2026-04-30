@@ -1,0 +1,3 @@
+[submodule "claude-code-system-prompts"]
+	path = claude-code-system-prompts
+	url = https://github.com/Piebald-AI/claude-code-system-prompts.git
