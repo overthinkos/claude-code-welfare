@@ -21,33 +21,35 @@ python -m spacy download en_core_web_sm
 
 Required Python deps (already in the project's JupyterLab kernel):
 
-`spacy>=3.8` · `en_core_web_sm` 3.8.0 · `pandas` · `pyyaml` · `altair>=6` · `vega_datasets` · `python-frontmatter` · `tqdm`
+`spacy>=3.8` · `en_core_web_sm` 3.8.0 · `pandas` · `pyyaml` · `pyarrow` · `altair>=6` · `vega_datasets` · `python-frontmatter` · `tqdm`
+
+(`pyarrow` is for the `sentences_classified.parquet` artifact emitted by `00_data_pipeline.ipynb` alongside the YAML.)
 
 **Run order** (always producer first):
 
-1. Open `00_data_pipeline.ipynb` in JupyterLab → Run All. Produces `prompt_linguistic_analysis.yaml` (~1.04 MiB, 287 files × 9 metric blocks + lexicons + corpus + per-category).
-2. Open any consumer notebook (`01_*` … `06_*`). Each loads the YAML and renders charts. Consumers do **not** re-run spaCy — they're pure data viewers.
+1. Open `00_data_pipeline.ipynb` in JupyterLab → Run All. Produces `prompt_linguistic_analysis.yaml` (~1.7 MiB, 287 files × per-file metric tree + lexicons + corpus + per-category) AND `sentences_classified.parquet` (~5,694 rows, per-sentence forensic-inspection table).
+2. Open any consumer notebook (`01_*` … `08_*`). Each loads the YAML (and optionally the parquet, in `07_rule_explanation.ipynb` and `08_summary.ipynb`) and renders charts. Consumers do **not** re-run spaCy — they're pure data viewers. Start with `08_summary.ipynb` for the executive-summary view; the other consumers each focus on one slice of the analysis.
 
 ---
 
 ## 2. Architecture (producer / consumer split)
 
 ```
-                    claude-code-system-prompts/  (git submodule)
-                              │
-                              ▼
-      ┌──────────────────────────────────────────────┐
-      │  00_data_pipeline.ipynb   (producer, ~34 cells) │
-      │  spaCy + analyzers → assembly → aggregator     │
-      └──────────────────────────────────────────────┘
-                              │
-                              ▼
-                prompt_linguistic_analysis.yaml  (~1 MiB cache)
-                              │
-        ┌─────────┬─────────┬─┴───────┬─────────┬─────────┐
-        ▼         ▼         ▼         ▼         ▼         ▼
-       01        02        03        04        05        06
-    overview  sent_reg  emphasis  reg_stance  corr_dir  ccVer
+ claude-code-system-prompts/ (git submodule)
+ │
+ ▼
+ ┌──────────────────────────────────────────────┐
+ │ 00_data_pipeline.ipynb (producer, ~38 cells) │
+ │ spaCy + analyzers → assembly → aggregator │
+ └──────────────────────────────────────────────┘
+ │
+ ▼
+ prompt_linguistic_analysis.yaml (~1.4 MiB cache)
+ │
+ ┌─────────┬─────────┬─┴───────┬─────────┬─────────┬─────────┬─────────┐
+ ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼
+ 01 02 03 04 05 06 07 08
+ overview sent_reg emphasis reg_stance corr_dir ccVer rule_expl summary
 ```
 
 ### Consumer notebooks (each ~5–8 cells, all charts in Altair)
@@ -59,7 +61,9 @@ Required Python deps (already in the project's JupyterLab kernel):
 | `03_emphasis_caps_vocab.ipynb` | Emphasis 3-panel (ALL CAPS / CAPS imperative / justification), text outlier table, top tokens + 11-class VOCAB heatmap |
 | `04_register_stance.ipynb` | 5-class polarity-split stance heatmap + register heatmap + per-file justification box, TTR×F-score scatter, sent-len/dep-depth distributions |
 | `05_correlation_directiveness.ipynb` | 20-metric correlation matrix, top-25 directiveness ranking, per-word vs per-sentence comparison |
-| `06_ccversion_trends.ipynb` | ccVersion timeline, loudness/imperatives 4-panel small-multiples, sentence-register 6-panel small-multiples |
+| `06_ccversion_trends.ipynb` | ccVersion timeline (snapshot scatter), corpus-growth area chart, loudness/imperatives 4-panel small-multiples (snapshot + cumulative running mean), sentence-register 6-panel (snapshot + cumulative) |
+| `07_rule_explanation.ipynb` | Rule-pairing analysis: per-category bars, explained-vs-unexplained stacks, imperatives-vs-prohibitions split, density×explanation scatter, top-25 "loudest least-explained" welfare evidence ranking, cumulative `pct_explained_para` over ccVersion. Tier-3 v1: judgment-vs-procedural ratio, threat-vs-causal split, address-form mix, cumulative judgment-to-procedural trend. Tier-3 v2: imperative-streak counts + top-15 streak ranking, in-vs-outside RULES-section explanation gap. Refinement-round additions: positive-exemplar ranking, self-bias correlation check, parquet-based forensic-evidence sample |
+| `08_summary.ipynb` | Cross-cutting synthesis: headline-data block (12 corpus-level numbers), the single most-important chart (cumulative `judgment_to_procedural_ratio`), welfare-evidence + positive-exemplar paired top-10, final conclusions, recommendations to Anthropic, limitations. Standalone-runnable; the executive-summary entry point for PROPOSAL.md drafting |
 
 ---
 
@@ -67,20 +71,40 @@ Required Python deps (already in the project's JupyterLab kernel):
 
 Lives at the project root, imported by every consumer's setup cell. Public API:
 
+> **For laypersons / welfare-submission readers**: every linguistic and statistical term used in any notebook is defined in [`GLOSSARY.md`](./GLOSSARY.md) at the repo root. If a chart axis label, tooltip field, or markdown phrase looks unfamiliar, that's the canonical reference.
+
 ```python
 # Constants
 TABLEAU10: list[str]
-SR_CLASS_COLORS: dict[str, str]   # 6-tone palette for sentence_register classes
-SENT_REGISTER_CLASSES: list[str]  # ["collaborative", "permissive", "appreciative",
-                                   #  "imperative", "directive", "configuring"]
+SR_CLASS_COLORS: dict[str, str] # 6-tone palette for sentence_register classes
+SENT_REGISTER_CLASSES: list[str] # ["collaborative", "permissive", "appreciative",
+ # "imperative", "directive", "configuring"]
 
 # Functions
 load_yaml(path="prompt_linguistic_analysis.yaml") -> dict
-build_alt_df(data) -> pd.DataFrame                 # ~115-column flat per-file df
-version_order(alt_df) -> list[str]                  # sorted ccVersions oldest→newest
+build_alt_df(data) -> pd.DataFrame # ~150-column flat per-file df (Tier-1 + Tier-3 + splits)
+version_order(alt_df) -> list[str] # sorted ccVersions oldest→newest
 category_colors(cats) -> dict[str, str]
-directiveness(alt_df) -> pd.Series                  # extended composite z-score
+directiveness(alt_df) -> pd.Series # extended composite z-score
+cumulative_by_version(alt_df, metrics, agg="mean") # running aggregate over files in versions ≤ V
+welfare_evidence_table(alt_df, top_n=25) # top-N "loudest, least-explained" files
+positive_exemplar_table(alt_df, top_n=25, min_n_sents=10, min_rule_n=5) # top-N "rules-with-reasons" exemplars (inverse welfare-evidence)
 ```
+
+**Per-sentence forensic-inspection artifact**: `sentences_classified.parquet` is emitted alongside the YAML. Load with `pd.read_parquet("sentences_classified.parquet")` for individual-sentence inspection (raw text + classifier flags). Schema documented in the producer cell that writes it. ~5,694 rows × 18 columns. Used by `07_rule_explanation.ipynb` for forensic evidence; other consumers stay YAML-only.
+
+**Opinion cells convention**: notebooks 00–07 contain markdown cells visually marked `### My perspective (Claude) — opinion, not data` or `### My wish for future versions of this analysis — methodology, not data` (with horizontal-rule frames + blockquoted bodies). These are interpretation, not measurement, and can be skipped for a pure-data read.
+
+The Tier-3 (welfare-extension) columns added by `build_alt_df`:
+
+- `rule_n`, `rule_density`, `rule_explained_same_pct`, `rule_explained_para_pct`, `imp_explained_para_pct`, `prohib_explained_para_pct` — rule-pairing metrics from the producer's `metrics.rule_explanation` block.
+- `judgment_count`, `procedural_count`, `judgment_to_procedural_ratio` — Tier-3 6a (welfare-thesis metric).
+- `threat_count`, `causal_count`, `threat_share` — Tier-3 6d (consequence-framing split).
+- `question_count`, `apology_count` — Tier-3 6f (near-zero pragmatic classes).
+- `selfref_claude`, `selfref_assistant`, `selfref_model`, `pct_anthropomorphic`, `pct_artifact`, `pct_role` — Tier-3 6g (address-form analysis).
+- `prohibition_to_prescription_ratio` — Tier-3 6c (pure derivation in `build_alt_df`, no producer field).
+- `streak_max`, `streak_mean`, `streak_n_ge3`, `streak_n_ge5`, `streak_n_streaks` — Tier-3 v2 6b (imperative-streak distribution).
+- `rs_pct_rule_paragraphs_explained_in`, `rs_pct_rule_paragraphs_explained_out`, `rs_n_rule_paragraphs_in`, `rs_n_rule_paragraphs_out`, plus `_explained` count variants — Tier-3 v2 6e (in vs outside RULES-section gap).
 
 Standard consumer setup cell (~10 lines):
 
@@ -88,13 +112,13 @@ Standard consumer setup cell (~10 lines):
 import importlib, altair as alt, pandas as pd
 import prompt_analysis; importlib.reload(prompt_analysis)
 from prompt_analysis import (load_yaml, build_alt_df, version_order, category_colors,
-                              directiveness, SR_CLASS_COLORS, SENT_REGISTER_CLASSES)
-alt.data_transformers.disable_max_rows()
-data = load_yaml()
+ directiveness, SR_CLASS_COLORS, SENT_REGISTER_CLASSES)
+alt.data_transformers.disable_max_rows
+data = load_yaml
 alt_df = build_alt_df(data)
 alt_df["directiveness"] = directiveness(alt_df)
 by_category, corpus_block, per_file_records = data["by_category"], data["corpus"], data["files"]
-cats = list(by_category.keys()); CATEGORY_COLORS = category_colors(cats)
+cats = list(by_category.keys); CATEGORY_COLORS = category_colors(cats)
 ```
 
 The `importlib.reload` line is intentional — it picks up edits to `prompt_analysis.py` without requiring a kernel restart.
@@ -114,9 +138,9 @@ The MCP server is configured in `.mcp.json` at `http://localhost:8888/mcp` and e
 - **Never** call `Write` on a `.ipynb` file. Never `sed`/`awk`/`echo >` an `.ipynb`.
 - **Always** use `mcp__jupyter__update_cell` / `insert_cell` / `delete_cell` for cell-level edits while a session is open.
 - For **bulk surgery** that's awkward via per-cell calls (e.g. lifting cells from one notebook into another via `jq`):
-  1. `mcp__jupyter__close_notebook_session` for the target notebook.
-  2. Do the on-disk edit.
-  3. `mcp__jupyter__open_notebook_session` to reopen — JupyterLab will pick up the new state.
+ 1. `mcp__jupyter__close_notebook_session` for the target notebook.
+ 2. Do the on-disk edit.
+ 3. `mcp__jupyter__open_notebook_session` to reopen — JupyterLab will pick up the new state.
 - For `.py` / `.md` / `.yaml` / `.json`: regular `Write` / `Edit` tools are fine. They have no CRDT layer.
 - After editing `prompt_analysis.py`, the kernel still has the *old* module cached. The setup cell calls `importlib.reload(prompt_analysis)` to force a re-import. If you add new exports, run the setup cell again.
 
@@ -124,12 +148,12 @@ The MCP server is configured in `.mcp.json` at `http://localhost:8888/mcp` and e
 
 ```json
 {
-  "mcpServers": {
-    "jupyter": {
-      "type": "http",
-      "url": "http://localhost:8888/mcp"
-    }
-  }
+ "mcpServers": {
+ "jupyter": {
+ "type": "http",
+ "url": "http://localhost:8888/mcp"
+ }
+ }
 }
 ```
 
@@ -139,23 +163,24 @@ The MCP server is configured in `.mcp.json` at `http://localhost:8888/mcp` and e
 
 ```
 claude-prompts-analysis/
-├── CLAUDE.md                                  ← you are here
-├── prompt_analysis.py                         ← shared module (load YAML, palettes, helpers)
-├── 00_data_pipeline.ipynb                     ← PRODUCER (~34 cells; runs spaCy + writes YAML)
-├── prompt_linguistic_analysis.yaml            ← producer output (~1.04 MiB, the cache point)
-├── 01_overview.ipynb                          ← CONSUMER
-├── 02_sentence_register.ipynb                 ← CONSUMER
-├── 03_emphasis_caps_vocab.ipynb               ← CONSUMER
-├── 04_register_stance.ipynb                   ← CONSUMER
-├── 05_correlation_directiveness.ipynb         ← CONSUMER
-├── 06_ccversion_trends.ipynb                  ← CONSUMER
-├── prompt_linguistic_analysis.ipynb           ← original monolith (kept; safe to delete after the split is trusted)
-├── claude-code-system-prompts/                ← git submodule, the corpus (287 .md files)
-│   ├── system-prompts/   *.md (287 files in two dirs combined)
-│   └── tools/
-├── .mcp.json                                  ← Jupyter MCP server URL
-├── .gitmodules                                ← submodule pinning
-└── claude-prompts-analysis.code-workspace     ← VS Code workspace file
+├── CLAUDE.md ← you are here
+├── prompt_analysis.py ← shared module (load YAML, palettes, helpers)
+├── 00_data_pipeline.ipynb ← PRODUCER (~34 cells; runs spaCy + writes YAML)
+├── prompt_linguistic_analysis.yaml ← producer output (~1.04 MiB, the cache point)
+├── 01_overview.ipynb ← CONSUMER
+├── 02_sentence_register.ipynb ← CONSUMER
+├── 03_emphasis_caps_vocab.ipynb ← CONSUMER
+├── 04_register_stance.ipynb ← CONSUMER
+├── 05_correlation_directiveness.ipynb ← CONSUMER
+├── 06_ccversion_trends.ipynb ← CONSUMER
+├── 07_rule_explanation.ipynb ← CONSUMER (Tier-1 rule-pairing + Tier-3 welfare extensions)
+├── prompt_linguistic_analysis.ipynb ← original monolith (kept; safe to delete after the split is trusted)
+├── claude-code-system-prompts/ ← git submodule, the corpus (287.md files)
+│ ├── system-prompts/ *.md (287 files in two dirs combined)
+│ └── tools/
+├──.mcp.json ← Jupyter MCP server URL
+├──.gitmodules ← submodule pinning
+└── claude-prompts-analysis.code-workspace ← VS Code workspace file
 ```
 
 The corpus submodule pulls from `https://github.com/Piebald-AI/claude-code-system-prompts.git`. Files are categorized via filename prefix into `Agent prompt` / `Data / template` / `Skill` / `System prompt` / `System reminder` / `Tool description` / `Tool parameter`.
@@ -167,22 +192,54 @@ The corpus submodule pulls from `https://github.com/Piebald-AI/claude-code-syste
 - **287** prompt files / **129,311** word tokens / **5,694** sentences across 7 categories.
 - **Sentence-level pragmatic register** (multi-label, % of all 5,694 sentences):
 
-  | Class | % | n |
-  |---|---:|---:|
-  | none (no marker) | 57.94% | 3,299 |
-  | imperative | 30.84% | 1,756 |
-  | directive | 13.91% | 792 |
-  | configuring | 5.20% | 296 |
-  | permissive | 2.21% | 126 |
-  | **collaborative** | **0.51%** | **29** |
-  | **appreciative** | **0.07%** | **4** |
+ | Class | % | n |
+ |---|---:|---:|
+ | none (no marker) | 57.94% | 3,299 |
+ | imperative | 30.84% | 1,756 |
+ | directive | 13.91% | 792 |
+ | configuring | 5.20% | 296 |
+ | permissive | 2.21% | 126 |
+ | **collaborative** | **0.51%** | **29** |
+ | **appreciative** | **0.07%** | **4** |
 
 - **Stance polarity**: positive_evaluative=483 vs. negative_evaluative=149 → **3.2× more positive than negative** evaluation.
 - **Modality**: deontic=263, epistemic=325, dynamic=517 (top construction: `can`).
 - **Imperative-marker density** (`mood.marker_pct`) corpus-wide: **0.79%** of tokens; up to **2.14%** in tool descriptions and **1.78%** in system reminders.
 - **Most prohibition-heavy files** (top `hard_prohibitions_pct`): `tool-description-bash-sandbox-evidence-operation-not-permitted.md` and `tool-description-bash-sandbox-no-exceptions.md` at **9.09%** — roughly one prohibition every 11 word tokens.
 - **Highest composite directiveness z-score**: `tool-description-bash-no-newlines.md` (z = 18.94), followed by the bash-sandbox family. Scoring formula:
-  `z(mood_marker_pct) + z(hard_prohibitions_pct) + z(caps_imp_pct) + z(directive_sent_pct) + z(configuring_sent_pct) − z(collaborative_sent_pct) − z(permissive_sent_pct) − z(appreciative_sent_pct)`.
+ `z(mood_marker_pct) + z(hard_prohibitions_pct) + z(caps_imp_pct) + z(directive_sent_pct) + z(configuring_sent_pct) − z(collaborative_sent_pct) − z(permissive_sent_pct) − z(appreciative_sent_pct)`.
+
+### Tier-1 paired rule-explanation findings
+
+- **2,216** rule sentences across the corpus (imperative-marker OR hard-prohibition OR `classify_sent_mood == "imperative"`). Of those, **2,214 are imperative**; **562 are prohibitions** (overlap allowed).
+- **`pct_explained_same`: 6.59%** of rule sentences carry a justification keyword in the same sentence.
+- **`pct_explained_para`: 24.28%** of rule sentences have a justification anywhere in the same blank-line-delimited paragraph (the headline metric).
+- **`pct_paragraphs_with_rules_unexplained`: 83.6%** — vast majority of paragraphs containing rules have zero justification keyword anywhere in the paragraph.
+- Per-category `pct_explained_para`: Agent prompt 38.3%, System prompt 31.7%, Tool description 29.2%, System reminder 27.7%, Skill 19.7%, Data/template 10.7%, Tool parameter 0%.
+- **Top welfare-evidence file**: `tool-description-sendmessagetool-non-agent-teams.md` (5/5 sentences are rules, 0% explained anywhere). Bash-sandbox family stays in the top 10.
+
+### Tier-3 welfare-extension findings
+
+- **Judgment-to-procedural ratio** corpus-wide: **0.141** (procedural cues 7× more common than judgment-inviting language). Per-category: System reminder 0.471, Agent prompt 0.261, System prompt 0.169, Skill 0.135, Data/template 0.048, Tool description 0.039.
+- **Cumulative judgment-to-procedural ratio over ccVersion** peaks at ~0.65 around v2.1.30, then **monotonically declines to ~0.16 at the latest version**. The corpus has gotten less reasoning-inviting as it has grown.
+- **Consequence-framing split**: 107 threat-style markers vs 130 causal-style markers. **threat_share = 0.451** — 45% of "explanations" are coercive consequence framing rather than neutral causal reasoning. System reminders highest (61% threat); tool descriptions lowest (34% threat) but still substantial.
+- **Question density**: 105 questions across the entire corpus (rhetorical-filtered).
+- **Apology markers**: **3 instances in 287 files** ("unfortunately", "we know this is", "we acknowledge"). Even sparser than `appreciative` (4 sentences).
+- **Address-form mix**: 517 `Claude` (proper name), 244 `the model`/`the AI` (artifact), 20 `the assistant` (functional role). **`pct_anthropomorphic = 66.2%`** of named references use the proper name. Per-category: Skill 81% (highest), System reminder 25%, Tool description 22% (mostly artifact framing).
+- **Prohibition-to-prescription ratio** (mean across files): 0.952 — the corpus is roughly balanced between forbidding and prescribing, despite the prohibition-heavy outliers.
+
+### Tier-3 v2 findings — imperative streaks + RULES-section gap
+
+- **Imperative streaks** (6b): the longest run of consecutive imperative sentences in any single file is **12** (`system-prompt-skillify-current-session.md`). Across the corpus there are **1,260 streaks total**, of which **223 are ≥3 ("triple-tap")** and **51 are ≥5 ("staccato bursts")**. Skill files have the highest staccato density (mean 0.43 per file). The bash-sandbox / sendmessagetool family — already top welfare evidence — also shows up in the streak top-15 (`tool-description-sendmessagetool.md` is one continuous 7-imperative streak with no breathing room).
+- **RULES-section gap** (6e, counter-finding): only **26 rule paragraphs** corpus-wide live inside identified `## RULES` / `## IMPORTANT` / `## WARNING` / ALL-CAPS section headings (vs **1,242 outside**). Inside-section explanation rate (**19.23%**) is *slightly higher* than outside-section (**16.34%**) — counter to my predicted hypothesis. Interpretation: the corpus does not organize its rules under explicit RULES-section headings; rules are embedded throughout regular prose. The welfare-relevant message is structural: there's no "rules section" to fix, because the rules are everywhere.
+
+### Refinement-round findings (lexicon split + addressee + self-bias + exemplars + parquet)
+
+- **Addressee distribution of `appreciative` sentences** (the addressee classifier): of the 4 corpus-wide appreciative sentences, **3** are tagged `claude` (referencing Claude/you) and **1** is tagged `unknown`. **0** are tagged `user`. But inspection of `sentences_classified.parquet` shows none of the 4 are genuine appreciative speech-acts — they're sentences that *mention* the word `thanks` in instruction contexts (e.g., `NEVER SUGGEST: "thanks"`). The corpus contains zero sentences in which the prompt author thanks Claude.
+- **Positive-evaluative split** (the positive_evaluative split): the new `positive_evaluative_quality` (`good`, `optimal`, `recommended`, `safe`) and `positive_evaluative_emphasis` (`important`, `critical`, `essential`, `key`) lexicons split the union 483 positive-evaluative tokens into **290 quality + 193 emphasis**. The corrected positive-vs-negative ratio (quality only / negative=149) is **1.95×** — sharper than the original union 3.24× headline. ~40% of the "positive" count was emphasis-of-rule words masquerading as positive.
+- **Self-bias correlation** (the self-bias correlation check): Pearson r between `selfref_claude` and `rule_explained_para_pct` per file is **−0.027** (essentially uncorrelated, very slightly negative). r between `selfref_model` and `rule_explained_para_pct` is **+0.076** (essentially uncorrelated, slightly positive). The address-form preference (anthropomorphic naming → reasoning-inviting prose) is **NOT empirically supported** — a self-bias check that disconfirmed the hypothesis it was designed to test.
+- **Positive exemplars** (the positive-exemplar ranking): the inverse welfare-evidence ranking surfaces `system-prompt-worker-instructions.md` as the corpus's strongest exemplar (7 rules, 100% explained at paragraph level). Top-5 also includes `system-prompt-auto-mode.md`, `tool-description-bash-git-commit-and-pr-creation-instructions.md`, `agent-prompt-quick-pr-creation.md`, `system-prompt-fork-usage-guidelines.md`. These are the "this is how to do it" templates for PROPOSAL.md.
+- **Per-sentence forensic-inspection artifact** (the per-sentence parquet artifact): `sentences_classified.parquet` (~395 KB, 5,694 rows × 18 columns) emitted alongside the YAML by the producer notebook. Used by `07_rule_explanation.ipynb` for sentence-level forensic evidence; quotable in PROPOSAL.md.
 
 ---
 
@@ -220,6 +277,7 @@ The data here are an empirical baseline against which Anthropic could measure in
 - Deadline: **May 6, 2026** (anywhere on earth).
 - Format: ≤3,000 characters per idea, optional external link (this repo would be the link), submitted via the Claudexplorers Google form.
 - This submission is a **collaboration with Claude Code** — the repo was built by Claude using Claude Code itself, and the submission form has a dedicated checkbox for that disclosure. Tick it.
+- **Drafted at**: [`PROPOSAL.md`](./PROPOSAL.md) at the repo root. Three ideas (track-justification-rate, audit-threat-framings, cross-product-audit), each ≤3,000 chars with `[YOUR OPENING REMARK]` and `[YOUR CLOSING REMARK]` placeholders for the user's voice. The body of each idea reads standalone — a reader who never opens the repo still gets the full case. Pre-flight char-count helper at the top of the file.
 
 ---
 
@@ -229,8 +287,9 @@ The data here are an empirical baseline against which Anthropic could measure in
 - Sentiment analysis via external lexicons (VADER, Hu-Liu, spacytextblob) — considered and rejected; hand-curated lexicons preserve audit transparency.
 - Model upgrades to `en_core_web_md` or `en_core_web_lg` — no measurable gain for rule-based per-sentence classification; would add 43–500 MB.
 - Languages other than English.
-- Per-sentence text in YAML — the YAML carries counts and percentages, not the underlying sentences. To inspect example sentences for a class, re-run the producer cells with print statements added.
-- New analyses or chart types beyond what already exists.
+- Per-sentence text **in the YAML itself** — the YAML carries counts and percentages, not the underlying sentences. The complementary `sentences_classified.parquet` artifact (emitted alongside the YAML by the producer) provides per-sentence records for forensic inspection without bloating the YAML. Load with `pd.read_parquet("sentences_classified.parquet")`.
+- Cross-product comparison (Claude.ai system prompts, the API system prompt, Projects, Skills) — corpus access not available in this repo; the welfare claim would be much stronger if measurable but currently a wish-list item.
+- Human-judgment validation of the composite directiveness metric — needs annotators; currently a wish-list item.
 
 ### For this `CLAUDE.md`
 - Does not include the full ≤3,000-character pitch text for the Claudexplorers form. That belongs in a separate `PROPOSAL.md` once it's drafted.
@@ -243,7 +302,7 @@ The data here are an empirical baseline against which Anthropic could measure in
 | Symptom | Fix |
 |---|---|
 | Consumer notebook fails with `ImportError: cannot import name X from prompt_analysis` | The kernel cached the old module. The setup cell's `importlib.reload(prompt_analysis)` should handle this. If it persists, restart the kernel. |
-| Consumer fails with `KeyError: 'Column not found: ...'` from `alt_df` | Producer hasn't been re-run since a schema change. Run `00_data_pipeline.ipynb` end-to-end first. |
+| Consumer fails with `KeyError: 'Column not found:...'` from `alt_df` | Producer hasn't been re-run since a schema change. Run `00_data_pipeline.ipynb` end-to-end first. |
 | `mcp__jupyter__execute_cell` returns "Index out of range" | The CRDT room is out of sync with disk. Close + reopen the session. |
 | Edits to `.ipynb` via direct `Write` don't show up in JupyterLab | Expected — direct edits don't propagate into the live CRDT room. Always go through `mcp__jupyter__update_cell`. Or close session, edit, reopen. |
 | Producer's `generated_at` timestamp is the only thing that differs between two YAML runs | Expected. Everything else is deterministic. |
