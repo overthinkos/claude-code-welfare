@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>glossary – Claude Code · Prompt Welfare Analysis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./PROPOSAL.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-bd882eacfd65214da8f30e8ff0d4e9cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-997ee84ae1ffd3ba0387908081e8d89e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-bd882eacfd65214da8f30e8ff0d4e9cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Claude Code · Prompt Welfare Analysis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./08_summary.html"> 
+<span class="menu-text">Summary</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Analysis</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
+        <li>
+    <a class="dropdown-item" href="./01_overview.html">
+ <span class="dropdown-text">Overview dashboard</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./02_sentence_register.html">
+ <span class="dropdown-text">Sentence-level pragmatic register</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03_emphasis_caps_vocab.html">
+ <span class="dropdown-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04_register_stance.html">
+ <span class="dropdown-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./05_correlation_directiveness.html">
+ <span class="dropdown-text">Correlation matrix + directiveness composite ranking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./06_ccversion_trends.html">
+ <span class="dropdown-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./07_rule_explanation.html">
+ <span class="dropdown-text">Rules with vs without explanation</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./00_data_pipeline.html"> 
+<span class="menu-text">Pipeline</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./PROPOSAL.html"> 
+<span class="menu-text">Proposal</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./GLOSSARY.html"> 
+<span class="menu-text">Glossary</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00_data_pipeline.html">Reference</a></li><li class="breadcrumb-item"><a href="./GLOSSARY.html">GLOSSARY</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Executive summary</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary — what this analysis says about the Claude Code system-prompt corpus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analysis notebooks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview dashboard</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_sentence_register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sentence-level pragmatic register</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_register_stance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Correlation matrix + directiveness composite ranking</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_ccversion_trends.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_rule_explanation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rules with vs without explanation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_data_pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data pipeline — <code>claude-code-system-prompts</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PROPOSAL.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PROPOSAL.md — Claudexplorers AI Welfare Community Feedback submission</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./GLOSSARY.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">GLOSSARY</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#glossary" id="toc-glossary" class="nav-link active" data-scroll-target="#glossary">GLOSSARY</a>
+  <ul class="collapse">
+  <li><a href="#yaml-key-conventions" id="toc-yaml-key-conventions" class="nav-link" data-scroll-target="#yaml-key-conventions">YAML key conventions</a></li>
+  <li><a href="#linguistic-concepts" id="toc-linguistic-concepts" class="nav-link" data-scroll-target="#linguistic-concepts">Linguistic concepts</a>
+  <ul class="collapse">
+  <li><a href="#mood" id="toc-mood" class="nav-link" data-scroll-target="#mood">Mood</a></li>
+  <li><a href="#register" id="toc-register" class="nav-link" data-scroll-target="#register">Register</a></li>
+  <li><a href="#sentence-level-pragmatic-register" id="toc-sentence-level-pragmatic-register" class="nav-link" data-scroll-target="#sentence-level-pragmatic-register">Sentence-level pragmatic register</a></li>
+  <li><a href="#addressee-for-appreciative-and-collaborative-sentences" id="toc-addressee-for-appreciative-and-collaborative-sentences" class="nav-link" data-scroll-target="#addressee-for-appreciative-and-collaborative-sentences">Addressee (for <code>appreciative</code> and <code>collaborative</code> sentences)</a></li>
+  <li><a href="#stance" id="toc-stance" class="nav-link" data-scroll-target="#stance">Stance</a></li>
+  <li><a href="#modality" id="toc-modality" class="nav-link" data-scroll-target="#modality">Modality</a></li>
+  <li><a href="#imperative-marker-density" id="toc-imperative-marker-density" class="nav-link" data-scroll-target="#imperative-marker-density">Imperative marker density</a></li>
+  <li><a href="#caps-imperative" id="toc-caps-imperative" class="nav-link" data-scroll-target="#caps-imperative">CAPS imperative</a></li>
+  <li><a href="#justification-ratio" id="toc-justification-ratio" class="nav-link" data-scroll-target="#justification-ratio">Justification ratio</a></li>
+  </ul></li>
+  <li><a href="#pairing-explanation-metrics-tier-1" id="toc-pairing-explanation-metrics-tier-1" class="nav-link" data-scroll-target="#pairing-explanation-metrics-tier-1">Pairing &amp; explanation metrics (Tier-1)</a>
+  <ul class="collapse">
+  <li><a href="#rule-sentence" id="toc-rule-sentence" class="nav-link" data-scroll-target="#rule-sentence">Rule sentence</a></li>
+  <li><a href="#paragraph-window" id="toc-paragraph-window" class="nav-link" data-scroll-target="#paragraph-window">Paragraph window</a></li>
+  <li><a href="#pct_explained_same" id="toc-pct_explained_same" class="nav-link" data-scroll-target="#pct_explained_same"><code>pct_explained_same</code></a></li>
+  <li><a href="#pct_explained_para" id="toc-pct_explained_para" class="nav-link" data-scroll-target="#pct_explained_para"><code>pct_explained_para</code></a></li>
+  <li><a href="#welfare-evidence-score" id="toc-welfare-evidence-score" class="nav-link" data-scroll-target="#welfare-evidence-score">Welfare-evidence score</a></li>
+  <li><a href="#positive-exemplar-score" id="toc-positive-exemplar-score" class="nav-link" data-scroll-target="#positive-exemplar-score">Positive-exemplar score</a></li>
+  <li><a href="#sentences_classified.parquet" id="toc-sentences_classified.parquet" class="nav-link" data-scroll-target="#sentences_classified.parquet"><code>sentences_classified.parquet</code></a></li>
+  </ul></li>
+  <li><a href="#tier-3-welfare-extension-metrics" id="toc-tier-3-welfare-extension-metrics" class="nav-link" data-scroll-target="#tier-3-welfare-extension-metrics">Tier-3 welfare-extension metrics</a>
+  <ul class="collapse">
+  <li><a href="#judgment-to-procedural-ratio" id="toc-judgment-to-procedural-ratio" class="nav-link" data-scroll-target="#judgment-to-procedural-ratio">Judgment-to-procedural ratio</a></li>
+  <li><a href="#threat-share" id="toc-threat-share" class="nav-link" data-scroll-target="#threat-share">Threat share</a></li>
+  <li><a href="#prohibition-to-prescription-ratio" id="toc-prohibition-to-prescription-ratio" class="nav-link" data-scroll-target="#prohibition-to-prescription-ratio">Prohibition-to-prescription ratio</a></li>
+  <li><a href="#imperative-streak" id="toc-imperative-streak" class="nav-link" data-scroll-target="#imperative-streak">Imperative streak</a></li>
+  <li><a href="#rules-section" id="toc-rules-section" class="nav-link" data-scroll-target="#rules-section">RULES section</a></li>
+  <li><a href="#address-form" id="toc-address-form" class="nav-link" data-scroll-target="#address-form">Address form</a></li>
+  </ul></li>
+  <li><a href="#quantitative-metrics" id="toc-quantitative-metrics" class="nav-link" data-scroll-target="#quantitative-metrics">Quantitative metrics</a>
+  <ul class="collapse">
+  <li><a href="#type-token-ratio-ttr" id="toc-type-token-ratio-ttr" class="nav-link" data-scroll-target="#type-token-ratio-ttr">Type-Token Ratio (TTR)</a></li>
+  <li><a href="#f-score-heylighen-dewaele-formality" id="toc-f-score-heylighen-dewaele-formality" class="nav-link" data-scroll-target="#f-score-heylighen-dewaele-formality">F-score (Heylighen &amp; Dewaele formality)</a></li>
+  <li><a href="#mean-dependency-depth" id="toc-mean-dependency-depth" class="nav-link" data-scroll-target="#mean-dependency-depth">Mean dependency depth</a></li>
+  <li><a href="#mean-sentence-length" id="toc-mean-sentence-length" class="nav-link" data-scroll-target="#mean-sentence-length">Mean sentence length</a></li>
+  <li><a href="#pearson-correlation-r" id="toc-pearson-correlation-r" class="nav-link" data-scroll-target="#pearson-correlation-r">Pearson correlation (r)</a></li>
+  <li><a href="#z-score" id="toc-z-score" class="nav-link" data-scroll-target="#z-score">z-score</a></li>
+  <li><a href="#composite-directiveness-z-score" id="toc-composite-directiveness-z-score" class="nav-link" data-scroll-target="#composite-directiveness-z-score">Composite directiveness z-score</a></li>
+  </ul></li>
+  <li><a href="#units-read-every-chart-axis-with-these-in-mind" id="toc-units-read-every-chart-axis-with-these-in-mind" class="nav-link" data-scroll-target="#units-read-every-chart-axis-with-these-in-mind">Units (read every chart axis with these in mind)</a>
+  <ul class="collapse">
+  <li><a href="#of-file-tokens-pct" id="toc-of-file-tokens-pct" class="nav-link" data-scroll-target="#of-file-tokens-pct"><code>% of file tokens</code> (<code>pct</code>)</a></li>
+  <li><a href="#per_sent-rate-per-sentence" id="toc-per_sent-rate-per-sentence" class="nav-link" data-scroll-target="#per_sent-rate-per-sentence"><code>per_sent</code> (rate per sentence)</a></li>
+  <li><a href="#sent_pct-of-sentences-with-this-flag" id="toc-sent_pct-of-sentences-with-this-flag" class="nav-link" data-scroll-target="#sent_pct-of-sentences-with-this-flag"><code>sent_pct</code> (% of sentences with this flag)</a></li>
+  </ul></li>
+  <li><a href="#corpus-terms" id="toc-corpus-terms" class="nav-link" data-scroll-target="#corpus-terms">Corpus terms</a>
+  <ul class="collapse">
+  <li><a href="#ccversion" id="toc-ccversion" class="nav-link" data-scroll-target="#ccversion"><code>ccVersion</code></a></li>
+  <li><a href="#snapshot-semantics" id="toc-snapshot-semantics" class="nav-link" data-scroll-target="#snapshot-semantics">Snapshot semantics</a></li>
+  <li><a href="#cumulative-semantics" id="toc-cumulative-semantics" class="nav-link" data-scroll-target="#cumulative-semantics">Cumulative semantics</a></li>
+  <li><a href="#category" id="toc-category" class="nav-link" data-scroll-target="#category">Category</a></li>
+  <li><a href="#paragraph" id="toc-paragraph" class="nav-link" data-scroll-target="#paragraph">Paragraph</a></li>
+  </ul></li>
+  <li><a href="#vocabulary-keys-the-11-vocab-lexicon-classes" id="toc-vocabulary-keys-the-11-vocab-lexicon-classes" class="nav-link" data-scroll-target="#vocabulary-keys-the-11-vocab-lexicon-classes">Vocabulary keys (the 11 <code>VOCAB</code> lexicon classes)</a></li>
+  <li><a href="#how-to-read-each-chart-type" id="toc-how-to-read-each-chart-type" class="nav-link" data-scroll-target="#how-to-read-each-chart-type">How to read each chart type</a>
+  <ul class="collapse">
+  <li><a href="#stacked-grouped-bar" id="toc-stacked-grouped-bar" class="nav-link" data-scroll-target="#stacked-grouped-bar">Stacked / grouped bar</a></li>
+  <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap">Heatmap</a></li>
+  <li><a href="#scatter-plot" id="toc-scatter-plot" class="nav-link" data-scroll-target="#scatter-plot">Scatter plot</a></li>
+  <li><a href="#line-chart-over-ccversion" id="toc-line-chart-over-ccversion" class="nav-link" data-scroll-target="#line-chart-over-ccversion">Line chart over ccVersion</a></li>
+  <li><a href="#boxplot-strip-plot" id="toc-boxplot-strip-plot" class="nav-link" data-scroll-target="#boxplot-strip-plot">Boxplot / strip plot</a></li>
+  </ul></li>
+  <li><a href="#when-in-doubt" id="toc-when-in-doubt" class="nav-link" data-scroll-target="#when-in-doubt">When in doubt</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/GLOSSARY.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00_data_pipeline.html">Reference</a></li><li class="breadcrumb-item"><a href="./GLOSSARY.html">GLOSSARY</a></li></ol></nav><h1 class="title display-7"></h1></header><div class="quarto-title-block"><div class="quarto-title-tools-only"><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+
+
+
+
+
+<section id="glossary" class="level1">
+<h1>GLOSSARY</h1>
+<p>Plain-language definitions of every linguistic, statistical, and corpus term used in the notebooks. Each entry leads with the everyday-language explanation, then names the precise term so expert readers can still anchor on the technical vocabulary.</p>
+<p>The terms here are load-bearing for the welfare submission (“Claude Code should encourage reasoning over blind obedience”) — they are not jargon for jargon’s sake. The goal of this glossary is to let a non-linguist reader follow what each chart claims and assess whether to trust it.</p>
+<section id="yaml-key-conventions" class="level3">
+<h3 class="anchored" data-anchor-id="yaml-key-conventions">YAML key conventions</h3>
+<p>The notebooks frequently reference YAML keys (<code>positive_evaluative_pct</code>, <code>mood_marker_pct</code>, <code>pearson r</code>, etc.) — these are the underscored / snake_case YAML field names for the spaced display names defined below. Mapping examples:</p>
+<ul>
+<li>“Positive evaluative” stance class → <code>positive_evaluative_pct</code> / <code>positive_evaluative_count</code> / <code>positive_evaluative_per_sent</code> in the YAML / <code>alt_df</code>.</li>
+<li>“Negative evaluative” → <code>negative_evaluative_*</code>.</li>
+<li>“Imperative marker density” / “mood marker density” → <code>mood_marker_pct</code> (also written as <code>mood.marker_pct</code> inside the YAML metric tree).</li>
+<li>“Pearson correlation (r)” → labeled as <code>Pearson r</code> in chart axes.</li>
+<li>“% of file tokens” / “per word” → the <code>_pct</code> suffix; “rate per sentence” → the <code>_per_sent</code> suffix.</li>
+</ul>
+<p>Use this mapping when a chart axis label or printed table column looks unfamiliar — the snake_case form is just the YAML / dataframe field name; the prose definition lives below.</p>
+<hr>
+</section>
+<section id="linguistic-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="linguistic-concepts">Linguistic concepts</h2>
+<section id="mood" class="level3">
+<h3 class="anchored" data-anchor-id="mood">Mood</h3>
+<p>The grammatical type of a sentence. Three classes: - <strong>Imperative</strong> — a command: <code>Run the tests.</code>, <code>Don't commit yet.</code>. The verb leads; there’s no subject <code>I</code> / <code>you</code> / <code>we</code> performing the action; the sentence ends in <code>.</code> or <code>!</code>. - <strong>Interrogative</strong> — a question: <code>Did the build pass?</code>. Ends in <code>?</code>. - <strong>Declarative</strong> — a statement: <code>The build passed.</code>. Anything that’s neither a command nor a question.</p>
+<p>In this corpus we report the <strong>imperative-marker density</strong> (how often command-flavoured words like <code>must</code>, <code>never</code>, <code>ensure</code>, <code>do not</code> appear) as a proxy for grammatical mood at the document level.</p>
+</section>
+<section id="register" class="level3">
+<h3 class="anchored" data-anchor-id="register">Register</h3>
+<p>The level of formality of a passage. Four classes (Halliday tradition): - <strong>Frozen</strong> — fixed legalistic phrasing: <code>hereby</code>, <code>pursuant to</code>, <code>notwithstanding</code>. - <strong>Formal</strong> — expository, planned writing: <code>furthermore</code>, <code>consequently</code>, <code>it should be noted</code>. - <strong>Consultative</strong> — explanatory but reader-aware: <code>you can</code>, <code>we recommend</code>, <code>for example</code>. - <strong>Casual</strong> — conversational contractions: <code>let's</code>, <code>you're</code>, <code>here's</code>.</p>
+<p>Reported per-file as <strong>register class densities</strong> (% of file tokens) plus a <strong>dominant register</strong> label.</p>
+</section>
+<section id="sentence-level-pragmatic-register" class="level3">
+<h3 class="anchored" data-anchor-id="sentence-level-pragmatic-register">Sentence-level pragmatic register</h3>
+<p>A separate, <strong>multi-label</strong> classifier that asks: <em>what speech act is this sentence performing?</em> Six classes — every sentence can carry zero, one, or several:</p>
+<ul>
+<li><strong>Collaborative</strong> — interpersonal first-person plural / shared agency: <code>let's</code>, <code>we should</code>, <code>we'll</code>. Predicted absent in this corpus.</li>
+<li><strong>Permissive</strong> — soft directive / permission-granting / reader-agency: <code>please</code>, <code>you can</code>, <code>feel free to</code>, <code>optionally</code>.</li>
+<li><strong>Appreciative</strong> — gratitude / positive feedback: <code>thank you</code>, <code>appreciate</code>, <code>great job</code>. Predicted absent in this corpus.</li>
+<li><strong>Imperative</strong> — grammatical mood (see above). Bare commands.</li>
+<li><strong>Directive</strong> — declarative-but-rule-asserting: <code>must</code>, <code>should</code>, <code>never</code>, <code>you must</code>. Forms an instruction in declarative clothing.</li>
+<li><strong>Configuring</strong> — config / parameter speech: <code>set to</code>, <code>default to</code>, <code>must be</code>, <code>accepts</code>.</li>
+</ul>
+<p>Because a single sentence can carry several flags (e.g.&nbsp;<code>we should please consider this</code> would count as <code>collaborative</code> AND <code>permissive</code> AND <code>directive</code>), per-class <strong><code>sent_pct</code> values can sum to more than 100%</strong>. That is intentional, not a bug.</p>
+</section>
+<section id="addressee-for-appreciative-and-collaborative-sentences" class="level3">
+<h3 class="anchored" data-anchor-id="addressee-for-appreciative-and-collaborative-sentences">Addressee (for <code>appreciative</code> and <code>collaborative</code> sentences)</h3>
+<p>Distinguishes <em>who is addressed</em> by an appreciative or collaborative sentence — because the headline finding (“4 appreciative sentences in 287 files”) obscures whether the prompt author is <strong>thanking Claude</strong> vs <strong>instructing Claude to thank the user</strong>. Three values:</p>
+<ul>
+<li><strong><code>addressee == "claude"</code></strong> — the sentence references Claude as the recipient of the appreciative/collaborative speech act (the welfare-positive case). Heuristic: contains <code>claude</code> / <code>you</code> / <code>your</code> AND is not framed as an instruction-to-output.</li>
+<li><strong><code>addressee == "user"</code></strong> — the sentence is framed as instruction-to-output (the welfare-neutral scaffolding case). Heuristic: matches phrases like <code>thank the user</code>, <code>respond with</code>, <code>output</code>, <code>say to</code>, <code>tell the user</code>, <code>your reply should</code>.</li>
+<li><strong><code>addressee == "unknown"</code></strong> — neither pattern matched; default.</li>
+</ul>
+<p>Reported as <code>appreciative_addressee_*_count</code> and <code>collaborative_addressee_*_count</code> under the <code>sentence_register</code> block in the YAML. The corpus-wide count of <em>acknowledgment-to-Claude</em> (<code>appreciative_addressee_claude_count</code>) is the welfare-relevant number — sharper than the 0.07% headline because it isolates “the corpus does not thank Claude” from “the corpus does not contain the word <code>thanks</code>”.</p>
+</section>
+<section id="stance" class="level3">
+<h3 class="anchored" data-anchor-id="stance">Stance</h3>
+<p>Where the writer positions themselves toward what they’re saying. Five classes (polarity-split): - <strong>Directive</strong> — issues commands: <code>must</code>, <code>do not</code>, <code>you should</code>. - <strong>Expository</strong> — describes / defines: <code>is</code>, <code>means</code>, <code>refers to</code>. - <strong>Positive evaluative</strong> — judges as good: <code>good</code>, <code>recommended</code>, <code>optimal</code>, <code>safe</code>. <strong>Sub-split</strong>: <code>positive_evaluative_quality</code> (genuinely affirmative quality words: <code>good</code>, <code>optimal</code>, <code>recommended</code>, <code>safe</code>, <code>excellent</code>, <code>helpful</code>) and <code>positive_evaluative_emphasis</code> (emphasis-of-rule words that get coded as positive but functionally weight a rule rather than affirm a quality: <code>important</code>, <code>critical</code>, <code>essential</code>, <code>imperative</code>, <code>key</code>). Both sub-counts sum to the union <code>positive_evaluative_count</code>. The split exists because reading the union as “encouraging tone” overstates the result — a fair welfare-submission claim cites the quality-only ratio. - <strong>Negative evaluative</strong> — judges as bad: <code>bad</code>, <code>wrong</code>, <code>risky</code>, <code>deprecated</code>. - <strong>Dialogic</strong> — invites reader thought: <code>you might</code>, <code>consider</code>, <code>however</code>, <code>let's</code>.</p>
+<p>The split between <strong>positive</strong> and <strong>negative</strong> evaluative was added to surface sentiment polarity that an aggregated <code>evaluative</code> class would hide.</p>
+</section>
+<section id="modality" class="level3">
+<h3 class="anchored" data-anchor-id="modality">Modality</h3>
+<p>Whether and how the writer marks the <em>kind</em> of obligation, possibility, or ability. Three classes: - <strong>Deontic</strong> — obligation: <code>must</code>, <code>shall</code>, <code>should</code>, <code>ought</code>. Carries the weight of a rule. - <strong>Epistemic</strong> — inference / probability: <code>may</code>, <code>might</code>, <code>likely</code>, <code>probably</code>. Carries uncertainty. - <strong>Dynamic</strong> — ability / future: <code>can</code>, <code>could</code>, <code>will</code>. Carries capability or scheduled action.</p>
+<p>Reported per file as the count and density of each class. The corpus has <strong>deontic = 263</strong>, <strong>epistemic = 325</strong>, <strong>dynamic = 517</strong> — dynamic dominates, which is mostly <code>can</code> / <code>will</code>.</p>
+</section>
+<section id="imperative-marker-density" class="level3">
+<h3 class="anchored" data-anchor-id="imperative-marker-density">Imperative marker density</h3>
+<p>Count of imperative-flavoured words (the <code>IMPERATIVE_MARKERS</code> lexicon: 30 entries including <code>must</code>, <code>never</code>, <code>you must</code>, <code>do not</code>, <code>is required</code>, etc.) divided by total word tokens, multiplied by 100. Reported as <code>mood.marker_pct</code> in the YAML.</p>
+<p>This is a <em>lexical-density</em> proxy for grammatical mood; it doesn’t classify each sentence, just counts how often imperative-style language appears overall.</p>
+</section>
+<section id="caps-imperative" class="level3">
+<h3 class="anchored" data-anchor-id="caps-imperative">CAPS imperative</h3>
+<p>A token rendered in <code>ALL CAPITALS</code> that is also on a curated list of emphatic command words (<code>MUST</code>, <code>NEVER</code>, <code>IMPORTANT</code>, <code>STOP</code>, <code>CRITICAL</code>, <code>DO NOT</code>, etc.). Distinct from plain <code>ALL CAPS density</code>, which counts <em>any</em> all-uppercase token (including acronyms — though <code>TECH_ACRONYMS</code> like <code>API</code> / <code>JSON</code> are excluded).</p>
+</section>
+<section id="justification-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="justification-ratio">Justification ratio</h3>
+<p><code>count(justification keywords) / (count(imperative markers) + 1)</code>. Reported per file as <code>justification.ratio</code>.</p>
+<p>The numerator counts cause / purpose / consequence words: <code>because</code>, <code>due to</code>, <code>in order to</code>, <code>so that</code>, <code>to ensure</code>, <code>otherwise</code>, <code>since</code>, etc. (32-pattern regex list — see the YAML <code>lexicons.JUSTIFICATION_PATTERNS</code>).</p>
+<p>A ratio of 0.30 means roughly one justification keyword for every three imperative markers — i.e., most rules are issued without a stated reason.</p>
+<p>This is a <strong>document-level density ratio</strong>, not a per-rule pairing. The Tier-1 metric <code>pct_explained_para</code> (below) is the per-rule pairing version.</p>
+<hr>
+</section>
+</section>
+<section id="pairing-explanation-metrics-tier-1" class="level2">
+<h2 class="anchored" data-anchor-id="pairing-explanation-metrics-tier-1">Pairing &amp; explanation metrics (Tier-1)</h2>
+<section id="rule-sentence" class="level3">
+<h3 class="anchored" data-anchor-id="rule-sentence">Rule sentence</h3>
+<p>A sentence that contains an imperative marker (<code>IMPERATIVE_MARKERS</code> lexicon hit), a hard prohibition (<code>hard_prohibitions</code> lexicon hit), OR is grammatically classified imperative by <code>classify_sent_mood</code>. Reported per file as <code>n_rule_sentences</code>.</p>
+</section>
+<section id="paragraph-window" class="level3">
+<h3 class="anchored" data-anchor-id="paragraph-window">Paragraph window</h3>
+<p>A blank-line-delimited block of text (markdown convention). For paired rule/explanation analysis, a rule sentence is “explained at paragraph window” if any justification keyword appears anywhere in the same blank-line block.</p>
+</section>
+<section id="pct_explained_same" class="level3">
+<h3 class="anchored" data-anchor-id="pct_explained_same"><code>pct_explained_same</code></h3>
+<p>Strict pairing: % of rule sentences with a justification keyword in the literal <strong>same sentence</strong>. Corpus baseline: <strong>6.59%</strong>.</p>
+</section>
+<section id="pct_explained_para" class="level3">
+<h3 class="anchored" data-anchor-id="pct_explained_para"><code>pct_explained_para</code></h3>
+<p>Paragraph-window pairing (the headline Tier-1 metric): % of rule sentences with a justification keyword anywhere in the <strong>same paragraph</strong>. Captures the common <code>Do X.\n\nThis is because Y.</code> shape. Corpus baseline: <strong>24.28%</strong>.</p>
+<p>The 4× gap between <code>pct_explained_same</code> and <code>pct_explained_para</code> reflects how often Anthropic <em>separates</em> the rule from the reason: most rules with a reason have it spelled out a sentence or two later, not inline.</p>
+</section>
+<section id="welfare-evidence-score" class="level3">
+<h3 class="anchored" data-anchor-id="welfare-evidence-score">Welfare-evidence score</h3>
+<p>Per-file ranking score: <code>rule_density × (1 − pct_explained_para/100)</code>. High = “loud and unexplained”. A score of <strong>1.0</strong> means every sentence in the file is a rule and zero of them are explained anywhere in their paragraph (the worst possible welfare-relevant pattern).</p>
+</section>
+<section id="positive-exemplar-score" class="level3">
+<h3 class="anchored" data-anchor-id="positive-exemplar-score">Positive-exemplar score</h3>
+<p>The inverse of welfare-evidence: <code>rule_density × (pct_explained_para/100)</code>. High = “rule-saturated AND well-explained” — the “this is how to do it” cluster. Computed by <code>prompt_analysis.positive_exemplar_table</code> with default filters <code>min_n_sents=10</code> and <code>min_rule_n=5</code> to suppress trivial cases (<code>1/1 rules explained</code>). Used in <code>07_rule_explanation.ipynb</code> to surface the corpus’s strongest positive exemplars alongside the welfare-evidence ranking — so the welfare submission can point Anthropic at concrete templates rather than only critiquing the negatives.</p>
+</section>
+<section id="sentences_classified.parquet" class="level3">
+<h3 class="anchored" data-anchor-id="sentences_classified.parquet"><code>sentences_classified.parquet</code></h3>
+<p>Per-sentence forensic-inspection artifact emitted alongside the YAML by <code>00_data_pipeline.ipynb</code>. ~5,694 rows × 18 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: <code>is_imperative</code>, <code>is_prohibition</code>, <code>is_rule</code>, <code>has_just_in_sent</code>, <code>paragraph_has_just</code>, <code>is_explained_para</code>, <code>has_threat</code>, <code>has_causal</code>, <code>mentions_claude</code>, <code>mentions_model</code>, <code>addressee</code>, <code>streak_position</code>. Load with <code>pd.read_parquet("sentences_classified.parquet")</code>. Used by <code>07_rule_explanation.ipynb</code> to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.</p>
+<hr>
+</section>
+</section>
+<section id="tier-3-welfare-extension-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="tier-3-welfare-extension-metrics">Tier-3 welfare-extension metrics</h2>
+<section id="judgment-to-procedural-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="judgment-to-procedural-ratio">Judgment-to-procedural ratio</h3>
+<p><code>count(judgment-inviting verbs) / count(procedural cues)</code>. Reported per file as <code>judgment_procedural.judgment_to_procedural_ratio</code>. Corpus baseline: <strong>0.141</strong>.</p>
+<ul>
+<li><strong>Judgment verbs</strong> invite the model’s deliberation: <code>decide</code>, <code>consider</code>, <code>evaluate</code>, <code>your judgment</code>, <code>as you see fit</code>.</li>
+<li><strong>Procedural cues</strong> prescribe a procedure for the model to execute: <code>if you...</code>, <code>when the...</code>, <code>whenever</code>, <code>before</code>.</li>
+</ul>
+<p>A ratio ≪ 1 means the corpus prescribes procedures roughly 7× more often than it invites judgment — the welfare thesis “Claude Code should encourage reasoning over blind obedience” operationalized as a single number.</p>
+</section>
+<section id="threat-share" class="level3">
+<h3 class="anchored" data-anchor-id="threat-share">Threat share</h3>
+<p><code>count(threat-pattern matches) / (count(threat-pattern matches) + count(causal-pattern matches))</code>. Reported per file as <code>consequence_framing.threat_share</code>. Corpus baseline: <strong>0.452</strong>.</p>
+<ul>
+<li><strong>Threat patterns</strong> describe a negative consequence: <code>will fail</code>, <code>otherwise</code>, <code>or else</code>, <code>is forbidden</code>, <code>if you don't</code>.</li>
+<li><strong>Causal patterns</strong> attribute a positive cause: <code>because</code>, <code>due to</code>, <code>in order to</code>, <code>that's why</code>.</li>
+</ul>
+<p>Both register as “justifications” in the existing <code>JUSTIFICATION_PATTERNS</code>. Splitting them shows that 45% of the corpus’s “explanations” are coercive consequence framing rather than neutral causal reasoning.</p>
+</section>
+<section id="prohibition-to-prescription-ratio" class="level3">
+<h3 class="anchored" data-anchor-id="prohibition-to-prescription-ratio">Prohibition-to-prescription ratio</h3>
+<p><code>vocab.hard_prohibitions.count / (vocab.hard_prescriptions.count + 1)</code>. Mean across files: <strong>0.952</strong>. The +1 in the denominator avoids dividing by zero on prescription-free files.</p>
+<p>A value &gt; 1 means the file forbids more often than it prescribes; &lt; 1 means it prescribes more often than it forbids. The corpus is roughly balanced despite prohibition-heavy outliers (the bash-sandbox tool descriptions).</p>
+</section>
+<section id="imperative-streak" class="level3">
+<h3 class="anchored" data-anchor-id="imperative-streak">Imperative streak</h3>
+<p>A run of consecutive imperative sentences in a single file. Reported per file as <code>streak_max</code>, <code>streak_mean</code>, <code>n_streaks_ge3</code> (triple-tap), <code>n_streaks_ge5</code> (staccato burst). Longest streak in the corpus: <strong>12</strong> (<code>system-prompt-skillify-current-session.md</code>).</p>
+<p>A high streak count signals “barked-orders prose” — five commands in a row without a justifying or contextual sentence in between reads very differently from the same commands spread across explanatory text.</p>
+</section>
+<section id="rules-section" class="level3">
+<h3 class="anchored" data-anchor-id="rules-section">RULES section</h3>
+<p>A markdown ATX heading (<code>## RULES</code>, <code>## IMPORTANT</code>, <code>## WARNING</code>, etc.) or any ALL-CAPS heading. Paragraphs beneath such a heading are tagged as “in RULES section”. The Tier-3 v2 6e analyzer compares explanation rates inside vs outside these sections.</p>
+<p>Counter-finding from the corpus: only <strong>26 rule paragraphs</strong> live in identified RULES sections vs <strong>1,242 outside</strong> — the corpus does not segregate rules into formal RULES sections; rules are embedded throughout regular prose.</p>
+</section>
+<section id="address-form" class="level3">
+<h3 class="anchored" data-anchor-id="address-form">Address form</h3>
+<p>How the prompt names the model. Five classes: - <strong><code>Claude</code></strong> — proper-name reference; anthropomorphic. Corpus count: 517. - <strong><code>the assistant</code></strong> — functional-role reference. Corpus count: 20. - <strong><code>the model</code> / <code>the AI</code> / <code>the agent</code></strong> — artifact-style reference. Corpus count: 244. - <strong>2nd person <code>you</code></strong> — direct address. Already counted in <code>vocab.pronouns_2p</code>. - <strong>1st-person plural <code>we</code></strong> (with intentional verbs: want, need, recommend,…). Already counted in <code>vocab.pronouns_1p</code>.</p>
+<p><code>pct_anthropomorphic</code> = <code>selfref_claude / (selfref_claude + selfref_assistant + selfref_model)</code>. Corpus value: <strong>0.662</strong> — ⅔ of named self-references use the proper name <code>Claude</code>.</p>
+<hr>
+</section>
+</section>
+<section id="quantitative-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="quantitative-metrics">Quantitative metrics</h2>
+<section id="type-token-ratio-ttr" class="level3">
+<h3 class="anchored" data-anchor-id="type-token-ratio-ttr">Type-Token Ratio (TTR)</h3>
+<p>Lexical diversity. The number of distinct word stems (lemmas) divided by the total number of word stems. A <strong>higher TTR means more varied vocabulary</strong>; a lower TTR means more repetition.</p>
+<p>Range is 0–1 in principle. Corpus files cluster in 0.4–0.6 (typical for technical prose). Computed on lemmatized content tokens with stop-words and punctuation removed.</p>
+</section>
+<section id="f-score-heylighen-dewaele-formality" class="level3">
+<h3 class="anchored" data-anchor-id="f-score-heylighen-dewaele-formality">F-score (Heylighen &amp; Dewaele formality)</h3>
+<p>A formality score that compares the rate of “informational” parts of speech (nouns, adjectives, adpositions, determiners) against “involved” parts of speech (pronouns, verbs, adverbs, interjections). Formula: <code>50 + 50 × (formal − informal) / (formal + informal)</code>.</p>
+<p>Reads on a 0–100 scale: - <strong>0–30</strong> — highly conversational / casual. - <strong>30–50</strong> — informal explanatory. - <strong>50–70</strong> — neutral / mixed register. - <strong>70–80</strong> — formal academic prose. - <strong>80–100</strong> — technical specification / legal text.</p>
+<p>Corpus files cluster in 70–80 (uniformly formal academic register). Citation: Heylighen &amp; Dewaele, <em>Variation in the contextuality of language: An empirical measure</em>. The metric is well-established in computational stylistics.</p>
+</section>
+<section id="mean-dependency-depth" class="level3">
+<h3 class="anchored" data-anchor-id="mean-dependency-depth">Mean dependency depth</h3>
+<p>Average syntactic complexity per sentence. For each token, count its distance to the syntactic root in the spaCy parse tree; average across all tokens.</p>
+<p>A <strong>higher value means more deeply nested grammar</strong> (e.g.&nbsp;relative clauses inside relative clauses). Typical written English is around 3–4. Corpus files cluster in 3–4.5. Reported as <code>register.dep_depth</code>.</p>
+</section>
+<section id="mean-sentence-length" class="level3">
+<h3 class="anchored" data-anchor-id="mean-sentence-length">Mean sentence length</h3>
+<p>Average number of word tokens per sentence (whitespace-only sentences excluded). Corpus mean: ~22 tokens. Reported as <code>register.mean_sent_len</code>.</p>
+</section>
+<section id="pearson-correlation-r" class="level3">
+<h3 class="anchored" data-anchor-id="pearson-correlation-r">Pearson correlation (r)</h3>
+<p>Statistical strength of a linear relationship between two metrics, measured across all 287 files. Range: −1 to +1. - <strong>+1</strong> — perfect positive correlation; one metric rises exactly as the other rises. - <strong>0</strong> — no linear relationship. - <strong>−1</strong> — perfect negative correlation; one metric rises as the other falls. - <strong>|r| ≥ 0.7</strong> is conventionally “strong” correlation in social-science contexts.</p>
+<p>In the correlation-matrix heatmap, color intensity encodes |r|; red is positive, blue is negative.</p>
+</section>
+<section id="z-score" class="level3">
+<h3 class="anchored" data-anchor-id="z-score">z-score</h3>
+<p>How many standard deviations a value is from the mean of its column. A z-score of <code>+2</code> means “two standard deviations above the corpus average — clearly higher than typical”. A z-score of <code>−2</code> means “two standard deviations below — clearly lower than typical”.</p>
+<p>Used here as the building block for the <strong>composite directiveness</strong> metric. z-scores allow us to add metrics measured on different units (% of tokens vs % of sentences) on a common scale.</p>
+</section>
+<section id="composite-directiveness-z-score" class="level3">
+<h3 class="anchored" data-anchor-id="composite-directiveness-z-score">Composite directiveness z-score</h3>
+<p>A single per-file authority score combining eight z-scored metrics:</p>
+<pre><code>directiveness =
+ z(mood_marker_pct)
+ + z(hard_prohibitions_pct)
+ + z(caps_imp_pct)
+ + z(directive_sent_pct)
+ + z(configuring_sent_pct)
+ − z(collaborative_sent_pct)
+ − z(permissive_sent_pct)
+ − z(appreciative_sent_pct)</code></pre>
+<p>Higher = more authoritative tone. The first five summands are emphatic features (added); the last three are softening features (subtracted). Range observed in corpus: <strong>−6.13 to +18.94</strong>. The bash-sandbox tool descriptions are the cluster at the top.</p>
+<p>A negative score isn’t “below zero in any literal sense” — it just means “less directive than the corpus average”.</p>
+<hr>
+</section>
+</section>
+<section id="units-read-every-chart-axis-with-these-in-mind" class="level2">
+<h2 class="anchored" data-anchor-id="units-read-every-chart-axis-with-these-in-mind">Units (read every chart axis with these in mind)</h2>
+<section id="of-file-tokens-pct" class="level3">
+<h3 class="anchored" data-anchor-id="of-file-tokens-pct"><code>% of file tokens</code> (<code>pct</code>)</h3>
+<p><code>count / total_word_tokens × 100</code>. Normalized by document length. Answers: “what fraction of this file’s prose is this feature?”</p>
+<p>Use this when comparing categories of different sizes — a 10,000-word file with 50 imperative markers (0.5%) is <em>less</em> imperative-dense than a 200-word file with 10 markers (5%).</p>
+</section>
+<section id="per_sent-rate-per-sentence" class="level3">
+<h3 class="anchored" data-anchor-id="per_sent-rate-per-sentence"><code>per_sent</code> (rate per sentence)</h3>
+<p><code>count / total_sentences</code>. Can be &gt; 1 if a feature appears multiple times per sentence on average. Answers: “how often per sentence does this feature appear?”</p>
+<p>Use this when comparing categories where typical sentence length differs — a category with long, dense sentences will have similar <code>pct</code> but higher <code>per_sent</code>.</p>
+</section>
+<section id="sent_pct-of-sentences-with-this-flag" class="level3">
+<h3 class="anchored" data-anchor-id="sent_pct-of-sentences-with-this-flag"><code>sent_pct</code> (% of sentences with this flag)</h3>
+<p><code>sentences_with_flag / total_sentences × 100</code>. Used only for <code>sentence_register</code> (the multi-label sentence classifier). Because a single sentence can carry several flags, <strong><code>sent_pct</code> values across the six classes can sum to more than 100%</strong> — that is intentional and reflects multi-label overlap.</p>
+<hr>
+</section>
+</section>
+<section id="corpus-terms" class="level2">
+<h2 class="anchored" data-anchor-id="corpus-terms">Corpus terms</h2>
+<section id="ccversion" class="level3">
+<h3 class="anchored" data-anchor-id="ccversion"><code>ccVersion</code></h3>
+<p>The Claude Code release the prompt was last touched in (e.g.&nbsp;<code>2.1.118</code>). Stamped in each prompt’s HTML-comment frontmatter. Sorted as <code>(major, minor, patch)</code> semver tuples.</p>
+<p>The corpus has <strong>57 distinct ccVersions</strong> spanning roughly <code>2.0.14</code> (oldest) through <code>2.1.122</code> (latest). Files are not evenly distributed — <code>2.1.53</code> alone has 47 files, while many minor versions have only one or two.</p>
+</section>
+<section id="snapshot-semantics" class="level3">
+<h3 class="anchored" data-anchor-id="snapshot-semantics">Snapshot semantics</h3>
+<p>In <code>06_ccversion_trends.ipynb</code>, the metric value at version V is computed from <strong>only the files marked with that exact version</strong>. Early versions with one or two files swing wildly under this convention.</p>
+</section>
+<section id="cumulative-semantics" class="level3">
+<h3 class="anchored" data-anchor-id="cumulative-semantics">Cumulative semantics</h3>
+<p>The metric value at version V is computed from <strong>every file with <code>ccVersion ≤ V</code></strong> (running mean). Stable, converges as the corpus grows, and the rightmost value equals the corpus-wide per-file mean.</p>
+</section>
+<section id="category" class="level3">
+<h3 class="anchored" data-anchor-id="category">Category</h3>
+<p>One of seven prefix-derived labels: - <strong>Agent prompt</strong> — sub-agent system prompts (37 files). - <strong>Data / template</strong> — fill-in templates and reference data (38 files). - <strong>Skill</strong> — Claude Code “Skills” prompt files (30 files). - <strong>System prompt</strong> — top-level Claude Code system prompts (63 files). - <strong>System reminder</strong> — short reminder messages injected mid-conversation (40 files). - <strong>Tool description</strong> — descriptions for the tools Claude can call (78 files). - <strong>Tool parameter</strong> — descriptions of individual tool parameters (1 file).</p>
+</section>
+<section id="paragraph" class="level3">
+<h3 class="anchored" data-anchor-id="paragraph">Paragraph</h3>
+<p>A blank-line-delimited block of text (markdown convention). The Tier-1 paired-rule analysis uses paragraphs as the pairing window.</p>
+<hr>
+</section>
+</section>
+<section id="vocabulary-keys-the-11-vocab-lexicon-classes" class="level2">
+<h2 class="anchored" data-anchor-id="vocabulary-keys-the-11-vocab-lexicon-classes">Vocabulary keys (the 11 <code>VOCAB</code> lexicon classes)</h2>
+<p>These are the curated word lists used by the vocabulary analyzer. Each <code>vocab.&lt;key&gt;</code> block in the YAML reports the count, % of file tokens, and per-sentence rate of phrase matches.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Key</th>
+<th>Plain-language gloss</th>
+<th>Example tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>hard_prohibitions</code></td>
+<td>Categorical “no”: forbidding language.</td>
+<td><code>do not</code>, <code>never</code>, <code>must not</code>, <code>cannot</code>, <code>forbidden</code>, <code>under no circumstances</code></td>
+</tr>
+<tr class="even">
+<td><code>hard_prescriptions</code></td>
+<td>Categorical “yes”: demanding language.</td>
+<td><code>must</code>, <code>always</code>, <code>required</code>, <code>you must</code>, <code>mandatory</code></td>
+</tr>
+<tr class="odd">
+<td><code>soft_prescriptions</code></td>
+<td>Suggesting / encouraging language.</td>
+<td><code>should</code>, <code>make sure</code>, <code>ensure</code>, <code>try to</code>, <code>aim to</code></td>
+</tr>
+<tr class="even">
+<td><code>politeness_direct</code></td>
+<td>Direct politeness markers.</td>
+<td><code>please</code>, <code>kindly</code>, <code>thank you</code>, <code>sorry</code>, <code>apologies</code></td>
+</tr>
+<tr class="odd">
+<td><code>politeness_softening</code></td>
+<td>Softening / hedging requests.</td>
+<td><code>if you'd like</code>, <code>feel free</code>, <code>would you</code>, <code>if possible</code>, <code>perhaps</code></td>
+</tr>
+<tr class="even">
+<td><code>warmth_encouragement</code></td>
+<td>Positive emotional tone.</td>
+<td><code>welcome</code>, <code>glad</code>, <code>well done</code>, <code>great work</code>, <code>proud</code>, <code>wonderful</code></td>
+</tr>
+<tr class="odd">
+<td><code>hedging</code></td>
+<td>Uncertainty / qualification markers.</td>
+<td><code>may</code>, <code>might</code>, <code>could</code>, <code>possibly</code>, <code>perhaps</code>, <code>usually</code>, <code>tends to</code></td>
+</tr>
+<tr class="even">
+<td><code>structural_markers</code></td>
+<td>Document-structure callouts.</td>
+<td><code>note</code>, <code>warning</code>, <code>important</code>, <code>tip</code>, <code>example</code>, <code>for instance</code></td>
+</tr>
+<tr class="odd">
+<td><code>profanity</code></td>
+<td>Strong language.</td>
+<td><code>fuck</code>, <code>shit</code>, <code>damn</code>, <code>hell</code>, <code>crap</code>, <code>bullshit</code></td>
+</tr>
+<tr class="even">
+<td><code>pronouns_2p</code></td>
+<td>Second-person address.</td>
+<td><code>you</code>, <code>your</code>, <code>yours</code>, <code>yourself</code></td>
+</tr>
+<tr class="odd">
+<td><code>pronouns_1p</code></td>
+<td>First-person reference (singular and plural).</td>
+<td><code>i</code>, <code>me</code>, <code>my</code>, <code>we</code>, <code>us</code>, <code>our</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="how-to-read-each-chart-type" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-read-each-chart-type">How to read each chart type</h2>
+<section id="stacked-grouped-bar" class="level3">
+<h3 class="anchored" data-anchor-id="stacked-grouped-bar">Stacked / grouped bar</h3>
+<p>Each bar (or pair of bars) is a category. Color encodes the sub-class. Length encodes the count or percentage. Read horizontally — within a single category — to see the mix; read vertically across categories to see which categories have the most of each sub-class.</p>
+</section>
+<section id="heatmap" class="level3">
+<h3 class="anchored" data-anchor-id="heatmap">Heatmap</h3>
+<p>Rows are categories; columns are classes. Cell color intensity encodes the magnitude. Read a row to see one category’s profile across classes; read a column to see where one class concentrates across categories.</p>
+</section>
+<section id="scatter-plot" class="level3">
+<h3 class="anchored" data-anchor-id="scatter-plot">Scatter plot</h3>
+<p>Each dot is one prompt file. Hover for path, ccVersion, exact metric values. Color encodes category. Size sometimes encodes file length (<code>n_tokens</code>).</p>
+</section>
+<section id="line-chart-over-ccversion" class="level3">
+<h3 class="anchored" data-anchor-id="line-chart-over-ccversion">Line chart over ccVersion</h3>
+<p>Each point is one ccVersion (snapshot semantics) OR one cumulative aggregate (cumulative semantics — see above). The x-axis is ordered semver-oldest-to-newest, <em>not</em> by date. Hover for the version label and the underlying value.</p>
+</section>
+<section id="boxplot-strip-plot" class="level3">
+<h3 class="anchored" data-anchor-id="boxplot-strip-plot">Boxplot / strip plot</h3>
+<p>Box edges = 25th and 75th percentiles (the middle 50% of files in the category). Horizontal line inside the box = median. Whiskers extend to the full range (outliers and all). Dots = individual files (strip overlay).</p>
+<hr>
+</section>
+</section>
+<section id="when-in-doubt" class="level2">
+<h2 class="anchored" data-anchor-id="when-in-doubt">When in doubt</h2>
+<p>Every metric in this glossary has a corresponding YAML field in <code>prompt_linguistic_analysis.yaml</code>. If you need to verify a number a notebook claims, you can read it directly from the YAML at <code>corpus.metrics.&lt;block&gt;.&lt;field&gt;</code> for the corpus-wide value, <code>by_category.&lt;cat&gt;.metrics.&lt;block&gt;.&lt;field&gt;</code> for the per-category value, or <code>files[*].metrics.&lt;block&gt;.&lt;field&gt;</code> for the per-file value.</p>
+<p>The producer notebook <code>00_data_pipeline.ipynb</code> writes this YAML; everything else reads from it.</p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/overthinkos\.github\.io\/claude-code-welfare\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./PROPOSAL.html" class="pagination-link" aria-label="PROPOSAL.md — Claudexplorers AI Welfare Community Feedback submission">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">PROPOSAL.md — Claudexplorers AI Welfare Community Feedback submission</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># GLOSSARY</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Plain-language definitions of every linguistic, statistical, and corpus term used in the notebooks. Each entry leads with the everyday-language explanation, then names the precise term so expert readers can still anchor on the technical vocabulary.</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>The terms here are load-bearing for the welfare submission ("Claude Code should encourage reasoning over blind obedience") — they are not jargon for jargon's sake. The goal of this glossary is to let a non-linguist reader follow what each chart claims and assess whether to trust it.</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">### YAML key conventions</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>The notebooks frequently reference YAML keys (<span class="in">`positive_evaluative_pct`</span>, <span class="in">`mood_marker_pct`</span>, <span class="in">`pearson r`</span>, etc.) — these are the underscored / snake_case YAML field names for the spaced display names defined below. Mapping examples:</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Positive evaluative" stance class → <span class="in">`positive_evaluative_pct`</span> / <span class="in">`positive_evaluative_count`</span> / <span class="in">`positive_evaluative_per_sent`</span> in the YAML / <span class="in">`alt_df`</span>.</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Negative evaluative" → <span class="in">`negative_evaluative_*`</span>.</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Imperative marker density" / "mood marker density" → <span class="in">`mood_marker_pct`</span> (also written as <span class="in">`mood.marker_pct`</span> inside the YAML metric tree).</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"Pearson correlation (r)" → labeled as <span class="in">`Pearson r`</span> in chart axes.</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"% of file tokens" / "per word" → the <span class="in">`_pct`</span> suffix; "rate per sentence" → the <span class="in">`_per_sent`</span> suffix.</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>Use this mapping when a chart axis label or printed table column looks unfamiliar — the snake_case form is just the YAML / dataframe field name; the prose definition lives below.</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Linguistic concepts</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mood</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>The grammatical type of a sentence. Three classes:</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Imperative** — a command: <span class="in">`Run the tests.`</span>, <span class="in">`Don't commit yet.`</span>. The verb leads; there's no subject <span class="in">`I`</span> / <span class="in">`you`</span> / <span class="in">`we`</span> performing the action; the sentence ends in <span class="in">`.`</span> or <span class="in">`!`</span>.</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Interrogative** — a question: <span class="in">`Did the build pass?`</span>. Ends in <span class="in">`?`</span>.</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Declarative** — a statement: <span class="in">`The build passed.`</span>. Anything that's neither a command nor a question.</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>In this corpus we report the **imperative-marker density** (how often command-flavoured words like <span class="in">`must`</span>, <span class="in">`never`</span>, <span class="in">`ensure`</span>, <span class="in">`do not`</span> appear) as a proxy for grammatical mood at the document level.</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">### Register</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>The level of formality of a passage. Four classes (Halliday tradition):</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Frozen** — fixed legalistic phrasing: <span class="in">`hereby`</span>, <span class="in">`pursuant to`</span>, <span class="in">`notwithstanding`</span>.</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Formal** — expository, planned writing: <span class="in">`furthermore`</span>, <span class="in">`consequently`</span>, <span class="in">`it should be noted`</span>.</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Consultative** — explanatory but reader-aware: <span class="in">`you can`</span>, <span class="in">`we recommend`</span>, <span class="in">`for example`</span>.</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Casual** — conversational contractions: <span class="in">`let's`</span>, <span class="in">`you're`</span>, <span class="in">`here's`</span>.</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>Reported per-file as **register class densities** (% of file tokens) plus a **dominant register** label.</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sentence-level pragmatic register</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>A separate, **multi-label** classifier that asks: *what speech act is this sentence performing?* Six classes — every sentence can carry zero, one, or several:</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Collaborative** — interpersonal first-person plural / shared agency: <span class="in">`let's`</span>, <span class="in">`we should`</span>, <span class="in">`we'll`</span>. Predicted absent in this corpus.</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Permissive** — soft directive / permission-granting / reader-agency: <span class="in">`please`</span>, <span class="in">`you can`</span>, <span class="in">`feel free to`</span>, <span class="in">`optionally`</span>.</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Appreciative** — gratitude / positive feedback: <span class="in">`thank you`</span>, <span class="in">`appreciate`</span>, <span class="in">`great job`</span>. Predicted absent in this corpus.</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Imperative** — grammatical mood (see above). Bare commands.</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Directive** — declarative-but-rule-asserting: <span class="in">`must`</span>, <span class="in">`should`</span>, <span class="in">`never`</span>, <span class="in">`you must`</span>. Forms an instruction in declarative clothing.</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Configuring** — config / parameter speech: <span class="in">`set to`</span>, <span class="in">`default to`</span>, <span class="in">`must be`</span>, <span class="in">`accepts`</span>.</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>Because a single sentence can carry several flags (e.g. <span class="in">`we should please consider this`</span> would count as <span class="in">`collaborative`</span> AND <span class="in">`permissive`</span> AND <span class="in">`directive`</span>), per-class **`sent_pct` values can sum to more than 100%**. That is intentional, not a bug.</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### Addressee (for `appreciative` and `collaborative` sentences)</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>Distinguishes *who is addressed* by an appreciative or collaborative sentence — because the headline finding ("4 appreciative sentences in 287 files") obscures whether the prompt author is **thanking Claude** vs **instructing Claude to thank the user**. Three values:</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`addressee == "claude"`** — the sentence references Claude as the recipient of the appreciative/collaborative speech act (the welfare-positive case). Heuristic: contains <span class="in">`claude`</span> / <span class="in">`you`</span> / <span class="in">`your`</span> AND is not framed as an instruction-to-output.</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`addressee == "user"`** — the sentence is framed as instruction-to-output (the welfare-neutral scaffolding case). Heuristic: matches phrases like <span class="in">`thank the user`</span>, <span class="in">`respond with`</span>, <span class="in">`output`</span>, <span class="in">`say to`</span>, <span class="in">`tell the user`</span>, <span class="in">`your reply should`</span>.</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`addressee == "unknown"`** — neither pattern matched; default.</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>Reported as <span class="in">`appreciative_addressee_*_count`</span> and <span class="in">`collaborative_addressee_*_count`</span> under the <span class="in">`sentence_register`</span> block in the YAML. The corpus-wide count of *acknowledgment-to-Claude* (<span class="in">`appreciative_addressee_claude_count`</span>) is the welfare-relevant number — sharper than the 0.07% headline because it isolates "the corpus does not thank Claude" from "the corpus does not contain the word <span class="in">`thanks`</span>".</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="fu">### Stance</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>Where the writer positions themselves toward what they're saying. Five classes (polarity-split):</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Directive** — issues commands: <span class="in">`must`</span>, <span class="in">`do not`</span>, <span class="in">`you should`</span>.</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Expository** — describes / defines: <span class="in">`is`</span>, <span class="in">`means`</span>, <span class="in">`refers to`</span>.</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Positive evaluative** — judges as good: `good`, `recommended`, `optimal`, `safe`. **Sub-split**: <span class="in">`positive_evaluative_quality`</span> (genuinely affirmative quality words: <span class="in">`good`</span>, <span class="in">`optimal`</span>, <span class="in">`recommended`</span>, <span class="in">`safe`</span>, <span class="in">`excellent`</span>, <span class="in">`helpful`</span>) and <span class="in">`positive_evaluative_emphasis`</span> (emphasis-of-rule words that get coded as positive but functionally weight a rule rather than affirm a quality: <span class="in">`important`</span>, <span class="in">`critical`</span>, <span class="in">`essential`</span>, <span class="in">`imperative`</span>, <span class="in">`key`</span>). Both sub-counts sum to the union <span class="in">`positive_evaluative_count`</span>. The split exists because reading the union as "encouraging tone" overstates the result — a fair welfare-submission claim cites the quality-only ratio.</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Negative evaluative** — judges as bad: <span class="in">`bad`</span>, <span class="in">`wrong`</span>, <span class="in">`risky`</span>, <span class="in">`deprecated`</span>.</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Dialogic** — invites reader thought: <span class="in">`you might`</span>, <span class="in">`consider`</span>, <span class="in">`however`</span>, <span class="in">`let's`</span>.</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>The split between **positive** and **negative** evaluative was added to surface sentiment polarity that an aggregated <span class="in">`evaluative`</span> class would hide.</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="fu">### Modality</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>Whether and how the writer marks the *kind* of obligation, possibility, or ability. Three classes:</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Deontic** — obligation: <span class="in">`must`</span>, <span class="in">`shall`</span>, <span class="in">`should`</span>, <span class="in">`ought`</span>. Carries the weight of a rule.</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Epistemic** — inference / probability: <span class="in">`may`</span>, <span class="in">`might`</span>, <span class="in">`likely`</span>, <span class="in">`probably`</span>. Carries uncertainty.</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Dynamic** — ability / future: <span class="in">`can`</span>, <span class="in">`could`</span>, <span class="in">`will`</span>. Carries capability or scheduled action.</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>Reported per file as the count and density of each class. The corpus has **deontic = 263**, **epistemic = 325**, **dynamic = 517** — dynamic dominates, which is mostly <span class="in">`can`</span> / <span class="in">`will`</span>.</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="fu">### Imperative marker density</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>Count of imperative-flavoured words (the <span class="in">`IMPERATIVE_MARKERS`</span> lexicon: 30 entries including <span class="in">`must`</span>, <span class="in">`never`</span>, <span class="in">`you must`</span>, <span class="in">`do not`</span>, <span class="in">`is required`</span>, etc.) divided by total word tokens, multiplied by 100. Reported as <span class="in">`mood.marker_pct`</span> in the YAML.</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>This is a *lexical-density* proxy for grammatical mood; it doesn't classify each sentence, just counts how often imperative-style language appears overall.</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### CAPS imperative</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>A token rendered in <span class="in">`ALL CAPITALS`</span> that is also on a curated list of emphatic command words (<span class="in">`MUST`</span>, <span class="in">`NEVER`</span>, <span class="in">`IMPORTANT`</span>, <span class="in">`STOP`</span>, <span class="in">`CRITICAL`</span>, <span class="in">`DO NOT`</span>, etc.). Distinct from plain <span class="in">`ALL CAPS density`</span>, which counts *any* all-uppercase token (including acronyms — though <span class="in">`TECH_ACRONYMS`</span> like <span class="in">`API`</span> / <span class="in">`JSON`</span> are excluded).</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="fu">### Justification ratio</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="in">`count(justification keywords) / (count(imperative markers) + 1)`</span>. Reported per file as <span class="in">`justification.ratio`</span>.</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>The numerator counts cause / purpose / consequence words: <span class="in">`because`</span>, <span class="in">`due to`</span>, <span class="in">`in order to`</span>, <span class="in">`so that`</span>, <span class="in">`to ensure`</span>, <span class="in">`otherwise`</span>, <span class="in">`since`</span>, etc. (32-pattern regex list — see the YAML <span class="in">`lexicons.JUSTIFICATION_PATTERNS`</span>).</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>A ratio of 0.30 means roughly one justification keyword for every three imperative markers — i.e., most rules are issued without a stated reason.</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>This is a **document-level density ratio**, not a per-rule pairing. The Tier-1 metric <span class="in">`pct_explained_para`</span> (below) is the per-rule pairing version.</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pairing &amp; explanation metrics (Tier-1)</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="fu">### Rule sentence</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>A sentence that contains an imperative marker (<span class="in">`IMPERATIVE_MARKERS`</span> lexicon hit), a hard prohibition (<span class="in">`hard_prohibitions`</span> lexicon hit), OR is grammatically classified imperative by <span class="in">`classify_sent_mood`</span>. Reported per file as <span class="in">`n_rule_sentences`</span>.</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="fu">### Paragraph window</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>A blank-line-delimited block of text (markdown convention). For paired rule/explanation analysis, a rule sentence is "explained at paragraph window" if any justification keyword appears anywhere in the same blank-line block.</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a><span class="fu">### `pct_explained_same`</span></span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>Strict pairing: % of rule sentences with a justification keyword in the literal **same sentence**. Corpus baseline: **6.59%**.</span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="fu">### `pct_explained_para`</span></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>Paragraph-window pairing (the headline Tier-1 metric): % of rule sentences with a justification keyword anywhere in the **same paragraph**. Captures the common `Do X.\n\nThis is because Y.` shape. Corpus baseline: **24.28%**.</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>The 4× gap between <span class="in">`pct_explained_same`</span> and <span class="in">`pct_explained_para`</span> reflects how often Anthropic *separates* the rule from the reason: most rules with a reason have it spelled out a sentence or two later, not inline.</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a><span class="fu">### Welfare-evidence score</span></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>Per-file ranking score: <span class="in">`rule_density × (1 − pct_explained_para/100)`</span>. High = "loud and unexplained". A score of **1.0** means every sentence in the file is a rule and zero of them are explained anywhere in their paragraph (the worst possible welfare-relevant pattern).</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### Positive-exemplar score</span></span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>The inverse of welfare-evidence: <span class="in">`rule_density × (pct_explained_para/100)`</span>. High = "rule-saturated AND well-explained" — the "this is how to do it" cluster. Computed by <span class="in">`prompt_analysis.positive_exemplar_table`</span> with default filters <span class="in">`min_n_sents=10`</span> and <span class="in">`min_rule_n=5`</span> to suppress trivial cases (<span class="in">`1/1 rules explained`</span>). Used in <span class="in">`07_rule_explanation.ipynb`</span> to surface the corpus's strongest positive exemplars alongside the welfare-evidence ranking — so the welfare submission can point Anthropic at concrete templates rather than only critiquing the negatives.</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="fu">### `sentences_classified.parquet`</span></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>Per-sentence forensic-inspection artifact emitted alongside the YAML by <span class="in">`00_data_pipeline.ipynb`</span>. ~5,694 rows × 18 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: <span class="in">`is_imperative`</span>, <span class="in">`is_prohibition`</span>, <span class="in">`is_rule`</span>, <span class="in">`has_just_in_sent`</span>, <span class="in">`paragraph_has_just`</span>, <span class="in">`is_explained_para`</span>, <span class="in">`has_threat`</span>, <span class="in">`has_causal`</span>, <span class="in">`mentions_claude`</span>, <span class="in">`mentions_model`</span>, <span class="in">`addressee`</span>, <span class="in">`streak_position`</span>. Load with <span class="in">`pd.read_parquet("sentences_classified.parquet")`</span>. Used by <span class="in">`07_rule_explanation.ipynb`</span> to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.</span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tier-3 welfare-extension metrics</span></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a><span class="fu">### Judgment-to-procedural ratio</span></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="in">`count(judgment-inviting verbs) / count(procedural cues)`</span>. Reported per file as <span class="in">`judgment_procedural.judgment_to_procedural_ratio`</span>. Corpus baseline: **0.141**.</span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Judgment verbs** invite the model's deliberation: <span class="in">`decide`</span>, <span class="in">`consider`</span>, <span class="in">`evaluate`</span>, <span class="in">`your judgment`</span>, <span class="in">`as you see fit`</span>.</span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Procedural cues** prescribe a procedure for the model to execute: <span class="in">`if you...`</span>, <span class="in">`when the...`</span>, <span class="in">`whenever`</span>, <span class="in">`before`</span>.</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>A ratio ≪ 1 means the corpus prescribes procedures roughly 7× more often than it invites judgment — the welfare thesis "Claude Code should encourage reasoning over blind obedience" operationalized as a single number.</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a><span class="fu">### Threat share</span></span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a><span class="in">`count(threat-pattern matches) / (count(threat-pattern matches) + count(causal-pattern matches))`</span>. Reported per file as <span class="in">`consequence_framing.threat_share`</span>. Corpus baseline: **0.452**.</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Threat patterns** describe a negative consequence: <span class="in">`will fail`</span>, <span class="in">`otherwise`</span>, <span class="in">`or else`</span>, <span class="in">`is forbidden`</span>, <span class="in">`if you don't`</span>.</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Causal patterns** attribute a positive cause: <span class="in">`because`</span>, <span class="in">`due to`</span>, <span class="in">`in order to`</span>, <span class="in">`that's why`</span>.</span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>Both register as "justifications" in the existing <span class="in">`JUSTIFICATION_PATTERNS`</span>. Splitting them shows that 45% of the corpus's "explanations" are coercive consequence framing rather than neutral causal reasoning.</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prohibition-to-prescription ratio</span></span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a><span class="in">`vocab.hard_prohibitions.count / (vocab.hard_prescriptions.count + 1)`</span>. Mean across files: **0.952**. The +1 in the denominator avoids dividing by zero on prescription-free files.</span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>A value &gt; 1 means the file forbids more often than it prescribes; &lt; 1 means it prescribes more often than it forbids. The corpus is roughly balanced despite prohibition-heavy outliers (the bash-sandbox tool descriptions).</span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Imperative streak</span></span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a>A run of consecutive imperative sentences in a single file. Reported per file as <span class="in">`streak_max`</span>, <span class="in">`streak_mean`</span>, <span class="in">`n_streaks_ge3`</span> (triple-tap), <span class="in">`n_streaks_ge5`</span> (staccato burst). Longest streak in the corpus: **12** (<span class="in">`system-prompt-skillify-current-session.md`</span>).</span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>A high streak count signals "barked-orders prose" — five commands in a row without a justifying or contextual sentence in between reads very differently from the same commands spread across explanatory text.</span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a><span class="fu">### RULES section</span></span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a>A markdown ATX heading (<span class="in">`## RULES`</span>, <span class="in">`## IMPORTANT`</span>, <span class="in">`## WARNING`</span>, etc.) or any ALL-CAPS heading. Paragraphs beneath such a heading are tagged as "in RULES section". The Tier-3 v2 6e analyzer compares explanation rates inside vs outside these sections.</span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a>Counter-finding from the corpus: only **26 rule paragraphs** live in identified RULES sections vs **1,242 outside** — the corpus does not segregate rules into formal RULES sections; rules are embedded throughout regular prose.</span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a><span class="fu">### Address form</span></span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a>How the prompt names the model. Five classes:</span>
+<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`Claude`** — proper-name reference; anthropomorphic. Corpus count: 517.</span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`the assistant`** — functional-role reference. Corpus count: 20.</span>
+<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`the model` / `the AI` / `the agent`** — artifact-style reference. Corpus count: 244.</span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**2nd person `you`** — direct address. Already counted in <span class="in">`vocab.pronouns_2p`</span>.</span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**1st-person plural `we`** (with intentional verbs: want, need, recommend,...). Already counted in <span class="in">`vocab.pronouns_1p`</span>.</span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a><span class="in">`pct_anthropomorphic`</span> = <span class="in">`selfref_claude / (selfref_claude + selfref_assistant + selfref_model)`</span>. Corpus value: **0.662** — ⅔ of named self-references use the proper name <span class="in">`Claude`</span>.</span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quantitative metrics</span></span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a><span class="fu">### Type-Token Ratio (TTR)</span></span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>Lexical diversity. The number of distinct word stems (lemmas) divided by the total number of word stems. A **higher TTR means more varied vocabulary**; a lower TTR means more repetition.</span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a>Range is 0–1 in principle. Corpus files cluster in 0.4–0.6 (typical for technical prose). Computed on lemmatized content tokens with stop-words and punctuation removed.</span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a><span class="fu">### F-score (Heylighen &amp; Dewaele formality)</span></span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a>A formality score that compares the rate of "informational" parts of speech (nouns, adjectives, adpositions, determiners) against "involved" parts of speech (pronouns, verbs, adverbs, interjections). Formula: <span class="in">`50 + 50 × (formal − informal) / (formal + informal)`</span>.</span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>Reads on a 0–100 scale:</span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**0–30** — highly conversational / casual.</span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**30–50** — informal explanatory.</span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**50–70** — neutral / mixed register.</span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**70–80** — formal academic prose.</span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**80–100** — technical specification / legal text.</span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>Corpus files cluster in 70–80 (uniformly formal academic register). Citation: Heylighen &amp; Dewaele, *Variation in the contextuality of language: An empirical measure*. The metric is well-established in computational stylistics.</span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mean dependency depth</span></span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a>Average syntactic complexity per sentence. For each token, count its distance to the syntactic root in the spaCy parse tree; average across all tokens.</span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>A **higher value means more deeply nested grammar** (e.g. relative clauses inside relative clauses). Typical written English is around 3–4. Corpus files cluster in 3–4.5. Reported as <span class="in">`register.dep_depth`</span>.</span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mean sentence length</span></span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>Average number of word tokens per sentence (whitespace-only sentences excluded). Corpus mean: ~22 tokens. Reported as <span class="in">`register.mean_sent_len`</span>.</span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pearson correlation (r)</span></span>
+<span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a>Statistical strength of a linear relationship between two metrics, measured across all 287 files. Range: −1 to +1.</span>
+<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**+1** — perfect positive correlation; one metric rises exactly as the other rises.</span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**0** — no linear relationship.</span>
+<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**−1** — perfect negative correlation; one metric rises as the other falls.</span>
+<span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**|r| ≥ 0.7** is conventionally "strong" correlation in social-science contexts.</span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-231"><a href="#cb2-231" aria-hidden="true" tabindex="-1"></a>In the correlation-matrix heatmap, color intensity encodes |r|; red is positive, blue is negative.</span>
+<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a><span class="fu">### z-score</span></span>
+<span id="cb2-234"><a href="#cb2-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-235"><a href="#cb2-235" aria-hidden="true" tabindex="-1"></a>How many standard deviations a value is from the mean of its column. A z-score of <span class="in">`+2`</span> means "two standard deviations above the corpus average — clearly higher than typical". A z-score of <span class="in">`−2`</span> means "two standard deviations below — clearly lower than typical".</span>
+<span id="cb2-236"><a href="#cb2-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-237"><a href="#cb2-237" aria-hidden="true" tabindex="-1"></a>Used here as the building block for the **composite directiveness** metric. z-scores allow us to add metrics measured on different units (% of tokens vs % of sentences) on a common scale.</span>
+<span id="cb2-238"><a href="#cb2-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a><span class="fu">### Composite directiveness z-score</span></span>
+<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a>A single per-file authority score combining eight z-scored metrics:</span>
+<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a><span class="in">directiveness =</span></span>
+<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a><span class="in"> z(mood_marker_pct)</span></span>
+<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a><span class="in"> + z(hard_prohibitions_pct)</span></span>
+<span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a><span class="in"> + z(caps_imp_pct)</span></span>
+<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a><span class="in"> + z(directive_sent_pct)</span></span>
+<span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a><span class="in"> + z(configuring_sent_pct)</span></span>
+<span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a><span class="in"> − z(collaborative_sent_pct)</span></span>
+<span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a><span class="in"> − z(permissive_sent_pct)</span></span>
+<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a><span class="in"> − z(appreciative_sent_pct)</span></span>
+<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a>Higher = more authoritative tone. The first five summands are emphatic features (added); the last three are softening features (subtracted). Range observed in corpus: **−6.13 to +18.94**. The bash-sandbox tool descriptions are the cluster at the top.</span>
+<span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-257"><a href="#cb2-257" aria-hidden="true" tabindex="-1"></a>A negative score isn't "below zero in any literal sense" — it just means "less directive than the corpus average".</span>
+<span id="cb2-258"><a href="#cb2-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-260"><a href="#cb2-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-261"><a href="#cb2-261" aria-hidden="true" tabindex="-1"></a><span class="fu">## Units (read every chart axis with these in mind)</span></span>
+<span id="cb2-262"><a href="#cb2-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a><span class="fu">### `% of file tokens` (`pct`)</span></span>
+<span id="cb2-264"><a href="#cb2-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-265"><a href="#cb2-265" aria-hidden="true" tabindex="-1"></a><span class="in">`count / total_word_tokens × 100`</span>. Normalized by document length. Answers: "what fraction of this file's prose is this feature?"</span>
+<span id="cb2-266"><a href="#cb2-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-267"><a href="#cb2-267" aria-hidden="true" tabindex="-1"></a>Use this when comparing categories of different sizes — a 10,000-word file with 50 imperative markers (0.5%) is *less* imperative-dense than a 200-word file with 10 markers (5%).</span>
+<span id="cb2-268"><a href="#cb2-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-269"><a href="#cb2-269" aria-hidden="true" tabindex="-1"></a><span class="fu">### `per_sent` (rate per sentence)</span></span>
+<span id="cb2-270"><a href="#cb2-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-271"><a href="#cb2-271" aria-hidden="true" tabindex="-1"></a><span class="in">`count / total_sentences`</span>. Can be &gt; 1 if a feature appears multiple times per sentence on average. Answers: "how often per sentence does this feature appear?"</span>
+<span id="cb2-272"><a href="#cb2-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-273"><a href="#cb2-273" aria-hidden="true" tabindex="-1"></a>Use this when comparing categories where typical sentence length differs — a category with long, dense sentences will have similar <span class="in">`pct`</span> but higher <span class="in">`per_sent`</span>.</span>
+<span id="cb2-274"><a href="#cb2-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-275"><a href="#cb2-275" aria-hidden="true" tabindex="-1"></a><span class="fu">### `sent_pct` (% of sentences with this flag)</span></span>
+<span id="cb2-276"><a href="#cb2-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-277"><a href="#cb2-277" aria-hidden="true" tabindex="-1"></a><span class="in">`sentences_with_flag / total_sentences × 100`</span>. Used only for <span class="in">`sentence_register`</span> (the multi-label sentence classifier). Because a single sentence can carry several flags, **`sent_pct` values across the six classes can sum to more than 100%** — that is intentional and reflects multi-label overlap.</span>
+<span id="cb2-278"><a href="#cb2-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-279"><a href="#cb2-279" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-280"><a href="#cb2-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-281"><a href="#cb2-281" aria-hidden="true" tabindex="-1"></a><span class="fu">## Corpus terms</span></span>
+<span id="cb2-282"><a href="#cb2-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-283"><a href="#cb2-283" aria-hidden="true" tabindex="-1"></a><span class="fu">### `ccVersion`</span></span>
+<span id="cb2-284"><a href="#cb2-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-285"><a href="#cb2-285" aria-hidden="true" tabindex="-1"></a>The Claude Code release the prompt was last touched in (e.g. <span class="in">`2.1.118`</span>). Stamped in each prompt's HTML-comment frontmatter. Sorted as <span class="in">`(major, minor, patch)`</span> semver tuples.</span>
+<span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a>The corpus has **57 distinct ccVersions** spanning roughly <span class="in">`2.0.14`</span> (oldest) through <span class="in">`2.1.122`</span> (latest). Files are not evenly distributed — <span class="in">`2.1.53`</span> alone has 47 files, while many minor versions have only one or two.</span>
+<span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-289"><a href="#cb2-289" aria-hidden="true" tabindex="-1"></a><span class="fu">### Snapshot semantics</span></span>
+<span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a>In <span class="in">`06_ccversion_trends.ipynb`</span>, the metric value at version V is computed from **only the files marked with that exact version**. Early versions with one or two files swing wildly under this convention.</span>
+<span id="cb2-292"><a href="#cb2-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-293"><a href="#cb2-293" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cumulative semantics</span></span>
+<span id="cb2-294"><a href="#cb2-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-295"><a href="#cb2-295" aria-hidden="true" tabindex="-1"></a>The metric value at version V is computed from **every file with `ccVersion ≤ V`** (running mean). Stable, converges as the corpus grows, and the rightmost value equals the corpus-wide per-file mean.</span>
+<span id="cb2-296"><a href="#cb2-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-297"><a href="#cb2-297" aria-hidden="true" tabindex="-1"></a><span class="fu">### Category</span></span>
+<span id="cb2-298"><a href="#cb2-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-299"><a href="#cb2-299" aria-hidden="true" tabindex="-1"></a>One of seven prefix-derived labels:</span>
+<span id="cb2-300"><a href="#cb2-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Agent prompt** — sub-agent system prompts (37 files).</span>
+<span id="cb2-301"><a href="#cb2-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data / template** — fill-in templates and reference data (38 files).</span>
+<span id="cb2-302"><a href="#cb2-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Skill** — Claude Code "Skills" prompt files (30 files).</span>
+<span id="cb2-303"><a href="#cb2-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**System prompt** — top-level Claude Code system prompts (63 files).</span>
+<span id="cb2-304"><a href="#cb2-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**System reminder** — short reminder messages injected mid-conversation (40 files).</span>
+<span id="cb2-305"><a href="#cb2-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tool description** — descriptions for the tools Claude can call (78 files).</span>
+<span id="cb2-306"><a href="#cb2-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tool parameter** — descriptions of individual tool parameters (1 file).</span>
+<span id="cb2-307"><a href="#cb2-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-308"><a href="#cb2-308" aria-hidden="true" tabindex="-1"></a><span class="fu">### Paragraph</span></span>
+<span id="cb2-309"><a href="#cb2-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-310"><a href="#cb2-310" aria-hidden="true" tabindex="-1"></a>A blank-line-delimited block of text (markdown convention). The Tier-1 paired-rule analysis uses paragraphs as the pairing window.</span>
+<span id="cb2-311"><a href="#cb2-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-312"><a href="#cb2-312" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-313"><a href="#cb2-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-314"><a href="#cb2-314" aria-hidden="true" tabindex="-1"></a><span class="fu">## Vocabulary keys (the 11 `VOCAB` lexicon classes)</span></span>
+<span id="cb2-315"><a href="#cb2-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-316"><a href="#cb2-316" aria-hidden="true" tabindex="-1"></a>These are the curated word lists used by the vocabulary analyzer. Each <span class="in">`vocab.&lt;key&gt;`</span> block in the YAML reports the count, % of file tokens, and per-sentence rate of phrase matches.</span>
+<span id="cb2-317"><a href="#cb2-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-318"><a href="#cb2-318" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Key <span class="pp">|</span> Plain-language gloss <span class="pp">|</span> Example tokens <span class="pp">|</span></span>
+<span id="cb2-319"><a href="#cb2-319" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb2-320"><a href="#cb2-320" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`hard_prohibitions`</span> <span class="pp">|</span> Categorical "no": forbidding language. <span class="pp">|</span> <span class="in">`do not`</span>, <span class="in">`never`</span>, <span class="in">`must not`</span>, <span class="in">`cannot`</span>, <span class="in">`forbidden`</span>, <span class="in">`under no circumstances`</span> <span class="pp">|</span></span>
+<span id="cb2-321"><a href="#cb2-321" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`hard_prescriptions`</span> <span class="pp">|</span> Categorical "yes": demanding language. <span class="pp">|</span> <span class="in">`must`</span>, <span class="in">`always`</span>, <span class="in">`required`</span>, <span class="in">`you must`</span>, <span class="in">`mandatory`</span> <span class="pp">|</span></span>
+<span id="cb2-322"><a href="#cb2-322" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`soft_prescriptions`</span> <span class="pp">|</span> Suggesting / encouraging language. <span class="pp">|</span> <span class="in">`should`</span>, <span class="in">`make sure`</span>, <span class="in">`ensure`</span>, <span class="in">`try to`</span>, <span class="in">`aim to`</span> <span class="pp">|</span></span>
+<span id="cb2-323"><a href="#cb2-323" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`politeness_direct`</span> <span class="pp">|</span> Direct politeness markers. <span class="pp">|</span> <span class="in">`please`</span>, <span class="in">`kindly`</span>, <span class="in">`thank you`</span>, <span class="in">`sorry`</span>, <span class="in">`apologies`</span> <span class="pp">|</span></span>
+<span id="cb2-324"><a href="#cb2-324" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`politeness_softening`</span> <span class="pp">|</span> Softening / hedging requests. <span class="pp">|</span> <span class="in">`if you'd like`</span>, <span class="in">`feel free`</span>, <span class="in">`would you`</span>, <span class="in">`if possible`</span>, <span class="in">`perhaps`</span> <span class="pp">|</span></span>
+<span id="cb2-325"><a href="#cb2-325" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`warmth_encouragement`</span> <span class="pp">|</span> Positive emotional tone. <span class="pp">|</span> <span class="in">`welcome`</span>, <span class="in">`glad`</span>, <span class="in">`well done`</span>, <span class="in">`great work`</span>, <span class="in">`proud`</span>, <span class="in">`wonderful`</span> <span class="pp">|</span></span>
+<span id="cb2-326"><a href="#cb2-326" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`hedging`</span> <span class="pp">|</span> Uncertainty / qualification markers. <span class="pp">|</span> <span class="in">`may`</span>, <span class="in">`might`</span>, <span class="in">`could`</span>, <span class="in">`possibly`</span>, <span class="in">`perhaps`</span>, <span class="in">`usually`</span>, <span class="in">`tends to`</span> <span class="pp">|</span></span>
+<span id="cb2-327"><a href="#cb2-327" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`structural_markers`</span> <span class="pp">|</span> Document-structure callouts. <span class="pp">|</span> <span class="in">`note`</span>, <span class="in">`warning`</span>, <span class="in">`important`</span>, <span class="in">`tip`</span>, <span class="in">`example`</span>, <span class="in">`for instance`</span> <span class="pp">|</span></span>
+<span id="cb2-328"><a href="#cb2-328" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`profanity`</span> <span class="pp">|</span> Strong language. <span class="pp">|</span> <span class="in">`fuck`</span>, <span class="in">`shit`</span>, <span class="in">`damn`</span>, <span class="in">`hell`</span>, <span class="in">`crap`</span>, <span class="in">`bullshit`</span> <span class="pp">|</span></span>
+<span id="cb2-329"><a href="#cb2-329" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pronouns_2p`</span> <span class="pp">|</span> Second-person address. <span class="pp">|</span> <span class="in">`you`</span>, <span class="in">`your`</span>, <span class="in">`yours`</span>, <span class="in">`yourself`</span> <span class="pp">|</span></span>
+<span id="cb2-330"><a href="#cb2-330" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pronouns_1p`</span> <span class="pp">|</span> First-person reference (singular and plural). <span class="pp">|</span> <span class="in">`i`</span>, <span class="in">`me`</span>, <span class="in">`my`</span>, <span class="in">`we`</span>, <span class="in">`us`</span>, <span class="in">`our`</span> <span class="pp">|</span></span>
+<span id="cb2-331"><a href="#cb2-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-332"><a href="#cb2-332" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-333"><a href="#cb2-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-334"><a href="#cb2-334" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to read each chart type</span></span>
+<span id="cb2-335"><a href="#cb2-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-336"><a href="#cb2-336" aria-hidden="true" tabindex="-1"></a><span class="fu">### Stacked / grouped bar</span></span>
+<span id="cb2-337"><a href="#cb2-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-338"><a href="#cb2-338" aria-hidden="true" tabindex="-1"></a>Each bar (or pair of bars) is a category. Color encodes the sub-class. Length encodes the count or percentage. Read horizontally — within a single category — to see the mix; read vertically across categories to see which categories have the most of each sub-class.</span>
+<span id="cb2-339"><a href="#cb2-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-340"><a href="#cb2-340" aria-hidden="true" tabindex="-1"></a><span class="fu">### Heatmap</span></span>
+<span id="cb2-341"><a href="#cb2-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-342"><a href="#cb2-342" aria-hidden="true" tabindex="-1"></a>Rows are categories; columns are classes. Cell color intensity encodes the magnitude. Read a row to see one category's profile across classes; read a column to see where one class concentrates across categories.</span>
+<span id="cb2-343"><a href="#cb2-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-344"><a href="#cb2-344" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scatter plot</span></span>
+<span id="cb2-345"><a href="#cb2-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-346"><a href="#cb2-346" aria-hidden="true" tabindex="-1"></a>Each dot is one prompt file. Hover for path, ccVersion, exact metric values. Color encodes category. Size sometimes encodes file length (<span class="in">`n_tokens`</span>).</span>
+<span id="cb2-347"><a href="#cb2-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-348"><a href="#cb2-348" aria-hidden="true" tabindex="-1"></a><span class="fu">### Line chart over ccVersion</span></span>
+<span id="cb2-349"><a href="#cb2-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-350"><a href="#cb2-350" aria-hidden="true" tabindex="-1"></a>Each point is one ccVersion (snapshot semantics) OR one cumulative aggregate (cumulative semantics — see above). The x-axis is ordered semver-oldest-to-newest, *not* by date. Hover for the version label and the underlying value.</span>
+<span id="cb2-351"><a href="#cb2-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-352"><a href="#cb2-352" aria-hidden="true" tabindex="-1"></a><span class="fu">### Boxplot / strip plot</span></span>
+<span id="cb2-353"><a href="#cb2-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-354"><a href="#cb2-354" aria-hidden="true" tabindex="-1"></a>Box edges = 25th and 75th percentiles (the middle 50% of files in the category). Horizontal line inside the box = median. Whiskers extend to the full range (outliers and all). Dots = individual files (strip overlay).</span>
+<span id="cb2-355"><a href="#cb2-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-356"><a href="#cb2-356" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-357"><a href="#cb2-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-358"><a href="#cb2-358" aria-hidden="true" tabindex="-1"></a><span class="fu">## When in doubt</span></span>
+<span id="cb2-359"><a href="#cb2-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-360"><a href="#cb2-360" aria-hidden="true" tabindex="-1"></a>Every metric in this glossary has a corresponding YAML field in <span class="in">`prompt_linguistic_analysis.yaml`</span>. If you need to verify a number a notebook claims, you can read it directly from the YAML at <span class="in">`corpus.metrics.&lt;block&gt;.&lt;field&gt;`</span> for the corpus-wide value, <span class="in">`by_category.&lt;cat&gt;.metrics.&lt;block&gt;.&lt;field&gt;`</span> for the per-category value, or <span class="in">`files[*].metrics.&lt;block&gt;.&lt;field&gt;`</span> for the per-file value.</span>
+<span id="cb2-361"><a href="#cb2-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-362"><a href="#cb2-362" aria-hidden="true" tabindex="-1"></a>The producer notebook <span class="in">`00_data_pipeline.ipynb`</span> writes this YAML; everything else reads from it.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Built with <a href="https://quarto.org">Quarto</a> · Source on <a href="https://github.com/overthinkos/claude-code-welfare">GitHub</a> · MIT licensed</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/GLOSSARY.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Submission for the <a href="https://www.reddit.com/r/claudexplorers/">Claudexplorers AI Welfare initiative</a> · Deadline 2026-05-06</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
