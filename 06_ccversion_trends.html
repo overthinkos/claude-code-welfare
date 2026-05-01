@@ -525,7 +525,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="b8178739" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-30T23:42:32.196295Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-30T23:42:32.196193Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-30T23:42:35.036507Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-30T23:42:35.036098Z&quot;}}" data-execution_count="1">
+<div id="b8178739" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -589,7 +589,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="corpus-growth-across-ccversion-cumulative" class="level3">
 <h3 class="anchored" data-anchor-id="corpus-growth-across-ccversion-cumulative">Corpus growth across ccVersion (cumulative)</h3>
 <p>Before showing cumulative metric trends, contextualize the denominator: how many files (and how many word tokens) does the corpus contain by each ccVersion? An area chart stacked by category answers “by version V, what does the corpus look like?” — every cumulative running mean below depends on this denominator. Versions where one category contributed many new files in a single bump are visible as steps; flat horizontal stretches are versions that added nothing.</p>
-<div id="b67f2a6c-0eb9-4a6f-847b-e6b46b2f09f0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-30T23:42:35.037609Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-30T23:42:35.037386Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-30T23:42:35.088166Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-30T23:42:35.087717Z&quot;}}" data-execution_count="2">
+<div id="b67f2a6c-0eb9-4a6f-847b-e6b46b2f09f0" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Corpus growth: cumulative file count and word count by ccVersion, stacked by category.</span></span>
@@ -667,23 +667,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-8789ca8cf9a34dd388cb35e173f29408.vega-embed {
+  #altair-viz-0b4b7ff5e20344d69c1b981d589ddd02.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-8789ca8cf9a34dd388cb35e173f29408.vega-embed details,
-  #altair-viz-8789ca8cf9a34dd388cb35e173f29408.vega-embed details summary {
+  #altair-viz-0b4b7ff5e20344d69c1b981d589ddd02.vega-embed details,
+  #altair-viz-0b4b7ff5e20344d69c1b981d589ddd02.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-8789ca8cf9a34dd388cb35e173f29408"></div>
+<div id="altair-viz-0b4b7ff5e20344d69c1b981d589ddd02"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-8789ca8cf9a34dd388cb35e173f29408") {
-      outputDiv = document.getElementById("altair-viz-8789ca8cf9a34dd388cb35e173f29408");
+    if (outputDiv.id !== "altair-viz-0b4b7ff5e20344d69c1b981d589ddd02") {
+      outputDiv = document.getElementById("altair-viz-0b4b7ff5e20344d69c1b981d589ddd02");
     }
 
     const paths = {
@@ -739,7 +739,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="ccversion-timeline" class="level3">
 <h3 class="anchored" data-anchor-id="ccversion-timeline">ccVersion timeline</h3>
 <p>Each prompt’s <code>ccVersion</code> (from the HTML-comment frontmatter) records the Claude Code release the prompt was last touched in. The chart below puts every file at its <code>ccVersion</code> on the x-axis and a directiveness signal on the y-axis. Hover any point for the prompt’s full <code>name</code>, <code>description</code>, and version. Brush horizontally to focus on a release window; click a category in the legend to highlight just that category.</p>
-<div id="e75b07b5-4139-4f2d-b1fc-35a509ee3e23" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-30T23:42:35.089276Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-30T23:42:35.089180Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-30T23:42:35.166907Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-30T23:42:35.166523Z&quot;}}" data-execution_count="3">
+<div id="e75b07b5-4139-4f2d-b1fc-35a509ee3e23" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""ccVersion timeline — per-file directiveness scatter, hover for prompt name.</span></span>
@@ -797,23 +797,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-6e72dc8621e34fd19a4e9f3039c20dda.vega-embed {
+  #altair-viz-8edf3927b7a24688a86430ad2c6dba75.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-6e72dc8621e34fd19a4e9f3039c20dda.vega-embed details,
-  #altair-viz-6e72dc8621e34fd19a4e9f3039c20dda.vega-embed details summary {
+  #altair-viz-8edf3927b7a24688a86430ad2c6dba75.vega-embed details,
+  #altair-viz-8edf3927b7a24688a86430ad2c6dba75.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-6e72dc8621e34fd19a4e9f3039c20dda"></div>
+<div id="altair-viz-8edf3927b7a24688a86430ad2c6dba75"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-6e72dc8621e34fd19a4e9f3039c20dda") {
-      outputDiv = document.getElementById("altair-viz-6e72dc8621e34fd19a4e9f3039c20dda");
+    if (outputDiv.id !== "altair-viz-8edf3927b7a24688a86430ad2c6dba75") {
+      outputDiv = document.getElementById("altair-viz-8edf3927b7a24688a86430ad2c6dba75");
     }
 
     const paths = {
@@ -875,7 +875,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Cumulative absolute count</strong> (right column) — at version V, the <em>running total of the underlying count</em> across every file with <code>ccVersion ≤ V</code>. Shows whether the absolute presence of the feature in the corpus is growing, even when the rate per file looks flat.</li>
 </ol>
 <p>Each row reads horizontally for one metric. Y-axes are independent so each panel keeps its own scale.</p>
-<div id="a7e338ed-ec30-4fc1-90e9-36f89397a8bd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-30T23:42:35.176814Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-30T23:42:35.176621Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-30T23:42:35.295835Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-30T23:42:35.295420Z&quot;}}" data-execution_count="4">
+<div id="a7e338ed-ec30-4fc1-90e9-36f89397a8bd" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Loudness &amp; imperative-density: snapshot % | cumulative-mean % | cumulative absolute count.</span></span>
@@ -1010,23 +1010,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display" data-execution_count="4">
 
 <style>
-  #altair-viz-b43e00d30dff49c2bf4104ee5d70106a.vega-embed {
+  #altair-viz-aeba00d5efb14a2e87fad372984fab10.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-b43e00d30dff49c2bf4104ee5d70106a.vega-embed details,
-  #altair-viz-b43e00d30dff49c2bf4104ee5d70106a.vega-embed details summary {
+  #altair-viz-aeba00d5efb14a2e87fad372984fab10.vega-embed details,
+  #altair-viz-aeba00d5efb14a2e87fad372984fab10.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-b43e00d30dff49c2bf4104ee5d70106a"></div>
+<div id="altair-viz-aeba00d5efb14a2e87fad372984fab10"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-b43e00d30dff49c2bf4104ee5d70106a") {
-      outputDiv = document.getElementById("altair-viz-b43e00d30dff49c2bf4104ee5d70106a");
+    if (outputDiv.id !== "altair-viz-aeba00d5efb14a2e87fad372984fab10") {
+      outputDiv = document.getElementById("altair-viz-aeba00d5efb14a2e87fad372984fab10");
     }
 
     const paths = {
@@ -1089,7 +1089,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Cumulative absolute count</strong> (right column) — running total of <code>*_sent_count</code> across all files with <code>ccVersion ≤ V</code>.</li>
 </ol>
 <p>Independent y-axes per panel so the near-zero <code>collaborative</code> and <code>appreciative</code> rows still show their (small) trends. Knowing what’s <em>absent</em> across ccVersion is part of the picture — if either of those lines ever lifts off zero, that’s a corpus-wide structural shift.</p>
-<div id="2b28d4a1-5b2b-475b-b044-87e7545e149a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-30T23:42:35.296925Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-30T23:42:35.296826Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-30T23:42:35.462587Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-30T23:42:35.462237Z&quot;}}" data-execution_count="5">
+<div id="2b28d4a1-5b2b-475b-b044-87e7545e149a" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Sentence-register classes: snapshot % | cumulative-mean % | cumulative absolute count.</span></span>
@@ -1216,23 +1216,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display" data-execution_count="5">
 
 <style>
-  #altair-viz-02c1d1cd04b34617bef42eb17b760fce.vega-embed {
+  #altair-viz-e337602d73d64065ae94f7294149dfd9.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-02c1d1cd04b34617bef42eb17b760fce.vega-embed details,
-  #altair-viz-02c1d1cd04b34617bef42eb17b760fce.vega-embed details summary {
+  #altair-viz-e337602d73d64065ae94f7294149dfd9.vega-embed details,
+  #altair-viz-e337602d73d64065ae94f7294149dfd9.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-02c1d1cd04b34617bef42eb17b760fce"></div>
+<div id="altair-viz-e337602d73d64065ae94f7294149dfd9"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-02c1d1cd04b34617bef42eb17b760fce") {
-      outputDiv = document.getElementById("altair-viz-02c1d1cd04b34617bef42eb17b760fce");
+    if (outputDiv.id !== "altair-viz-e337602d73d64065ae94f7294149dfd9") {
+      outputDiv = document.getElementById("altair-viz-e337602d73d64065ae94f7294149dfd9");
     }
 
     const paths = {

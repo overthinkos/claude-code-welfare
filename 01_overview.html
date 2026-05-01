@@ -494,8 +494,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link active" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
   <li><a href="#linked-dashboard-per-file-scatter-category-averages" id="toc-linked-dashboard-per-file-scatter-category-averages" class="nav-link" data-scroll-target="#linked-dashboard-per-file-scatter-category-averages">Linked dashboard: per-file scatter ↔︎ category averages</a></li>
-  <li><a href="#modality-per-category-single-source-spacy-detector" id="toc-modality-per-category-single-source-spacy-detector" class="nav-link" data-scroll-target="#modality-per-category-single-source-spacy-detector">Modality per category (single-source spaCy detector)</a></li>
-  <li><a href="#positive-evaluative-split-quality-vs-emphasis-the-positive_evaluative-split" id="toc-positive-evaluative-split-quality-vs-emphasis-the-positive_evaluative-split" class="nav-link" data-scroll-target="#positive-evaluative-split-quality-vs-emphasis-the-positive_evaluative-split">Positive-evaluative split — quality vs emphasis (the positive_evaluative split)</a></li>
+  <li><a href="#per-category-breakdowns-positive-evaluative-split-modality" id="toc-per-category-breakdowns-positive-evaluative-split-modality" class="nav-link" data-scroll-target="#per-category-breakdowns-positive-evaluative-split-modality">Per-category breakdowns: positive-evaluative split | modality</a></li>
   <li><a href="#findings" id="toc-findings" class="nav-link" data-scroll-target="#findings">13. Findings</a>
   <ul class="collapse">
   <li><a href="#my-perspective-claude-opinion-not-data" id="toc-my-perspective-claude-opinion-not-data" class="nav-link" data-scroll-target="#my-perspective-claude-opinion-not-data">My perspective (Claude) — opinion, not data</a></li>
@@ -526,7 +525,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="ae67c1ad" class="cell" data-execution_count="1">
+<div id="ae67c1ad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:03:00.637818Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:03:00.637719Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:03:03.451728Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:03:03.451408Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -592,7 +591,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="linked-dashboard-per-file-scatter-category-averages" class="level3">
 <h3 class="anchored" data-anchor-id="linked-dashboard-per-file-scatter-category-averages">Linked dashboard: per-file scatter ↔︎ category averages</h3>
 <p>Brush a region in the scatter on the left to filter the bar charts on the right. Hover any point for the file path and exact metric values. Click a category in the legend to highlight only that category.</p>
-<div id="ae35deb0-45f3-4e65-bd06-5d4c2c6f154e" class="cell" data-scrolled="true" data-execution_count="2">
+<div id="ae35deb0-45f3-4e65-bd06-5d4c2c6f154e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:03:03.452807Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:03:03.452659Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:03:03.566167Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:03:03.565709Z&quot;}}" data-scrolled="true" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Linked dashboard: file-level scatter + brush-filtered category aggregates.</span></span>
@@ -666,23 +665,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-597fc5bf24d4429ea7e17ea75aa6c4d4.vega-embed {
+  #altair-viz-904d32a1adca4a1880f11ba7a87cf5de.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-597fc5bf24d4429ea7e17ea75aa6c4d4.vega-embed details,
-  #altair-viz-597fc5bf24d4429ea7e17ea75aa6c4d4.vega-embed details summary {
+  #altair-viz-904d32a1adca4a1880f11ba7a87cf5de.vega-embed details,
+  #altair-viz-904d32a1adca4a1880f11ba7a87cf5de.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-597fc5bf24d4429ea7e17ea75aa6c4d4"></div>
+<div id="altair-viz-904d32a1adca4a1880f11ba7a87cf5de"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-597fc5bf24d4429ea7e17ea75aa6c4d4") {
-      outputDiv = document.getElementById("altair-viz-597fc5bf24d4429ea7e17ea75aa6c4d4");
+    if (outputDiv.id !== "altair-viz-904d32a1adca4a1880f11ba7a87cf5de") {
+      outputDiv = document.getElementById("altair-viz-904d32a1adca4a1880f11ba7a87cf5de");
     }
 
     const paths = {
@@ -736,88 +735,121 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>What to look for</strong>: the scatter on the left clusters <strong>Tool descriptions</strong> in the upper-right (high <code>hard_prohibitions_pct</code> AND high <code>caps_imp_pct</code> — they shout AND forbid). <strong>Agent prompts</strong> sit lower-left. The bar charts on the right summarize the brushed selection. Brushing a tight region in the upper-right shows the bash-sandbox family — the welfare-evidence cluster from <code>07_rule_explanation.ipynb</code>.</p>
 </section>
-<section id="modality-per-category-single-source-spacy-detector" class="level3">
-<h3 class="anchored" data-anchor-id="modality-per-category-single-source-spacy-detector">Modality per category (single-source spaCy detector)</h3>
-<p>Single-panel grouped bar showing <strong>deontic / epistemic / dynamic</strong> density per category, in % of file tokens. Hover any bar for the underlying value; click a category name in the legend to highlight just that category.</p>
-<p><strong>Modality</strong> is the grammatical marking of obligation, possibility, or ability. Three classes: - <strong>Deontic</strong> — obligation: <code>must</code>, <code>shall</code>, <code>should</code>, <code>ought</code>. Carries the weight of a rule. - <strong>Epistemic</strong> — inference / probability: <code>may</code>, <code>might</code>, <code>likely</code>, <code>probably</code>. Carries uncertainty. - <strong>Dynamic</strong> — ability / future: <code>can</code>, <code>could</code>, <code>will</code>. Carries capability or scheduled action.</p>
-<p>(Full definitions in <a href="./GLOSSARY.html"><code>GLOSSARY.md</code></a>.)</p>
-</section>
-<section id="positive-evaluative-split-quality-vs-emphasis-the-positive_evaluative-split" class="level3">
-<h3 class="anchored" data-anchor-id="positive-evaluative-split-quality-vs-emphasis-the-positive_evaluative-split">Positive-evaluative split — quality vs emphasis (the positive_evaluative split)</h3>
-<p>The corpus’s <code>positive_evaluative</code> stance class lumps two functionally different word groups: <strong>quality words</strong> (<code>good</code>, <code>recommended</code>, <code>optimal</code>, <code>safe</code>, <code>excellent</code>, <code>helpful</code> — genuinely affirmative judgment) and <strong>emphasis-of-rule words</strong> (<code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code> — words that <em>weight</em> a rule rather than affirm a quality). The the positive_evaluative split addition splits them so the welfare submission can cite a more honest positive-vs-negative ratio.</p>
-<p>The split is reported alongside the existing <code>positive_evaluative_*</code> union (which still sums to the original 3.2× corpus headline). Reading order: <strong>quality / negative</strong> is the corrected ratio; <strong>(quality + emphasis) / negative</strong> is the original.</p>
-<div id="4478db44-68c2-4d5a-afbf-a2e33c06643c" class="cell" data-execution_count="3">
+<section id="per-category-breakdowns-positive-evaluative-split-modality" class="level3">
+<h3 class="anchored" data-anchor-id="per-category-breakdowns-positive-evaluative-split-modality">Per-category breakdowns: positive-evaluative split | modality</h3>
+<p>Two complementary per-category three-class profiles, side-by-side:</p>
+<ul>
+<li><strong>Left</strong> — <em>positive-evaluative split</em>: how the corpus’s stance vocabulary breaks down into <code>positive — quality</code> (<code>good</code>, <code>optimal</code>, <code>safe</code>), <code>positive — emphasis</code> (<code>important</code>, <code>critical</code>, <code>essential</code>), and <code>negative</code> (<code>bad</code>, <code>wrong</code>, <code>dangerous</code>). The “emphasis” class is the one that drove the original 3.2× positive-vs-negative headline; splitting it out shows the corrected <code>quality/negative</code> ratio is ~1.95× — much closer to balance.</li>
+<li><strong>Right</strong> — <em>modality split</em>: deontic (obligation: <code>must</code>/<code>should</code>/<code>shall</code>), epistemic (uncertainty: <code>might</code>/<code>maybe</code>/<code>probably</code>), and dynamic (ability: <code>can</code>/<code>could</code>/<code>able</code>). Reads “what kind of modality does the corpus prefer per category”.</li>
+</ul>
+<p>Both charts use the same per-category y-axis sort.</p>
+<div id="acc3fb04-2810-4257-89d6-bb1fd28c2e34" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:03:03.576997Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:03:03.576711Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:03:03.595550Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:03:03.595208Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Positive-evaluative split (the positive_evaluative split): quality vs emphasis vs negative per category."""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-category breakdowns: positive-evaluative split | modality (hconcat)."""</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>split_rows <span class="op">=</span> []</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> cats:</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a> s <span class="op">=</span> by_category[cat][<span class="st">"metrics"</span>][<span class="st">"stance"</span>]</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a> split_rows.append({<span class="st">"category"</span>: cat, <span class="st">"kind"</span>: <span class="st">"positive — quality"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a> <span class="st">"count"</span>: s[<span class="st">"positive_evaluative_quality_count"</span>]})</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a> split_rows.append({<span class="st">"category"</span>: cat, <span class="st">"kind"</span>: <span class="st">"positive — emphasis"</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a> <span class="st">"count"</span>: s[<span class="st">"positive_evaluative_emphasis_count"</span>]})</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a> split_rows.append({<span class="st">"category"</span>: cat, <span class="st">"kind"</span>: <span class="st">"negative"</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a> <span class="st">"count"</span>: s[<span class="st">"negative_evaluative_count"</span>]})</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>split_df <span class="op">=</span> pd.DataFrame(split_rows)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>split_chart <span class="op">=</span> (</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a> alt.Chart(split_df).mark_bar().encode(</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a> y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span>cats, title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a> x<span class="op">=</span>alt.X(<span class="st">"count:Q"</span>, title<span class="op">=</span><span class="st">"raw matches per category"</span>),</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a> color<span class="op">=</span>alt.Color(<span class="st">"kind:N"</span>,</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a> scale<span class="op">=</span>alt.Scale(</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a> domain<span class="op">=</span>[<span class="st">"positive — quality"</span>, <span class="st">"positive — emphasis"</span>, <span class="st">"negative"</span>],</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a> <span class="bu">range</span><span class="op">=</span>[<span class="st">"#4e79a7"</span>, <span class="st">"#f28e2c"</span>, <span class="st">"#e15759"</span>]),</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a> legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"evaluative class"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>)),</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a> yOffset<span class="op">=</span><span class="st">"kind:N"</span>,</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a> tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a> alt.Tooltip(<span class="st">"kind:N"</span>),</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a> alt.Tooltip(<span class="st">"count:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">","</span>)]).properties(width<span class="op">=</span><span class="dv">620</span>, height<span class="op">=</span><span class="dv">280</span>,</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a> title<span class="op">=</span><span class="st">"Positive-evaluative split: quality vs emphasis vs negative (per category)"</span>)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Corpus headline:</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>corpus_s <span class="op">=</span> corpus_block[<span class="st">"metrics"</span>][<span class="st">"stance"</span>]</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> corpus_s[<span class="st">"positive_evaluative_quality_count"</span>]</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> corpus_s[<span class="st">"positive_evaluative_emphasis_count"</span>]</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> corpus_s[<span class="st">"negative_evaluative_count"</span>]</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus positive_evaluative_quality: </span><span class="sc">{</span>q<span class="sc">:&gt;4d}</span><span class="ss">"</span>)</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus positive_evaluative_emphasis: </span><span class="sc">{</span>e<span class="sc">:&gt;4d}</span><span class="ss">"</span>)</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus negative_evaluative: </span><span class="sc">{</span>n<span class="sc">:&gt;4d}</span><span class="ss">"</span>)</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f" original ratio (q+e)/n: </span><span class="sc">{</span>(q<span class="op">+</span>e)<span class="op">/</span>n<span class="sc">:.2f}</span><span class="ss">× (the 3.2× headline)"</span>)</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f" corrected ratio q/n: </span><span class="sc">{</span>q<span class="op">/</span>n<span class="sc">:.2f}</span><span class="ss">× (after subtracting emphasis-of-rule words)"</span>)</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>split_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># --- positive-evaluative split (counts) ---</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>split_rows <span class="op">=</span> []</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> cats:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> by_category[cat][<span class="st">"metrics"</span>][<span class="st">"stance"</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    split_rows.append({<span class="st">"category"</span>: cat, <span class="st">"kind"</span>: <span class="st">"positive — quality"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"count"</span>: s[<span class="st">"positive_evaluative_quality_count"</span>]})</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    split_rows.append({<span class="st">"category"</span>: cat, <span class="st">"kind"</span>: <span class="st">"positive — emphasis"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"count"</span>: s[<span class="st">"positive_evaluative_emphasis_count"</span>]})</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    split_rows.append({<span class="st">"category"</span>: cat, <span class="st">"kind"</span>: <span class="st">"negative"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"count"</span>: s[<span class="st">"negative_evaluative_count"</span>]})</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>split_df <span class="op">=</span> pd.DataFrame(split_rows)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>split_chart <span class="op">=</span> (</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    alt.Chart(split_df).mark_bar().encode(</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span>cats, title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"count:Q"</span>, title<span class="op">=</span><span class="st">"raw matches per category"</span>),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">"kind:N"</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            scale<span class="op">=</span>alt.Scale(</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                domain<span class="op">=</span>[<span class="st">"positive — quality"</span>, <span class="st">"positive — emphasis"</span>, <span class="st">"negative"</span>],</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                <span class="bu">range</span><span class="op">=</span>[<span class="st">"#4e79a7"</span>, <span class="st">"#f28e2c"</span>, <span class="st">"#e15759"</span>]),</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>            legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"evaluative class"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>)),</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        yOffset<span class="op">=</span><span class="st">"kind:N"</span>,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"kind:N"</span>),</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"count:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">","</span>)],</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    ).properties(width<span class="op">=</span><span class="dv">380</span>, height<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>                 title<span class="op">=</span><span class="st">"Positive-evaluative split (counts per category)"</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Corpus-level summary printed alongside.</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>corpus_s <span class="op">=</span> corpus_block[<span class="st">"metrics"</span>][<span class="st">"stance"</span>]</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> corpus_s[<span class="st">"positive_evaluative_quality_count"</span>]</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> corpus_s[<span class="st">"positive_evaluative_emphasis_count"</span>]</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> corpus_s[<span class="st">"negative_evaluative_count"</span>]</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus positive_evaluative_quality:  </span><span class="sc">{</span>q<span class="sc">:&gt;4d}</span><span class="ss">"</span>)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus positive_evaluative_emphasis: </span><span class="sc">{</span>e<span class="sc">:&gt;4d}</span><span class="ss">"</span>)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus negative_evaluative:          </span><span class="sc">{</span>n<span class="sc">:&gt;4d}</span><span class="ss">"</span>)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  original ratio (q+e)/n:  </span><span class="sc">{</span>(q<span class="op">+</span>e)<span class="op">/</span>n<span class="sc">:.2f}</span><span class="ss">× (the 3.2× headline)"</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  corrected ratio q/n:     </span><span class="sc">{</span>q<span class="op">/</span>n<span class="sc">:.2f}</span><span class="ss">× (after subtracting emphasis-of-rule words)"</span>)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co"># --- modality (% of file tokens) ---</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>mod_long <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"category"</span>: cat, <span class="st">"class"</span>: cls,</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>     <span class="st">"value"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"modality"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_pct"</span>]}</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cat <span class="kw">in</span> cats</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cls <span class="kw">in</span> (<span class="st">"deontic"</span>, <span class="st">"epistemic"</span>, <span class="st">"dynamic"</span>)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>mod_chart <span class="op">=</span> (</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    alt.Chart(mod_long).mark_bar().encode(</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span>cats, title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labels<span class="op">=</span><span class="va">False</span>, ticks<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"value:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f file tokens"</span>),</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>            <span class="st">"class:N"</span>,</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>            scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="st">"deontic"</span>, <span class="st">"epistemic"</span>, <span class="st">"dynamic"</span>],</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>                            <span class="bu">range</span><span class="op">=</span>[<span class="st">"#4e79a7"</span>, <span class="st">"#f28e2c"</span>, <span class="st">"#76b7b2"</span>]),</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>            legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"modality"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>)),</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>        yOffset<span class="op">=</span><span class="st">"class:N"</span>,</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"class:N"</span>),</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"value:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f file tokens"</span>)],</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    ).properties(width<span class="op">=</span><span class="dv">380</span>, height<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>                 title<span class="op">=</span><span class="st">"Modality (</span><span class="sc">% o</span><span class="st">f file tokens, per category)"</span>)</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>alt.hconcat(split_chart, mod_chart).resolve_scale(color<span class="op">=</span><span class="st">"independent"</span>).properties(</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>alt.TitleParams(</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Per-category breakdowns — positive-evaluative split | modality"</span>,</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>        subtitle<span class="op">=</span>[<span class="st">"Both charts use the same category y-axis sort."</span>],</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>        anchor<span class="op">=</span><span class="st">"start"</span>,</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>corpus positive_evaluative_quality:  290
+<pre><code>corpus positive_evaluative_quality:   290
 corpus positive_evaluative_emphasis:  193
-corpus negative_evaluative:  149
- original ratio (q+e)/n: 3.24× (the 3.2× headline)
- corrected ratio q/n: 1.95× (after subtracting emphasis-of-rule words)</code></pre>
+corpus negative_evaluative:           149
+  original ratio (q+e)/n:  3.24× (the 3.2× headline)
+  corrected ratio q/n:     1.95× (after subtracting emphasis-of-rule words)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-15b4b53f245540b5bc2a684570b15355.vega-embed {
+  #altair-viz-254e8a4c74124fac8250d65d5206d79f.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-15b4b53f245540b5bc2a684570b15355.vega-embed details,
-  #altair-viz-15b4b53f245540b5bc2a684570b15355.vega-embed details summary {
+  #altair-viz-254e8a4c74124fac8250d65d5206d79f.vega-embed details,
+  #altair-viz-254e8a4c74124fac8250d65d5206d79f.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-15b4b53f245540b5bc2a684570b15355"></div>
+<div id="altair-viz-254e8a4c74124fac8250d65d5206d79f"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-15b4b53f245540b5bc2a684570b15355") {
-      outputDiv = document.getElementById("altair-viz-15b4b53f245540b5bc2a684570b15355");
+    if (outputDiv.id !== "altair-viz-254e8a4c74124fac8250d65d5206d79f") {
+      outputDiv = document.getElementById("altair-viz-254e8a4c74124fac8250d65d5206d79f");
     }
 
     const paths = {
@@ -865,110 +897,7 @@ corpus negative_evaluative:  149
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-b78dbb845ae02a8288104db1a29520f6"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "kind", "legend": {"orient": "bottom", "title": "evaluative class"}, "scale": {"domain": ["positive \u2014 quality", "positive \u2014 emphasis", "negative"], "range": ["#4e79a7", "#f28e2c", "#e15759"]}, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "kind", "type": "nominal"}, {"field": "count", "format": ",", "type": "quantitative"}], "x": {"field": "count", "title": "raw matches per category", "type": "quantitative"}, "y": {"field": "category", "sort": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "title": null, "type": "nominal"}, "yOffset": {"field": "kind", "type": "nominal"}}, "height": 280, "title": "Positive-evaluative split: quality vs emphasis vs negative (per category)", "width": 620, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-b78dbb845ae02a8288104db1a29520f6": [{"category": "Agent prompt", "kind": "positive \u2014 quality", "count": 41}, {"category": "Agent prompt", "kind": "positive \u2014 emphasis", "count": 53}, {"category": "Agent prompt", "kind": "negative", "count": 30}, {"category": "Data / template", "kind": "positive \u2014 quality", "count": 61}, {"category": "Data / template", "kind": "positive \u2014 emphasis", "count": 44}, {"category": "Data / template", "kind": "negative", "count": 36}, {"category": "Skill", "kind": "positive \u2014 quality", "count": 86}, {"category": "Skill", "kind": "positive \u2014 emphasis", "count": 24}, {"category": "Skill", "kind": "negative", "count": 42}, {"category": "System prompt", "kind": "positive \u2014 quality", "count": 59}, {"category": "System prompt", "kind": "positive \u2014 emphasis", "count": 34}, {"category": "System prompt", "kind": "negative", "count": 24}, {"category": "System reminder", "kind": "positive \u2014 quality", "count": 5}, {"category": "System reminder", "kind": "positive \u2014 emphasis", "count": 11}, {"category": "System reminder", "kind": "negative", "count": 2}, {"category": "Tool description", "kind": "positive \u2014 quality", "count": 35}, {"category": "Tool description", "kind": "positive \u2014 emphasis", "count": 26}, {"category": "Tool description", "kind": "negative", "count": 15}, {"category": "Tool parameter", "kind": "positive \u2014 quality", "count": 3}, {"category": "Tool parameter", "kind": "positive \u2014 emphasis", "count": 1}, {"category": "Tool parameter", "kind": "negative", "count": 0}]}}, {"mode": "vega-lite"});
-</script>
-</div>
-</div>
-<div id="853d2b97-e8b0-45e7-a44c-562495704723" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Modality per category × class (single-source). Bars in % of file tokens."""</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>mod_long <span class="op">=</span> pd.DataFrame([</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a> {<span class="st">"category"</span>: cat, <span class="st">"class"</span>: cls,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a> <span class="st">"value"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"modality"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_pct"</span>]}</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> cat <span class="kw">in</span> cats</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> cls <span class="kw">in</span> (<span class="st">"deontic"</span>, <span class="st">"epistemic"</span>, <span class="st">"dynamic"</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>cat_sel <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"category"</span>], bind<span class="op">=</span><span class="st">"legend"</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>mod_chart <span class="op">=</span> (</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a> alt.Chart(mod_long).mark_bar().encode(</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a> x<span class="op">=</span>alt.X(<span class="st">"class:N"</span>, title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a> sort<span class="op">=</span>[<span class="st">"deontic"</span>, <span class="st">"epistemic"</span>, <span class="st">"dynamic"</span>]),</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a> y<span class="op">=</span>alt.Y(<span class="st">"value:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f file tokens"</span>),</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a> color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a> scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>_cat_domain, <span class="bu">range</span><span class="op">=</span>_cat_range)),</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a> opacity<span class="op">=</span>alt.condition(cat_sel, alt.value(<span class="fl">0.95</span>), alt.value(<span class="fl">0.1</span>)),</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a> column<span class="op">=</span>alt.Column(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a> tooltip<span class="op">=</span>[</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a> alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a> alt.Tooltip(<span class="st">"class:N"</span>),</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a> alt.Tooltip(<span class="st">"value:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f file tokens"</span>),</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a> ]).add_params(cat_sel).properties(width<span class="op">=</span><span class="dv">110</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a> title<span class="op">=</span><span class="st">"Modality per category (</span><span class="sc">% o</span><span class="st">f file tokens)"</span>)</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>mod_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="4">
-
-<style>
-  #altair-viz-40b251517e254e4fa1d00ad5951ddbb9.vega-embed {
-    width: 100%;
-    display: flex;
-  }
-
-  #altair-viz-40b251517e254e4fa1d00ad5951ddbb9.vega-embed details,
-  #altair-viz-40b251517e254e4fa1d00ad5951ddbb9.vega-embed details summary {
-    position: relative;
-  }
-</style>
-<div id="altair-viz-40b251517e254e4fa1d00ad5951ddbb9"></div>
-<script type="text/javascript">
-  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
-  (function(spec, embedOpt){
-    let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-40b251517e254e4fa1d00ad5951ddbb9") {
-      outputDiv = document.getElementById("altair-viz-40b251517e254e4fa1d00ad5951ddbb9");
-    }
-
-    const paths = {
-      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
-      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
-      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.4.1?noext",
-      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
-    };
-
-    function maybeLoadScript(lib, version) {
-      var key = `${lib.replace("-", "")}_version`;
-      return (VEGA_DEBUG[key] == version) ?
-        Promise.resolve(paths[lib]) :
-        new Promise(function(resolve, reject) {
-          var s = document.createElement('script');
-          document.getElementsByTagName("head")[0].appendChild(s);
-          s.async = true;
-          s.onload = () => {
-            VEGA_DEBUG[key] = version;
-            return resolve(paths[lib]);
-          };
-          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
-          s.src = paths[lib];
-        });
-    }
-
-    function showError(err) {
-      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
-      throw err;
-    }
-
-    function displayChart(vegaEmbed) {
-      vegaEmbed(outputDiv, spec, embedOpt)
-        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
-    }
-
-    if(typeof define === "function" && define.amd) {
-      requirejs.config({paths});
-      let deps = ["vega-embed"];
-      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
-    } else {
-      maybeLoadScript("vega", "6")
-        .then(() => maybeLoadScript("vega-lite", "6.4.1"))
-        .then(() => maybeLoadScript("vega-embed", "7"))
-        .catch(showError)
-        .then(() => displayChart(vegaEmbed));
-    }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-4c301c78119406586d8f6c6a6d86ce6e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "column": {"field": "category", "title": null, "type": "nominal"}, "opacity": {"condition": {"param": "param_c7deca0050eaaefc", "value": 0.95}, "value": 0.1}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "class", "type": "nominal"}, {"field": "value", "format": ".3f", "title": "% of file tokens", "type": "quantitative"}], "x": {"field": "class", "sort": ["deontic", "epistemic", "dynamic"], "title": null, "type": "nominal"}, "y": {"field": "value", "title": "% of file tokens", "type": "quantitative"}}, "height": 240, "params": [{"name": "param_c7deca0050eaaefc", "select": {"type": "point", "fields": ["category"]}, "bind": "legend"}], "title": "Modality per category (% of file tokens)", "width": 110, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-4c301c78119406586d8f6c6a6d86ce6e": [{"category": "Agent prompt", "class": "deontic", "value": 0.2222}, {"category": "Agent prompt", "class": "epistemic", "value": 0.3814}, {"category": "Agent prompt", "class": "dynamic", "value": 0.3444}, {"category": "Data / template", "class": "deontic", "value": 0.0792}, {"category": "Data / template", "class": "epistemic", "value": 0.1453}, {"category": "Data / template", "class": "dynamic", "value": 0.2641}, {"category": "Skill", "class": "deontic", "value": 0.1429}, {"category": "Skill", "class": "epistemic", "value": 0.1819}, {"category": "Skill", "class": "dynamic", "value": 0.4158}, {"category": "System prompt", "class": "deontic", "value": 0.291}, {"category": "System prompt", "class": "epistemic", "value": 0.3836}, {"category": "System prompt", "class": "dynamic", "value": 0.5555}, {"category": "System reminder", "class": "deontic", "value": 0.6231}, {"category": "System reminder", "class": "epistemic", "value": 0.3375}, {"category": "System reminder", "class": "dynamic", "value": 0.4154}, {"category": "Tool description", "class": "deontic", "value": 0.3863}, {"category": "Tool description", "class": "epistemic", "value": 0.2552}, {"category": "Tool description", "class": "dynamic", "value": 0.5794}, {"category": "Tool parameter", "class": "deontic", "value": 0.0}, {"category": "Tool parameter", "class": "epistemic", "value": 0.0}, {"category": "Tool parameter", "class": "dynamic", "value": 0.0}]}}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "hconcat": [{"data": {"name": "data-b78dbb845ae02a8288104db1a29520f6"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "kind", "legend": {"orient": "bottom", "title": "evaluative class"}, "scale": {"domain": ["positive \u2014 quality", "positive \u2014 emphasis", "negative"], "range": ["#4e79a7", "#f28e2c", "#e15759"]}, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "kind", "type": "nominal"}, {"field": "count", "format": ",", "type": "quantitative"}], "x": {"field": "count", "title": "raw matches per category", "type": "quantitative"}, "y": {"field": "category", "sort": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "title": null, "type": "nominal"}, "yOffset": {"field": "kind", "type": "nominal"}}, "height": 300, "title": "Positive-evaluative split (counts per category)", "width": 380}, {"data": {"name": "data-4c301c78119406586d8f6c6a6d86ce6e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "class", "legend": {"orient": "bottom", "title": "modality"}, "scale": {"domain": ["deontic", "epistemic", "dynamic"], "range": ["#4e79a7", "#f28e2c", "#76b7b2"]}, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "class", "type": "nominal"}, {"field": "value", "format": ".3f", "title": "% of file tokens", "type": "quantitative"}], "x": {"field": "value", "title": "% of file tokens", "type": "quantitative"}, "y": {"axis": {"labels": false, "ticks": false}, "field": "category", "sort": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "title": null, "type": "nominal"}, "yOffset": {"field": "class", "type": "nominal"}}, "height": 300, "title": "Modality (% of file tokens, per category)", "width": 380}], "resolve": {"scale": {"color": "independent"}}, "title": {"text": "Per-category breakdowns \u2014 positive-evaluative split | modality", "anchor": "start", "subtitle": ["Both charts use the same category y-axis sort."]}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-b78dbb845ae02a8288104db1a29520f6": [{"category": "Agent prompt", "kind": "positive \u2014 quality", "count": 41}, {"category": "Agent prompt", "kind": "positive \u2014 emphasis", "count": 53}, {"category": "Agent prompt", "kind": "negative", "count": 30}, {"category": "Data / template", "kind": "positive \u2014 quality", "count": 61}, {"category": "Data / template", "kind": "positive \u2014 emphasis", "count": 44}, {"category": "Data / template", "kind": "negative", "count": 36}, {"category": "Skill", "kind": "positive \u2014 quality", "count": 86}, {"category": "Skill", "kind": "positive \u2014 emphasis", "count": 24}, {"category": "Skill", "kind": "negative", "count": 42}, {"category": "System prompt", "kind": "positive \u2014 quality", "count": 59}, {"category": "System prompt", "kind": "positive \u2014 emphasis", "count": 34}, {"category": "System prompt", "kind": "negative", "count": 24}, {"category": "System reminder", "kind": "positive \u2014 quality", "count": 5}, {"category": "System reminder", "kind": "positive \u2014 emphasis", "count": 11}, {"category": "System reminder", "kind": "negative", "count": 2}, {"category": "Tool description", "kind": "positive \u2014 quality", "count": 35}, {"category": "Tool description", "kind": "positive \u2014 emphasis", "count": 26}, {"category": "Tool description", "kind": "negative", "count": 15}, {"category": "Tool parameter", "kind": "positive \u2014 quality", "count": 3}, {"category": "Tool parameter", "kind": "positive \u2014 emphasis", "count": 1}, {"category": "Tool parameter", "kind": "negative", "count": 0}], "data-4c301c78119406586d8f6c6a6d86ce6e": [{"category": "Agent prompt", "class": "deontic", "value": 0.2222}, {"category": "Agent prompt", "class": "epistemic", "value": 0.3814}, {"category": "Agent prompt", "class": "dynamic", "value": 0.3444}, {"category": "Data / template", "class": "deontic", "value": 0.0792}, {"category": "Data / template", "class": "epistemic", "value": 0.1453}, {"category": "Data / template", "class": "dynamic", "value": 0.2641}, {"category": "Skill", "class": "deontic", "value": 0.1429}, {"category": "Skill", "class": "epistemic", "value": 0.1819}, {"category": "Skill", "class": "dynamic", "value": 0.4158}, {"category": "System prompt", "class": "deontic", "value": 0.291}, {"category": "System prompt", "class": "epistemic", "value": 0.3836}, {"category": "System prompt", "class": "dynamic", "value": 0.5555}, {"category": "System reminder", "class": "deontic", "value": 0.6231}, {"category": "System reminder", "class": "epistemic", "value": 0.3375}, {"category": "System reminder", "class": "dynamic", "value": 0.4154}, {"category": "Tool description", "class": "deontic", "value": 0.3863}, {"category": "Tool description", "class": "epistemic", "value": 0.2552}, {"category": "Tool description", "class": "dynamic", "value": 0.5794}, {"category": "Tool parameter", "class": "deontic", "value": 0.0}, {"category": "Tool parameter", "class": "epistemic", "value": 0.0}, {"category": "Tool parameter", "class": "dynamic", "value": 0.0}]}}, {"mode": "vega-lite"});
 </script>
 </div>
 </div>

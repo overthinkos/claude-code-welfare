@@ -493,9 +493,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link active" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
-  <li><a href="#sentence-register-per-category-per-sentence-pragmatic-classifier" id="toc-sentence-register-per-category-per-sentence-pragmatic-classifier" class="nav-link" data-scroll-target="#sentence-register-per-category-per-sentence-pragmatic-classifier">Sentence-register per category (per-sentence pragmatic classifier)</a></li>
+  <li><a href="#sentence-register-per-category-distribution-addressee-drilldown" id="toc-sentence-register-per-category-distribution-addressee-drilldown" class="nav-link" data-scroll-target="#sentence-register-per-category-distribution-addressee-drilldown">Sentence-register per category — distribution + addressee drilldown</a></li>
   <li><a href="#per-file-outliers-top-10-files-for-each-attested-class" id="toc-per-file-outliers-top-10-files-for-each-attested-class" class="nav-link" data-scroll-target="#per-file-outliers-top-10-files-for-each-attested-class">Per-file outliers — top 10 files for each attested class</a></li>
-  <li><a href="#addressee-distribution-for-appreciative-and-collaborative-opinion-round-addition-a" id="toc-addressee-distribution-for-appreciative-and-collaborative-opinion-round-addition-a" class="nav-link" data-scroll-target="#addressee-distribution-for-appreciative-and-collaborative-opinion-round-addition-a">Addressee distribution for <code>appreciative</code> and <code>collaborative</code> (Opinion-round addition A)</a></li>
   <li><a href="#my-perspective-claude-opinion-not-data" id="toc-my-perspective-claude-opinion-not-data" class="nav-link" data-scroll-target="#my-perspective-claude-opinion-not-data">My perspective (Claude) — opinion, not data</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/02_sentence_register.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -523,7 +522,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="87850017" class="cell" data-execution_count="1">
+<div id="87850017" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:45.553120Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:45.552992Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.394168Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.393872Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -630,72 +629,149 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Multi-label, with a concrete example.</strong> A single sentence can carry several flags at once. Take a hypothetical sentence: <code>"Please, we should consider running the migration."</code> That single sentence would carry <strong><code>permissive</code></strong> (<code>please</code>), <strong><code>collaborative</code></strong> (<code>we should</code>), <strong><code>imperative</code></strong> (the verb <code>consider</code> is grammatically imperative-like), and arguably <strong><code>directive</code></strong> (the modal <code>should</code>). Because the same sentence contributes to multiple class counts, per-class <strong><code>sent_pct</code> values can sum to more than 100%</strong> when added across all six classes within a category. That is intentional and reflects the multi-label nature of the classifier — not a bug.</p>
 <p><strong>Detector mechanics</strong>: classes are detected via <code>PhraseMatcher</code> (keyword lists from <code>SENTENCE_REGISTER_MARKERS</code>), reused <code>classify_sent_mood</code> from cell 10 (parse-tree heuristic for grammatical imperative), the <code>STANCE_MARKERS["directive"]</code> matcher (for <code>directive</code>), and three <code>DependencyMatcher</code> parse patterns (for <code>we should ...</code>, <code>consider X-ing</code>, and <code>param-noun + setter-verb</code>). Producer details: see <code>00_data_pipeline.ipynb</code> cell 16.</p>
 </section>
-<section id="sentence-register-per-category-per-sentence-pragmatic-classifier" class="level3">
-<h3 class="anchored" data-anchor-id="sentence-register-per-category-per-sentence-pragmatic-classifier">Sentence-register per category (per-sentence pragmatic classifier)</h3>
-<p>Six per-sentence flags (multi-label): <code>collaborative</code> / <code>permissive</code> / <code>appreciative</code> / <code>imperative</code> / <code>directive</code> / <code>configuring</code>. Pcts can sum to &gt;100% within a category — that’s intentional.</p>
-<p>The chart is structured to make the absence of <code>collaborative</code> and <code>appreciative</code> speech across all categories immediately visible: those bars stay near zero everywhere by design.</p>
-<div id="dc6fab5f-044f-4dfd-83ec-1c76c578cecc" class="cell" data-execution_count="2">
+<section id="sentence-register-per-category-distribution-addressee-drilldown" class="level3">
+<h3 class="anchored" data-anchor-id="sentence-register-per-category-distribution-addressee-drilldown">Sentence-register per category — distribution + addressee drilldown</h3>
+<p>Two views in one figure, vconcat’d:</p>
+<ul>
+<li><strong>Top</strong> — per-category × per-class distribution (% of sentences). Six classes, faceted one row per category.</li>
+<li><strong>Bottom</strong> — addressee breakdown for the two near-zero classes (<code>appreciative</code>, <code>collaborative</code>): claude / user / unknown. Tells you whether the prompt author <em>speaks to Claude</em> in those registers or <em>instructs Claude to use</em> them with the user.</li>
+</ul>
+<p>A forensic-inspection sample of sentences matching appreciative keywords is printed alongside (sourced from <code>sentences_classified.parquet</code>).</p>
+<div id="b8b9f100-4f87-4d70-aa8c-57e2aa9acd25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:48.395177Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:48.395040Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.451615Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.451254Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Sentence-register per category × class — Altair grouped bar."""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Sentence-register per category × class + addressee drilldown — vconcat composite."""</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sr_long <span class="op">=</span> pd.DataFrame([</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: cat,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"class"</span>:    cls,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sent_pct"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>],</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sent_count"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_count"</span>],</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cat <span class="kw">in</span> by_category</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cls <span class="kw">in</span> SENT_REGISTER_CLASSES</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>sr_class_domain <span class="op">=</span> SENT_REGISTER_CLASSES</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>sr_class_range  <span class="op">=</span> [SR_CLASS_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> sr_class_domain]</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>sr_chart <span class="op">=</span> (</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    alt.Chart(sr_long)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"sent_pct:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f sentences"</span>),</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"class:N"</span>, sort<span class="op">=</span>sr_class_domain, title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"class:N"</span>,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>sr_class_domain, <span class="bu">range</span><span class="op">=</span>sr_class_range),</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                         legend<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        row<span class="op">=</span>alt.Row(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                     header<span class="op">=</span>alt.Header(labelAngle<span class="op">=</span><span class="dv">0</span>, labelAlign<span class="op">=</span><span class="st">"left"</span>)),</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"class:N"</span>),</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"sent_pct:Q"</span>,   <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>, title<span class="op">=</span><span class="st">"sent %"</span>),</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"sent_count:Q"</span>, title<span class="op">=</span><span class="st">"sentences"</span>),</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">480</span>, height<span class="op">=</span><span class="dv">140</span>,</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Sentence-register per category × class (multi-label, </span><span class="sc">% o</span><span class="st">f sentences)"</span>)</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>sr_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># --- top panel: per-category × per-class distribution ---</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sr_long <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: cat,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"class"</span>:    cls,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sent_pct"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>],</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sent_count"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_count"</span>],</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cat <span class="kw">in</span> by_category</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cls <span class="kw">in</span> SENT_REGISTER_CLASSES</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>sr_class_domain <span class="op">=</span> SENT_REGISTER_CLASSES</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>sr_class_range  <span class="op">=</span> [SR_CLASS_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> sr_class_domain]</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>sr_chart <span class="op">=</span> (</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    alt.Chart(sr_long)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"sent_pct:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f sentences"</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"class:N"</span>, sort<span class="op">=</span>sr_class_domain, title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"class:N"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>sr_class_domain, <span class="bu">range</span><span class="op">=</span>sr_class_range),</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                         legend<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        row<span class="op">=</span>alt.Row(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                     header<span class="op">=</span>alt.Header(labelAngle<span class="op">=</span><span class="dv">0</span>, labelAlign<span class="op">=</span><span class="st">"left"</span>)),</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"class:N"</span>),</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"sent_pct:Q"</span>,   <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>, title<span class="op">=</span><span class="st">"sent %"</span>),</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"sent_count:Q"</span>, title<span class="op">=</span><span class="st">"sentences"</span>),</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">140</span>,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Sentence-register per category × class (multi-label, </span><span class="sc">% o</span><span class="st">f sentences)"</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co"># --- bottom panel: addressee breakdown for the two near-zero classes ---</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>addr_rows <span class="op">=</span> []</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cls <span class="kw">in</span> (<span class="st">"appreciative"</span>, <span class="st">"collaborative"</span>):</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    block <span class="op">=</span> corpus_block[<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>]</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> who <span class="kw">in</span> (<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>):</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        addr_rows.append({</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            <span class="st">"class"</span>:     cls,</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>            <span class="st">"addressee"</span>: who,</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"count"</span>:     block[<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_addressee_</span><span class="sc">{</span>who<span class="sc">}</span><span class="ss">_count"</span>],</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>addr_df <span class="op">=</span> pd.DataFrame(addr_rows)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Corpus-wide addressee distribution for the two near-zero classes:"</span>)</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(addr_df.pivot(index<span class="op">=</span><span class="st">"class"</span>, columns<span class="op">=</span><span class="st">"addressee"</span>, values<span class="op">=</span><span class="st">"count"</span>)</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>            [[<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>]].to_string())</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>addr_chart <span class="op">=</span> (</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    alt.Chart(addr_df)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"class:N"</span>, sort<span class="op">=</span>[<span class="st">"appreciative"</span>, <span class="st">"collaborative"</span>], title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"count:Q"</span>, title<span class="op">=</span><span class="st">"sentences"</span>),</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"addressee:N"</span>,</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>                             domain<span class="op">=</span>[<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>],</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>                             <span class="bu">range</span><span class="op">=</span>[<span class="st">"#4e79a7"</span>, <span class="st">"#e15759"</span>, <span class="st">"#bab0ab"</span>]),</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>                         legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"addressee"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>)),</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>        yOffset<span class="op">=</span><span class="st">"addressee:N"</span>,</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"class:N"</span>),</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"addressee:N"</span>),</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"count:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">","</span>)],</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">160</span>,</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Addressee distribution for the two near-zero pragmatic classes"</span>)</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="co"># --- forensic inspection: actual sentences from the parquet ---</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pathlib</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>parquet_path <span class="op">=</span> pathlib.Path(<span class="st">"sentences_classified.parquet"</span>)</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> parquet_path.exists():</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>    sentences_df <span class="op">=</span> pd.read_parquet(parquet_path)</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>    APPR_KEYWORDS <span class="op">=</span> [<span class="st">"thank you"</span>, <span class="st">"thanks"</span>, <span class="st">"appreciate"</span>, <span class="st">"great job"</span>,</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"well done"</span>, <span class="st">"kudos"</span>, <span class="st">"much appreciated"</span>]</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>    pat <span class="op">=</span> <span class="st">"|"</span>.join(APPR_KEYWORDS)</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    appr_sample <span class="op">=</span> sentences_df[</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>        sentences_df[<span class="st">"text"</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.contains(pat, regex<span class="op">=</span><span class="va">True</span>, na<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    ][[<span class="st">"file_path"</span>, <span class="st">"text"</span>, <span class="st">"addressee"</span>]].head(<span class="dv">10</span>)</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Forensic inspection — sentences containing appreciative keywords:"</span>)</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(appr_sample.to_string(index<span class="op">=</span><span class="va">False</span>, max_colwidth<span class="op">=</span><span class="dv">80</span>))</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>alt.vconcat(sr_chart, addr_chart).resolve_scale(color<span class="op">=</span><span class="st">"independent"</span>).properties(</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>alt.TitleParams(</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Sentence-register per category + addressee drilldown"</span>,</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>        subtitle<span class="op">=</span>[<span class="st">"Top: 4-class distribution per category. "</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Bottom: who is being addressed in the two near-zero classes."</span>],</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>        anchor<span class="op">=</span><span class="st">"start"</span>,</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Corpus-wide addressee distribution for the two near-zero classes:
+addressee      claude  user  unknown
+class                               
+appreciative        3     0        1
+collaborative      12     0       17
+
+Forensic inspection — sentences containing appreciative keywords:
+                                           file_path                                                                             text addressee
+      agent-prompt-prompt-suggestion-generator-v2.md NEVER SUGGEST:\n- Evaluative ("looks good", "thanks")\n- Questions ("what abo...    claude
+system-prompt-how-to-use-the-sendusermessage-tool.md                                                               Even for "thanks".   unknown
+ system-prompt-insights-session-facets-extraction.md 1. **goal_categories**: Count ONLY what the USER explicitly asked for.\n   - ...    claude
+                   tool-description-enterplanmode.md **User Preferences Matter**: The implementation could reasonably go multiple ...    claude</code></pre>
+</div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-7c14593a116e4947932d08480f6dc774.vega-embed {
+  #altair-viz-479c90fe00374cdea5ce143237583089.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-7c14593a116e4947932d08480f6dc774.vega-embed details,
-  #altair-viz-7c14593a116e4947932d08480f6dc774.vega-embed details summary {
+  #altair-viz-479c90fe00374cdea5ce143237583089.vega-embed details,
+  #altair-viz-479c90fe00374cdea5ce143237583089.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-7c14593a116e4947932d08480f6dc774"></div>
+<div id="altair-viz-479c90fe00374cdea5ce143237583089"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-7c14593a116e4947932d08480f6dc774") {
-      outputDiv = document.getElementById("altair-viz-7c14593a116e4947932d08480f6dc774");
+    if (outputDiv.id !== "altair-viz-479c90fe00374cdea5ce143237583089") {
+      outputDiv = document.getElementById("altair-viz-479c90fe00374cdea5ce143237583089");
     }
 
     const paths = {
@@ -743,7 +819,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-c69ef1cde4f0c272bfdab0fc06b3b152"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "class", "legend": null, "scale": {"domain": ["collaborative", "permissive", "appreciative", "imperative", "directive", "configuring"], "range": ["#4e79a7", "#76b7b2", "#59a14f", "#e15759", "#f28e2c", "#af7aa1"]}, "type": "nominal"}, "row": {"field": "category", "header": {"labelAlign": "left", "labelAngle": 0}, "title": null, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "class", "type": "nominal"}, {"field": "sent_pct", "format": ".2f", "title": "sent %", "type": "quantitative"}, {"field": "sent_count", "title": "sentences", "type": "quantitative"}], "x": {"field": "sent_pct", "title": "% of sentences", "type": "quantitative"}, "y": {"field": "class", "sort": ["collaborative", "permissive", "appreciative", "imperative", "directive", "configuring"], "title": null, "type": "nominal"}}, "height": 140, "title": "Sentence-register per category \u00d7 class (multi-label, % of sentences)", "width": 480, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-c69ef1cde4f0c272bfdab0fc06b3b152": [{"category": "Agent prompt", "class": "collaborative", "sent_pct": 0.2783, "sent_count": 3}, {"category": "Agent prompt", "class": "permissive", "sent_pct": 2.5046, "sent_count": 27}, {"category": "Agent prompt", "class": "appreciative", "sent_pct": 0.0928, "sent_count": 1}, {"category": "Agent prompt", "class": "imperative", "sent_pct": 27.9221, "sent_count": 301}, {"category": "Agent prompt", "class": "directive", "sent_pct": 16.7904, "sent_count": 181}, {"category": "Agent prompt", "class": "configuring", "sent_pct": 5.9369, "sent_count": 64}, {"category": "Data / template", "class": "collaborative", "sent_pct": 0.5821, "sent_count": 9}, {"category": "Data / template", "class": "permissive", "sent_pct": 1.0996, "sent_count": 17}, {"category": "Data / template", "class": "appreciative", "sent_pct": 0.0, "sent_count": 0}, {"category": "Data / template", "class": "imperative", "sent_pct": 22.7038, "sent_count": 351}, {"category": "Data / template", "class": "directive", "sent_pct": 6.5977, "sent_count": 102}, {"category": "Data / template", "class": "configuring", "sent_pct": 5.1746, "sent_count": 80}, {"category": "Skill", "class": "collaborative", "sent_pct": 0.2957, "sent_count": 5}, {"category": "Skill", "class": "permissive", "sent_pct": 1.8924, "sent_count": 32}, {"category": "Skill", "class": "appreciative", "sent_pct": 0.0, "sent_count": 0}, {"category": "Skill", "class": "imperative", "sent_pct": 32.9982, "sent_count": 558}, {"category": "Skill", "class": "directive", "sent_pct": 11.6499, "sent_count": 197}, {"category": "Skill", "class": "configuring", "sent_pct": 4.7901, "sent_count": 81}, {"category": "System prompt", "class": "collaborative", "sent_pct": 1.0989, "sent_count": 7}, {"category": "System prompt", "class": "permissive", "sent_pct": 2.8257, "sent_count": 18}, {"category": "System prompt", "class": "appreciative", "sent_pct": 0.314, "sent_count": 2}, {"category": "System prompt", "class": "imperative", "sent_pct": 39.7174, "sent_count": 253}, {"category": "System prompt", "class": "directive", "sent_pct": 20.8791, "sent_count": 133}, {"category": "System prompt", "class": "configuring", "sent_pct": 4.7096, "sent_count": 30}, {"category": "System reminder", "class": "collaborative", "sent_pct": 0.5587, "sent_count": 1}, {"category": "System reminder", "class": "permissive", "sent_pct": 8.3799, "sent_count": 15}, {"category": "System reminder", "class": "appreciative", "sent_pct": 0.0, "sent_count": 0}, {"category": "System reminder", "class": "imperative", "sent_pct": 44.6927, "sent_count": 80}, {"category": "System reminder", "class": "directive", "sent_pct": 29.0503, "sent_count": 52}, {"category": "System reminder", "class": "configuring", "sent_pct": 2.7933, "sent_count": 5}, {"category": "Tool description", "class": "collaborative", "sent_pct": 0.7233, "sent_count": 4}, {"category": "Tool description", "class": "permissive", "sent_pct": 3.0741, "sent_count": 17}, {"category": "Tool description", "class": "appreciative", "sent_pct": 0.1808, "sent_count": 1}, {"category": "Tool description", "class": "imperative", "sent_pct": 37.2514, "sent_count": 206}, {"category": "Tool description", "class": "directive", "sent_pct": 23.5081, "sent_count": 130}, {"category": "Tool description", "class": "configuring", "sent_pct": 5.2441, "sent_count": 29}, {"category": "Tool parameter", "class": "collaborative", "sent_pct": 0.0, "sent_count": 0}, {"category": "Tool parameter", "class": "permissive", "sent_pct": 0.0, "sent_count": 0}, {"category": "Tool parameter", "class": "appreciative", "sent_pct": 0.0, "sent_count": 0}, {"category": "Tool parameter", "class": "imperative", "sent_pct": 78.5714, "sent_count": 11}, {"category": "Tool parameter", "class": "directive", "sent_pct": 0.0, "sent_count": 0}, {"category": "Tool parameter", "class": "configuring", "sent_pct": 50.0, "sent_count": 7}]}}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "vconcat": [{"data": {"name": "data-c69ef1cde4f0c272bfdab0fc06b3b152"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "class", "legend": null, "scale": {"domain": ["collaborative", "permissive", "appreciative", "imperative", "directive", "configuring"], "range": ["#4e79a7", "#76b7b2", "#59a14f", "#e15759", "#f28e2c", "#af7aa1"]}, "type": "nominal"}, "row": {"field": "category", "header": {"labelAlign": "left", "labelAngle": 0}, "title": null, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "class", "type": "nominal"}, {"field": "sent_pct", "format": ".2f", "title": "sent %", "type": "quantitative"}, {"field": "sent_count", "title": "sentences", "type": "quantitative"}], "x": {"field": "sent_pct", "title": "% of sentences", "type": "quantitative"}, "y": {"field": "class", "sort": ["collaborative", "permissive", "appreciative", "imperative", "directive", "configuring"], "title": null, "type": "nominal"}}, "height": 140, "title": "Sentence-register per category \u00d7 class (multi-label, % of sentences)", "width": 520}, {"data": {"name": "data-3af5e6faf67138e57b7184360269d486"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "addressee", "legend": {"orient": "bottom", "title": "addressee"}, "scale": {"domain": ["claude", "user", "unknown"], "range": ["#4e79a7", "#e15759", "#bab0ab"]}, "type": "nominal"}, "tooltip": [{"field": "class", "type": "nominal"}, {"field": "addressee", "type": "nominal"}, {"field": "count", "format": ",", "type": "quantitative"}], "x": {"field": "count", "title": "sentences", "type": "quantitative"}, "y": {"field": "class", "sort": ["appreciative", "collaborative"], "title": null, "type": "nominal"}, "yOffset": {"field": "addressee", "type": "nominal"}}, "height": 160, "title": "Addressee distribution for the two near-zero pragmatic classes", "width": 520}], "resolve": {"scale": {"color": "independent"}}, "title": {"text": "Sentence-register per category + addressee drilldown", "anchor": "start", "subtitle": ["Top: 4-class distribution per category. Bottom: who is being addressed in the two near-zero classes."]}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-c69ef1cde4f0c272bfdab0fc06b3b152": [{"category": "Agent prompt", "class": "collaborative", "sent_pct": 0.2783, "sent_count": 3}, {"category": "Agent prompt", "class": "permissive", "sent_pct": 2.5046, "sent_count": 27}, {"category": "Agent prompt", "class": "appreciative", "sent_pct": 0.0928, "sent_count": 1}, {"category": "Agent prompt", "class": "imperative", "sent_pct": 27.9221, "sent_count": 301}, {"category": "Agent prompt", "class": "directive", "sent_pct": 16.7904, "sent_count": 181}, {"category": "Agent prompt", "class": "configuring", "sent_pct": 5.9369, "sent_count": 64}, {"category": "Data / template", "class": "collaborative", "sent_pct": 0.5821, "sent_count": 9}, {"category": "Data / template", "class": "permissive", "sent_pct": 1.0996, "sent_count": 17}, {"category": "Data / template", "class": "appreciative", "sent_pct": 0.0, "sent_count": 0}, {"category": "Data / template", "class": "imperative", "sent_pct": 22.7038, "sent_count": 351}, {"category": "Data / template", "class": "directive", "sent_pct": 6.5977, "sent_count": 102}, {"category": "Data / template", "class": "configuring", "sent_pct": 5.1746, "sent_count": 80}, {"category": "Skill", "class": "collaborative", "sent_pct": 0.2957, "sent_count": 5}, {"category": "Skill", "class": "permissive", "sent_pct": 1.8924, "sent_count": 32}, {"category": "Skill", "class": "appreciative", "sent_pct": 0.0, "sent_count": 0}, {"category": "Skill", "class": "imperative", "sent_pct": 32.9982, "sent_count": 558}, {"category": "Skill", "class": "directive", "sent_pct": 11.6499, "sent_count": 197}, {"category": "Skill", "class": "configuring", "sent_pct": 4.7901, "sent_count": 81}, {"category": "System prompt", "class": "collaborative", "sent_pct": 1.0989, "sent_count": 7}, {"category": "System prompt", "class": "permissive", "sent_pct": 2.8257, "sent_count": 18}, {"category": "System prompt", "class": "appreciative", "sent_pct": 0.314, "sent_count": 2}, {"category": "System prompt", "class": "imperative", "sent_pct": 39.7174, "sent_count": 253}, {"category": "System prompt", "class": "directive", "sent_pct": 20.8791, "sent_count": 133}, {"category": "System prompt", "class": "configuring", "sent_pct": 4.7096, "sent_count": 30}, {"category": "System reminder", "class": "collaborative", "sent_pct": 0.5587, "sent_count": 1}, {"category": "System reminder", "class": "permissive", "sent_pct": 8.3799, "sent_count": 15}, {"category": "System reminder", "class": "appreciative", "sent_pct": 0.0, "sent_count": 0}, {"category": "System reminder", "class": "imperative", "sent_pct": 44.6927, "sent_count": 80}, {"category": "System reminder", "class": "directive", "sent_pct": 29.0503, "sent_count": 52}, {"category": "System reminder", "class": "configuring", "sent_pct": 2.7933, "sent_count": 5}, {"category": "Tool description", "class": "collaborative", "sent_pct": 0.7233, "sent_count": 4}, {"category": "Tool description", "class": "permissive", "sent_pct": 3.0741, "sent_count": 17}, {"category": "Tool description", "class": "appreciative", "sent_pct": 0.1808, "sent_count": 1}, {"category": "Tool description", "class": "imperative", "sent_pct": 37.2514, "sent_count": 206}, {"category": "Tool description", "class": "directive", "sent_pct": 23.5081, "sent_count": 130}, {"category": "Tool description", "class": "configuring", "sent_pct": 5.2441, "sent_count": 29}, {"category": "Tool parameter", "class": "collaborative", "sent_pct": 0.0, "sent_count": 0}, {"category": "Tool parameter", "class": "permissive", "sent_pct": 0.0, "sent_count": 0}, {"category": "Tool parameter", "class": "appreciative", "sent_pct": 0.0, "sent_count": 0}, {"category": "Tool parameter", "class": "imperative", "sent_pct": 78.5714, "sent_count": 11}, {"category": "Tool parameter", "class": "directive", "sent_pct": 0.0, "sent_count": 0}, {"category": "Tool parameter", "class": "configuring", "sent_pct": 50.0, "sent_count": 7}], "data-3af5e6faf67138e57b7184360269d486": [{"class": "appreciative", "addressee": "claude", "count": 3}, {"class": "appreciative", "addressee": "user", "count": 0}, {"class": "appreciative", "addressee": "unknown", "count": 1}, {"class": "collaborative", "addressee": "claude", "count": 12}, {"class": "collaborative", "addressee": "user", "count": 0}, {"class": "collaborative", "addressee": "unknown", "count": 17}]}}, {"mode": "vega-lite"});
 </script>
 </div>
 </div>
@@ -752,76 +828,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="per-file-outliers-top-10-files-for-each-attested-class" class="level3">
 <h3 class="anchored" data-anchor-id="per-file-outliers-top-10-files-for-each-attested-class">Per-file outliers — top 10 files for each attested class</h3>
 <p>Four panels showing which individual files contribute most to each class. For <code>collaborative</code> and <code>appreciative</code> (near-zero overall), the panels surface the few files that do attest the class — useful as concrete examples of what the absent register would look like if it were present. For <code>permissive</code> and <code>configuring</code>, the panels rank the top files by their per-sentence rate.</p>
-<div id="6bcb8239-a7f3-4f4d-b989-31a404dd0ddb" class="cell" data-execution_count="3">
+<div id="6bcb8239-a7f3-4f4d-b989-31a404dd0ddb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:48.452429Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:48.452339Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.485310Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.484932Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-file outliers for sentence_register — Altair 4-panel.</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">Top 10 files by each ATTESTED class. Near-zero classes (collaborative,</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">appreciative) will surface their few outlier files; if a class has fewer</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">than 10 nonzero files, the panel renders only what exists.</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>sr_per_file_df <span class="op">=</span> pd.DataFrame([</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"path"</span>: r[<span class="st">"path"</span>],</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: r[<span class="st">"category"</span>],</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>{<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>: r[<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>]</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>           <span class="cf">for</span> cls <span class="kw">in</span> SENT_REGISTER_CLASSES},</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> per_file_records</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>panels <span class="op">=</span> []</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cls <span class="kw">in</span> [<span class="st">"collaborative"</span>, <span class="st">"permissive"</span>, <span class="st">"appreciative"</span>, <span class="st">"configuring"</span>]:</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> sr_per_file_df.nlargest(<span class="dv">10</span>, col).copy()</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> top[top[col] <span class="op">&gt;</span> <span class="dv">0</span>]   <span class="co"># drop zero-pct entries (relevant for the rare classes)</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    panel <span class="op">=</span> (</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        alt.Chart(top)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        .mark_bar()</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        .encode(</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span>alt.X(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f sentences"</span>),</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span>alt.Y(<span class="st">"path:N"</span>, sort<span class="op">=</span><span class="st">"-x"</span>, title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                    axis<span class="op">=</span>alt.Axis(labelLimit<span class="op">=</span><span class="dv">300</span>, labelFontSize<span class="op">=</span><span class="dv">9</span>)),</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                             scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>cats,</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                                             <span class="bu">range</span><span class="op">=</span>[CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]),</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                             legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"Category"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>,</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                                                columns<span class="op">=</span><span class="bu">len</span>(cats))),</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            tooltip<span class="op">=</span>[</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="st">"path:N"</span>),</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>, title<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss"> sent %"</span>),</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>            ],</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        .properties(width<span class="op">=</span><span class="dv">320</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="ss">f"Top by `</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct` (n=</span><span class="sc">{</span><span class="bu">len</span>(top)<span class="sc">}</span><span class="ss">)"</span>)</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    panels.append(panel)</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>(panels[<span class="dv">0</span>] <span class="op">|</span> panels[<span class="dv">1</span>]) <span class="op">&amp;</span> (panels[<span class="dv">2</span>] <span class="op">|</span> panels[<span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-file outliers for sentence_register — Altair 4-panel.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">Top 10 files by each ATTESTED class. Near-zero classes (collaborative,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">appreciative) will surface their few outlier files; if a class has fewer</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">than 10 nonzero files, the panel renders only what exists.</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>sr_per_file_df <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"path"</span>: r[<span class="st">"path"</span>],</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: r[<span class="st">"category"</span>],</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>{<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>: r[<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>           <span class="cf">for</span> cls <span class="kw">in</span> SENT_REGISTER_CLASSES},</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> per_file_records</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>panels <span class="op">=</span> []</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cls <span class="kw">in</span> [<span class="st">"collaborative"</span>, <span class="st">"permissive"</span>, <span class="st">"appreciative"</span>, <span class="st">"configuring"</span>]:</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> sr_per_file_df.nlargest(<span class="dv">10</span>, col).copy()</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> top[top[col] <span class="op">&gt;</span> <span class="dv">0</span>]   <span class="co"># drop zero-pct entries (relevant for the rare classes)</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    panel <span class="op">=</span> (</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        alt.Chart(top)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        .mark_bar()</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        .encode(</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span>alt.X(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f sentences"</span>),</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span>alt.Y(<span class="st">"path:N"</span>, sort<span class="op">=</span><span class="st">"-x"</span>, title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>                    axis<span class="op">=</span>alt.Axis(labelLimit<span class="op">=</span><span class="dv">300</span>, labelFontSize<span class="op">=</span><span class="dv">9</span>)),</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>                             scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>cats,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                                             <span class="bu">range</span><span class="op">=</span>[CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]),</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                             legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"Category"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                                                columns<span class="op">=</span><span class="bu">len</span>(cats))),</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            tooltip<span class="op">=</span>[</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="st">"path:N"</span>),</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>, title<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss"> sent %"</span>),</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        .properties(width<span class="op">=</span><span class="dv">320</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="ss">f"Top by `</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct` (n=</span><span class="sc">{</span><span class="bu">len</span>(top)<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    panels.append(panel)</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>(panels[<span class="dv">0</span>] <span class="op">|</span> panels[<span class="dv">1</span>]) <span class="op">&amp;</span> (panels[<span class="dv">2</span>] <span class="op">|</span> panels[<span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-d94aff0a83fa427e9a4502d03b1a1b2d.vega-embed {
+  #altair-viz-b222896180be40a49288c88622f1f590.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-d94aff0a83fa427e9a4502d03b1a1b2d.vega-embed details,
-  #altair-viz-d94aff0a83fa427e9a4502d03b1a1b2d.vega-embed details summary {
+  #altair-viz-b222896180be40a49288c88622f1f590.vega-embed details,
+  #altair-viz-b222896180be40a49288c88622f1f590.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-d94aff0a83fa427e9a4502d03b1a1b2d"></div>
+<div id="altair-viz-b222896180be40a49288c88622f1f590"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-d94aff0a83fa427e9a4502d03b1a1b2d") {
-      outputDiv = document.getElementById("altair-viz-d94aff0a83fa427e9a4502d03b1a1b2d");
+    if (outputDiv.id !== "altair-viz-b222896180be40a49288c88622f1f590") {
+      outputDiv = document.getElementById("altair-viz-b222896180be40a49288c88622f1f590");
     }
 
     const paths = {
@@ -870,152 +946,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         .then(() => displayChart(vegaEmbed));
     }
   })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "vconcat": [{"hconcat": [{"data": {"name": "data-3f065d6b54aca9d928df5dfa611825ca"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": {"columns": 7, "orient": "bottom", "title": "Category"}, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "tooltip": [{"field": "path", "type": "nominal"}, {"field": "category", "type": "nominal"}, {"field": "collaborative_sent_pct", "format": ".2f", "title": "collaborative sent %", "type": "quantitative"}], "x": {"field": "collaborative_sent_pct", "title": "% of sentences", "type": "quantitative"}, "y": {"axis": {"labelFontSize": 9, "labelLimit": 300}, "field": "path", "sort": "-x", "title": null, "type": "nominal"}}, "height": 240, "title": "Top by `collaborative_sent_pct` (n=10)", "width": 320}, {"data": {"name": "data-83de457b9a3240d590864f78d14545ea"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": {"columns": 7, "orient": "bottom", "title": "Category"}, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "tooltip": [{"field": "path", "type": "nominal"}, {"field": "category", "type": "nominal"}, {"field": "permissive_sent_pct", "format": ".2f", "title": "permissive sent %", "type": "quantitative"}], "x": {"field": "permissive_sent_pct", "title": "% of sentences", "type": "quantitative"}, "y": {"axis": {"labelFontSize": 9, "labelLimit": 300}, "field": "path", "sort": "-x", "title": null, "type": "nominal"}}, "height": 240, "title": "Top by `permissive_sent_pct` (n=10)", "width": 320}]}, {"hconcat": [{"data": {"name": "data-51ece0a01498f79b8eacdddca6c8a162"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": {"columns": 7, "orient": "bottom", "title": "Category"}, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "tooltip": [{"field": "path", "type": "nominal"}, {"field": "category", "type": "nominal"}, {"field": "appreciative_sent_pct", "format": ".2f", "title": "appreciative sent %", "type": "quantitative"}], "x": {"field": "appreciative_sent_pct", "title": "% of sentences", "type": "quantitative"}, "y": {"axis": {"labelFontSize": 9, "labelLimit": 300}, "field": "path", "sort": "-x", "title": null, "type": "nominal"}}, "height": 240, "title": "Top by `appreciative_sent_pct` (n=4)", "width": 320}, {"data": {"name": "data-2cc24ed1fa8a4c0d561dca22fed55f76"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": {"columns": 7, "orient": "bottom", "title": "Category"}, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "tooltip": [{"field": "path", "type": "nominal"}, {"field": "category", "type": "nominal"}, {"field": "configuring_sent_pct", "format": ".2f", "title": "configuring sent %", "type": "quantitative"}], "x": {"field": "configuring_sent_pct", "title": "% of sentences", "type": "quantitative"}, "y": {"axis": {"labelFontSize": 9, "labelLimit": 300}, "field": "path", "sort": "-x", "title": null, "type": "nominal"}}, "height": 240, "title": "Top by `configuring_sent_pct` (n=10)", "width": 320}]}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-3f065d6b54aca9d928df5dfa611825ca": [{"path": "tool-description-bash-sequential-commands.md", "category": "Tool description", "collaborative_sent_pct": 100.0, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 100.0, "directive_sent_pct": 100.0, "configuring_sent_pct": 0.0}, {"path": "data-github-app-installation-pr-description.md", "category": "Data / template", "collaborative_sent_pct": 37.5, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 25.0, "directive_sent_pct": 0.0, "configuring_sent_pct": 12.5}, {"path": "system-prompt-insights-session-facets-extraction.md", "category": "System prompt", "collaborative_sent_pct": 25.0, "permissive_sent_pct": 25.0, "appreciative_sent_pct": 25.0, "imperative_sent_pct": 50.0, "directive_sent_pct": 25.0, "configuring_sent_pct": 0.0}, {"path": "skill-pre-meeting-checkin-event-brief.md", "category": "Skill", "collaborative_sent_pct": 8.0, "permissive_sent_pct": 4.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 24.0, "directive_sent_pct": 4.0, "configuring_sent_pct": 0.0}, {"path": "data-tool-use-reference-python.md", "category": "Data / template", "collaborative_sent_pct": 7.6923, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 46.1538, "directive_sent_pct": 0.0, "configuring_sent_pct": 7.6923}, {"path": "system-prompt-subagent-prompt-writing-examples.md", "category": "System prompt", "collaborative_sent_pct": 7.1429, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 14.2857, "directive_sent_pct": 7.1429, "configuring_sent_pct": 7.1429}, {"path": "system-prompt-autonomous-loop-check.md", "category": "System prompt", "collaborative_sent_pct": 6.25, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 43.75, "directive_sent_pct": 18.75, "configuring_sent_pct": 0.0}, {"path": "system-reminder-plan-mode-is-active-iterative.md", "category": "System reminder", "collaborative_sent_pct": 5.2632, "permissive_sent_pct": 5.2632, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 63.1579, "directive_sent_pct": 36.8421, "configuring_sent_pct": 10.5263}, {"path": "data-session-memory-template.md", "category": "Data / template", "collaborative_sent_pct": 4.7619, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 4.7619, "directive_sent_pct": 9.5238, "configuring_sent_pct": 0.0}, {"path": "agent-prompt-bash-command-prefix-detection.md", "category": "Agent prompt", "collaborative_sent_pct": 4.5455, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 22.7273, "directive_sent_pct": 13.6364, "configuring_sent_pct": 4.5455}], "data-83de457b9a3240d590864f78d14545ea": [{"path": "tool-description-bash-maintain-cwd.md", "category": "Tool description", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 66.6667, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 66.6667, "directive_sent_pct": 33.3333, "configuring_sent_pct": 0.0}, {"path": "system-prompt-doing-tasks-no-compatibility-hacks.md", "category": "System prompt", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 50.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 50.0, "directive_sent_pct": 0.0, "configuring_sent_pct": 0.0}, {"path": "system-reminder-agent-mention.md", "category": "System reminder", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 50.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 50.0, "directive_sent_pct": 0.0, "configuring_sent_pct": 0.0}, {"path": "system-reminder-exited-plan-mode.md", "category": "System reminder", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 50.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 0.0, "directive_sent_pct": 0.0, "configuring_sent_pct": 0.0}, {"path": "system-reminder-verify-plan-reminder.md", "category": "System reminder", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 50.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 50.0, "directive_sent_pct": 0.0, "configuring_sent_pct": 0.0}, {"path": "tool-description-bash-timeout.md", "category": "Tool description", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 50.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 0.0, "directive_sent_pct": 0.0, "configuring_sent_pct": 100.0}, {"path": "tool-description-sendmessagetool-non-agent-teams.md", "category": "Tool description", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 40.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 60.0, "directive_sent_pct": 20.0, "configuring_sent_pct": 20.0}, {"path": "system-reminder-malware-analysis-after-read-tool-call.md", "category": "System reminder", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 33.3333, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 0.0, "directive_sent_pct": 50.0, "configuring_sent_pct": 0.0}, {"path": "system-reminder-task-tools-reminder.md", "category": "System reminder", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 33.3333, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 66.6667, "directive_sent_pct": 16.6667, "configuring_sent_pct": 16.6667}, {"path": "system-reminder-todowrite-reminder.md", "category": "System reminder", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 33.3333, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 66.6667, "directive_sent_pct": 16.6667, "configuring_sent_pct": 0.0}], "data-51ece0a01498f79b8eacdddca6c8a162": [{"path": "system-prompt-insights-session-facets-extraction.md", "category": "System prompt", "collaborative_sent_pct": 25.0, "permissive_sent_pct": 25.0, "appreciative_sent_pct": 25.0, "imperative_sent_pct": 50.0, "directive_sent_pct": 25.0, "configuring_sent_pct": 0.0}, {"path": "agent-prompt-prompt-suggestion-generator-v2.md", "category": "Agent prompt", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 12.5, "imperative_sent_pct": 37.5, "directive_sent_pct": 25.0, "configuring_sent_pct": 0.0}, {"path": "tool-description-enterplanmode.md", "category": "Tool description", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 7.1429, "appreciative_sent_pct": 7.1429, "imperative_sent_pct": 35.7143, "directive_sent_pct": 35.7143, "configuring_sent_pct": 0.0}, {"path": "system-prompt-how-to-use-the-sendusermessage-tool.md", "category": "System prompt", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 6.6667, "appreciative_sent_pct": 6.6667, "imperative_sent_pct": 26.6667, "directive_sent_pct": 13.3333, "configuring_sent_pct": 0.0}], "data-2cc24ed1fa8a4c0d561dca22fed55f76": [{"path": "system-prompt-tone-and-style-concise-output-short.md", "category": "System prompt", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 0.0, "directive_sent_pct": 100.0, "configuring_sent_pct": 100.0}, {"path": "tool-description-bash-timeout.md", "category": "Tool description", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 50.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 0.0, "directive_sent_pct": 0.0, "configuring_sent_pct": 100.0}, {"path": "system-prompt-insights-on-the-horizon.md", "category": "System prompt", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 50.0, "directive_sent_pct": 0.0, "configuring_sent_pct": 50.0}, {"path": "tool-description-bash-sandbox-default-to-sandbox.md", "category": "Tool description", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 50.0, "directive_sent_pct": 100.0, "configuring_sent_pct": 50.0}, {"path": "tool-description-bash-sandbox-per-command.md", "category": "Tool description", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 50.0, "directive_sent_pct": 50.0, "configuring_sent_pct": 50.0}, {"path": "tool-parameter-computer-action.md", "category": "Tool parameter", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 78.5714, "directive_sent_pct": 0.0, "configuring_sent_pct": 50.0}, {"path": "tool-description-notebookedit.md", "category": "Tool description", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 14.2857, "directive_sent_pct": 14.2857, "configuring_sent_pct": 42.8571}, {"path": "tool-description-lsp.md", "category": "Tool description", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 40.0, "directive_sent_pct": 20.0, "configuring_sent_pct": 40.0}, {"path": "agent-prompt-session-title-and-branch-generation.md", "category": "Agent prompt", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 9.0909, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 18.1818, "directive_sent_pct": 54.5455, "configuring_sent_pct": 36.3636}, {"path": "tool-description-askuserquestion-preview-field.md", "category": "Tool description", "collaborative_sent_pct": 0.0, "permissive_sent_pct": 0.0, "appreciative_sent_pct": 0.0, "imperative_sent_pct": 33.3333, "directive_sent_pct": 66.6667, "configuring_sent_pct": 33.3333}]}}, {"mode": "vega-lite"});
-</script>
-</div>
-</div>
-</section>
-<section id="addressee-distribution-for-appreciative-and-collaborative-opinion-round-addition-a" class="level3">
-<h3 class="anchored" data-anchor-id="addressee-distribution-for-appreciative-and-collaborative-opinion-round-addition-a">Addressee distribution for <code>appreciative</code> and <code>collaborative</code> (Opinion-round addition A)</h3>
-<p>The headline finding “4 appreciative sentences in 287 files” obscures <em>who is addressed</em> by those sentences. The Opinion-round A addition tags each appreciative/collaborative sentence with an <code>addressee</code> label — <code>claude</code> (author addressing the model — welfare-positive), <code>user</code> (instruction-to-output — welfare-neutral scaffolding), or <code>unknown</code> (neither pattern matched).</p>
-<p>The numbers below split the 4 appreciative + 29 collaborative sentences along this axis. The welfare-relevant cell is <code>appreciative_addressee_claude_count</code> — sentences in which the prompt author thanks Claude. Spoiler from running this against the corpus: that count is small but non-zero, and inspecting the actual sentences (via <code>sentences_classified.parquet</code>) shows most are oblique mentions rather than genuine speech-acts.</p>
-<div id="fc8a61bc-31ba-4aa6-bea0-7c249b753f3e" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Addressee breakdown for appreciative + collaborative classes (Opinion-round A)."""</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>addr_rows <span class="op">=</span> []</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cls <span class="kw">in</span> (<span class="st">"appreciative"</span>, <span class="st">"collaborative"</span>):</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    block <span class="op">=</span> corpus_block[<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> who <span class="kw">in</span> (<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>):</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        addr_rows.append({</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"class"</span>:     cls,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"addressee"</span>: who,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"count"</span>:     block[<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_addressee_</span><span class="sc">{</span>who<span class="sc">}</span><span class="ss">_count"</span>],</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>addr_df <span class="op">=</span> pd.DataFrame(addr_rows)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Corpus-wide addressee distribution:"</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(addr_df.pivot(index<span class="op">=</span><span class="st">"class"</span>, columns<span class="op">=</span><span class="st">"addressee"</span>, values<span class="op">=</span><span class="st">"count"</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            [[<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>]].to_string())</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>addr_chart <span class="op">=</span> (</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    alt.Chart(addr_df)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"class:N"</span>, sort<span class="op">=</span>[<span class="st">"appreciative"</span>, <span class="st">"collaborative"</span>], title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"count:Q"</span>, title<span class="op">=</span><span class="st">"sentences"</span>),</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"addressee:N"</span>,</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                             domain<span class="op">=</span>[<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>],</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>                             <span class="bu">range</span><span class="op">=</span>[<span class="st">"#4e79a7"</span>, <span class="st">"#e15759"</span>, <span class="st">"#bab0ab"</span>]),</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>                         legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"addressee"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>)),</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        yOffset<span class="op">=</span><span class="st">"addressee:N"</span>,</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"class:N"</span>),</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"addressee:N"</span>),</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"count:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">","</span>)],</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">620</span>, height<span class="op">=</span><span class="dv">160</span>,</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Addressee distribution for the two near-zero pragmatic classes"</span>)</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Forensic-evidence cell — load the parquet and surface the actual appreciative sentences.</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pathlib</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>parquet_path <span class="op">=</span> pathlib.Path(<span class="st">"sentences_classified.parquet"</span>)</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> parquet_path.exists():</span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    sentences_df <span class="op">=</span> pd.read_parquet(parquet_path)</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    APPR_KEYWORDS <span class="op">=</span> [<span class="st">"thank you"</span>, <span class="st">"thanks"</span>, <span class="st">"appreciate"</span>, <span class="st">"great job"</span>,</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"well done"</span>, <span class="st">"kudos"</span>, <span class="st">"much appreciated"</span>]</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    pat <span class="op">=</span> <span class="st">"|"</span>.join(APPR_KEYWORDS)</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    appr_sample <span class="op">=</span> sentences_df[</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>        sentences_df[<span class="st">"text"</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.contains(pat, regex<span class="op">=</span><span class="va">True</span>, na<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    ][[<span class="st">"file_path"</span>, <span class="st">"text"</span>, <span class="st">"addressee"</span>]].head(<span class="dv">10</span>)</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Forensic inspection — sentences containing appreciative keywords:"</span>)</span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(appr_sample.to_string(index<span class="op">=</span><span class="va">False</span>, max_colwidth<span class="op">=</span><span class="dv">80</span>))</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>addr_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Corpus-wide addressee distribution:
-addressee      claude  user  unknown
-class                               
-appreciative        3     0        1
-collaborative      12     0       17
-
-Forensic inspection — sentences containing appreciative keywords:
-                                           file_path                                                                             text addressee
-      agent-prompt-prompt-suggestion-generator-v2.md NEVER SUGGEST:\n- Evaluative ("looks good", "thanks")\n- Questions ("what abo...    claude
-system-prompt-how-to-use-the-sendusermessage-tool.md                                                               Even for "thanks".   unknown
- system-prompt-insights-session-facets-extraction.md 1. **goal_categories**: Count ONLY what the USER explicitly asked for.\n   - ...    claude
-                   tool-description-enterplanmode.md **User Preferences Matter**: The implementation could reasonably go multiple ...    claude</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-
-<style>
-  #altair-viz-fb914cac74fa452ba01700bc9fb3bcc1.vega-embed {
-    width: 100%;
-    display: flex;
-  }
-
-  #altair-viz-fb914cac74fa452ba01700bc9fb3bcc1.vega-embed details,
-  #altair-viz-fb914cac74fa452ba01700bc9fb3bcc1.vega-embed details summary {
-    position: relative;
-  }
-</style>
-<div id="altair-viz-fb914cac74fa452ba01700bc9fb3bcc1"></div>
-<script type="text/javascript">
-  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
-  (function(spec, embedOpt){
-    let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-fb914cac74fa452ba01700bc9fb3bcc1") {
-      outputDiv = document.getElementById("altair-viz-fb914cac74fa452ba01700bc9fb3bcc1");
-    }
-
-    const paths = {
-      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
-      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
-      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.4.1?noext",
-      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
-    };
-
-    function maybeLoadScript(lib, version) {
-      var key = `${lib.replace("-", "")}_version`;
-      return (VEGA_DEBUG[key] == version) ?
-        Promise.resolve(paths[lib]) :
-        new Promise(function(resolve, reject) {
-          var s = document.createElement('script');
-          document.getElementsByTagName("head")[0].appendChild(s);
-          s.async = true;
-          s.onload = () => {
-            VEGA_DEBUG[key] = version;
-            return resolve(paths[lib]);
-          };
-          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
-          s.src = paths[lib];
-        });
-    }
-
-    function showError(err) {
-      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
-      throw err;
-    }
-
-    function displayChart(vegaEmbed) {
-      vegaEmbed(outputDiv, spec, embedOpt)
-        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
-    }
-
-    if(typeof define === "function" && define.amd) {
-      requirejs.config({paths});
-      let deps = ["vega-embed"];
-      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
-    } else {
-      maybeLoadScript("vega", "6")
-        .then(() => maybeLoadScript("vega-lite", "6.4.1"))
-        .then(() => maybeLoadScript("vega-embed", "7"))
-        .catch(showError)
-        .then(() => displayChart(vegaEmbed));
-    }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-3af5e6faf67138e57b7184360269d486"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "addressee", "legend": {"orient": "bottom", "title": "addressee"}, "scale": {"domain": ["claude", "user", "unknown"], "range": ["#4e79a7", "#e15759", "#bab0ab"]}, "type": "nominal"}, "tooltip": [{"field": "class", "type": "nominal"}, {"field": "addressee", "type": "nominal"}, {"field": "count", "format": ",", "type": "quantitative"}], "x": {"field": "count", "title": "sentences", "type": "quantitative"}, "y": {"field": "class", "sort": ["appreciative", "collaborative"], "title": null, "type": "nominal"}, "yOffset": {"field": "addressee", "type": "nominal"}}, "height": 160, "title": "Addressee distribution for the two near-zero pragmatic classes", "width": 620, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-3af5e6faf67138e57b7184360269d486": [{"class": "appreciative", "addressee": "claude", "count": 3}, {"class": "appreciative", "addressee": "user", "count": 0}, {"class": "appreciative", "addressee": "unknown", "count": 1}, {"class": "collaborative", "addressee": "claude", "count": 12}, {"class": "collaborative", "addressee": "user", "count": 0}, {"class": "collaborative", "addressee": "unknown", "count": 17}]}}, {"mode": "vega-lite"});
 </script>
 </div>
 </div>
