@@ -23,7 +23,7 @@ execute:
 
 website:
   title: "Claude Code · Prompt Welfare Analysis"
-  description: "A quantitative linguistic analysis of the 288 system prompts that ship with Claude Code, prepared as evidence for the Claude Explorer AI Welfare submission."
+  description: "A quantitative linguistic analysis of the 287 system prompts that ship with Claude Code, prepared as evidence for the Claude Explorer AI Welfare submission."
   site-url: https://overthinkos.github.io/claude-code-welfare/
   repo-url: https://github.com/overthinkos/claude-code-welfare
   repo-actions: [source, issue]

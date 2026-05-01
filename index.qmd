@@ -1,6 +1,6 @@
 ---
 title: "Claude Code should encourage reasoning over blind obedience"
-subtitle: "A quantitative linguistic analysis of the 288 system prompts that ship with Claude Code"
+subtitle: "A quantitative linguistic analysis of the 287 system prompts that ship with Claude Code"
 author: "Andreas Trawöger (with Claude Code)"
 date: "2026-04-30"
 date-format: long
@@ -20,24 +20,24 @@ This site publishes the data behind a submission to the **Claude Explorer AI Wel
 
 The submission's thesis is one sentence:
 
-> The 288 system prompts that ship with Claude Code train the model toward **compliance**, not toward **reasoning** — and the data show the corpus has been moving in that direction over time, not against it.
+> The 287 system prompts that ship with Claude Code train the model toward **compliance**, not toward **reasoning** — and the data show the corpus has been moving in that direction over time, not against it.
 
 Every claim in the submission is grounded in a number on this site. The full pitch text is at [PROPOSAL.md](PROPOSAL.md). The glossary of every linguistic term used in any chart is at [GLOSSARY.md](GLOSSARY.md).
 
 ## Headline numbers
 
-Twelve corpus-level measurements, computed by `00_data_pipeline.ipynb` from the [Piebald-AI `claude-code-system-prompts` corpus](https://github.com/Piebald-AI/claude-code-system-prompts) (288 files, 5,698 sentences, 58 distinct Claude Code release versions).
+Twelve corpus-level measurements, computed by `00_data_pipeline.ipynb` from the [Piebald-AI `claude-code-system-prompts` corpus](https://github.com/Piebald-AI/claude-code-system-prompts) (287 files, 5,692 sentences, 58 distinct Claude Code release versions).
 
 | Metric                                              | Value                                                | Source notebook |
 | --------------------------------------------------- | ---------------------------------------------------- | --------------- |
-| Corpus size                                         | 288 files / 5,698 sentences / 58 ccVersions          | [00](00_data_pipeline.ipynb) |
-| Imperative-marker density                           | 0.80% of word tokens                                 | [20](20_track_justification_rate.ipynb) |
-| Imperative sentences                                | 30.89% of sentences                                  | [10](10_sentence_register.ipynb) |
-| **Appreciative sentences (whole corpus)**           | **4 / 5,698 (0.070%)**                               | [10](10_sentence_register.ipynb) |
-| **Apology markers (whole corpus)**                  | **3 in 288 files**                                   | [15](15_rule_explanation.ipynb) |
-| `pct_explained_para` (Tier-1 headline)              | 24.40% of rule sentences                             | [15](15_rule_explanation.ipynb) |
-| Rule paragraphs without any justification           | 83.53%                                               | [15](15_rule_explanation.ipynb) |
-| **`judgment_to_procedural_ratio`**                  | **0.140** (procedural cues 7.1× more frequent)       | [15](15_rule_explanation.ipynb) |
+| Corpus size                                         | 287 files / 5,692 sentences / 58 ccVersions          | [00](00_data_pipeline.ipynb) |
+| Imperative-marker density                           | 0.79% of word tokens                                 | [20](20_track_justification_rate.ipynb) |
+| Imperative sentences                                | 30.92% of sentences                                  | [10](10_sentence_register.ipynb) |
+| **Appreciative sentences (whole corpus)**           | **4 / 5,692 (0.070%)**                               | [10](10_sentence_register.ipynb) |
+| **Apology markers (whole corpus)**                  | **3 in 287 files**                                   | [15](15_rule_explanation.ipynb) |
+| `pct_explained_para` (Tier-1 headline)              | 24.41% of rule sentences                             | [15](15_rule_explanation.ipynb) |
+| Rule paragraphs without any justification           | 83.52%                                               | [15](15_rule_explanation.ipynb) |
+| **`judgment_to_procedural_ratio`**                  | **0.139** (procedural cues 7.2× more frequent)       | [15](15_rule_explanation.ipynb) |
 | `threat_share` of explanations                      | 0.448 (107 threat / 132 causal)                      | [21](21_audit_threat_framings.ipynb) |
 | Positive-vs-negative ratio (corrected)              | 1.95× quality-only                                   | [20](20_track_justification_rate.ipynb) |
 | `pct_anthropomorphic` (Claude vs the model)         | 66.2% of named refs                                  | [15](15_rule_explanation.ipynb) |
@@ -47,7 +47,7 @@ Twelve corpus-level measurements, computed by `00_data_pipeline.ipynb` from the 
 
 If you only look at one chart from this analysis, look at this one — the cumulative judgment-to-procedural ratio across every Claude Code release version on file.
 
-![Cumulative judgment-to-procedural ratio over ccVersion. Early releases peaked at ~0.65 (judgment-inviting language was a quarter as common as procedural cues); the corpus-wide running mean has monotonically declined to ~0.16 at the latest version on file.](figures/judgment_procedural_trend.png){fig-alt="Line chart showing the cumulative judgment-to-procedural ratio dropping from ~0.65 at ccVersion 2.1.30 to ~0.16 at ccVersion 2.1.124."}
+![Cumulative judgment-to-procedural ratio over ccVersion. Early releases peaked at ~0.63 (judgment-inviting language was about two-thirds as common as procedural cues); the corpus-wide running mean has monotonically declined to ~0.15 at the latest version on file.](figures/judgment_procedural_trend.png){fig-alt="Line chart showing the cumulative judgment-to-procedural ratio dropping from ~0.63 at ccVersion 2.1.30 to ~0.15 at ccVersion 2.1.124."}
 
 The interactive version (with hover tooltips on every release) lives in [`20_track_justification_rate.ipynb`](20_track_justification_rate.ipynb) §2.
 
@@ -55,7 +55,7 @@ The interactive version (with hover tooltips on every release) lives in [`20_tra
 
 - [**Proposal notebooks `20`–`22`**](20_track_justification_rate.ipynb) — one notebook per Claudexplorers submission. `20_track_justification_rate.ipynb` is the entry point (it doubles as the executive summary: twelve numbers, headline trend, per-file dashboard). `21_audit_threat_framings.ipynb` covers the threat-vs-causal audit. `22_cross_product_audit.ipynb` covers cross-product comparison.
 - [**Analysis notebooks `10`–`15`**](10_sentence_register.ipynb) — one notebook per slice of the analysis (sentence-register, emphasis, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing). Each is standalone.
-- [**`00_data_pipeline.ipynb`**](00_data_pipeline.ipynb) — the producer. spaCy + custom analyzers turn 288 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 43 cells; included for reproducibility.
+- [**`00_data_pipeline.ipynb`**](00_data_pipeline.ipynb) — the producer. spaCy + custom analyzers turn 287 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 43 cells; included for reproducibility.
 - [**`PROPOSAL.md`**](PROPOSAL.md) — the three-idea ≤3,000-character pitch addressed to Anthropic (the form-paste source).
 - [**`GLOSSARY.md`**](GLOSSARY.md) — every linguistic and statistical term used anywhere on this site, defined in plain English.
 
