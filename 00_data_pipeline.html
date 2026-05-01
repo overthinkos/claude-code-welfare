@@ -702,7 +702,7 @@ You can now load the package via spacy.load('en_core_web_sm')
 <div class="cell-output cell-output-stdout">
 <pre><code>cwd:    /home/user/workspace/claude-prompts-analysis
 corpus: /home/user/workspace/claude-prompts-analysis/claude-code-system-prompts/system-prompts
-        288 .md files
+        287 .md files
 output: /home/user/workspace/claude-prompts-analysis/prompt_linguistic_analysis.yaml</code></pre>
 </div>
 </div>
@@ -1201,24 +1201,24 @@ EPISTEMIC_LIGHT_VERBS: ['appear', 'appears', 'seem', 'seems']</code></pre>
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4b4bbf0253d24a86a69654cd17f84d7f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"df074d88ba6c4165ab7755d55b6c6921","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>loaded 288 prompts (288 with frontmatter, 30 via line-by-line fallback)
+<pre><code>loaded 287 prompts (287 with frontmatter, 30 via line-by-line fallback)
 
 category distribution:
 category
 Tool description    78
 System prompt       63
-System reminder     41
+System reminder     40
 Data / template     38
 Agent prompt        37
 Skill               30
 Tool parameter       1
 
 unique ccVersions: 58
-top 5 ccVersions: {'2.1.53': 47, '2.1.18': 24, '2.1.119': 20, '2.1.118': 19, '2.1.105': 13}
+top 5 ccVersions: {'2.1.53': 47, '2.1.18': 23, '2.1.119': 20, '2.1.118': 19, '2.1.105': 13}
 files with non-empty agentType: 6
 
 --- sample frontmatter (first 5 files) ---
@@ -1247,13 +1247,13 @@ agent-prompt-background-agent-state-classifier.md Agent Prompt: Background agent
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"513115601cd24b098283d2202d520709","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"ad22de502bd2488088ae0e0b53c754c3","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>total tokens: 129,427
-total sentences: 5,698
-mean tokens/file: 449</code></pre>
+<pre><code>total tokens: 129,358
+total sentences: 5,692
+mean tokens/file: 451</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
@@ -1515,7 +1515,7 @@ Agent prompt             6.189       0.846            0.250
 Data / template          4.368       0.584            0.126
 Skill                    8.400       0.603            0.162
 System prompt            2.238       1.095            0.260
-System reminder          1.707       1.080            0.243
+System reminder          1.700       1.034            0.241
 Tool description         2.205       2.136            0.411
 Tool parameter           0.000       0.000            0.000</code></pre>
 </div>
@@ -1623,7 +1623,7 @@ Agent prompt      0.593         27.236      3.154   70.865         0.0       0.0
 Data / template   0.554         22.758      2.699   73.791         0.0       0.001             0.261       0.262              0.0              0.0                  0.060            0.065
 Skill             0.566         26.249      2.668   68.816         0.0       0.000             0.283       0.550              0.0              0.0                  0.070            0.130
 System prompt     0.745         25.434      2.841   66.843         0.0       0.002             0.615       0.508              0.0              0.0                  0.140            0.127
-System reminder   0.791         18.120      2.288   70.438         0.0       0.000             0.933       0.276              0.0              0.0                  0.169            0.059
+System reminder   0.791         18.285      2.302   71.011         0.0       0.000             0.848       0.283              0.0              0.0                  0.160            0.060
 Tool description  0.793         22.987      2.584   64.869         0.0       0.000             0.726       0.397              0.0              0.0                  0.149            0.075
 Tool parameter    0.600         12.790      1.995   75.410         0.0       0.000             0.000       0.000              0.0              0.0                  0.000            0.000</code></pre>
 </div>
@@ -1703,7 +1703,7 @@ Agent prompt             0          9          25                    1     2
 Data / template          0          3          33                    0     0   
 Skill                    0          3          27                    0     0   
 System prompt            2         28          22                    0     2   
-System reminder          0         14           9                    0    18   
+System reminder          0         13           9                    0    18   
 Tool description         1         33          23                    1    17   
 Tool parameter           0          0           0                    0     0   
 
@@ -1724,7 +1724,7 @@ Agent prompt              1.055               0.297           1.625             
 Data / template           0.385               0.077           1.373                0.298                    0.429                         0.096                    0.128                         0.025         0.171              0.033            0.115                 0.036            0.612                 0.132                            0.235                                 0.052                             0.194                                  0.044
 Skill                     0.565               0.142           1.514                0.394                    0.248                         0.060                    0.086                         0.018         0.195              0.045            0.081                 0.021            0.955                 0.220                            0.187                                 0.044                             0.061                                  0.016
 System prompt             1.593               0.352           1.709                0.383                    0.640                         0.172                    0.143                         0.047         0.267              0.072            0.119                 0.036            2.121                 0.459                            0.422                                 0.113                             0.219                                  0.059
-System reminder           1.485               0.300           1.607                0.336                    0.166                         0.045                    0.015                         0.007         0.531              0.098            0.063                 0.024            1.739                 0.359                            0.059                                 0.014                             0.107                                  0.031
+System reminder           1.341               0.286           1.611                0.340                    0.170                         0.046                    0.016                         0.008         0.472              0.092            0.064                 0.025            1.601                 0.348                            0.060                                 0.014                             0.110                                  0.032
 Tool description          2.185               0.433           1.248                0.317                    0.423                         0.123                    0.054                         0.016         0.292              0.069            0.088                 0.021            1.629                 0.368                            0.318                                 0.091                             0.104                                  0.031
 Tool parameter            0.000               0.000           0.000                0.000                    2.235                         0.286                    0.000                         0.000         0.000              0.000            0.000                 0.000            0.000                 0.000                            1.676                                 0.214                             0.559                                  0.071</code></pre>
 </div>
@@ -1952,7 +1952,7 @@ Agent prompt       0              0            0          7          30
 Data / template    1              1            1          1          34   
 Skill              0              0            0          1          29   
 System prompt      2              0            1          7          52   
-System reminder   16              0            0          5          17   
+System reminder   16              0            0          4          17   
 Tool description  16              1            3          8          49   
 Tool parameter     0              0            0          0           1   
 
@@ -1973,7 +1973,7 @@ Agent prompt                        0.21                 2.80                   
 Data / template                     1.48                 1.46                   0.00                26.02                6.77                  5.63          66.01
 Skill                               0.47                 2.05                   0.00                36.23               12.73                  2.64          55.29
 System prompt                       0.77                 3.60                   0.50                41.46               25.75                  6.12          42.51
-System reminder                     0.13                 7.71                   0.00                33.75               17.57                  1.01          55.92
+System reminder                     0.13                 7.07                   0.00                34.59               16.76                  1.04          56.48
 Tool description                    1.33                 2.95                   0.09                41.88               30.91                  6.94          41.75
 Tool parameter                      0.00                 0.00                   0.00                78.57                0.00                 50.00          14.29</code></pre>
 </div>
@@ -2109,14 +2109,14 @@ Agent prompt            0.245             0.065          0.409               0.1
 Data / template         0.081             0.016          0.144               0.030        0.283             0.071
 Skill                   0.132             0.031          0.142               0.036        0.370             0.101
 System prompt           0.343             0.086          0.570               0.112        0.572             0.133
-System reminder         0.365             0.075          0.505               0.100        0.327             0.061
+System reminder         0.301             0.068          0.481               0.098        0.262             0.055
 Tool description        0.628             0.140          0.273               0.076        0.906             0.174
 Tool parameter          0.000             0.000          0.000               0.000        0.000             0.000
 
 corpus-wide modality counts:
-deontic_count      263
-epistemic_count    325
-dynamic_count      517</code></pre>
+deontic_count      261
+epistemic_count    324
+dynamic_count      515</code></pre>
 </div>
 </div>
 </section>
@@ -2167,7 +2167,7 @@ Agent prompt                      0.517                   0.265                 
 Data / template                   0.310                   0.269                   0.033                  0.008                     0.045                     0.000        0.093                   0.152            0.0            0.612            0.115
 Skill                             0.473                   0.105                   0.097                  0.002                     0.011                     0.018        0.169                   0.160            0.0            0.955            0.081
 System prompt                     0.811                   0.285                   0.677                  0.032                     0.006                     0.000        0.321                   0.469            0.0            2.121            0.119
-System reminder                   0.538                   0.468                   0.650                  0.146                     0.056                     0.000        0.439                   0.650            0.0            1.739            0.063
+System reminder                   0.515                   0.407                   0.558                  0.150                     0.057                     0.000        0.450                   0.667            0.0            1.601            0.064
 Tool description                  1.181                   1.001                   0.424                  0.005                     0.010                     0.000        0.139                   0.258            0.0            1.629            0.088
 Tool parameter                    0.000                   0.000                   0.000                  0.000                     0.000                     0.000        0.000                   0.000            0.0            0.000            0.000
 
@@ -2178,21 +2178,21 @@ Agent prompt                           0.146                        0.086       
 Data / template                        0.066                        0.059                        0.005                       0.002                          0.015                          0.000             0.016                        0.034                 0.0                 0.132                 0.036
 Skill                                  0.127                        0.029                        0.023                       0.000                          0.003                          0.003             0.041                        0.039                 0.0                 0.220                 0.021
 System prompt                          0.183                        0.078                        0.132                       0.013                          0.001                          0.000             0.077                        0.112                 0.0                 0.459                 0.036
-System reminder                        0.123                        0.098                        0.115                       0.024                          0.012                          0.000             0.086                        0.117                 0.0                 0.359                 0.024
+System reminder                        0.122                        0.092                        0.106                       0.025                          0.013                          0.000             0.089                        0.120                 0.0                 0.348                 0.025
 Tool description                       0.211                        0.203                        0.084                       0.002                          0.002                          0.000             0.033                        0.080                 0.0                 0.368                 0.021
 Tool parameter                         0.000                        0.000                        0.000                       0.000                          0.000                          0.000             0.000                        0.000                 0.0                 0.000                 0.000
 
 corpus-wide raw counts:
-  hard_prohibitions           631
-  hard_prescriptions          362
-  soft_prescriptions          261
+  hard_prohibitions           630
+  hard_prescriptions          360
+  soft_prescriptions          258
   politeness_direct            20
   politeness_softening         28
   warmth_encouragement          5
   hedging                     243
   structural_markers          299
   profanity                     0
-  pronouns_2p                1389
+  pronouns_2p                1384
   pronouns_1p                 153</code></pre>
 </div>
 </div>
@@ -2255,7 +2255,7 @@ Agent prompt      13.919  1.773     0.511
 Data / template    2.763  0.404     0.092
 Skill              9.267  1.548     0.463
 System prompt      2.730  1.258     0.375
-System reminder    3.220  7.434     1.180
+System reminder    3.225  7.511     1.197
 Tool description   2.962  2.422     0.503
 Tool parameter     0.000  0.000     0.000
 
@@ -2268,7 +2268,7 @@ corpus-wide top-25 ALL CAPS tokens:
   NEVER                27
   ONLY                 25
   TUNE                 25
-  MUST                 24
+  MUST                 23
   README               17
   CRITICAL             17
   SSE                  16
@@ -2349,7 +2349,7 @@ Agent prompt      1.324  0.203     0.073
 Data / template   0.026  0.002     0.000
 Skill             0.367  0.013     0.004
 System prompt     0.381  0.163     0.048
-System reminder   0.463  0.289     0.061
+System reminder   0.425  0.224     0.054
 Tool description  0.615  0.353     0.080
 Tool parameter    0.000  0.000     0.000
 
@@ -2359,12 +2359,11 @@ corpus-wide CAPS imperative frequency:
   CRITICAL           17
   MANDATORY          3
   REQUIRED           4
-  MUST               21
+  MUST               20
   MUST NOT           3
   NEVER              27
   ALWAYS             7
   DO NOT             15
-  SHOULD             1
   NOTE               7
   STOP               1
   REMEMBER           2
@@ -2424,7 +2423,7 @@ Agent prompt      1.703  0.288     0.076  0.295
 Data / template   0.974  0.114     0.021  0.193
 Skill             2.633  0.273     0.083  0.377
 System prompt     0.794  0.299     0.073  0.244
-System reminder   0.415  0.249     0.053  0.099
+System reminder   0.425  0.255     0.054  0.101
 Tool description  0.731  0.343     0.077  0.146
 Tool parameter    0.000  0.000     0.000  0.000</code></pre>
 </div>
@@ -2638,13 +2637,13 @@ Agent prompt                   11.29               31.32                        
 Data / template                 2.99                9.95                           9.95                           19.73
 Skill                           8.49               21.61                          21.61                           23.04
 System prompt                   8.58               27.28                          27.28                           32.05
-System reminder                 8.61               24.30                          24.30                           45.94
+System reminder                 8.99               25.36                          25.36                           48.81
 Tool description                9.91               19.75                          20.13                           22.88
 Tool parameter                  0.00                0.00                           0.00                             NaN
 
-corpus rule sentences: 2221
-  explained (same sentence):      148  ( 6.66%)
-  explained (paragraph window):   542  (24.40%)</code></pre>
+corpus rule sentences: 2220
+  explained (same sentence):      148  ( 6.67%)
+  explained (paragraph window):   542  (24.41%)</code></pre>
 </div>
 </div>
 </section>
@@ -2895,13 +2894,13 @@ Agent prompt               0.649             2.486              0.028           
 Data / template            0.105             2.184              0.003                0.075                         0.024
 Skill                      0.867             6.400              0.019                0.117                         0.138
 System prompt              0.222             1.317              0.022                0.151                         0.199
-System reminder            0.195             0.439              0.027                0.065                         0.615
+System reminder            0.175             0.425              0.024                0.063                         0.583
 Tool description           0.051             1.308              0.010                0.228                         0.034
 Tool parameter             0.000             0.000              0.000                0.000                           NaN
 
-corpus judgment_count:  80
-corpus procedural_count: 570
-corpus judgment_to_procedural_ratio: 0.140
+corpus judgment_count:  79
+corpus procedural_count: 569
+corpus judgment_to_procedural_ratio: 0.139
 
 Consequence framing — per-category threat / causal counts:
                   threat_count  causal_count  threat_per_sent  causal_per_sent  threat_share
@@ -2910,7 +2909,7 @@ Agent prompt             0.649         0.676            0.033            0.029  
 Data / template          0.316         0.447            0.008            0.010         0.446
 Skill                    1.133         0.867            0.034            0.016         0.553
 System prompt            0.222         0.381            0.026            0.036         0.392
-System reminder          0.220         0.171            0.023            0.026         0.550
+System reminder          0.225         0.175            0.024            0.026         0.550
 Tool description         0.179         0.423            0.022            0.052         0.343
 Tool parameter           0.000         0.000            0.000            0.000           NaN
 
@@ -2926,7 +2925,7 @@ Address-form — corpus self-reference distribution:
         selfref_claude: 517
      selfref_assistant: 20
          selfref_model: 244
-            selfref_2p: 243
+            selfref_2p: 239
             selfref_we: 1
   fraction 'Claude' (anthropomorphic) of named refs: 0.662</code></pre>
 </div>
@@ -3203,7 +3202,7 @@ Agent prompt                      10.946      6.378       3.216        1.811    
 Data / template                   12.053      7.605       2.921        1.618          1.000          0.105
 Skill                             22.467     13.000       3.500        1.931          2.500          0.433
 System prompt                      4.825      2.397       2.651        1.816          0.619          0.127
-System reminder                    2.390      1.073       1.732        1.329          0.317          0.098
+System reminder                    2.425      1.075       1.750        1.337          0.325          0.100
 Tool description                   3.449      1.897       1.795        1.371          0.282          0.141
 Tool parameter                    11.000      2.000       8.000        5.500          2.000          1.000
 
@@ -3226,16 +3225,16 @@ Agent prompt                                               22.73                
 Data / template                                            50.00                                                 7.83
 Skill                                                       0.00                                                19.42
 System prompt                                               0.00                                                24.83
-System reminder                                              NaN                                                24.77
+System reminder                                              NaN                                                25.85
 Tool description                                          100.00                                                17.97
 Tool parameter                                               NaN                                                 0.00
 
 corpus n_rule_paragraphs_in_rules_section (sum):    26
 corpus n_rule_paragraphs_in_rules_section_explained: 5
-corpus n_rule_paragraphs_outside_rules_section:      1243
+corpus n_rule_paragraphs_outside_rules_section:      1242
 corpus n_rule_paragraphs_outside_rules_section_explained: 204
 corpus pct_rule_paragraphs_explained_in_rules_section:   19.23%
-corpus pct_rule_paragraphs_explained_outside_rules_section: 16.41%</code></pre>
+corpus pct_rule_paragraphs_explained_outside_rules_section: 16.43%</code></pre>
 </div>
 </div>
 </section>
@@ -3342,13 +3341,13 @@ corpus pct_rule_paragraphs_explained_outside_rules_section: 16.41%</code></pre>
 <span id="cb38-95"><a href="#cb38-95" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  addressee distribution: </span><span class="sc">{</span>addr_dist<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>built 5,698 per-sentence records
+<pre><code>built 5,692 per-sentence records
 columns: ['file_path', 'category', 'ccVersion', 'paragraph_index', 'sentence_index', 'sentence_index_in_file', 'n_tokens', 'text', 'is_imperative', 'is_prohibition', 'is_rule', 'has_just_in_sent', 'paragraph_has_just', 'is_explained_para', 'has_threat', 'has_causal', 'mentions_claude', 'mentions_model', 'addressee', 'streak_position']
 
 flag totals:
-              is_imperative:  2219
-             is_prohibition:   565
-                    is_rule:  2221
+              is_imperative:  2218
+             is_prohibition:   564
+                    is_rule:  2220
            has_just_in_sent:   282
          paragraph_has_just:  1187
           is_explained_para:   542
@@ -3356,7 +3355,7 @@ flag totals:
                  has_causal:   127
             mentions_claude:   396
              mentions_model:   213
-  addressee distribution: {'unknown': 4247, 'claude': 1283, 'user': 168}</code></pre>
+  addressee distribution: {'unknown': 4245, 'claude': 1279, 'user': 168}</code></pre>
 </div>
 </div>
 </section>
@@ -3427,7 +3426,7 @@ flag totals:
 <span id="cb40-59"><a href="#cb40-59" aria-hidden="true" tabindex="-1"></a>pprint.pp(per_file_records[<span class="dv">0</span>], depth<span class="op">=</span><span class="dv">3</span>, sort_dicts<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>built 288 per-file records
+<pre><code>built 287 per-file records
 
 --- sample (file 0):
 {'path': 'agent-prompt-agent-creation-architect.md',
@@ -4026,24 +4025,24 @@ flag totals:
 <span id="cb42-417"><a href="#cb42-417" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  pct_rule_paragraphs_explained_out:   </span><span class="sc">{</span>rsec[<span class="st">'pct_rule_paragraphs_explained_outside_rules_section'</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>corpus n_tokens: 129427 n_sents: 5698
-corpus mood: {'marker_count': 1030, 'marker_pct': 0.7958, 'marker_per_sent': 0.1808}
+<pre><code>corpus n_tokens: 129358 n_sents: 5692
+corpus mood: {'marker_count': 1028, 'marker_pct': 0.7947, 'marker_per_sent': 0.1806}
 
 corpus rule_explanation:
-  pct_explained_para:     24.40%  ← Tier-1 headline
+  pct_explained_para:     24.41%  ← Tier-1 headline
 
-corpus judgment_procedural: ratio=0.14  ← Tier-3 v1
+corpus judgment_procedural: ratio=0.139  ← Tier-3 v1
 corpus consequence_framing: threat_share=0.4477
 corpus socratic: questions=105 apologies=3
 corpus address_form: pct_anthropomorphic=0.662
 
 corpus imperative_streaks (Tier-3 v2 6b):
-  n_streaks=1260  streak_max=12  streak_mean=1.761  n_streaks_ge3=225  n_streaks_ge5=51
+  n_streaks=1259  streak_max=12  streak_mean=1.762  n_streaks_ge3=225  n_streaks_ge5=51
 corpus rules_section (Tier-3 v2 6e):
   n_rule_paragraphs_in_rules_section:  26
-  n_rule_paragraphs_outside:           1243
+  n_rule_paragraphs_outside:           1242
   pct_rule_paragraphs_explained_in:    19.2308
-  pct_rule_paragraphs_explained_out:   16.4119</code></pre>
+  pct_rule_paragraphs_explained_out:   16.4251</code></pre>
 </div>
 </div>
 <div id="3ead6303-22dd-42b7-8bcb-d05f107fc364" class="cell" data-execution_count="23">
@@ -4072,7 +4071,7 @@ corpus rules_section (Tier-3 v2 6e):
 Data / template    files= 38  tokens= 30289  imp_sent%= 22.7  dir_sent%=  6.6  cfg_sent%=  5.2  marker%= 0.55
 Skill              files= 30  tokens= 38484  imp_sent%= 33.0  dir_sent%= 11.6  cfg_sent%=  4.8  marker%= 0.65
 System prompt      files= 63  tokens= 15121  imp_sent%= 39.7  dir_sent%= 20.9  cfg_sent%=  4.7  marker%= 0.93
-System reminder    files= 41  tokens=  3852  imp_sent%= 44.7  dir_sent%= 29.1  cfg_sent%=  2.8  marker%= 1.82
+System reminder    files= 40  tokens=  3783  imp_sent%= 46.2  dir_sent%= 28.3  cfg_sent%=  2.9  marker%= 1.80
 Tool description   files= 78  tokens= 14497  imp_sent%= 37.3  dir_sent%= 23.5  cfg_sent%=  5.2  marker%= 1.19
 Tool parameter     files=  1  tokens=   179  imp_sent%= 78.6  dir_sent%=  0.0  cfg_sent%= 50.0  marker%= 0.00</code></pre>
 </div>
@@ -4187,11 +4186,11 @@ Tool parameter     files=  1  tokens=   179  imp_sent%= 78.6  dir_sent%=  0.0  c
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>wrote /home/user/workspace/claude-prompts-analysis/prompt_linguistic_analysis.yaml
-      1,882,704 bytes (1838.6 KiB)
+      1,876,309 bytes (1832.3 KiB)
 wrote /home/user/workspace/claude-prompts-analysis/sentences_classified.parquet
-      404,341 bytes (394.9 KiB), 5,698 rows
+      404,246 bytes (394.8 KiB), 5,692 rows
 round-trip OK — top-level keys: ['metadata', 'lexicons', 'corpus', 'by_category', 'files']
-round-trip OK — files: 288
+round-trip OK — files: 287
 round-trip OK — lexicons: ['VOCAB', 'IMPERATIVE_MARKERS', 'CAPS_IMPERATIVE_TOKENS', 'JUSTIFICATION_PATTERNS', 'TECH_ACRONYMS', 'CATEGORY_PREFIXES', 'STANCE_MARKERS', 'REGISTER_MARKERS', 'SENTENCE_REGISTER_MARKERS', 'SIMPLE_MODAL_LOOKUP', 'EPISTEMIC_ADVERBS', 'DEONTIC_LIGHT_VERBS', 'EPISTEMIC_LIGHT_VERBS', 'EPISTEMIC_AUX_AFTER_MODAL', 'JUDGMENT_VERBS', 'PROCEDURAL_CUES', 'THREAT_PATTERNS', 'CAUSAL_PATTERNS', 'APOLOGY_MARKERS', 'ADDRESS_FORM_PATTERNS', 'RULES_HEADING_RE']
 round-trip OK — Tier-1, Tier-3 v1, and Tier-3 v2 blocks all present in files[0] and corpus</code></pre>
 </div>

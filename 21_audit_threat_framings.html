@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -112,6 +112,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -556,7 +559,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Forensic sample</strong> — actual threat-framed sentences pulled from <code>sentences_classified.parquet</code>, to make the audit concrete.</li>
 <li><strong>Conclusions / Recommendations / Limitations</strong> <em>(opinion, not data)</em> — the slice of the executive-summary commentary specific to threat-vs-causal.</li>
 </ol>
-<div id="78ee4cba-7b1c-4d59-8a56-6d1b65e94d97" class="cell">
+<div id="78ee4cba-7b1c-4d59-8a56-6d1b65e94d97" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + parquet artifact for forensic sentence inspection."""</span></span>
@@ -595,6 +598,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  has_threat (per-sentence flag):                </span><span class="sc">{</span><span class="bu">int</span>(sentences_df[<span class="st">'has_threat'</span>].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  has_causal (per-sentence flag):                </span><span class="sc">{</span><span class="bu">int</span>(sentences_df[<span class="st">'has_causal'</span>].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>corpus threat / causal counts (YAML, headline):  107 / 132
+corpus threat_share:                             0.448  (44.8%)
+sentences_classified.parquet:                    5,692 rows × 20 columns
+  has_threat (per-sentence flag):                97
+  has_causal (per-sentence flag):                127</code></pre>
+</div>
 </div>
 <section id="threat-share-data" class="level2">
 <h2 class="anchored" data-anchor-id="threat-share-data">1. Threat-share data</h2>
@@ -603,115 +613,355 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="per-category-threat_share" class="level2">
 <h2 class="anchored" data-anchor-id="per-category-threat_share">2. Per-category threat_share</h2>
 <p>Where the threat-framing concentrates. The chart below sums per-file <code>threat_count</code> and <code>causal_count</code> within each category, then plots the resulting threat_share. Categories with fewer than 5 explanations total are omitted (the share is undefined or noisy).</p>
-<div id="c6ae37b3-5110-4e81-850f-0e5326e0a9fa" class="cell">
+<div id="c6ae37b3-5110-4e81-850f-0e5326e0a9fa" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-category threat_share — sum of per-file counts, then ratio."""</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>per_cat <span class="op">=</span> (</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    alt_df.groupby(<span class="st">"category"</span>, as_index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>          .agg(threat<span class="op">=</span>(<span class="st">"threat_count"</span>, <span class="st">"sum"</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>               causal<span class="op">=</span>(<span class="st">"causal_count"</span>, <span class="st">"sum"</span>))</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>per_cat[<span class="st">"total"</span>] <span class="op">=</span> per_cat[<span class="st">"threat"</span>] <span class="op">+</span> per_cat[<span class="st">"causal"</span>]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>per_cat <span class="op">=</span> per_cat[per_cat[<span class="st">"total"</span>] <span class="op">&gt;=</span> <span class="dv">5</span>].copy()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>per_cat[<span class="st">"threat_share"</span>] <span class="op">=</span> per_cat[<span class="st">"threat"</span>] <span class="op">/</span> per_cat[<span class="st">"total"</span>]</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>threat_chart <span class="op">=</span> (</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    alt.Chart(per_cat).mark_bar().encode(</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"threat_share:Q"</span>, title<span class="op">=</span><span class="st">"threat_share (fraction of explanations that are threats)"</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>])),</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span><span class="st">"-x"</span>, title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                        scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>_cat_domain, <span class="bu">range</span><span class="op">=</span>_cat_range),</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                        legend<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"threat:Q"</span>, title<span class="op">=</span><span class="st">"threat count"</span>),</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"causal:Q"</span>, title<span class="op">=</span><span class="st">"causal count"</span>),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"total:Q"</span>,  title<span class="op">=</span><span class="st">"total explanations"</span>),</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"threat_share:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>)],</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    ).properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                 title<span class="op">=</span><span class="st">"Per-category threat_share (categories with ≥5 explanations)"</span>)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>threat_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-category threat_share — sum of per-file counts, then ratio."""</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>per_cat <span class="op">=</span> (</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    alt_df.groupby(<span class="st">"category"</span>, as_index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>          .agg(threat<span class="op">=</span>(<span class="st">"threat_count"</span>, <span class="st">"sum"</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>               causal<span class="op">=</span>(<span class="st">"causal_count"</span>, <span class="st">"sum"</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>per_cat[<span class="st">"total"</span>] <span class="op">=</span> per_cat[<span class="st">"threat"</span>] <span class="op">+</span> per_cat[<span class="st">"causal"</span>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>per_cat <span class="op">=</span> per_cat[per_cat[<span class="st">"total"</span>] <span class="op">&gt;=</span> <span class="dv">5</span>].copy()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>per_cat[<span class="st">"threat_share"</span>] <span class="op">=</span> per_cat[<span class="st">"threat"</span>] <span class="op">/</span> per_cat[<span class="st">"total"</span>]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>threat_chart <span class="op">=</span> (</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    alt.Chart(per_cat).mark_bar().encode(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"threat_share:Q"</span>, title<span class="op">=</span><span class="st">"threat_share (fraction of explanations that are threats)"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>])),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span><span class="st">"-x"</span>, title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                        scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>_cat_domain, <span class="bu">range</span><span class="op">=</span>_cat_range),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                        legend<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"threat:Q"</span>, title<span class="op">=</span><span class="st">"threat count"</span>),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"causal:Q"</span>, title<span class="op">=</span><span class="st">"causal count"</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"total:Q"</span>,  title<span class="op">=</span><span class="st">"total explanations"</span>),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"threat_share:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>)],</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    ).properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                 title<span class="op">=</span><span class="st">"Per-category threat_share (categories with ≥5 explanations)"</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>threat_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<style>
+  #altair-viz-8866836b24674a368e05dfeb3cef3958.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-8866836b24674a368e05dfeb3cef3958.vega-embed details,
+  #altair-viz-8866836b24674a368e05dfeb3cef3958.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-8866836b24674a368e05dfeb3cef3958"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-8866836b24674a368e05dfeb3cef3958") {
+      outputDiv = document.getElementById("altair-viz-8866836b24674a368e05dfeb3cef3958");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.4.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.4.1"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-4f27db34c8a7b117a5de58abc2c71082"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": null, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "threat", "title": "threat count", "type": "quantitative"}, {"field": "causal", "title": "causal count", "type": "quantitative"}, {"field": "total", "title": "total explanations", "type": "quantitative"}, {"field": "threat_share", "format": ".3f", "type": "quantitative"}], "x": {"field": "threat_share", "scale": {"domain": [0, 1]}, "title": "threat_share (fraction of explanations that are threats)", "type": "quantitative"}, "y": {"field": "category", "sort": "-x", "title": null, "type": "nominal"}}, "height": 240, "title": "Per-category threat_share (categories with \u22655 explanations)", "width": 520, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-4f27db34c8a7b117a5de58abc2c71082": [{"category": "Agent prompt", "threat": 24, "causal": 25, "total": 49, "threat_share": 0.4897959183673469}, {"category": "Data / template", "threat": 12, "causal": 17, "total": 29, "threat_share": 0.41379310344827586}, {"category": "Skill", "threat": 34, "causal": 26, "total": 60, "threat_share": 0.5666666666666667}, {"category": "System prompt", "threat": 14, "causal": 24, "total": 38, "threat_share": 0.3684210526315789}, {"category": "System reminder", "threat": 9, "causal": 7, "total": 16, "threat_share": 0.5625}, {"category": "Tool description", "threat": 14, "causal": 33, "total": 47, "threat_share": 0.2978723404255319}]}}, {"mode": "vega-lite"});
+</script>
+</div>
 </div>
 </section>
 <section id="paired-exemplars-audit-candidates-and-rewrite-templates" class="level2">
 <h2 class="anchored" data-anchor-id="paired-exemplars-audit-candidates-and-rewrite-templates">3. Paired exemplars — audit candidates and rewrite templates</h2>
 <p>Two rankings, side by side. The <strong>top-10 welfare-evidence files</strong> (negative exemplars) are rule-saturated AND under-explained — they are Idea 2’s primary <strong>audit candidates</strong>: every threat-framed sentence in these files is a candidate for rewriting. The <strong>top-10 positive exemplars</strong> are rule-saturated AND well-explained — they are the <strong>rewrite templates</strong> showing how rules can be paired with reasons in similar contexts.</p>
 <p>The score formulas: <code>score_welfare = rule_density × (1 − pct_explained_para/100)</code> and <code>score_positive = rule_density × (pct_explained_para/100)</code>.</p>
-<div id="ad0ca296-ff19-4082-b38c-1b024ab04301" class="cell">
+<div id="ad0ca296-ff19-4082-b38c-1b024ab04301" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Welfare-evidence + positive-exemplar paired top-10 chart."""</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>we_top <span class="op">=</span> welfare_evidence_table(alt_df, top_n<span class="op">=</span><span class="dv">10</span>).copy()</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>we_top[<span class="st">"kind"</span>] <span class="op">=</span> <span class="st">"audit candidates (loudest, least-explained)"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>pe_top <span class="op">=</span> positive_exemplar_table(alt_df, top_n<span class="op">=</span><span class="dv">10</span>).copy()</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>pe_top[<span class="st">"kind"</span>] <span class="op">=</span> <span class="st">"rewrite templates (rules-with-reasons)"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>paired <span class="op">=</span> pd.concat([we_top, pe_top], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>paired_chart <span class="op">=</span> (</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    alt.Chart(paired)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"score:Q"</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"rule_density × (explanation factor)"</span>),</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"path:N"</span>,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                sort<span class="op">=</span>alt.SortField(<span class="st">"score"</span>, order<span class="op">=</span><span class="st">"descending"</span>),</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labelLimit<span class="op">=</span><span class="dv">420</span>)),</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                        scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>_cat_domain, <span class="bu">range</span><span class="op">=</span>_cat_range),</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                        legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"Category"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>, columns<span class="op">=</span><span class="dv">4</span>)),</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        row<span class="op">=</span>alt.Row(<span class="st">"kind:N"</span>,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                    sort<span class="op">=</span>[<span class="st">"audit candidates (loudest, least-explained)"</span>,</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"rewrite templates (rules-with-reasons)"</span>],</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                    header<span class="op">=</span>alt.Header(labelAngle<span class="op">=</span><span class="dv">0</span>, labelAlign<span class="op">=</span><span class="st">"left"</span>)),</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"path:N"</span>),</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"ccVersion:N"</span>),</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"rule_n:Q"</span>,                  <span class="bu">format</span><span class="op">=</span><span class="st">","</span>, title<span class="op">=</span><span class="st">"rule sentences"</span>),</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"rule_density:Q"</span>,            <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>),</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"rule_explained_para_pct:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% e</span><span class="st">xplained"</span>),</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"score:Q"</span>,                   <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>),</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">560</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Top-10 audit candidates (top) and top-10 rewrite templates (bottom)"</span>)</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    .resolve_scale(x<span class="op">=</span><span class="st">"independent"</span>, y<span class="op">=</span><span class="st">"independent"</span>)</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>paired_chart.save(<span class="st">"figures/welfare_evidence_pairing.png"</span>, ppi<span class="op">=</span><span class="dv">200</span>)</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>paired_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Welfare-evidence + positive-exemplar paired top-10 chart."""</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>we_top <span class="op">=</span> welfare_evidence_table(alt_df, top_n<span class="op">=</span><span class="dv">10</span>).copy()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>we_top[<span class="st">"kind"</span>] <span class="op">=</span> <span class="st">"audit candidates (loudest, least-explained)"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pe_top <span class="op">=</span> positive_exemplar_table(alt_df, top_n<span class="op">=</span><span class="dv">10</span>).copy()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>pe_top[<span class="st">"kind"</span>] <span class="op">=</span> <span class="st">"rewrite templates (rules-with-reasons)"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>paired <span class="op">=</span> pd.concat([we_top, pe_top], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>paired_chart <span class="op">=</span> (</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    alt.Chart(paired)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"score:Q"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"rule_density × (explanation factor)"</span>),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"path:N"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                sort<span class="op">=</span>alt.SortField(<span class="st">"score"</span>, order<span class="op">=</span><span class="st">"descending"</span>),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labelLimit<span class="op">=</span><span class="dv">420</span>)),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                        scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>_cat_domain, <span class="bu">range</span><span class="op">=</span>_cat_range),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                        legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"Category"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>, columns<span class="op">=</span><span class="dv">4</span>)),</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        row<span class="op">=</span>alt.Row(<span class="st">"kind:N"</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                    sort<span class="op">=</span>[<span class="st">"audit candidates (loudest, least-explained)"</span>,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"rewrite templates (rules-with-reasons)"</span>],</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                    header<span class="op">=</span>alt.Header(labelAngle<span class="op">=</span><span class="dv">0</span>, labelAlign<span class="op">=</span><span class="st">"left"</span>)),</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"path:N"</span>),</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"ccVersion:N"</span>),</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"rule_n:Q"</span>,                  <span class="bu">format</span><span class="op">=</span><span class="st">","</span>, title<span class="op">=</span><span class="st">"rule sentences"</span>),</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"rule_density:Q"</span>,            <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>),</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"rule_explained_para_pct:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% e</span><span class="st">xplained"</span>),</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"score:Q"</span>,                   <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>),</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">560</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Top-10 audit candidates (top) and top-10 rewrite templates (bottom)"</span>)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    .resolve_scale(x<span class="op">=</span><span class="st">"independent"</span>, y<span class="op">=</span><span class="st">"independent"</span>)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>paired_chart.save(<span class="st">"figures/welfare_evidence_pairing.png"</span>, ppi<span class="op">=</span><span class="dv">200</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>paired_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<style>
+  #altair-viz-e3a90cdb958949019ea1cf6ed38b3c4b.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-e3a90cdb958949019ea1cf6ed38b3c4b.vega-embed details,
+  #altair-viz-e3a90cdb958949019ea1cf6ed38b3c4b.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-e3a90cdb958949019ea1cf6ed38b3c4b"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-e3a90cdb958949019ea1cf6ed38b3c4b") {
+      outputDiv = document.getElementById("altair-viz-e3a90cdb958949019ea1cf6ed38b3c4b");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.4.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.4.1"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-e2c34c7fcd8e0ed9f8237f4e4d12f242"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": {"columns": 4, "orient": "bottom", "title": "Category"}, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "row": {"field": "kind", "header": {"labelAlign": "left", "labelAngle": 0}, "sort": ["audit candidates (loudest, least-explained)", "rewrite templates (rules-with-reasons)"], "title": null, "type": "nominal"}, "tooltip": [{"field": "path", "type": "nominal"}, {"field": "category", "type": "nominal"}, {"field": "ccVersion", "type": "nominal"}, {"field": "rule_n", "format": ",", "title": "rule sentences", "type": "quantitative"}, {"field": "rule_density", "format": ".3f", "type": "quantitative"}, {"field": "rule_explained_para_pct", "format": ".2f", "title": "% explained", "type": "quantitative"}, {"field": "score", "format": ".3f", "type": "quantitative"}], "x": {"field": "score", "title": "rule_density \u00d7 (explanation factor)", "type": "quantitative"}, "y": {"axis": {"labelLimit": 420}, "field": "path", "sort": {"field": "score", "order": "descending"}, "title": null, "type": "nominal"}}, "height": 240, "resolve": {"scale": {"x": "independent", "y": "independent"}}, "title": "Top-10 audit candidates (top) and top-10 rewrite templates (bottom)", "width": 560, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-e2c34c7fcd8e0ed9f8237f4e4d12f242": [{"path": "tool-description-sendmessagetool-non-agent-teams.md", "category": "Tool description", "ccVersion": "2.1.116", "rule_n": 5, "rule_density": 1.0, "rule_explained_para_pct": 0.0, "score": 1.0, "kind": "audit candidates (loudest, least-explained)"}, {"path": "tool-description-sendmessagetool.md", "category": "Tool description", "ccVersion": "2.1.118", "rule_n": 7, "rule_density": 0.875, "rule_explained_para_pct": 0.0, "score": 0.875, "kind": "audit candidates (loudest, least-explained)"}, {"path": "system-reminder-team-shutdown.md", "category": "System reminder", "ccVersion": "2.1.16", "rule_n": 6, "rule_density": 0.8571428571428571, "rule_explained_para_pct": 0.0, "score": 0.8571428571428571, "kind": "audit candidates (loudest, least-explained)"}, {"path": "system-prompt-parallel-tool-call-note-part-of-tool-usage-policy.md", "category": "System prompt", "ccVersion": "2.1.30", "rule_n": 4, "rule_density": 0.8, "rule_explained_para_pct": 0.0, "score": 0.8, "kind": "audit candidates (loudest, least-explained)"}, {"path": "tool-description-schedule-proactive-offer-guidance.md", "category": "Tool description", "ccVersion": "2.1.118", "rule_n": 4, "rule_density": 0.8, "rule_explained_para_pct": 0.0, "score": 0.8, "kind": "audit candidates (loudest, least-explained)"}, {"path": "system-prompt-tool-execution-denied.md", "category": "System prompt", "ccVersion": "2.1.20", "rule_n": 4, "rule_density": 0.8, "rule_explained_para_pct": 0.0, "score": 0.8, "kind": "audit candidates (loudest, least-explained)"}, {"path": "tool-description-tasklist-teammate-workflow.md", "category": "Tool description", "ccVersion": "2.1.38", "rule_n": 4, "rule_density": 0.8, "rule_explained_para_pct": 0.0, "score": 0.8, "kind": "audit candidates (loudest, least-explained)"}, {"path": "tool-parameter-computer-action.md", "category": "Tool parameter", "ccVersion": "2.0.71", "rule_n": 11, "rule_density": 0.7857142857142857, "rule_explained_para_pct": 0.0, "score": 0.7857142857142857, "kind": "audit candidates (loudest, least-explained)"}, {"path": "system-reminder-plan-mode-approval-tool-enforcement.md", "category": "System reminder", "ccVersion": "2.1.118", "rule_n": 6, "rule_density": 0.75, "rule_explained_para_pct": 0.0, "score": 0.75, "kind": "audit candidates (loudest, least-explained)"}, {"path": "skill-loop-cloud-first-scheduling-offer.md", "category": "Skill", "ccVersion": "2.1.101", "rule_n": 9, "rule_density": 0.9, "rule_explained_para_pct": 22.2222, "score": 0.7000002, "kind": "audit candidates (loudest, least-explained)"}, {"path": "system-prompt-worker-instructions.md", "category": "System prompt", "ccVersion": "2.1.63", "rule_n": 7, "rule_density": 0.6363636363636364, "rule_explained_para_pct": 100.0, "score": 0.6363636363636364, "kind": "rewrite templates (rules-with-reasons)"}, {"path": "system-prompt-auto-mode.md", "category": "System prompt", "ccVersion": "2.1.84", "rule_n": 8, "rule_density": 0.6153846153846154, "rule_explained_para_pct": 87.5, "score": 0.5384615384615385, "kind": "rewrite templates (rules-with-reasons)"}, {"path": "tool-description-bash-git-commit-and-pr-creation-instructions.md", "category": "Tool description", "ccVersion": "2.1.84", "rule_n": 20, "rule_density": 0.5714285714285714, "rule_explained_para_pct": 90.0, "score": 0.5142857142857142, "kind": "rewrite templates (rules-with-reasons)"}, {"path": "agent-prompt-quick-pr-creation.md", "category": "Agent prompt", "ccVersion": "2.1.118", "rule_n": 8, "rule_density": 0.5714285714285714, "rule_explained_para_pct": 87.5, "score": 0.5, "kind": "rewrite templates (rules-with-reasons)"}, {"path": "system-prompt-fork-usage-guidelines.md", "category": "System prompt", "ccVersion": "2.1.105", "rule_n": 11, "rule_density": 0.4782608695652174, "rule_explained_para_pct": 90.9091, "score": 0.43478265217391304, "kind": "rewrite templates (rules-with-reasons)"}, {"path": "system-prompt-claude-in-chrome-browser-automation.md", "category": "System prompt", "ccVersion": "2.1.20", "rule_n": 17, "rule_density": 0.6538461538461539, "rule_explained_para_pct": 64.7059, "score": 0.4230770384615385, "kind": "rewrite templates (rules-with-reasons)"}, {"path": "skill-loop-slash-command.md", "category": "Skill", "ccVersion": "2.1.101", "rule_n": 8, "rule_density": 0.6666666666666666, "rule_explained_para_pct": 62.5, "score": 0.41666666666666663, "kind": "rewrite templates (rules-with-reasons)"}, {"path": "system-reminder-ultraplan-mode.md", "category": "System reminder", "ccVersion": "2.1.88", "rule_n": 12, "rule_density": 0.6, "rule_explained_para_pct": 66.6667, "score": 0.4000002, "kind": "rewrite templates (rules-with-reasons)"}, {"path": "agent-prompt-security-monitor-for-autonomous-agent-actions-second-part.md", "category": "Agent prompt", "ccVersion": "2.1.120", "rule_n": 29, "rule_density": 0.4393939393939394, "rule_explained_para_pct": 89.6552, "score": 0.3939395151515151, "kind": "rewrite templates (rules-with-reasons)"}, {"path": "skill-loop-self-pacing-mode.md", "category": "Skill", "ccVersion": "2.1.105", "rule_n": 7, "rule_density": 0.4375, "rule_explained_para_pct": 85.7143, "score": 0.3750000625, "kind": "rewrite templates (rules-with-reasons)"}]}}, {"mode": "vega-lite"});
+</script>
+</div>
 </div>
 </section>
 <section id="forensic-sample-actual-threat-framed-sentences" class="level2">
 <h2 class="anchored" data-anchor-id="forensic-sample-actual-threat-framed-sentences">4. Forensic sample — actual threat-framed sentences</h2>
 <p>Eight randomly-sampled sentences from <code>sentences_classified.parquet</code> where <code>has_threat=True</code> and <code>is_rule=True</code> — the concrete population the audit operates on. Each row shows the file, the threat-framed sentence text, and (for context) whether the same paragraph also contains a causal explanation. The “rewrite as causal” task is: replace the threat clause with a <code>because &lt;reason&gt;</code> clause that names the rule’s underlying purpose.</p>
-<div id="1bf5ccf5-9215-4b14-a117-ea674e90eadc" class="cell">
+<div id="1bf5ccf5-9215-4b14-a117-ea674e90eadc" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Forensic sample of threat-framed rule sentences from the parquet."""</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>threat_rules <span class="op">=</span> sentences_df[sentences_df[<span class="st">"has_threat"</span>] <span class="op">&amp;</span> sentences_df[<span class="st">"is_rule"</span>]].copy()</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"population: </span><span class="sc">{</span><span class="bu">len</span>(threat_rules)<span class="sc">}</span><span class="ss"> sentences flagged as both threat and rule"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  of which </span><span class="sc">{</span><span class="bu">int</span>(threat_rules[<span class="st">'has_causal'</span>].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss"> also carry a causal marker in the same sentence"</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  of which </span><span class="sc">{</span><span class="bu">int</span>(threat_rules[<span class="st">'paragraph_has_just'</span>].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss"> sit in a paragraph that also contains some justification"</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>sample_n <span class="op">=</span> <span class="bu">min</span>(<span class="dv">8</span>, <span class="bu">len</span>(threat_rules))</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> threat_rules.sample(sample_n, random_state<span class="op">=</span><span class="dv">42</span>).sort_values(<span class="st">"file_path"</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>display_cols <span class="op">=</span> [<span class="st">"file_path"</span>, <span class="st">"category"</span>, <span class="st">"ccVersion"</span>, <span class="st">"text"</span>, <span class="st">"has_causal"</span>, <span class="st">"paragraph_has_just"</span>]</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>sample[display_cols].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Forensic sample of threat-framed rule sentences from the parquet."""</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>threat_rules <span class="op">=</span> sentences_df[sentences_df[<span class="st">"has_threat"</span>] <span class="op">&amp;</span> sentences_df[<span class="st">"is_rule"</span>]].copy()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"population: </span><span class="sc">{</span><span class="bu">len</span>(threat_rules)<span class="sc">}</span><span class="ss"> sentences flagged as both threat and rule"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  of which </span><span class="sc">{</span><span class="bu">int</span>(threat_rules[<span class="st">'has_causal'</span>].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss"> also carry a causal marker in the same sentence"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  of which </span><span class="sc">{</span><span class="bu">int</span>(threat_rules[<span class="st">'paragraph_has_just'</span>].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss"> sit in a paragraph that also contains some justification"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>sample_n <span class="op">=</span> <span class="bu">min</span>(<span class="dv">8</span>, <span class="bu">len</span>(threat_rules))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> threat_rules.sample(sample_n, random_state<span class="op">=</span><span class="dv">42</span>).sort_values(<span class="st">"file_path"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>display_cols <span class="op">=</span> [<span class="st">"file_path"</span>, <span class="st">"category"</span>, <span class="st">"ccVersion"</span>, <span class="st">"text"</span>, <span class="st">"has_causal"</span>, <span class="st">"paragraph_has_just"</span>]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>sample[display_cols].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>population: 57 sentences flagged as both threat and rule
+  of which 1 also carry a causal marker in the same sentence
+  of which 56 sit in a paragraph that also contains some justification
+</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">file_path</th>
+<th data-quarto-table-cell-role="th">category</th>
+<th data-quarto-table-cell-role="th">ccVersion</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">has_causal</th>
+<th data-quarto-table-cell-role="th">paragraph_has_just</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>agent-prompt-bash-command-description-writer.md</td>
+<td>Agent prompt</td>
+<td>2.1.3</td>
+<td>Never use words like "complex" or "risk" in th...</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>agent-prompt-review-pr-slash-command.md</td>
+<td>Agent prompt</td>
+<td>2.1.45</td>
+<td>Analyze the changes and provide a thorough cod...</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>data-claude-model-catalog.md</td>
+<td>Data / template</td>
+<td>2.1.111</td>
+<td>Never guess or construct model IDs — incorrect...</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>skill-model-migration-guide.md</td>
+<td>Skill</td>
+<td>2.1.116</td>
+<td>If the length or contents of Opus 4.7's update...</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>skill-model-migration-guide.md</td>
+<td>Skill</td>
+<td>2.1.116</td>
+<td>Move&nbsp;&nbsp; from top-level&nbsp;&nbsp; into&nbsp;&nbsp;\n- [ ] **[BLOCK...</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>skill-model-migration-guide.md</td>
+<td>Skill</td>
+<td>2.1.116</td>
+<td>At&nbsp;&nbsp; and&nbsp;&nbsp; it scopes work to what was asked ra...</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>skill-morning-checkin-daily-brief.md</td>
+<td>Skill</td>
+<td>2.1.119</td>
+<td>If not, skip to Phase 2.</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>tool-description-teammatetool.md</td>
+<td>Tool description</td>
+<td>2.1.88</td>
+<td>Your team cannot hear you if you do not use th...</td>
+<td>False</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 <hr>
 <section id="conclusions-for-this-proposal-claude-opinion-not-data" class="level3">
