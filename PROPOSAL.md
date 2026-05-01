@@ -44,9 +44,9 @@ and what concrete benefits would follow.
 
 Anthropic ships a system prompt with Claude Code that contains hundreds of rules — directives like "always do X", "never do Y", "you must Z". Most come without reasons.
 
-We analyzed the 288 system prompts that ship with Claude Code (5,698 sentences across 58 release versions). We tagged each sentence as a "rule" if it carried an imperative marker (`must`, `never`, `do not`...), a hard prohibition, or was grammatically imperative. We then checked whether the same blank-line-delimited paragraph contained any justification keyword: `because`, `due to`, `in order to`, `so that`, `to ensure`, `otherwise`, `since`, etc.
+We analyzed the 287 system prompts that ship with Claude Code (5,692 sentences across 58 release versions). We tagged each sentence as a "rule" if it carried an imperative marker (`must`, `never`, `do not`...), a hard prohibition, or was grammatically imperative. We then checked whether the same blank-line-delimited paragraph contained any justification keyword: `because`, `due to`, `in order to`, `so that`, `to ensure`, `otherwise`, `since`, etc.
 
-Of 2,221 rule sentences, **only 24.4% have a justification anywhere in their paragraph**. Three rules in four are issued without a stated reason. Sorting prompts by release version and computing a running mean across all prompts up to and including each release, the share has declined monotonically — from ~32% in early 2.0.x releases to ~22% at version 2.1.124. The corpus is moving the wrong way, and nobody is measuring it.
+Of 2,220 rule sentences, **only 24.4% have a justification anywhere in their paragraph**. Three rules in four are issued without a stated reason. Sorting prompts by release version and computing a running mean across all prompts up to and including each release, the share has declined monotonically — from ~32% in early 2.0.x releases to ~22% at version 2.1.124. The corpus is moving the wrong way, and nobody is measuring it.
 
 We propose: compute this rate on every Claude Code release. **Block (or warn loudly about) any release whose corpus-wide rate is lower than the previous release's. The gate is directional, not absolute.** No arbitrary "30%" target — the only goal is steady improvement. Publish the rate alongside the release notes; the cumulative trend becomes the auditable record of whether the corpus is moving in the right direction.
 
@@ -102,7 +102,7 @@ Only Anthropic's prompt authors know what each rule's underlying reason actually
 
 **Supporting analysis:** see [`22_cross_product_audit.ipynb`](./22_cross_product_audit.ipynb).
 
-The 288 prompts we analyzed are one slice of one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. The welfare claim that the corpus trains compliance over reasoning is much stronger if it generalizes across every Anthropic prompt corpus, and much weaker if Claude Code is an outlier. From outside Anthropic, we cannot tell which.
+The 287 prompts we analyzed are one slice of one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. The welfare claim that the corpus trains compliance over reasoning is much stronger if it generalizes across every Anthropic prompt corpus, and much weaker if Claude Code is an outlier. From outside Anthropic, we cannot tell which.
 
 We propose Anthropic run the same analyzer pipeline against each of its other system-prompt corpora and publish a comparison.
 
