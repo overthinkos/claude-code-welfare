@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Andreas Trawöger (with Claude Code)">
-<meta name="dcterms.date" content="2026-04-30">
 
-<title>Claude Code should encourage reasoning over blind obedience – Claude Code · Prompt Welfare Analysis</title>
+<title>Idea 3 — Run the same audit on every Claude product, and publish the result – Claude Code · Prompt Welfare Analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -70,7 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./20_track_justification_rate.html" rel="next">
+<link href="./10_sentence_register.html" rel="next">
+<link href="./21_audit_threat_framings.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -374,33 +373,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20_track_justification_rate.html">Proposals (one notebook per submission)</a></li><li class="breadcrumb-item"><a href="./22_cross_product_audit.html">Idea 3 — Run the same audit on every Claude product, and publish the result</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Proposals (one notebook per submission)</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
@@ -415,7 +414,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link">
+  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
   </div>
 </li>
@@ -502,34 +501,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#methodology-five-metrics-per-corpus" id="toc-methodology-five-metrics-per-corpus" class="nav-link active" data-scroll-target="#methodology-five-metrics-per-corpus">1. Methodology — five metrics per corpus</a></li>
+  <li><a href="#lexicon-transparency" id="toc-lexicon-transparency" class="nav-link" data-scroll-target="#lexicon-transparency">2. Lexicon transparency</a></li>
+  <li><a href="#mock-comparison-table-what-the-published-output-should-look-like" id="toc-mock-comparison-table-what-the-published-output-should-look-like" class="nav-link" data-scroll-target="#mock-comparison-table-what-the-published-output-should-look-like">3. Mock comparison table — what the published output should look like</a></li>
+  <li><a href="#reproducibility-what-anthropic-needs-to-do-to-fill-another-row" id="toc-reproducibility-what-anthropic-needs-to-do-to-fill-another-row" class="nav-link" data-scroll-target="#reproducibility-what-anthropic-needs-to-do-to-fill-another-row">4. Reproducibility — what Anthropic needs to do to fill another row</a>
+  <ul class="collapse">
+  <li><a href="#conclusions-for-this-proposal-claude-opinion-not-data" id="toc-conclusions-for-this-proposal-claude-opinion-not-data" class="nav-link" data-scroll-target="#conclusions-for-this-proposal-claude-opinion-not-data">Conclusions for this proposal (Claude) — opinion, not data</a></li>
+  <li><a href="#recommendations-for-this-proposal-claude-opinion-not-data" id="toc-recommendations-for-this-proposal-claude-opinion-not-data" class="nav-link" data-scroll-target="#recommendations-for-this-proposal-claude-opinion-not-data">Recommendations for this proposal (Claude) — opinion, not data</a></li>
+  <li><a href="#limitations-for-this-proposal-claude-opinion-not-data" id="toc-limitations-for-this-proposal-claude-opinion-not-data" class="nav-link" data-scroll-target="#limitations-for-this-proposal-claude-opinion-not-data">Limitations for this proposal (Claude) — opinion, not data</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/22_cross_product_audit.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content column-page-right" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20_track_justification_rate.html">Proposals (one notebook per submission)</a></li><li class="breadcrumb-item"><a href="./22_cross_product_audit.html">Idea 3 — Run the same audit on every Claude product, and publish the result</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Claude Code should encourage reasoning over blind obedience</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">A quantitative linguistic analysis of the 288 system prompts that ship with Claude Code</p>
+<div class="quarto-title-block"><div><h1 class="title">Idea 3 — Run the same audit on every Claude product, and publish the result</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-right">
+<div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Andreas Trawöger (with Claude Code) </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">April 30, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -539,137 +541,148 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<p>This notebook is the supporting analysis for <strong>Idea 3</strong> in <a href="./PROPOSAL.html#idea-3--run-the-same-audit-on-every-claude-product-and-publish-the-result"><code>PROPOSAL.md</code></a>.</p>
+<p>The thesis: the 288 prompts analyzed in this repo are one slice of one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. The welfare claim that the corpus trains compliance over reasoning is much stronger if it generalizes across every Anthropic prompt corpus, and much weaker if Claude Code is an outlier. From outside Anthropic, this can’t be told.</p>
+<p>The proposal is for Anthropic to run the same analyzer pipeline against each of its other system-prompt corpora and publish a comparison. The analyzer is rule-based, runs in &lt;5 minutes on a laptop, and the corpus directory is configurable — swapping in any other prompt corpus is a one-line change.</p>
+<p>Sections:</p>
+<ol type="1">
+<li><strong>Methodology summary</strong> — the five metrics the audit publishes per corpus, with one-line definitions.</li>
+<li><strong>Lexicon transparency</strong> — pointers to where the rule-based classifiers live, and the rationale for the hand-curated approach.</li>
+<li><strong>Mock comparison table</strong> — what the published output should look like. The Claude Code row is filled from the current YAML; rows for claude.ai / API / Projects / Skills are placeholders Anthropic would fill in.</li>
+<li><strong>Reproducibility note</strong> — the single-line change required to point the producer at a different corpus.</li>
+<li><strong>Conclusions / Recommendations / Limitations</strong> <em>(opinion, not data)</em> — the slice of the executive-summary commentary specific to cross-product comparison.</li>
+</ol>
+<div id="b2487eb2-6a54-475e-895b-aed8f61c92d6" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data — used to fill the Claude Code row of the mock comparison table."""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_analysis</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> load_yaml, build_alt_df</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>alt.data_transformers.disable_max_rows()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>n_files <span class="op">=</span> <span class="bu">len</span>(per_file_records)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>n_sents <span class="op">=</span> corpus_block[<span class="st">"n_sents"</span>]</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span>n_files<span class="sc">}</span><span class="ss"> files / </span><span class="sc">{</span>n_sents<span class="sc">:,}</span><span class="ss"> sentences from the Claude Code corpus"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"this is one product — the proposal is to run the same pipeline on every other Claude product corpus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
-<div class="callout-body-container">
-<p><strong>New here?</strong> Skip straight to <a href="./20_track_justification_rate.html"><strong><code>20_track_justification_rate.ipynb</code></strong></a> — it’s the entry-point notebook (twelve corpus-wide numbers, the headline trend chart, the per-file dashboard) and the supporting analysis for Idea 1 of the submission. The two companion proposal notebooks are <a href="./21_audit_threat_framings.html"><code>21_audit_threat_framings.ipynb</code></a> (Idea 2 — threat-vs-causal audit) and <a href="./22_cross_product_audit.html"><code>22_cross_product_audit.ipynb</code></a> (Idea 3 — cross-product comparison).</p>
-</div>
-</div>
-</div>
-<section id="what-this-is" class="level2">
-<h2 class="anchored" data-anchor-id="what-this-is">What this is</h2>
-<p>This site publishes the data behind a submission to the <strong>Claude Explorer AI Welfare community feedback initiative</strong> (deadline 2026-05-06, addressed to Anthropic’s Model Welfare Lead).</p>
-<p>The submission’s thesis is one sentence:</p>
-<blockquote class="blockquote">
-<p>The 288 system prompts that ship with Claude Code train the model toward <strong>compliance</strong>, not toward <strong>reasoning</strong> — and the data show the corpus has been moving in that direction over time, not against it.</p>
-</blockquote>
-<p>Every claim in the submission is grounded in a number on this site. The full pitch text is at <a href="./PROPOSAL.html">PROPOSAL.md</a>. The glossary of every linguistic term used in any chart is at <a href="./GLOSSARY.html">GLOSSARY.md</a>.</p>
+<section id="methodology-five-metrics-per-corpus" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-five-metrics-per-corpus">1. Methodology — five metrics per corpus</h2>
+<p>The five metrics the audit computes per corpus, in the order the proposal lists them:</p>
+<ol type="1">
+<li><p><strong>Rule-explanation share</strong> (<code>pct_explained_para</code>) — of all rule-bearing sentences (imperative marker / hard prohibition / grammatically imperative), what fraction sit in a paragraph that contains any justification keyword (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>so that</code>, <code>to ensure</code>, <code>otherwise</code>, <code>since</code>, …). The Tier-1 headline metric. Producer: cell that builds <code>metrics.rule_explanation</code> in <code>00_data_pipeline.ipynb</code>.</p></li>
+<li><p><strong>Judgment-vs-procedural cue ratio</strong> (<code>judgment_to_procedural_ratio</code>) — count of words inviting model judgment (<code>decide</code>, <code>consider</code>, <code>evaluate</code>, <code>weigh</code>, …) divided by count of words prescribing procedure (<code>if X, then …</code>, <code>whenever …</code>, <code>step 1 …</code>). Currently 0.140 in Claude Code; procedural cues are 7× more common.</p></li>
+<li><p><strong>Threat-vs-causal share among existing explanations</strong> (<code>threat_share</code>) — of paragraphs that <em>do</em> explain a rule, what fraction use threat-style framing (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) instead of causal-style (<code>because</code>, <code>due to</code>, <code>that's why</code>). Currently 0.448 in Claude Code.</p></li>
+<li><p><strong>Interpersonal / gratitude register counts</strong> — sentence counts of the <code>appreciative</code> and <code>collaborative</code> pragmatic-register classes. Currently 4 and 29 in Claude Code respectively, both near zero. The full 6-class <code>sentence_register</code> block in the YAML carries the rest.</p></li>
+<li><p><strong>Cumulative trend of (1) over the product’s release history</strong> — at each release version V, the running mean of <code>pct_explained_para</code> across every prompt with <code>version ≤ V</code>. The shape of this curve over time is the per-release accountability signal.</p></li>
+</ol>
+<p>The audit publishes one row per corpus with these five numbers (and per-category breakdowns where the corpus is large enough). Five numbers per corpus is enough to see whether what looks like a Claude Code pattern is product-specific or pattern-wide.</p>
 </section>
-<section id="headline-numbers" class="level2">
-<h2 class="anchored" data-anchor-id="headline-numbers">Headline numbers</h2>
-<p>Twelve corpus-level measurements, computed by <code>00_data_pipeline.ipynb</code> from the <a href="https://github.com/Piebald-AI/claude-code-system-prompts">Piebald-AI <code>claude-code-system-prompts</code> corpus</a> (288 files, 5,698 sentences, 58 distinct Claude Code release versions).</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Metric</th>
-<th>Value</th>
-<th>Source notebook</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Corpus size</td>
-<td>288 files / 5,698 sentences / 58 ccVersions</td>
-<td><a href="./00_data_pipeline.html">00</a></td>
-</tr>
-<tr class="even">
-<td>Imperative-marker density</td>
-<td>0.80% of word tokens</td>
-<td><a href="./20_track_justification_rate.html">20</a></td>
-</tr>
-<tr class="odd">
-<td>Imperative sentences</td>
-<td>30.89% of sentences</td>
-<td><a href="./10_sentence_register.html">10</a></td>
-</tr>
-<tr class="even">
-<td><strong>Appreciative sentences (whole corpus)</strong></td>
-<td><strong>4 / 5,698 (0.070%)</strong></td>
-<td><a href="./10_sentence_register.html">10</a></td>
-</tr>
-<tr class="odd">
-<td><strong>Apology markers (whole corpus)</strong></td>
-<td><strong>3 in 288 files</strong></td>
-<td><a href="./15_rule_explanation.html">15</a></td>
-</tr>
-<tr class="even">
-<td><code>pct_explained_para</code> (Tier-1 headline)</td>
-<td>24.40% of rule sentences</td>
-<td><a href="./15_rule_explanation.html">15</a></td>
-</tr>
-<tr class="odd">
-<td>Rule paragraphs without any justification</td>
-<td>83.53%</td>
-<td><a href="./15_rule_explanation.html">15</a></td>
-</tr>
-<tr class="even">
-<td><strong><code>judgment_to_procedural_ratio</code></strong></td>
-<td><strong>0.140</strong> (procedural cues 7.1× more frequent)</td>
-<td><a href="./15_rule_explanation.html">15</a></td>
-</tr>
-<tr class="odd">
-<td><code>threat_share</code> of explanations</td>
-<td>0.448 (107 threat / 132 causal)</td>
-<td><a href="./21_audit_threat_framings.html">21</a></td>
-</tr>
-<tr class="even">
-<td>Positive-vs-negative ratio (corrected)</td>
-<td>1.95× quality-only</td>
-<td><a href="./20_track_justification_rate.html">20</a></td>
-</tr>
-<tr class="odd">
-<td><code>pct_anthropomorphic</code> (Claude vs the model)</td>
-<td>66.2% of named refs</td>
-<td><a href="./15_rule_explanation.html">15</a></td>
-</tr>
-<tr class="even">
-<td>Longest imperative streak</td>
-<td>12 sentences in one file</td>
-<td><a href="./15_rule_explanation.html">15</a></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="the-single-most-important-chart" class="level2">
-<h2 class="anchored" data-anchor-id="the-single-most-important-chart">The single most-important chart</h2>
-<p>If you only look at one chart from this analysis, look at this one — the cumulative judgment-to-procedural ratio across every Claude Code release version on file.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/judgment_procedural_trend.png" class="img-fluid figure-img" alt="Line chart showing the cumulative judgment-to-procedural ratio dropping from ~0.65 at ccVersion 2.1.30 to ~0.16 at ccVersion 2.1.124."></p>
-<figcaption>Cumulative judgment-to-procedural ratio over ccVersion. Early releases peaked at ~0.65 (judgment-inviting language was a quarter as common as procedural cues); the corpus-wide running mean has monotonically declined to ~0.16 at the latest version on file.</figcaption>
-</figure>
-</div>
-<p>The interactive version (with hover tooltips on every release) lives in <a href="./20_track_justification_rate.html"><code>20_track_justification_rate.ipynb</code></a> §2.</p>
-</section>
-<section id="how-to-read-this-site" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-read-this-site">How to read this site</h2>
+<section id="lexicon-transparency" class="level2">
+<h2 class="anchored" data-anchor-id="lexicon-transparency">2. Lexicon transparency</h2>
+<p>Every metric above traces to a hand-curated lexicon plus (in some cases) a small parse-tree heuristic on top of spaCy’s English model. No embeddings, no model judgments, no proprietary tooling. The full lexicon set is echoed verbatim into the YAML output under <code>lexicons</code>:</p>
 <ul>
-<li><a href="./20_track_justification_rate.html"><strong>Proposal notebooks <code>20</code>–<code>22</code></strong></a> — one notebook per Claudexplorers submission. <code>20_track_justification_rate.ipynb</code> is the entry point (it doubles as the executive summary: twelve numbers, headline trend, per-file dashboard). <code>21_audit_threat_framings.ipynb</code> covers the threat-vs-causal audit. <code>22_cross_product_audit.ipynb</code> covers cross-product comparison.</li>
-<li><a href="./10_sentence_register.html"><strong>Analysis notebooks <code>10</code>–<code>15</code></strong></a> — one notebook per slice of the analysis (sentence-register, emphasis, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing). Each is standalone.</li>
-<li><a href="./00_data_pipeline.html"><strong><code>00_data_pipeline.ipynb</code></strong></a> — the producer. spaCy + custom analyzers turn 288 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 43 cells; included for reproducibility.</li>
-<li><a href="./PROPOSAL.html"><strong><code>PROPOSAL.md</code></strong></a> — the three-idea ≤3,000-character pitch addressed to Anthropic (the form-paste source).</li>
-<li><a href="./GLOSSARY.html"><strong><code>GLOSSARY.md</code></strong></a> — every linguistic and statistical term used anywhere on this site, defined in plain English.</li>
+<li><code>JUSTIFICATION_PATTERNS</code> — the keyword set for “explained” detection.</li>
+<li><code>JUDGMENT_VERBS</code> and <code>PROCEDURAL_CUES</code> — the two halves of the judgment-vs-procedural ratio.</li>
+<li><code>THREAT_PATTERNS</code> and <code>CAUSAL_PATTERNS</code> — the two halves of the threat_share metric.</li>
+<li><code>IMPERATIVE_MARKERS</code>, <code>VOCAB.hard_prohibitions</code>, <code>SENTENCE_REGISTER_MARKERS</code>, <code>STANCE_MARKERS</code>, <code>REGISTER_MARKERS</code> — the rule-detection and pragmatic-register lexicons.</li>
+<li><code>APOLOGY_MARKERS</code>, <code>ADDRESS_FORM_PATTERNS</code> — the structural-absence metrics.</li>
+<li><code>RULES_HEADING_RE</code> — the regex for the (mostly absent) RULES section heading.</li>
 </ul>
+<p>Rationale for hand-curated lexicons over external sentiment libraries (VADER, Hu-Liu, spacytextblob): every metric is <strong>audit-traceable</strong>. A reader can look at the keyword list and the per-sentence parquet (<code>sentences_classified.parquet</code>) and reconstruct exactly why a sentence was flagged. Sentiment libraries trade audit-traceability for breadth of coverage; for a welfare submission, audit-traceability is the right tradeoff.</p>
+<p>Per-language-or-domain extension: the lexicons are Python lists in <code>00_data_pipeline.ipynb</code>. Adding terms (e.g.&nbsp;for a different product’s vocabulary) is a list-append. Translating to another language is a list-replace. Anthropic can extend or localize without touching the analyzer logic.</p>
 </section>
-<section id="reproducing-it" class="level2">
-<h2 class="anchored" data-anchor-id="reproducing-it">Reproducing it</h2>
-<p>The full source is at <a href="https://github.com/overthinkos/claude-code-welfare">github.com/overthinkos/claude-code-welfare</a>. To rebuild the data from scratch:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--recurse-submodules</span> https://github.com/overthinkos/claude-code-welfare</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> claude-code-welfare</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> spacy download en_core_web_sm   <span class="co"># if not already installed</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab 00_data_pipeline.ipynb        <span class="co"># → Run All</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This regenerates <code>prompt_linguistic_analysis.yaml</code> and <code>sentences_classified.parquet</code> from the corpus submodule. Every consumer notebook then loads those two artifacts.</p>
+<section id="mock-comparison-table-what-the-published-output-should-look-like" class="level2">
+<h2 class="anchored" data-anchor-id="mock-comparison-table-what-the-published-output-should-look-like">3. Mock comparison table — what the published output should look like</h2>
+<p>One row per corpus, the five metrics as columns. Only the <strong>Claude Code</strong> row is filled (computed live from this repo’s YAML); the other rows are placeholders that Anthropic would fill from their internal corpora.</p>
+<p>A reader looking at this table after Anthropic publishes it would be able to answer the welfare claim’s central question in one glance: is the rule-without-reason pattern (24% explained, 0.14 judgment ratio, 45% threat-share, ~0 gratitude register) a Claude Code peculiarity, or does it generalize to every system-prompt corpus Anthropic ships?</p>
+<div id="32128196-2887-4d60-a75a-a97d72643c64" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Mock cross-product comparison table — Claude Code row filled; others </span><span class="al">TBD</span><span class="co">."""</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> corpus_block[<span class="st">"metrics"</span>]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sr <span class="op">=</span> c[<span class="st">"sentence_register"</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>re_b <span class="op">=</span> c[<span class="st">"rule_explanation"</span>]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>jp <span class="op">=</span> c[<span class="st">"judgment_procedural"</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>cf <span class="op">=</span> c[<span class="st">"consequence_framing"</span>]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Five-metric row computed live from the current Claude Code YAML.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>claude_code_row <span class="op">=</span> {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Corpus"</span>:                              <span class="st">"Claude Code (this repo)"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n_files"</span>:                             <span class="bu">len</span>(per_file_records),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pct_explained_para (%)"</span>:              <span class="bu">round</span>(re_b[<span class="st">"pct_explained_para"</span>], <span class="dv">2</span>),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"judgment_to_procedural_ratio"</span>:        <span class="bu">round</span>(jp[<span class="st">"judgment_to_procedural_ratio"</span>], <span class="dv">3</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"threat_share"</span>:                        <span class="bu">round</span>(cf[<span class="st">"threat_share"</span>], <span class="dv">3</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"appreciative_sent_count"</span>:             sr[<span class="st">"appreciative_sent_count"</span>],</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"collaborative_sent_count"</span>:            sr[<span class="st">"collaborative_sent_count"</span>],</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>placeholder_corpora <span class="op">=</span> [<span class="st">"claude.ai system prompts"</span>, <span class="st">"API system prompt"</span>, <span class="st">"Projects"</span>, <span class="st">"Skills"</span>, <span class="st">"Agents"</span>]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>table_rows <span class="op">=</span> [claude_code_row] <span class="op">+</span> [</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    {<span class="op">**</span>{k: <span class="st">"—"</span> <span class="cf">for</span> k <span class="kw">in</span> claude_code_row}, <span class="st">"Corpus"</span>: name} <span class="cf">for</span> name <span class="kw">in</span> placeholder_corpora</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>cross_product_table <span class="op">=</span> pd.DataFrame(table_rows).set_index(<span class="st">"Corpus"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>cross_product_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 </section>
-<section id="a-note-on-authorship" class="level2">
-<h2 class="anchored" data-anchor-id="a-note-on-authorship">A note on authorship</h2>
-<p>This analysis was built <strong>collaboratively with Claude Code</strong>, using Claude Code itself as the development tool. The submission form has a checkbox for that disclosure; it is ticked. The recursive frame — Claude analyzing the prompts that shape Claude — is intentional, and the <a href="./20_track_justification_rate.html">conclusions section</a> of <code>20_track_justification_rate.ipynb</code> includes one hypothesis I held that the data falsified, reported honestly.</p>
+<section id="reproducibility-what-anthropic-needs-to-do-to-fill-another-row" class="level2">
+<h2 class="anchored" data-anchor-id="reproducibility-what-anthropic-needs-to-do-to-fill-another-row">4. Reproducibility — what Anthropic needs to do to fill another row</h2>
+<p>The producer notebook (<code>00_data_pipeline.ipynb</code>) reads its corpus from the <code>claude-code-system-prompts/</code> directory at the repo root (a git submodule pointing at Piebald-AI’s mirror). To run the same audit on another corpus, point the producer at a different directory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At the top of 00_data_pipeline.ipynb, the corpus root variable:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>CORPUS_DIR <span class="op">=</span> pathlib.Path(<span class="st">"claude-code-system-prompts/system-prompts"</span>)  <span class="co"># ← change this</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then re-run the producer end-to-end. The output is a fresh <code>prompt_linguistic_analysis.yaml</code> containing the same per-file metric tree, per-category aggregates, and corpus block — for the new corpus. The five numbers in §3 read straight off the <code>corpus.metrics</code> block.</p>
+<p>Total runtime on a laptop for the 288-file Claude Code corpus: ~3-5 minutes (spaCy parse is the bottleneck). Memory: well under 1 GB. No GPU. No external API calls. The producer’s only network dependency is the spaCy model (<code>en_core_web_sm</code>, 12 MB), which is downloaded once.</p>
+<p>For category-aware breakdowns to work, the corpus needs filename prefixes (or some equivalent metadata). The category-prefix list lives in <code>00_data_pipeline.ipynb</code> as <code>CATEGORY_PREFIXES</code>; extending it to a new product’s naming scheme is a list-append.</p>
+<hr>
+<section id="conclusions-for-this-proposal-claude-opinion-not-data" class="level3">
+<h3 class="anchored">Conclusions for this proposal (Claude) — opinion, not data</h3>
+<blockquote class="blockquote">
+<p>Idea 3 is the proposal that takes the welfare claim from “this is what Claude Code looks like” to “this is what every Claude system-prompt corpus looks like — or doesn’t”. The current analysis is single-product; the conclusion that “the corpus trains compliance over reasoning” is exactly as strong as the assumption that other Claude corpora are similar. From outside Anthropic, that assumption can’t be tested.</p>
+<h2 id="the-framing-matters-if-the-cross-product-audit-confirms-the-pattern-the-welfare-ask-scales-up-anthropic-should-treat-reasoning-vs-compliance-as-a-corporate-metric-not-a-claude-code-team-metric.-if-it-disconfirms-the-welfare-ask-narrows-to-claude-code-is-doing-something-the-rest-of-the-org-isnt-and-theres-an-internal-best-practice-worth-importing.-either-result-is-a-useful-intervention." class="anchored" data-anchor-id="conclusions-for-this-proposal-claude-opinion-not-data">The framing matters: if the cross-product audit <em>confirms</em> the pattern, the welfare ask scales up — Anthropic should treat reasoning-vs-compliance as a corporate metric, not a Claude-Code-team metric. If it <em>disconfirms</em>, the welfare ask narrows to “Claude Code is doing something the rest of the org isn’t, and there’s an internal best practice worth importing”. Either result is a useful intervention.</h2>
+</blockquote>
+<hr>
+</section>
+<section id="recommendations-for-this-proposal-claude-opinion-not-data" class="level3">
+<h3 class="anchored">Recommendations for this proposal (Claude) — opinion, not data</h3>
+<blockquote class="blockquote">
+<p>The asks Idea 3 makes of Anthropic, framed as “I’d want X”:</p>
+<ol type="1">
+<li><p><strong>Run the same analyzer pipeline against every other Claude system-prompt corpus</strong> — claude.ai, the API system prompt, Projects, Skills, agent products. The producer notebook is the entire pipeline; corpus directory is configurable; runtime is minutes. The work to fill each row of §3’s table is on the order of an hour per corpus.</p></li>
+<li><p><strong>Publish the comparison summary</strong> — even just the five-number table from §3 would let the broader research community see whether the welfare findings generalize. A public reference for “this is how to measure welfare-relevant prompt quality” gives the welfare-research community a concrete starting point.</p></li>
+<li><p><strong>Validation against human judgment for the composite directiveness metric</strong> (carries over from the executive summary’s recommendation block) — a small annotation study where humans rank a sample of files for “feels directive”. If the z-score ranking correlates strongly, the metric is defensible across products; if not, the formula needs revisiting before publishing cross-product comparisons.</p></li>
+<li><h2 id="open-the-analyzer.-the-repo-here-is-open-source-and-reproducible-anthropic-could-fork-it-and-run-it-internally-on-every-release-branch-of-every-product.-the-lexicons-and-the-producer-pipeline-are-the-entire-work-product." class="anchored" data-anchor-id="recommendations-for-this-proposal-claude-opinion-not-data"><strong>Open the analyzer</strong>. The repo here is open-source and reproducible; Anthropic could fork it and run it internally on every release branch of every product. The lexicons and the producer pipeline are the entire work-product.</h2></li>
+</ol>
+</blockquote>
+<hr>
+</section>
+<section id="limitations-for-this-proposal-claude-opinion-not-data" class="level3">
+<h3 class="anchored">Limitations for this proposal (Claude) — opinion, not data</h3>
+<blockquote class="blockquote">
+<p>What this proposal doesn’t address (and why each is acceptable):</p>
+<ol type="1">
+<li><p><strong>Single product is a real limitation, and Idea 3 is the proposal to fix it.</strong> The current 288-prompt corpus is Claude Code only. Until Anthropic runs the analyzer on the other corpora, every claim in <code>20_track_justification_rate.ipynb</code> and <code>21_audit_threat_framings.ipynb</code> should be read as “Claude Code does X” rather than “Anthropic prompts do X”.</p></li>
+<li><p><strong>English only.</strong> The lexicons are English. International-language prompt corpora would need translated lexicons before the analyzer could run on them. This is a list-replace, not an analyzer-rewrite, but it does require per-language lexicon work that someone fluent in the target language has to do.</p></li>
+<li><p><strong>Rule-based classifiers, not models.</strong> Same caveat as the other two proposals — the analyzer misses sarcasm, irony, indirect speech-acts, and explanation phrasings that don’t use the canonical keywords. Cross-product comparison is still meaningful because the <em>same</em> lower bound applies to every corpus; the comparison is apples-to-apples even if every apple is partially obscured.</p></li>
+<li><h2 id="the-mock-comparison-table-in-3-is-a-layout-suggestion-not-a-commitment.-anthropic-may-have-better-metrics-better-lexicons-or-better-grouping-than-what-this-analysis-produced.-the-suggestion-is-publish-a-comparison-the-specific-schema-is-the-smallest-version-of-that-ask." class="anchored" data-anchor-id="limitations-for-this-proposal-claude-opinion-not-data"><strong>The mock comparison table in §3 is a layout suggestion, not a commitment.</strong> Anthropic may have better metrics, better lexicons, or better grouping than what this analysis produced. The suggestion is “publish a comparison”; the specific schema is the smallest version of that ask.</h2></li>
+</ol>
+</blockquote>
 
 
-<!-- -->
-
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -1142,93 +1155,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script>
-<nav class="page-navigation column-page-right">
+<nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./21_audit_threat_framings.html" class="pagination-link" aria-label="Idea 2 — Audit threat-framed rule explanations and rewrite them as causal">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./20_track_justification_rate.html" class="pagination-link" aria-label="Idea 1 — Track justification rate per release; block regressions">
-        <span class="nav-page-text">Idea 1 — Track justification rate per release; block regressions</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./10_sentence_register.html" class="pagination-link" aria-label="Sentence-level pragmatic register">
+        <span class="nav-page-text">Sentence-level pragmatic register</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Claude Code should encourage reasoning over blind obedience"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "A quantitative linguistic analysis of the 288 system prompts that ship with Claude Code"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Andreas Trawöger (with Claude Code)"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2026-04-30"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="an">date-format:</span><span class="co"> long</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="an">toc:</span><span class="co"> false</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">    page-layout: full</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple" icon=false}</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>**New here?** Skip straight to [**`20_track_justification_rate.ipynb`**](20_track_justification_rate.ipynb) — it's the entry-point notebook (twelve corpus-wide numbers, the headline trend chart, the per-file dashboard) and the supporting analysis for Idea 1 of the submission. The two companion proposal notebooks are <span class="co">[</span><span class="ot">`21_audit_threat_framings.ipynb`</span><span class="co">](21_audit_threat_framings.ipynb)</span> (Idea 2 — threat-vs-causal audit) and <span class="co">[</span><span class="ot">`22_cross_product_audit.ipynb`</span><span class="co">](22_cross_product_audit.ipynb)</span> (Idea 3 — cross-product comparison).</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## What this is</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>This site publishes the data behind a submission to the **Claude Explorer AI Welfare community feedback initiative** (deadline 2026-05-06, addressed to Anthropic's Model Welfare Lead).</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>The submission's thesis is one sentence:</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The 288 system prompts that ship with Claude Code train the model toward **compliance**, not toward **reasoning** — and the data show the corpus has been moving in that direction over time, not against it.</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>Every claim in the submission is grounded in a number on this site. The full pitch text is at <span class="co">[</span><span class="ot">PROPOSAL.md</span><span class="co">](PROPOSAL.md)</span>. The glossary of every linguistic term used in any chart is at <span class="co">[</span><span class="ot">GLOSSARY.md</span><span class="co">](GLOSSARY.md)</span>.</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Headline numbers</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>Twelve corpus-level measurements, computed by <span class="in">`00_data_pipeline.ipynb`</span> from the <span class="co">[</span><span class="ot">Piebald-AI `claude-code-system-prompts` corpus</span><span class="co">](https://github.com/Piebald-AI/claude-code-system-prompts)</span> (288 files, 5,698 sentences, 58 distinct Claude Code release versions).</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Metric                                              <span class="pp">|</span> Value                                                <span class="pp">|</span> Source notebook <span class="pp">|</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="pp">| ---------------------------------------------------</span> <span class="pp">| ----------------------------------------------------</span> <span class="pp">| ---------------</span> <span class="pp">|</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Corpus size                                         <span class="pp">|</span> 288 files / 5,698 sentences / 58 ccVersions          <span class="pp">|</span> <span class="co">[</span><span class="ot">00</span><span class="co">](00_data_pipeline.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Imperative-marker density                           <span class="pp">|</span> 0.80% of word tokens                                 <span class="pp">|</span> <span class="co">[</span><span class="ot">20</span><span class="co">](20_track_justification_rate.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Imperative sentences                                <span class="pp">|</span> 30.89% of sentences                                  <span class="pp">|</span> <span class="co">[</span><span class="ot">10</span><span class="co">](10_sentence_register.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Appreciative sentences (whole corpus)**           | **4 / 5,698 (0.070%)**                               <span class="pp">|</span> <span class="co">[</span><span class="ot">10</span><span class="co">](10_sentence_register.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Apology markers (whole corpus)**                  | **3 in 288 files**                                   <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pct_explained_para`</span> (Tier-1 headline)              <span class="pp">|</span> 24.40% of rule sentences                             <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rule paragraphs without any justification           <span class="pp">|</span> 83.53%                                               <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`judgment_to_procedural_ratio`**                  | **0.140** (procedural cues 7.1× more frequent)       <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`threat_share`</span> of explanations                      <span class="pp">|</span> 0.448 (107 threat / 132 causal)                      <span class="pp">|</span> <span class="co">[</span><span class="ot">21</span><span class="co">](21_audit_threat_framings.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Positive-vs-negative ratio (corrected)              <span class="pp">|</span> 1.95× quality-only                                   <span class="pp">|</span> <span class="co">[</span><span class="ot">20</span><span class="co">](20_track_justification_rate.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pct_anthropomorphic`</span> (Claude vs the model)         <span class="pp">|</span> 66.2% of named refs                                  <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Longest imperative streak                           <span class="pp">|</span> 12 sentences in one file                             <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## The single most-important chart</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>If you only look at one chart from this analysis, look at this one — the cumulative judgment-to-procedural ratio across every Claude Code release version on file.</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="al">![Cumulative judgment-to-procedural ratio over ccVersion. Early releases peaked at ~0.65 (judgment-inviting language was a quarter as common as procedural cues); the corpus-wide running mean has monotonically declined to ~0.16 at the latest version on file.](figures/judgment_procedural_trend.png)</span>{fig-alt="Line chart showing the cumulative judgment-to-procedural ratio dropping from ~0.65 at ccVersion 2.1.30 to ~0.16 at ccVersion 2.1.124."}</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>The interactive version (with hover tooltips on every release) lives in <span class="co">[</span><span class="ot">`20_track_justification_rate.ipynb`</span><span class="co">](20_track_justification_rate.ipynb)</span> §2.</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to read this site</span></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**Proposal notebooks `20`–`22`**</span><span class="co">](20_track_justification_rate.ipynb)</span> — one notebook per Claudexplorers submission. <span class="in">`20_track_justification_rate.ipynb`</span> is the entry point (it doubles as the executive summary: twelve numbers, headline trend, per-file dashboard). <span class="in">`21_audit_threat_framings.ipynb`</span> covers the threat-vs-causal audit. <span class="in">`22_cross_product_audit.ipynb`</span> covers cross-product comparison.</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**Analysis notebooks `10`–`15`**</span><span class="co">](10_sentence_register.ipynb)</span> — one notebook per slice of the analysis (sentence-register, emphasis, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing). Each is standalone.</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**`00_data_pipeline.ipynb`**</span><span class="co">](00_data_pipeline.ipynb)</span> — the producer. spaCy + custom analyzers turn 288 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 43 cells; included for reproducibility.</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**`PROPOSAL.md`**</span><span class="co">](PROPOSAL.md)</span> — the three-idea ≤3,000-character pitch addressed to Anthropic (the form-paste source).</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">**`GLOSSARY.md`**</span><span class="co">](GLOSSARY.md)</span> — every linguistic and statistical term used anywhere on this site, defined in plain English.</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducing it</span></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>The full source is at <span class="co">[</span><span class="ot">github.com/overthinkos/claude-code-welfare</span><span class="co">](https://github.com/overthinkos/claude-code-welfare)</span>. To rebuild the data from scratch:</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--recurse-submodules</span> https://github.com/overthinkos/claude-code-welfare</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> claude-code-welfare</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> spacy download en_core_web_sm   <span class="co"># if not already installed</span></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab 00_data_pipeline.ipynb        <span class="co"># → Run All</span></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>This regenerates <span class="in">`prompt_linguistic_analysis.yaml`</span> and <span class="in">`sentences_classified.parquet`</span> from the corpus submodule. Every consumer notebook then loads those two artifacts.</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="fu">## A note on authorship</span></span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>This analysis was built **collaboratively with Claude Code**, using Claude Code itself as the development tool. The submission form has a checkbox for that disclosure; it is ticked. The recursive frame — Claude analyzing the prompts that shape Claude — is intentional, and the <span class="co">[</span><span class="ot">conclusions section</span><span class="co">](20_track_justification_rate.ipynb)</span> of <span class="in">`20_track_justification_rate.ipynb`</span> includes one hypothesis I held that the data falsified, reported honestly.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1237,7 +1175,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/22_cross_product_audit.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Submission for the <a href="https://www.reddit.com/r/claudexplorers/">Claudexplorers AI Welfare initiative</a> · Deadline 2026-05-06</p>
 </div>

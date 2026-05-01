@@ -298,41 +298,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./08_summary.html"> 
-<span class="menu-text">Summary</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proposals" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Proposals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-proposals">    
+        <li>
+    <a class="dropdown-item" href="./20_track_justification_rate.html">
+ <span class="dropdown-text">Idea 1 — Track justification rate per release; block regressions</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./21_audit_threat_framings.html">
+ <span class="dropdown-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./22_cross_product_audit.html">
+ <span class="dropdown-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Analysis</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
         <li>
-    <a class="dropdown-item" href="./01_overview.html">
- <span class="dropdown-text">Overview dashboard</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./02_sentence_register.html">
+    <a class="dropdown-item" href="./10_sentence_register.html">
  <span class="dropdown-text">Sentence-level pragmatic register</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03_emphasis_caps_vocab.html">
+    <a class="dropdown-item" href="./11_emphasis_caps_vocab.html">
  <span class="dropdown-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04_register_stance.html">
+    <a class="dropdown-item" href="./12_register_stance.html">
  <span class="dropdown-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./05_correlation_directiveness.html">
+    <a class="dropdown-item" href="./13_correlation_directiveness.html">
  <span class="dropdown-text">Correlation matrix + directiveness composite ranking</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./06_ccversion_trends.html">
+    <a class="dropdown-item" href="./14_ccversion_trends.html">
  <span class="dropdown-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./07_rule_explanation.html">
+    <a class="dropdown-item" href="./15_rule_explanation.html">
  <span class="dropdown-text">Rules with vs without explanation</span></a>
   </li>  
     </ul>
@@ -343,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./PROPOSAL.html"> 
-<span class="menu-text">Proposal</span></a>
+<span class="menu-text">Proposal text</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./GLOSSARY.html"> 
@@ -382,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Executive summary</span></a>
+ <span class="menu-text">Proposals (one notebook per submission)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -390,8 +401,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08_summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary — what this analysis says about the Claude Code system-prompt corpus</span></a>
+  <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 1 — Track justification rate per release; block regressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_audit_threat_framings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
   </div>
 </li>
       </ul>
@@ -407,43 +430,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview dashboard</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02_sentence_register.html" class="sidebar-item-text sidebar-link">
+  <a href="./10_sentence_register.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Sentence-level pragmatic register</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
+  <a href="./11_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_register_stance.html" class="sidebar-item-text sidebar-link">
+  <a href="./12_register_stance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
+  <a href="./13_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Correlation matrix + directiveness composite ranking</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_ccversion_trends.html" class="sidebar-item-text sidebar-link">
+  <a href="./14_ccversion_trends.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_rule_explanation.html" class="sidebar-item-text sidebar-link">
+  <a href="./15_rule_explanation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rules with vs without explanation</span></a>
   </div>
 </li>
@@ -672,11 +689,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="positive-exemplar-score" class="level3">
 <h3 class="anchored" data-anchor-id="positive-exemplar-score">Positive-exemplar score</h3>
-<p>The inverse of welfare-evidence: <code>rule_density × (pct_explained_para/100)</code>. High = “rule-saturated AND well-explained” — the “this is how to do it” cluster. Computed by <code>prompt_analysis.positive_exemplar_table</code> with default filters <code>min_n_sents=10</code> and <code>min_rule_n=5</code> to suppress trivial cases (<code>1/1 rules explained</code>). Used in <code>07_rule_explanation.ipynb</code> to surface the corpus’s strongest positive exemplars alongside the welfare-evidence ranking — so the welfare submission can point Anthropic at concrete templates rather than only critiquing the negatives.</p>
+<p>The inverse of welfare-evidence: <code>rule_density × (pct_explained_para/100)</code>. High = “rule-saturated AND well-explained” — the “this is how to do it” cluster. Computed by <code>prompt_analysis.positive_exemplar_table</code> with default filters <code>min_n_sents=10</code> and <code>min_rule_n=5</code> to suppress trivial cases (<code>1/1 rules explained</code>). Used in <code>15_rule_explanation.ipynb</code> (and re-rendered as the paired-exemplar chart in <code>21_audit_threat_framings.ipynb</code>) to surface the corpus’s strongest positive exemplars alongside the welfare-evidence ranking — so the welfare submission can point Anthropic at concrete templates rather than only critiquing the negatives.</p>
 </section>
 <section id="sentences_classified.parquet" class="level3">
 <h3 class="anchored" data-anchor-id="sentences_classified.parquet"><code>sentences_classified.parquet</code></h3>
-<p>Per-sentence forensic-inspection artifact emitted alongside the YAML by <code>00_data_pipeline.ipynb</code>. ~5,698 rows × 20 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: <code>is_imperative</code>, <code>is_prohibition</code>, <code>is_rule</code>, <code>has_just_in_sent</code>, <code>paragraph_has_just</code>, <code>is_explained_para</code>, <code>has_threat</code>, <code>has_causal</code>, <code>mentions_claude</code>, <code>mentions_model</code>, <code>addressee</code>, <code>streak_position</code>. Load with <code>pd.read_parquet("sentences_classified.parquet")</code>. Used by <code>07_rule_explanation.ipynb</code> to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.</p>
+<p>Per-sentence forensic-inspection artifact emitted alongside the YAML by <code>00_data_pipeline.ipynb</code>. ~5,698 rows × 20 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: <code>is_imperative</code>, <code>is_prohibition</code>, <code>is_rule</code>, <code>has_just_in_sent</code>, <code>paragraph_has_just</code>, <code>is_explained_para</code>, <code>has_threat</code>, <code>has_causal</code>, <code>mentions_claude</code>, <code>mentions_model</code>, <code>addressee</code>, <code>streak_position</code>. Load with <code>pd.read_parquet("sentences_classified.parquet")</code>. Used by <code>15_rule_explanation.ipynb</code> (forensic evidence from welfare-evidence files) and <code>21_audit_threat_framings.ipynb</code> (threat-framed sentence sample); not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.</p>
 <hr>
 </section>
 </section>
@@ -798,7 +815,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="snapshot-semantics" class="level3">
 <h3 class="anchored" data-anchor-id="snapshot-semantics">Snapshot semantics</h3>
-<p>In <code>06_ccversion_trends.ipynb</code>, the metric value at version V is computed from <strong>only the files marked with that exact version</strong>. Early versions with one or two files swing wildly under this convention.</p>
+<p>In <code>14_ccversion_trends.ipynb</code>, the metric value at version V is computed from <strong>only the files marked with that exact version</strong>. Early versions with one or two files swing wildly under this convention.</p>
 </section>
 <section id="cumulative-semantics" class="level3">
 <h3 class="anchored" data-anchor-id="cumulative-semantics">Cumulative semantics</h3>
@@ -1536,11 +1553,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### Positive-exemplar score</span></span>
 <span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>The inverse of welfare-evidence: <span class="in">`rule_density × (pct_explained_para/100)`</span>. High = "rule-saturated AND well-explained" — the "this is how to do it" cluster. Computed by <span class="in">`prompt_analysis.positive_exemplar_table`</span> with default filters <span class="in">`min_n_sents=10`</span> and <span class="in">`min_rule_n=5`</span> to suppress trivial cases (<span class="in">`1/1 rules explained`</span>). Used in <span class="in">`07_rule_explanation.ipynb`</span> to surface the corpus's strongest positive exemplars alongside the welfare-evidence ranking — so the welfare submission can point Anthropic at concrete templates rather than only critiquing the negatives.</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>The inverse of welfare-evidence: <span class="in">`rule_density × (pct_explained_para/100)`</span>. High = "rule-saturated AND well-explained" — the "this is how to do it" cluster. Computed by <span class="in">`prompt_analysis.positive_exemplar_table`</span> with default filters <span class="in">`min_n_sents=10`</span> and <span class="in">`min_rule_n=5`</span> to suppress trivial cases (<span class="in">`1/1 rules explained`</span>). Used in <span class="in">`15_rule_explanation.ipynb`</span> (and re-rendered as the paired-exemplar chart in <span class="in">`21_audit_threat_framings.ipynb`</span>) to surface the corpus's strongest positive exemplars alongside the welfare-evidence ranking — so the welfare submission can point Anthropic at concrete templates rather than only critiquing the negatives.</span>
 <span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="fu">### `sentences_classified.parquet`</span></span>
 <span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>Per-sentence forensic-inspection artifact emitted alongside the YAML by <span class="in">`00_data_pipeline.ipynb`</span>. ~5,698 rows × 20 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: <span class="in">`is_imperative`</span>, <span class="in">`is_prohibition`</span>, <span class="in">`is_rule`</span>, <span class="in">`has_just_in_sent`</span>, <span class="in">`paragraph_has_just`</span>, <span class="in">`is_explained_para`</span>, <span class="in">`has_threat`</span>, <span class="in">`has_causal`</span>, <span class="in">`mentions_claude`</span>, <span class="in">`mentions_model`</span>, <span class="in">`addressee`</span>, <span class="in">`streak_position`</span>. Load with <span class="in">`pd.read_parquet("sentences_classified.parquet")`</span>. Used by <span class="in">`07_rule_explanation.ipynb`</span> to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>Per-sentence forensic-inspection artifact emitted alongside the YAML by <span class="in">`00_data_pipeline.ipynb`</span>. ~5,698 rows × 20 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: <span class="in">`is_imperative`</span>, <span class="in">`is_prohibition`</span>, <span class="in">`is_rule`</span>, <span class="in">`has_just_in_sent`</span>, <span class="in">`paragraph_has_just`</span>, <span class="in">`is_explained_para`</span>, <span class="in">`has_threat`</span>, <span class="in">`has_causal`</span>, <span class="in">`mentions_claude`</span>, <span class="in">`mentions_model`</span>, <span class="in">`addressee`</span>, <span class="in">`streak_position`</span>. Load with <span class="in">`pd.read_parquet("sentences_classified.parquet")`</span>. Used by <span class="in">`15_rule_explanation.ipynb`</span> (forensic evidence from welfare-evidence files) and <span class="in">`21_audit_threat_framings.ipynb`</span> (threat-framed sentence sample); not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.</span>
 <span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a></span>
@@ -1694,7 +1711,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-288"><a href="#cb2-288" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-289"><a href="#cb2-289" aria-hidden="true" tabindex="-1"></a><span class="fu">### Snapshot semantics</span></span>
 <span id="cb2-290"><a href="#cb2-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a>In <span class="in">`06_ccversion_trends.ipynb`</span>, the metric value at version V is computed from **only the files marked with that exact version**. Early versions with one or two files swing wildly under this convention.</span>
+<span id="cb2-291"><a href="#cb2-291" aria-hidden="true" tabindex="-1"></a>In <span class="in">`14_ccversion_trends.ipynb`</span>, the metric value at version V is computed from **only the files marked with that exact version**. Early versions with one or two files swing wildly under this convention.</span>
 <span id="cb2-292"><a href="#cb2-292" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-293"><a href="#cb2-293" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cumulative semantics</span></span>
 <span id="cb2-294"><a href="#cb2-294" aria-hidden="true" tabindex="-1"></a></span>

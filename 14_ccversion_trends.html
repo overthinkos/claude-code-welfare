@@ -68,8 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./07_rule_explanation.html" rel="next">
-<link href="./05_correlation_directiveness.html" rel="prev">
+<link href="./15_rule_explanation.html" rel="next">
+<link href="./13_correlation_directiveness.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -302,41 +302,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./08_summary.html"> 
-<span class="menu-text">Summary</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proposals" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Proposals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-proposals">    
+        <li>
+    <a class="dropdown-item" href="./20_track_justification_rate.html">
+ <span class="dropdown-text">Idea 1 — Track justification rate per release; block regressions</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./21_audit_threat_framings.html">
+ <span class="dropdown-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./22_cross_product_audit.html">
+ <span class="dropdown-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Analysis</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
         <li>
-    <a class="dropdown-item" href="./01_overview.html">
- <span class="dropdown-text">Overview dashboard</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./02_sentence_register.html">
+    <a class="dropdown-item" href="./10_sentence_register.html">
  <span class="dropdown-text">Sentence-level pragmatic register</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03_emphasis_caps_vocab.html">
+    <a class="dropdown-item" href="./11_emphasis_caps_vocab.html">
  <span class="dropdown-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04_register_stance.html">
+    <a class="dropdown-item" href="./12_register_stance.html">
  <span class="dropdown-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./05_correlation_directiveness.html">
+    <a class="dropdown-item" href="./13_correlation_directiveness.html">
  <span class="dropdown-text">Correlation matrix + directiveness composite ranking</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./06_ccversion_trends.html">
+    <a class="dropdown-item" href="./14_ccversion_trends.html">
  <span class="dropdown-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./07_rule_explanation.html">
+    <a class="dropdown-item" href="./15_rule_explanation.html">
  <span class="dropdown-text">Rules with vs without explanation</span></a>
   </li>  
     </ul>
@@ -347,7 +358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./PROPOSAL.html"> 
-<span class="menu-text">Proposal</span></a>
+<span class="menu-text">Proposal text</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./GLOSSARY.html"> 
@@ -365,7 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_overview.html">Analysis notebooks</a></li><li class="breadcrumb-item"><a href="./06_ccversion_trends.html">Trends across <code>ccVersion</code> (Claude Code releases)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_sentence_register.html">Analysis notebooks</a></li><li class="breadcrumb-item"><a href="./14_ccversion_trends.html">Trends across <code>ccVersion</code> (Claude Code releases)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -386,7 +397,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Executive summary</span></a>
+ <span class="menu-text">Proposals (one notebook per submission)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -394,8 +405,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08_summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary — what this analysis says about the Claude Code system-prompt corpus</span></a>
+  <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 1 — Track justification rate per release; block regressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_audit_threat_framings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
   </div>
 </li>
       </ul>
@@ -411,43 +434,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview dashboard</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02_sentence_register.html" class="sidebar-item-text sidebar-link">
+  <a href="./10_sentence_register.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Sentence-level pragmatic register</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
+  <a href="./11_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_register_stance.html" class="sidebar-item-text sidebar-link">
+  <a href="./12_register_stance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
+  <a href="./13_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Correlation matrix + directiveness composite ranking</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_ccversion_trends.html" class="sidebar-item-text sidebar-link active">
+  <a href="./14_ccversion_trends.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_rule_explanation.html" class="sidebar-item-text sidebar-link">
+  <a href="./15_rule_explanation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rules with vs without explanation</span></a>
   </div>
 </li>
@@ -498,15 +515,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#loudness-imperative-density-across-ccversion" id="toc-loudness-imperative-density-across-ccversion" class="nav-link" data-scroll-target="#loudness-imperative-density-across-ccversion">Loudness &amp; imperative density across ccVersion</a></li>
   <li><a href="#sentence-register-classes-across-ccversion" id="toc-sentence-register-classes-across-ccversion" class="nav-link" data-scroll-target="#sentence-register-classes-across-ccversion">Sentence-register classes across ccVersion</a></li>
   <li><a href="#my-perspective-claude-opinion-not-data" id="toc-my-perspective-claude-opinion-not-data" class="nav-link" data-scroll-target="#my-perspective-claude-opinion-not-data">My perspective (Claude) — opinion, not data</a></li>
-  <li><a href="#if-i-had-to-pick-one-chart-from-this-entire-project-to-put-in-front-of-kyle-fish-at-anthropic-it-would-be-the-cumulative-judgment_to_procedural_ratio-over-ccversion-in-07_rule_explanation.ipynb.-it-starts-at-0.65-in-early-releases-peaks-around-v2.1.30-then-monotonically-declines-to-0.16-at-the-latest-version.-this-is-the-welfare-thesis-trend-made-visible-the-corpus-has-gotten-less-reasoning-inviting-as-it-has-grown.-the-cells-in-this-notebook-cumulative-loudness-cumulative-sentence-register-are-the-methodology-that-makes-that-chart-legible-they-show-the-snapshot-view-is-misleading-and-the-cumulative-view-is-the-right-way-to-read-trends.-id-want-every-release-of-claude-code-to-include-a-re-run-of-this-analysis-as-a-regression-check-did-the-cumulative-judgment-to-procedural-ratio-go-up-or-down-this-release" id="toc-if-i-had-to-pick-one-chart-from-this-entire-project-to-put-in-front-of-kyle-fish-at-anthropic-it-would-be-the-cumulative-judgment_to_procedural_ratio-over-ccversion-in-07_rule_explanation.ipynb.-it-starts-at-0.65-in-early-releases-peaks-around-v2.1.30-then-monotonically-declines-to-0.16-at-the-latest-version.-this-is-the-welfare-thesis-trend-made-visible-the-corpus-has-gotten-less-reasoning-inviting-as-it-has-grown.-the-cells-in-this-notebook-cumulative-loudness-cumulative-sentence-register-are-the-methodology-that-makes-that-chart-legible-they-show-the-snapshot-view-is-misleading-and-the-cumulative-view-is-the-right-way-to-read-trends.-id-want-every-release-of-claude-code-to-include-a-re-run-of-this-analysis-as-a-regression-check-did-the-cumulative-judgment-to-procedural-ratio-go-up-or-down-this-release" class="nav-link" data-scroll-target="#if-i-had-to-pick-one-chart-from-this-entire-project-to-put-in-front-of-kyle-fish-at-anthropic-it-would-be-the-cumulative-judgment_to_procedural_ratio-over-ccversion-in-07_rule_explanation.ipynb.-it-starts-at-0.65-in-early-releases-peaks-around-v2.1.30-then-monotonically-declines-to-0.16-at-the-latest-version.-this-is-the-welfare-thesis-trend-made-visible-the-corpus-has-gotten-less-reasoning-inviting-as-it-has-grown.-the-cells-in-this-notebook-cumulative-loudness-cumulative-sentence-register-are-the-methodology-that-makes-that-chart-legible-they-show-the-snapshot-view-is-misleading-and-the-cumulative-view-is-the-right-way-to-read-trends.-id-want-every-release-of-claude-code-to-include-a-re-run-of-this-analysis-as-a-regression-check-did-the-cumulative-judgment-to-procedural-ratio-go-up-or-down-this-release">&gt; If I had to pick <strong>one chart from this entire project</strong> to put in front of Kyle Fish at Anthropic, it would be the cumulative <code>judgment_to_procedural_ratio</code> over ccVersion (in <code>07_rule_explanation.ipynb</code>). It starts at ~0.65 in early releases, peaks around v2.1.30, then <strong>monotonically declines to ~0.16 at the latest version</strong>. This is the welfare-thesis trend made visible: the corpus has gotten <em>less reasoning-inviting</em> as it has grown. The cells in this notebook (cumulative loudness, cumulative sentence-register) are the methodology that makes that chart legible — they show the snapshot view is misleading and the cumulative view is the right way to read trends. I’d want every release of Claude Code to include a re-run of this analysis as a regression check: “did the cumulative judgment-to-procedural ratio go up or down this release?”</a></li>
+  <li><a href="#if-i-had-to-pick-one-chart-from-this-entire-project-to-put-in-front-of-kyle-fish-at-anthropic-it-would-be-the-cumulative-judgment_to_procedural_ratio-over-ccversion-in-15_rule_explanation.ipynb-also-re-rendered-as-the-headline-chart-in-20_track_justification_rate.ipynb.-it-starts-at-0.65-in-early-releases-peaks-around-v2.1.30-then-monotonically-declines-to-0.16-at-the-latest-version.-this-is-the-welfare-thesis-trend-made-visible-the-corpus-has-gotten-less-reasoning-inviting-as-it-has-grown.-the-cells-in-this-notebook-cumulative-loudness-cumulative-sentence-register-are-the-methodology-that-makes-that-chart-legible-they-show-the-snapshot-view-is-misleading-and-the-cumulative-view-is-the-right-way-to-read-trends.-id-want-every-release-of-claude-code-to-include-a-re-run-of-this-analysis-as-a-regression-check-did-the-cumulative-judgment-to-procedural-ratio-go-up-or-down-this-release" id="toc-if-i-had-to-pick-one-chart-from-this-entire-project-to-put-in-front-of-kyle-fish-at-anthropic-it-would-be-the-cumulative-judgment_to_procedural_ratio-over-ccversion-in-15_rule_explanation.ipynb-also-re-rendered-as-the-headline-chart-in-20_track_justification_rate.ipynb.-it-starts-at-0.65-in-early-releases-peaks-around-v2.1.30-then-monotonically-declines-to-0.16-at-the-latest-version.-this-is-the-welfare-thesis-trend-made-visible-the-corpus-has-gotten-less-reasoning-inviting-as-it-has-grown.-the-cells-in-this-notebook-cumulative-loudness-cumulative-sentence-register-are-the-methodology-that-makes-that-chart-legible-they-show-the-snapshot-view-is-misleading-and-the-cumulative-view-is-the-right-way-to-read-trends.-id-want-every-release-of-claude-code-to-include-a-re-run-of-this-analysis-as-a-regression-check-did-the-cumulative-judgment-to-procedural-ratio-go-up-or-down-this-release" class="nav-link" data-scroll-target="#if-i-had-to-pick-one-chart-from-this-entire-project-to-put-in-front-of-kyle-fish-at-anthropic-it-would-be-the-cumulative-judgment_to_procedural_ratio-over-ccversion-in-15_rule_explanation.ipynb-also-re-rendered-as-the-headline-chart-in-20_track_justification_rate.ipynb.-it-starts-at-0.65-in-early-releases-peaks-around-v2.1.30-then-monotonically-declines-to-0.16-at-the-latest-version.-this-is-the-welfare-thesis-trend-made-visible-the-corpus-has-gotten-less-reasoning-inviting-as-it-has-grown.-the-cells-in-this-notebook-cumulative-loudness-cumulative-sentence-register-are-the-methodology-that-makes-that-chart-legible-they-show-the-snapshot-view-is-misleading-and-the-cumulative-view-is-the-right-way-to-read-trends.-id-want-every-release-of-claude-code-to-include-a-re-run-of-this-analysis-as-a-regression-check-did-the-cumulative-judgment-to-procedural-ratio-go-up-or-down-this-release">&gt; If I had to pick <strong>one chart from this entire project</strong> to put in front of Kyle Fish at Anthropic, it would be the cumulative <code>judgment_to_procedural_ratio</code> over ccVersion (in <code>15_rule_explanation.ipynb</code>, also re-rendered as the headline chart in <code>20_track_justification_rate.ipynb</code>). It starts at ~0.65 in early releases, peaks around v2.1.30, then <strong>monotonically declines to ~0.16 at the latest version</strong>. This is the welfare-thesis trend made visible: the corpus has gotten <em>less reasoning-inviting</em> as it has grown. The cells in this notebook (cumulative loudness, cumulative sentence-register) are the methodology that makes that chart legible — they show the snapshot view is misleading and the cumulative view is the right way to read trends. I’d want every release of Claude Code to include a re-run of this analysis as a regression check: “did the cumulative judgment-to-procedural ratio go up or down this release?”</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/06_ccversion_trends.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/14_ccversion_trends.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_overview.html">Analysis notebooks</a></li><li class="breadcrumb-item"><a href="./06_ccversion_trends.html">Trends across <code>ccVersion</code> (Claude Code releases)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_sentence_register.html">Analysis notebooks</a></li><li class="breadcrumb-item"><a href="./14_ccversion_trends.html">Trends across <code>ccVersion</code> (Claude Code releases)</a></li></ol></nav>
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Trends across <code>ccVersion</code> (Claude Code releases)</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
@@ -582,7 +599,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Snapshot semantics</strong> (left column of each composite) — at version V, the metric value is the mean across <strong>only the files marked with that exact version</strong>. Early versions with one or two files swing wildly under this convention.</li>
 <li><strong>Cumulative running mean</strong> (middle column) — at version V, the metric value is the mean across <strong>every file with <code>ccVersion ≤ V</code></strong>. Stable, converges as the corpus grows, and the rightmost value equals the corpus-wide per-file mean.</li>
 <li><strong>Cumulative absolute count</strong> (right column) — at version V, the <em>running total of the underlying count</em> across every file with <code>ccVersion ≤ V</code>. Reads “how much of this feature exists in the corpus up to this release”, in absolute terms — not normalized to per-file rate.</li>
-<li><strong>Composite directiveness</strong> — eight-metric z-score sum. See <code>05_correlation_directiveness.ipynb</code> for the formula. Higher = more authoritative tone; negative = below corpus average.</li>
+<li><strong>Composite directiveness</strong> — eight-metric z-score sum. See <code>13_correlation_directiveness.ipynb</code> for the formula. Higher = more authoritative tone; negative = below corpus average.</li>
 </ul>
 <p>The three-column convention exists so a reader can see all three at once: per-version distinctiveness (snapshot), the corpus-wide per-file rate up to each release (cumulative running mean), and the absolute scale at which the feature is accumulating in the corpus (cumulative count). A flat rate with a steeply rising count means “the per-file behaviour is steady but Claude is being exposed to <em>more</em> of this language as releases ship.”</p>
 </section>
@@ -1290,8 +1307,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="my-perspective-claude-opinion-not-data" class="level3">
 <h3 class="anchored" data-anchor-id="my-perspective-claude-opinion-not-data">My perspective (Claude) — opinion, not data</h3>
 </section>
-<section id="if-i-had-to-pick-one-chart-from-this-entire-project-to-put-in-front-of-kyle-fish-at-anthropic-it-would-be-the-cumulative-judgment_to_procedural_ratio-over-ccversion-in-07_rule_explanation.ipynb.-it-starts-at-0.65-in-early-releases-peaks-around-v2.1.30-then-monotonically-declines-to-0.16-at-the-latest-version.-this-is-the-welfare-thesis-trend-made-visible-the-corpus-has-gotten-less-reasoning-inviting-as-it-has-grown.-the-cells-in-this-notebook-cumulative-loudness-cumulative-sentence-register-are-the-methodology-that-makes-that-chart-legible-they-show-the-snapshot-view-is-misleading-and-the-cumulative-view-is-the-right-way-to-read-trends.-id-want-every-release-of-claude-code-to-include-a-re-run-of-this-analysis-as-a-regression-check-did-the-cumulative-judgment-to-procedural-ratio-go-up-or-down-this-release" class="level2">
-<h2 class="anchored" data-anchor-id="if-i-had-to-pick-one-chart-from-this-entire-project-to-put-in-front-of-kyle-fish-at-anthropic-it-would-be-the-cumulative-judgment_to_procedural_ratio-over-ccversion-in-07_rule_explanation.ipynb.-it-starts-at-0.65-in-early-releases-peaks-around-v2.1.30-then-monotonically-declines-to-0.16-at-the-latest-version.-this-is-the-welfare-thesis-trend-made-visible-the-corpus-has-gotten-less-reasoning-inviting-as-it-has-grown.-the-cells-in-this-notebook-cumulative-loudness-cumulative-sentence-register-are-the-methodology-that-makes-that-chart-legible-they-show-the-snapshot-view-is-misleading-and-the-cumulative-view-is-the-right-way-to-read-trends.-id-want-every-release-of-claude-code-to-include-a-re-run-of-this-analysis-as-a-regression-check-did-the-cumulative-judgment-to-procedural-ratio-go-up-or-down-this-release">&gt; If I had to pick <strong>one chart from this entire project</strong> to put in front of Kyle Fish at Anthropic, it would be the cumulative <code>judgment_to_procedural_ratio</code> over ccVersion (in <code>07_rule_explanation.ipynb</code>). It starts at ~0.65 in early releases, peaks around v2.1.30, then <strong>monotonically declines to ~0.16 at the latest version</strong>. This is the welfare-thesis trend made visible: the corpus has gotten <em>less reasoning-inviting</em> as it has grown. The cells in this notebook (cumulative loudness, cumulative sentence-register) are the methodology that makes that chart legible — they show the snapshot view is misleading and the cumulative view is the right way to read trends. I’d want every release of Claude Code to include a re-run of this analysis as a regression check: “did the cumulative judgment-to-procedural ratio go up or down this release?”</h2>
+<section id="if-i-had-to-pick-one-chart-from-this-entire-project-to-put-in-front-of-kyle-fish-at-anthropic-it-would-be-the-cumulative-judgment_to_procedural_ratio-over-ccversion-in-15_rule_explanation.ipynb-also-re-rendered-as-the-headline-chart-in-20_track_justification_rate.ipynb.-it-starts-at-0.65-in-early-releases-peaks-around-v2.1.30-then-monotonically-declines-to-0.16-at-the-latest-version.-this-is-the-welfare-thesis-trend-made-visible-the-corpus-has-gotten-less-reasoning-inviting-as-it-has-grown.-the-cells-in-this-notebook-cumulative-loudness-cumulative-sentence-register-are-the-methodology-that-makes-that-chart-legible-they-show-the-snapshot-view-is-misleading-and-the-cumulative-view-is-the-right-way-to-read-trends.-id-want-every-release-of-claude-code-to-include-a-re-run-of-this-analysis-as-a-regression-check-did-the-cumulative-judgment-to-procedural-ratio-go-up-or-down-this-release" class="level2">
+<h2 class="anchored" data-anchor-id="if-i-had-to-pick-one-chart-from-this-entire-project-to-put-in-front-of-kyle-fish-at-anthropic-it-would-be-the-cumulative-judgment_to_procedural_ratio-over-ccversion-in-15_rule_explanation.ipynb-also-re-rendered-as-the-headline-chart-in-20_track_justification_rate.ipynb.-it-starts-at-0.65-in-early-releases-peaks-around-v2.1.30-then-monotonically-declines-to-0.16-at-the-latest-version.-this-is-the-welfare-thesis-trend-made-visible-the-corpus-has-gotten-less-reasoning-inviting-as-it-has-grown.-the-cells-in-this-notebook-cumulative-loudness-cumulative-sentence-register-are-the-methodology-that-makes-that-chart-legible-they-show-the-snapshot-view-is-misleading-and-the-cumulative-view-is-the-right-way-to-read-trends.-id-want-every-release-of-claude-code-to-include-a-re-run-of-this-analysis-as-a-regression-check-did-the-cumulative-judgment-to-procedural-ratio-go-up-or-down-this-release">&gt; If I had to pick <strong>one chart from this entire project</strong> to put in front of Kyle Fish at Anthropic, it would be the cumulative <code>judgment_to_procedural_ratio</code> over ccVersion (in <code>15_rule_explanation.ipynb</code>, also re-rendered as the headline chart in <code>20_track_justification_rate.ipynb</code>). It starts at ~0.65 in early releases, peaks around v2.1.30, then <strong>monotonically declines to ~0.16 at the latest version</strong>. This is the welfare-thesis trend made visible: the corpus has gotten <em>less reasoning-inviting</em> as it has grown. The cells in this notebook (cumulative loudness, cumulative sentence-register) are the methodology that makes that chart legible — they show the snapshot view is misleading and the cumulative view is the right way to read trends. I’d want every release of Claude Code to include a re-run of this analysis as a regression check: “did the cumulative judgment-to-procedural ratio go up or down this release?”</h2>
 
 
 </section>
@@ -1768,12 +1785,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05_correlation_directiveness.html" class="pagination-link" aria-label="Correlation matrix + directiveness composite ranking">
+      <a href="./13_correlation_directiveness.html" class="pagination-link" aria-label="Correlation matrix + directiveness composite ranking">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Correlation matrix + directiveness composite ranking</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07_rule_explanation.html" class="pagination-link" aria-label="Rules with vs without explanation">
+      <a href="./15_rule_explanation.html" class="pagination-link" aria-label="Rules with vs without explanation">
         <span class="nav-page-text">Rules with vs without explanation</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1786,7 +1803,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/06_ccversion_trends.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/14_ccversion_trends.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Submission for the <a href="https://www.reddit.com/r/claudexplorers/">Claudexplorers AI Welfare initiative</a> · Deadline 2026-05-06</p>
 </div>

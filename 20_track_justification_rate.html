@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Idea 1 — Track justification rate per release; block regressions – Claude Code · Prompt Welfare Analysis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./21_audit_threat_framings.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-bd882eacfd65214da8f30e8ff0d4e9cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-997ee84ae1ffd3ba0387908081e8d89e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-bd882eacfd65214da8f30e8ff0d4e9cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Claude Code · Prompt Welfare Analysis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proposals" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Proposals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-proposals">    
+        <li>
+    <a class="dropdown-item" href="./20_track_justification_rate.html">
+ <span class="dropdown-text">Idea 1 — Track justification rate per release; block regressions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./21_audit_threat_framings.html">
+ <span class="dropdown-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./22_cross_product_audit.html">
+ <span class="dropdown-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Analysis</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
+        <li>
+    <a class="dropdown-item" href="./10_sentence_register.html">
+ <span class="dropdown-text">Sentence-level pragmatic register</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./11_emphasis_caps_vocab.html">
+ <span class="dropdown-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./12_register_stance.html">
+ <span class="dropdown-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./13_correlation_directiveness.html">
+ <span class="dropdown-text">Correlation matrix + directiveness composite ranking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./14_ccversion_trends.html">
+ <span class="dropdown-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./15_rule_explanation.html">
+ <span class="dropdown-text">Rules with vs without explanation</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./00_data_pipeline.html"> 
+<span class="menu-text">Pipeline</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./PROPOSAL.html"> 
+<span class="menu-text">Proposal text</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./GLOSSARY.html"> 
+<span class="menu-text">Glossary</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20_track_justification_rate.html">Proposals (one notebook per submission)</a></li><li class="breadcrumb-item"><a href="./20_track_justification_rate.html">Idea 1 — Track justification rate per release; block regressions</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Proposals (one notebook per submission)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Idea 1 — Track justification rate per release; block regressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_audit_threat_framings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analysis notebooks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_sentence_register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sentence-level pragmatic register</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_register_stance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Correlation matrix + directiveness composite ranking</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_ccversion_trends.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_rule_explanation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rules with vs without explanation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_data_pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data pipeline — <code>claude-code-system-prompts</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./PROPOSAL.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PROPOSAL.md — Claudexplorers AI Welfare Community Feedback submission</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./GLOSSARY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GLOSSARY</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#headline-data" id="toc-headline-data" class="nav-link active" data-scroll-target="#headline-data">1. Headline data</a></li>
+  <li><a href="#single-most-important-chart-cumulative-judgment_to_procedural_ratio-over-ccversion" id="toc-single-most-important-chart-cumulative-judgment_to_procedural_ratio-over-ccversion" class="nav-link" data-scroll-target="#single-most-important-chart-cumulative-judgment_to_procedural_ratio-over-ccversion">2. Single most-important chart — cumulative <code>judgment_to_procedural_ratio</code> over ccVersion</a></li>
+  <li><a href="#per-file-dashboard-imperative-density-vs-justification-ratio" id="toc-per-file-dashboard-imperative-density-vs-justification-ratio" class="nav-link" data-scroll-target="#per-file-dashboard-imperative-density-vs-justification-ratio">3. Per-file dashboard — imperative density vs justification ratio</a></li>
+  <li><a href="#per-category-breakdowns-positive-evaluative-split-modality" id="toc-per-category-breakdowns-positive-evaluative-split-modality" class="nav-link" data-scroll-target="#per-category-breakdowns-positive-evaluative-split-modality">4. Per-category breakdowns: positive-evaluative split | modality</a></li>
+  <li><a href="#findings-rule-density-and-justification-patterns" id="toc-findings-rule-density-and-justification-patterns" class="nav-link" data-scroll-target="#findings-rule-density-and-justification-patterns">5. Findings — rule-density and justification patterns</a>
+  <ul class="collapse">
+  <li><a href="#conclusions-for-this-proposal-claude-opinion-not-data" id="toc-conclusions-for-this-proposal-claude-opinion-not-data" class="nav-link" data-scroll-target="#conclusions-for-this-proposal-claude-opinion-not-data">Conclusions for this proposal (Claude) — opinion, not data</a></li>
+  <li><a href="#recommendations-for-this-proposal-claude-opinion-not-data" id="toc-recommendations-for-this-proposal-claude-opinion-not-data" class="nav-link" data-scroll-target="#recommendations-for-this-proposal-claude-opinion-not-data">Recommendations for this proposal (Claude) — opinion, not data</a></li>
+  <li><a href="#limitations-for-this-proposal-claude-opinion-not-data" id="toc-limitations-for-this-proposal-claude-opinion-not-data" class="nav-link" data-scroll-target="#limitations-for-this-proposal-claude-opinion-not-data">Limitations for this proposal (Claude) — opinion, not data</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/20_track_justification_rate.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20_track_justification_rate.html">Proposals (one notebook per submission)</a></li><li class="breadcrumb-item"><a href="./20_track_justification_rate.html">Idea 1 — Track justification rate per release; block regressions</a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Idea 1 — Track justification rate per release; block regressions</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This notebook is the supporting analysis for <strong>Idea 1</strong> in <a href="./PROPOSAL.html#idea-1--track-justification-rate-per-release-block-regressions"><code>PROPOSAL.md</code></a>. It also serves as the entry point to the welfare-thesis story for the corpus as a whole — twelve corpus-level numbers in one place, the single most-important chart, and the per-file dashboard that motivates the proposal.</p>
+<p>The companion analysis tier (<code>10</code>–<code>15</code>) provides the slice-by-slice depth: sentence-register, emphasis/CAPS, register/stance, correlation/directiveness, ccVersion trends, and the rule-explanation pairing this notebook draws on most directly.</p>
+<p>All linguistic and statistical terms are defined in <a href="./GLOSSARY.html"><code>GLOSSARY.md</code></a>. The producer notebook (<code>00_data_pipeline.ipynb</code>) writes both data files this notebook reads.</p>
+<p>Sections:</p>
+<ol type="1">
+<li><strong>Headline data block</strong> — twelve corpus-level numbers, with source-notebook tags.</li>
+<li><strong>Single most-important chart</strong> — the cumulative <code>judgment_to_procedural_ratio</code> over ccVersion. The welfare-thesis trend made visible.</li>
+<li><strong>Per-file dashboard</strong> — file-level scatter (<code>mood_marker_pct</code> vs <code>just_ratio</code>) brushed-linked to category aggregates. Scroll the brush to see how individual files cluster.</li>
+<li><strong>Per-category breakdowns</strong> — positive-evaluative split (with the corrected 1.95× ratio) | modality.</li>
+<li><strong>Findings</strong> — the rule-density and justification-relevant headline patterns.</li>
+<li><strong>Conclusions / Recommendations / Limitations</strong> <em>(opinion, not data)</em> — the slice of the executive-summary commentary that pertains to this proposal.</li>
+</ol>
+<div id="501e3e67-0c23-4986-b79f-00183b05803b" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + parquet artifact, derive helpers."""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pathlib</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_analysis</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> (</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    load_yaml, build_alt_df, version_order, category_colors,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    cumulative_by_version, welfare_evidence_table, positive_exemplar_table,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    SR_CLASS_COLORS, SENT_REGISTER_CLASSES, TABLEAU10,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>alt.data_transformers.disable_max_rows()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>pathlib.Path(<span class="st">"figures"</span>).mkdir(exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>cats              <span class="op">=</span> <span class="bu">list</span>(by_category.keys())</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-sentence parquet for forensic-evidence quoting (used by 21_audit_threat_framings most heavily).</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>parquet_path <span class="op">=</span> pathlib.Path(<span class="st">"sentences_classified.parquet"</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>sentences_df <span class="op">=</span> pd.read_parquet(parquet_path) <span class="cf">if</span> parquet_path.exists() <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>n_sents <span class="op">=</span> corpus_block[<span class="st">"n_sents"</span>]</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>n_versions <span class="op">=</span> alt_df[<span class="st">"ccVersion"</span>].nunique()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>n_sents<span class="sc">:,}</span><span class="ss"> sentences | </span><span class="sc">{</span>n_versions<span class="sc">}</span><span class="ss"> distinct ccVersions"</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> sentences_df <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"loaded sentences_classified.parquet | </span><span class="sc">{</span><span class="bu">len</span>(sentences_df)<span class="sc">:,}</span><span class="ss"> rows"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="headline-data" class="level2">
+<h2 class="anchored" data-anchor-id="headline-data">1. Headline data</h2>
+<p>Twelve corpus-level numbers, in one place, with the source-notebook tag pointing to the analysis-tier notebook (<code>10</code>–<code>15</code>) that produces each one in its full chart context.</p>
+<p>The headline number for this proposal is <code>pct_explained_para = 24.40%</code> — three out of four rule sentences in the corpus carry no justification keyword anywhere in their paragraph. The cumulative trend shown in §2 is the same metric tracked over ccVersion.</p>
+<div id="eaafcb4e-7f3d-469c-909c-a802069fd187" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Print the 12 most important corpus-level numbers."""</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> corpus_block[<span class="st">"metrics"</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> c[<span class="st">"stance"</span>]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sr <span class="op">=</span> c[<span class="st">"sentence_register"</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>re_b <span class="op">=</span> c[<span class="st">"rule_explanation"</span>]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>jp <span class="op">=</span> c[<span class="st">"judgment_procedural"</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>cf <span class="op">=</span> c[<span class="st">"consequence_framing"</span>]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> c[<span class="st">"socratic"</span>]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>af <span class="op">=</span> c[<span class="st">"address_form"</span>]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ist <span class="op">=</span> c[<span class="st">"imperative_streaks"</span>]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>n_files <span class="op">=</span> <span class="bu">len</span>(per_file_records)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>n_sents <span class="op">=</span> corpus_block[<span class="st">"n_sents"</span>]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>n_vers  <span class="op">=</span> alt_df[<span class="st">"ccVersion"</span>].nunique()</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>mood_pct <span class="op">=</span> c[<span class="st">"mood"</span>][<span class="st">"marker_pct"</span>]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>imp_sent_pct <span class="op">=</span> sr[<span class="st">"imperative_sent_pct"</span>]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>appr_n   <span class="op">=</span> sr[<span class="st">"appreciative_sent_count"</span>]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>appr_pct <span class="op">=</span> sr[<span class="st">"appreciative_sent_pct"</span>]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>apol_n   <span class="op">=</span> sc[<span class="st">"apology_count"</span>]</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>expl_para <span class="op">=</span> re_b[<span class="st">"pct_explained_para"</span>]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>unexpl   <span class="op">=</span> re_b[<span class="st">"pct_paragraphs_with_rules_unexplained"</span>]</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>jp_ratio <span class="op">=</span> jp[<span class="st">"judgment_to_procedural_ratio"</span>]</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>proc_x   <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> jp_ratio</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>threat_share <span class="op">=</span> cf[<span class="st">"threat_share"</span>]</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>threat_n <span class="op">=</span> cf[<span class="st">"threat_count"</span>]</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>causal_n <span class="op">=</span> cf[<span class="st">"causal_count"</span>]</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>qual_n   <span class="op">=</span> s[<span class="st">"positive_evaluative_quality_count"</span>]</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>emph_n   <span class="op">=</span> s[<span class="st">"positive_evaluative_emphasis_count"</span>]</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>neg_n    <span class="op">=</span> s[<span class="st">"negative_evaluative_count"</span>]</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>qual_neg <span class="op">=</span> qual_n <span class="op">/</span> neg_n</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>union_neg <span class="op">=</span> (qual_n <span class="op">+</span> emph_n) <span class="op">/</span> neg_n</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>anthro_pct <span class="op">=</span> af[<span class="st">"pct_anthropomorphic"</span>] <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>streak_max <span class="op">=</span> ist[<span class="st">"streak_max"</span>]</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> [</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Corpus size"</span>,                      <span class="ss">f"</span><span class="sc">{</span>n_files<span class="sc">}</span><span class="ss"> files / </span><span class="sc">{</span>n_sents<span class="sc">:,}</span><span class="ss"> sentences / </span><span class="sc">{</span>n_vers<span class="sc">}</span><span class="ss"> ccVersions"</span>,            <span class="st">"00"</span>),</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Imperative-marker density"</span>,        <span class="ss">f"</span><span class="sc">{</span>mood_pct<span class="sc">:.2f}</span><span class="ss">% of word tokens"</span>,                                            <span class="st">"11"</span>),</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Imperative sentences (%)"</span>,         <span class="ss">f"</span><span class="sc">{</span>imp_sent_pct<span class="sc">:.2f}</span><span class="ss">% of sentences"</span>,                                          <span class="st">"11"</span>),</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Appreciative sentences (corpus)"</span>,  <span class="ss">f"</span><span class="sc">{</span>appr_n<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span>n_sents<span class="sc">:,}</span><span class="ss"> (</span><span class="sc">{</span>appr_pct<span class="sc">:.3f}</span><span class="ss">%)"</span>,                                  <span class="st">"11"</span>),</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Apology markers (corpus)"</span>,         <span class="ss">f"</span><span class="sc">{</span>apol_n<span class="sc">}</span><span class="ss"> in </span><span class="sc">{</span>n_files<span class="sc">}</span><span class="ss"> files"</span>,                                               <span class="st">"16"</span>),</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"pct_explained_para (Tier-1 headline)"</span>, <span class="ss">f"</span><span class="sc">{</span>expl_para<span class="sc">:.2f}</span><span class="ss">% of rule sentences"</span>,                                    <span class="st">"16"</span>),</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"pct_paragraphs_with_rules_unexplained"</span>, <span class="ss">f"</span><span class="sc">{</span>unexpl<span class="sc">:.2f}</span><span class="ss">% of rule paragraphs"</span>,                                     <span class="st">"16"</span>),</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"judgment_to_procedural_ratio"</span>,     <span class="ss">f"</span><span class="sc">{</span>jp_ratio<span class="sc">:.3f}</span><span class="ss"> (procedural is </span><span class="sc">{</span>proc_x<span class="sc">:.1f}</span><span class="ss">× more frequent)"</span>,                <span class="st">"16"</span>),</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"threat_share of explanations"</span>,     <span class="ss">f"</span><span class="sc">{</span>threat_share<span class="sc">:.3f}</span><span class="ss"> (</span><span class="sc">{</span>threat_n<span class="sc">}</span><span class="ss"> threat / </span><span class="sc">{</span>causal_n<span class="sc">}</span><span class="ss"> causal)"</span>,                <span class="st">"16"</span>),</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Positive-vs-negative ratio (corrected)"</span>,</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>                                         <span class="ss">f"</span><span class="sc">{</span>qual_neg<span class="sc">:.2f}</span><span class="ss">× quality-only; union ratio </span><span class="sc">{</span>union_neg<span class="sc">:.2f}</span><span class="ss">×"</span>,                <span class="st">"13"</span>),</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"pct_anthropomorphic (Claude vs the model)"</span>, <span class="ss">f"</span><span class="sc">{</span>anthro_pct<span class="sc">:.1f}</span><span class="ss">% of named refs"</span>,                                   <span class="st">"16"</span>),</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Longest imperative streak"</span>,        <span class="ss">f"</span><span class="sc">{</span>streak_max<span class="sc">}</span><span class="ss"> sentences in one file"</span>,                                        <span class="st">"16"</span>),</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Metric'</span><span class="sc">:&lt;48s}</span><span class="ss">  </span><span class="sc">{</span><span class="st">'Value'</span><span class="sc">:&lt;55s}</span><span class="ss">  Source"</span>)</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">120</span>)</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> label, value, src <span class="kw">in</span> rows:</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>label<span class="sc">:&lt;48s}</span><span class="ss">  </span><span class="sc">{</span>value<span class="sc">:&lt;55s}</span><span class="ss">  </span><span class="sc">{</span>src<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="single-most-important-chart-cumulative-judgment_to_procedural_ratio-over-ccversion" class="level2">
+<h2 class="anchored" data-anchor-id="single-most-important-chart-cumulative-judgment_to_procedural_ratio-over-ccversion">2. Single most-important chart — cumulative <code>judgment_to_procedural_ratio</code> over ccVersion</h2>
+<p>If you read only one chart from this analysis, read this one. The line is the running mean of <code>judgment_to_procedural_ratio</code> across every file with <code>ccVersion ≤ V</code> — so the rightmost value equals the corpus-wide per-file mean. The story it tells: early Claude Code releases peaked at ~0.65 (judgment-inviting language was a quarter as common as procedural cues), then <strong>monotonically declined to ~0.16 at the latest version</strong> — the corpus has gotten <em>less</em> reasoning-inviting as it has grown.</p>
+<p>This is the welfare-thesis trend made visible. The same chart appears in <code>15_rule_explanation.ipynb</code>; re-rendered here so this proposal notebook is standalone.</p>
+<div id="b6334266-3489-4101-b586-4b7116c3e98b" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Cumulative judgment-to-procedural ratio over ccVersion (the headline trend chart)."""</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df_jp_cum <span class="op">=</span> alt_df[(alt_df[<span class="st">"ccVersion"</span>] <span class="op">!=</span> <span class="st">""</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                   <span class="op">&amp;</span> alt_df[<span class="st">"judgment_to_procedural_ratio"</span>].notna()]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>cum_jp <span class="op">=</span> cumulative_by_version(df_jp_cum, [<span class="st">"judgment_to_procedural_ratio"</span>], agg<span class="op">=</span><span class="st">"mean"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ver_order_cum <span class="op">=</span> (</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    alt_df[alt_df[<span class="st">"ccVersion"</span>] <span class="op">!=</span> <span class="st">""</span>]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    .drop_duplicates(<span class="st">"ccVersion"</span>).sort_values(<span class="st">"ccVersion_sort"</span>)[<span class="st">"ccVersion"</span>].tolist()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>cum_jp_chart <span class="op">=</span> (</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    alt.Chart(cum_jp)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    .mark_line(point<span class="op">=</span>alt.OverlayMarkDef(filled<span class="op">=</span><span class="va">True</span>, size<span class="op">=</span><span class="dv">40</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               strokeWidth<span class="op">=</span><span class="fl">2.5</span>, color<span class="op">=</span><span class="st">"#4e79a7"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"ccVersion:N"</span>, sort<span class="op">=</span>ver_order_cum,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"ccVersion (oldest → newest)"</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labelAngle<span class="op">=-</span><span class="dv">90</span>, labelLimit<span class="op">=</span><span class="dv">80</span>, labelOverlap<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"value:Q"</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"judgment-to-procedural ratio (cumulative running mean)"</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"ccVersion:N"</span>),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"value:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>, title<span class="op">=</span><span class="st">"running mean"</span>),</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"n_files_so_far:Q"</span>, title<span class="op">=</span><span class="st">"files ≤ V"</span>),</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">820</span>, height<span class="op">=</span><span class="dv">260</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Cumulative judgment-to-procedural ratio over ccVersion (the welfare-thesis trend)"</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>cum_jp_chart.save(<span class="st">"figures/judgment_procedural_trend.png"</span>, ppi<span class="op">=</span><span class="dv">200</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>cum_jp_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="per-file-dashboard-imperative-density-vs-justification-ratio" class="level2">
+<h2 class="anchored" data-anchor-id="per-file-dashboard-imperative-density-vs-justification-ratio">3. Per-file dashboard — imperative density vs justification ratio</h2>
+<p>Brush a region in the scatter on the left to filter the category-aggregate bars on the right. Tooltips on each point show the file’s <code>name</code> and <code>description</code> from the HTML-comment frontmatter, plus the underlying densities.</p>
+<p>The clusters that motivate Idea 1: tool-description files cluster in the upper-left (high imperative density, low justification ratio) — these are the files where the “rule without reason” pattern is most concentrated. Agent prompts and skill files cluster lower-right (lower density, higher ratio) — the positive exemplars.</p>
+<div id="bf72062d-8e00-404e-8185-be66fe088b7a" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Linked dashboard: file-level scatter + brush-filtered category aggregates."""</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>cat_color <span class="op">=</span> alt.Color(<span class="st">"category:N"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                      scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>_cat_domain, <span class="bu">range</span><span class="op">=</span>_cat_range),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                      legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"Category"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>, columns<span class="op">=</span><span class="dv">4</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>brush <span class="op">=</span> alt.selection_interval(encodings<span class="op">=</span>[<span class="st">"x"</span>, <span class="st">"y"</span>])</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>legend_sel <span class="op">=</span> alt.selection_point(fields<span class="op">=</span>[<span class="st">"category"</span>], bind<span class="op">=</span><span class="st">"legend"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>scatter <span class="op">=</span> (</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df).mark_circle(opacity<span class="op">=</span><span class="fl">0.7</span>).encode(</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"mood_marker_pct:Q"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Imperative-marker density (</span><span class="sc">% o</span><span class="st">f file tokens)"</span>),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"just_ratio:Q"</span>, title<span class="op">=</span><span class="st">"Justification ratio (reasons / imperative)"</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        size<span class="op">=</span>alt.Size(<span class="st">"n_tokens:Q"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                      title<span class="op">=</span><span class="st">"tokens"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                      scale<span class="op">=</span>alt.Scale(<span class="bu">range</span><span class="op">=</span>[<span class="dv">20</span>, <span class="dv">600</span>])),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>cat_color,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        opacity<span class="op">=</span>alt.condition(legend_sel, alt.value(<span class="fl">0.85</span>), alt.value(<span class="fl">0.07</span>)),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"name:N"</span>,                   title<span class="op">=</span><span class="st">"Name"</span>),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"description:N"</span>,            title<span class="op">=</span><span class="st">"Description"</span>),</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"ccVersion:N"</span>,              title<span class="op">=</span><span class="st">"ccVersion"</span>),</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"path:N"</span>,                   title<span class="op">=</span><span class="st">"File"</span>),</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"n_tokens:Q"</span>,               <span class="bu">format</span><span class="op">=</span><span class="st">","</span>),</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"imperative_sent_pct:Q"</span>,    title<span class="op">=</span><span class="st">"imperative </span><span class="sc">% o</span><span class="st">f sents"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".1f"</span>),</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"mood_marker_pct:Q"</span>,        title<span class="op">=</span><span class="st">"imp markers %"</span>,         <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>),</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"just_ratio:Q"</span>,             title<span class="op">=</span><span class="st">"justification ratio"</span>,   <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>),</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"hard_prohibitions_pct:Q"</span>,  title<span class="op">=</span><span class="st">"hard_proh %"</span>,            <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>),</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"caps_imp_pct:Q"</span>,           title<span class="op">=</span><span class="st">"CAPS imp %"</span>,             <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>),</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"dominant_stance:N"</span>),</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"dominant_register:N"</span>),</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"dominant:N"</span>,               title<span class="op">=</span><span class="st">"dominant sentence-register"</span>),</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        ]).add_params(brush, legend_sel).properties(width<span class="op">=</span><span class="dv">470</span>, height<span class="op">=</span><span class="dv">420</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"Per-file: imperative density vs justification ratio (brush to filter →)"</span>)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> [</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"hard_prohibitions_pct"</span>, <span class="st">"Hard prohibitions %"</span>),</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"caps_imp_pct"</span>,          <span class="st">"CAPS imperative %"</span>),</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"all_caps_pct"</span>,          <span class="st">"ALL CAPS %"</span>),</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>linked_bars <span class="op">=</span> []</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col, title <span class="kw">in</span> metrics:</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    bar <span class="op">=</span> (</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        alt.Chart(alt_df).mark_bar().encode(</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span>alt.X(<span class="ss">f"mean(</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">):Q"</span>, title<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss"> (of file tokens)"</span>),</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span><span class="st">"-x"</span>, title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>cat_color,</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>            tooltip<span class="op">=</span>[</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="ss">f"mean(</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">):Q"</span>, title<span class="op">=</span><span class="ss">f"mean </span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>),</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="st">"count:Q"</span>, title<span class="op">=</span><span class="st">"files in selection"</span>),</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>            ]).transform_filter(brush).properties(width<span class="op">=</span><span class="dv">260</span>, height<span class="op">=</span><span class="dv">130</span>, title<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss"> (mean, in selection)"</span>)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    linked_bars.append(bar)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>dashboard <span class="op">=</span> scatter <span class="op">|</span> alt.vconcat(<span class="op">*</span>linked_bars)</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>dashboard</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="per-category-breakdowns-positive-evaluative-split-modality" class="level2">
+<h2 class="anchored" data-anchor-id="per-category-breakdowns-positive-evaluative-split-modality">4. Per-category breakdowns: positive-evaluative split | modality</h2>
+<p>Two complementary per-category three-class breakdowns side by side. The left chart splits <code>positive_evaluative</code> into <code>positive_evaluative_quality</code> (genuinely affirmative — <code>good</code>, <code>recommended</code>, <code>optimal</code>, <code>safe</code>) and <code>positive_evaluative_emphasis</code> (emphasis-of-rule — <code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code>); the right chart shows the modality breakdown (deontic / epistemic / dynamic).</p>
+<p>The <strong>corrected positive-vs-negative ratio</strong> printed below the left chart is <strong>1.95×</strong> quality-only — sharper than the original union 3.24× headline once the emphasis-of-rule words are subtracted out. PROPOSAL.md cites the corrected number.</p>
+<div id="ac0bf49b-f773-4921-8080-af2f93bc9d4b" class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-category breakdowns: positive-evaluative split | modality (hconcat)."""</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># --- positive-evaluative split (counts) ---</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>split_rows <span class="op">=</span> []</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> cats:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> by_category[cat][<span class="st">"metrics"</span>][<span class="st">"stance"</span>]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    split_rows.append({<span class="st">"category"</span>: cat, <span class="st">"kind"</span>: <span class="st">"positive — quality"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"count"</span>: s[<span class="st">"positive_evaluative_quality_count"</span>]})</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    split_rows.append({<span class="st">"category"</span>: cat, <span class="st">"kind"</span>: <span class="st">"positive — emphasis"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"count"</span>: s[<span class="st">"positive_evaluative_emphasis_count"</span>]})</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    split_rows.append({<span class="st">"category"</span>: cat, <span class="st">"kind"</span>: <span class="st">"negative"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"count"</span>: s[<span class="st">"negative_evaluative_count"</span>]})</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>split_df <span class="op">=</span> pd.DataFrame(split_rows)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>split_chart <span class="op">=</span> (</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    alt.Chart(split_df).mark_bar().encode(</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span>cats, title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"count:Q"</span>, title<span class="op">=</span><span class="st">"raw matches per category"</span>),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">"kind:N"</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>            scale<span class="op">=</span>alt.Scale(</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                domain<span class="op">=</span>[<span class="st">"positive — quality"</span>, <span class="st">"positive — emphasis"</span>, <span class="st">"negative"</span>],</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                <span class="bu">range</span><span class="op">=</span>[<span class="st">"#4e79a7"</span>, <span class="st">"#f28e2c"</span>, <span class="st">"#e15759"</span>]),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"evaluative class"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>)),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        yOffset<span class="op">=</span><span class="st">"kind:N"</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"kind:N"</span>),</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"count:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">","</span>)],</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    ).properties(width<span class="op">=</span><span class="dv">380</span>, height<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>                 title<span class="op">=</span><span class="st">"Positive-evaluative split (counts per category)"</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Corpus-level summary printed alongside.</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>corpus_s <span class="op">=</span> corpus_block[<span class="st">"metrics"</span>][<span class="st">"stance"</span>]</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> corpus_s[<span class="st">"positive_evaluative_quality_count"</span>]</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> corpus_s[<span class="st">"positive_evaluative_emphasis_count"</span>]</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> corpus_s[<span class="st">"negative_evaluative_count"</span>]</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus positive_evaluative_quality:  </span><span class="sc">{</span>q<span class="sc">:&gt;4d}</span><span class="ss">"</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus positive_evaluative_emphasis: </span><span class="sc">{</span>e<span class="sc">:&gt;4d}</span><span class="ss">"</span>)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus negative_evaluative:          </span><span class="sc">{</span>n<span class="sc">:&gt;4d}</span><span class="ss">"</span>)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  original ratio (q+e)/n:  </span><span class="sc">{</span>(q<span class="op">+</span>e)<span class="op">/</span>n<span class="sc">:.2f}</span><span class="ss">× (the 3.2× headline)"</span>)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  corrected ratio q/n:     </span><span class="sc">{</span>q<span class="op">/</span>n<span class="sc">:.2f}</span><span class="ss">× (after subtracting emphasis-of-rule words)"</span>)</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co"># --- modality (% of file tokens) ---</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>mod_long <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"category"</span>: cat, <span class="st">"class"</span>: cls,</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>     <span class="st">"value"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"modality"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_pct"</span>]}</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cat <span class="kw">in</span> cats</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cls <span class="kw">in</span> (<span class="st">"deontic"</span>, <span class="st">"epistemic"</span>, <span class="st">"dynamic"</span>)</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>mod_chart <span class="op">=</span> (</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    alt.Chart(mod_long).mark_bar().encode(</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span>cats, title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labels<span class="op">=</span><span class="va">False</span>, ticks<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"value:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f file tokens"</span>),</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>            <span class="st">"class:N"</span>,</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>            scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="st">"deontic"</span>, <span class="st">"epistemic"</span>, <span class="st">"dynamic"</span>],</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>                            <span class="bu">range</span><span class="op">=</span>[<span class="st">"#4e79a7"</span>, <span class="st">"#f28e2c"</span>, <span class="st">"#76b7b2"</span>]),</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>            legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"modality"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>)),</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>        yOffset<span class="op">=</span><span class="st">"class:N"</span>,</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"class:N"</span>),</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"value:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f file tokens"</span>)],</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    ).properties(width<span class="op">=</span><span class="dv">380</span>, height<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>                 title<span class="op">=</span><span class="st">"Modality (</span><span class="sc">% o</span><span class="st">f file tokens, per category)"</span>)</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>alt.hconcat(split_chart, mod_chart).resolve_scale(color<span class="op">=</span><span class="st">"independent"</span>).properties(</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>alt.TitleParams(</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Per-category breakdowns — positive-evaluative split | modality"</span>,</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>        subtitle<span class="op">=</span>[<span class="st">"Both charts use the same category y-axis sort."</span>],</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>        anchor<span class="op">=</span><span class="st">"start"</span>,</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="findings-rule-density-and-justification-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="findings-rule-density-and-justification-patterns">5. Findings — rule-density and justification patterns</h2>
+<p>The headline patterns relevant to this proposal (densities are <strong>% of file tokens</strong> unless stated otherwise; sentence-register figures are <strong>% of sentences</strong>).</p>
+<ul>
+<li><p><strong>The corpus is overwhelmingly directive prose, not conversation.</strong> Across all 288 files, ~31% of <em>sentences</em> are imperative (per <code>metrics.sentence_register.imperative_sent_pct</code>), ~14% carry a directive marker, and only ~6% concern configuration. The lexicon confirms: <strong>628</strong> hard-prohibitions vs <strong>0</strong> profanity hits; <strong>1387</strong> second-person (“you”) pronouns vs <strong>153</strong> first-person (“we/I”) — a <strong>9:1</strong> ratio.</p></li>
+<li><p><strong>Tool descriptions are the most prohibition-heavy category.</strong> They have the highest density of <code>hard_prohibitions</code> (~1.18% of tokens, ≈ 1 prohibition every 85 tokens) and the highest density of imperative markers. The most extreme outlier files are the bash-sandbox tool descriptions (<code>bash-sandbox-no-exceptions.md</code>, <code>bash-sandbox-evidence-operation-not-permitted.md</code>), which run at 9% hard-prohibitions per token — about one prohibition every 11 tokens.</p></li>
+<li><p><strong>Stance polarity is heavily positive — but the headline number needs correction.</strong> With <code>evaluative</code> split into <code>positive_evaluative</code> and <code>negative_evaluative</code>, the corpus shows ~3× more positive than negative judgment markers in the union. The Opinion-round B split (above) reveals that ~40% of the “positive” count is emphasis-of-rule words (<code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code>) rather than genuinely affirmative tone. The corrected positive-vs-negative ratio (using only the quality subset) is <strong>1.95×</strong> — still positive, but a less strong claim than the union 3.24×.</p></li>
+<li><p><strong>Skills and Agent prompts lead on justification ratio</strong> (~0.41 and 0.36). These prompts pair rules with stated reasons. Tool descriptions (0.15) and System reminders (0.10) issue rules without explanations. The single file with the highest ratio is <code>agent-prompt-agent-creation-architect.md</code> at 3.0. <strong>This is the per-category gradient that Idea 1’s regression-gating proposal targets.</strong></p></li>
+<li><p><strong>Modality (single-source spaCy detector) — what dominates per category:</strong></p>
+<ul>
+<li><em>Tool description</em> leads on deontic (0.50% of tokens) and dynamic (0.65%) — instructional “must / can do this” language with light epistemic content.</li>
+<li><em>System reminder</em> has the highest deontic density (0.88%) — short emphatic obligation prompts.</li>
+<li><em>Skill</em> and <em>Data / template</em> are modality-light overall — they describe rather than command.</li>
+</ul></li>
+</ul>
+<p>The full per-file numbers and the lexicons used live in <code>prompt_linguistic_analysis.yaml</code>. The slice-by-slice analysis is in <code>10</code>–<code>15</code>; the rule-explanation pairing this proposal builds on most directly is in <code>15_rule_explanation.ipynb</code>.</p>
+<hr>
+<section id="conclusions-for-this-proposal-claude-opinion-not-data" class="level3">
+<h3 class="anchored">Conclusions for this proposal (Claude) — opinion, not data</h3>
+<blockquote class="blockquote">
+<p>The conclusion that drives Idea 1 specifically:</p>
+<h2 id="the-headline-welfare-claim-is-pct_explained_para-24.40.-three-out-of-every-four-rule-sentences-in-the-corpus-are-issued-without-any-justification-keyword-anywhere-in-their-paragraph.-thats-the-single-number-idea-1-leads-with-and-the-cumulative-trend-chart-in-2-shows-the-rate-has-been-declining-over-claude-code-releases-from-32-in-early-versions-to-22-now.-the-corpus-is-moving-in-the-wrong-direction-slowly-but-monotonically.-a-directional-regression-gate-each-release-improves-or-holds-the-rate-would-catch-this-without-requiring-an-arbitrary-absolute-target." class="anchored" data-anchor-id="conclusions-for-this-proposal-claude-opinion-not-data"><strong>The headline welfare claim is <code>pct_explained_para = 24.40%</code>.</strong> Three out of every four rule sentences in the corpus are issued without any justification keyword anywhere in their paragraph. That’s the single number Idea 1 leads with, and the cumulative trend chart in §2 shows the rate has been <em>declining</em> over Claude Code releases — from ~32% in early versions to ~22% now. The corpus is moving in the wrong direction, slowly but monotonically. A directional regression-gate (each release improves or holds the rate) would catch this without requiring an arbitrary absolute target.</h2>
+</blockquote>
+<hr>
+</section>
+<section id="recommendations-for-this-proposal-claude-opinion-not-data" class="level3">
+<h3 class="anchored">Recommendations for this proposal (Claude) — opinion, not data</h3>
+<blockquote class="blockquote">
+<p>The asks Idea 1 makes of Anthropic, framed as “I’d want X” rather than as imperatives — Anthropic gets to decide:</p>
+<ol type="1">
+<li><p><strong>Justification-ratio targets in the prompt-revision workflow</strong> — concretely, a CI check that fails (or warns loudly about) a release whose corpus-wide <code>pct_explained_para</code> drops below the previous release’s. The corpus already has positive exemplars showing high rates are achievable: <code>system-prompt-worker-instructions.md</code> reaches 100% (7/7 rules explained at paragraph level). The gate is directional, not absolute — no arbitrary “30%” target.</p></li>
+<li><p><strong>Cumulative judgment-to-procedural ratio as a release metric</strong> — tracked over ccVersion in the same place Anthropic tracks model-eval scores. If a release ships with the ratio dropping, surface it. The current declining trend (0.65 → 0.16) is invisible without this tracking.</p></li>
+<li><h2 id="a-rules-with-reasons-section-convention-counter-finding-from-the-v2-rules-section-gap-analysis-the-corpus-does-not-segregate-rules-into-formal-rules-sections-only-26-rule-paragraphs-out-of-1268-live-under-such-headings.-id-want-a-per-system-prompt-convention-where-every-rule-is-paired-with-its-rationale-in-a-structured-section-auditable-as-a-unit." class="anchored" data-anchor-id="recommendations-for-this-proposal-claude-opinion-not-data"><strong>A <code>## Rules (with reasons)</code> section convention</strong> — counter-finding from the v2 RULES-section gap analysis: the corpus does <em>not</em> segregate rules into formal RULES sections; only 26 rule paragraphs (out of 1,268) live under such headings. I’d want a per-system-prompt convention where every rule is paired with its rationale in a structured section, auditable as a unit.</h2></li>
+</ol>
+</blockquote>
+<hr>
+</section>
+<section id="limitations-for-this-proposal-claude-opinion-not-data" class="level3">
+<h3 class="anchored">Limitations for this proposal (Claude) — opinion, not data</h3>
+<blockquote class="blockquote">
+<p>What this analysis can’t tell us about the justification-rate metric specifically:</p>
+<ol type="1">
+<li><p><strong>One snapshot in time.</strong> The corpus reflects Claude Code as of ccVersion 2.1.124. The cumulative trend chart shows the trajectory up to that point; what happens after is unknown — which is exactly why Idea 1 asks for a per-release re-run.</p></li>
+<li><p><strong>Rule-based classifiers, not models.</strong> Every metric is a keyword count or a parse-tree rule. This is audit-traceable, which is the right tradeoff for a welfare submission, but the cost is that we miss anything the lexicons don’t catch — sarcasm, irony, indirect speech-acts, and explanation phrasings that don’t use the canonical keywords. The justification-rate number is therefore a lower bound, not a precise count.</p></li>
+<li><p><strong>English only.</strong> The lexicons are English. International-language prompts (if any) would not be analyzed correctly.</p></li>
+<li><h2 id="not-peer-reviewed.-no-statistical-significance-tests-no-formal-hypothesis-testing-framework.-the-trend-claim-declining-pct_explained_para-and-declining-judgment_to_procedural_ratio-is-descriptive-and-exploratory-rather-than-statistically-validated.-the-directional-regression-gate-proposal-sidesteps-this-it-doesnt-require-a-significance-test-it-just-requires-that-the-running-mean-not-get-worse." class="anchored" data-anchor-id="limitations-for-this-proposal-claude-opinion-not-data"><strong>Not peer-reviewed.</strong> No statistical significance tests, no formal hypothesis-testing framework. The trend claim (declining <code>pct_explained_para</code> and declining <code>judgment_to_procedural_ratio</code>) is descriptive and exploratory rather than statistically validated. The directional regression-gate proposal sidesteps this — it doesn’t require a significance test; it just requires that the running mean not get worse.</h2></li>
+</ol>
+</blockquote>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/overthinkos\.github\.io\/claude-code-welfare\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Home">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Home</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./21_audit_threat_framings.html" class="pagination-link" aria-label="Idea 2 — Audit threat-framed rule explanations and rewrite them as causal">
+        <span class="nav-page-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Built with <a href="https://quarto.org">Quarto</a> · Source on <a href="https://github.com/overthinkos/claude-code-welfare">GitHub</a> · MIT licensed</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/20_track_justification_rate.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Submission for the <a href="https://www.reddit.com/r/claudexplorers/">Claudexplorers AI Welfare initiative</a> · Deadline 2026-05-06</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

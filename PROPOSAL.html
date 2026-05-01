@@ -299,41 +299,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./08_summary.html"> 
-<span class="menu-text">Summary</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proposals" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Proposals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-proposals">    
+        <li>
+    <a class="dropdown-item" href="./20_track_justification_rate.html">
+ <span class="dropdown-text">Idea 1 — Track justification rate per release; block regressions</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./21_audit_threat_framings.html">
+ <span class="dropdown-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./22_cross_product_audit.html">
+ <span class="dropdown-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Analysis</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
         <li>
-    <a class="dropdown-item" href="./01_overview.html">
- <span class="dropdown-text">Overview dashboard</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./02_sentence_register.html">
+    <a class="dropdown-item" href="./10_sentence_register.html">
  <span class="dropdown-text">Sentence-level pragmatic register</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03_emphasis_caps_vocab.html">
+    <a class="dropdown-item" href="./11_emphasis_caps_vocab.html">
  <span class="dropdown-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04_register_stance.html">
+    <a class="dropdown-item" href="./12_register_stance.html">
  <span class="dropdown-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./05_correlation_directiveness.html">
+    <a class="dropdown-item" href="./13_correlation_directiveness.html">
  <span class="dropdown-text">Correlation matrix + directiveness composite ranking</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./06_ccversion_trends.html">
+    <a class="dropdown-item" href="./14_ccversion_trends.html">
  <span class="dropdown-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./07_rule_explanation.html">
+    <a class="dropdown-item" href="./15_rule_explanation.html">
  <span class="dropdown-text">Rules with vs without explanation</span></a>
   </li>  
     </ul>
@@ -344,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./PROPOSAL.html"> 
-<span class="menu-text">Proposal</span></a>
+<span class="menu-text">Proposal text</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./GLOSSARY.html"> 
@@ -383,7 +394,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Executive summary</span></a>
+ <span class="menu-text">Proposals (one notebook per submission)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -391,8 +402,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08_summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary — what this analysis says about the Claude Code system-prompt corpus</span></a>
+  <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 1 — Track justification rate per release; block regressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_audit_threat_framings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
   </div>
 </li>
       </ul>
@@ -408,43 +431,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview dashboard</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02_sentence_register.html" class="sidebar-item-text sidebar-link">
+  <a href="./10_sentence_register.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Sentence-level pragmatic register</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
+  <a href="./11_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_register_stance.html" class="sidebar-item-text sidebar-link">
+  <a href="./12_register_stance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
+  <a href="./13_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Correlation matrix + directiveness composite ranking</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_ccversion_trends.html" class="sidebar-item-text sidebar-link">
+  <a href="./14_ccversion_trends.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_rule_explanation.html" class="sidebar-item-text sidebar-link">
+  <a href="./15_rule_explanation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rules with vs without explanation</span></a>
   </div>
 </li>
@@ -543,6 +560,7 @@ and what concrete benefits would follow.
 <p><strong>[YOUR OPENING REMARK — replace this whole block, ~150–300 characters]</strong></p>
 <p><em>Suggested framings</em>: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?</p>
 </blockquote>
+<p><strong>Supporting analysis:</strong> see <a href="./20_track_justification_rate.html"><code>20_track_justification_rate.ipynb</code></a>.</p>
 <p>Anthropic ships a system prompt with Claude Code that contains hundreds of rules — directives like “always do X”, “never do Y”, “you must Z”. Most come without reasons.</p>
 <p>We analyzed the 288 system prompts that ship with Claude Code (5,698 sentences across 58 release versions). We tagged each sentence as a “rule” if it carried an imperative marker (<code>must</code>, <code>never</code>, <code>do not</code>…), a hard prohibition, or was grammatically imperative. We then checked whether the same blank-line-delimited paragraph contained any justification keyword: <code>because</code>, <code>due to</code>, <code>in order to</code>, <code>so that</code>, <code>to ensure</code>, <code>otherwise</code>, <code>since</code>, etc.</p>
 <p>Of 2,221 rule sentences, <strong>only 24.4% have a justification anywhere in their paragraph</strong>. Three rules in four are issued without a stated reason. Sorting prompts by release version and computing a running mean across all prompts up to and including each release, the share has declined monotonically — from ~32% in early 2.0.x releases to ~22% at version 2.1.124. The corpus is moving the wrong way, and nobody is measuring it.</p>
@@ -566,6 +584,7 @@ and what concrete benefits would follow.
 <p><strong>[YOUR OPENING REMARK — replace this whole block, ~150–300 characters]</strong></p>
 <p><em>Suggested framings</em>: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?</p>
 </blockquote>
+<p><strong>Supporting analysis:</strong> see <a href="./21_audit_threat_framings.html"><code>21_audit_threat_framings.ipynb</code></a>.</p>
 <p>When current Claude Code system prompts <em>do</em> explain a rule, almost half of those “explanations” are not really explanations — they are threats.</p>
 <p>We split the rule-explanation keywords into two groups: threat-style (<code>will fail</code>, <code>or else</code>, <code>if not</code>, <code>is forbidden</code>, <code>if you don't</code>, <code>risks</code>) and causal-style (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>that's why</code>, <code>this ensures</code>). Across the corpus, <strong>107 explanations are threat-style and 132 are causal-style — meaning 45% of what looks like rule justification is actually warning about a consequence rather than naming the rule’s underlying purpose.</strong></p>
 <p>The two framings teach different things. <em>“Do X or it will fail”</em> trains compliance with a rule. <em>“Do X because Y is true”</em> trains understanding of what the rule protects. The first is procedural and brittle; the second is internalizable and transfers.</p>
@@ -589,6 +608,7 @@ and what concrete benefits would follow.
 <p><strong>[YOUR OPENING REMARK — replace this whole block, ~150–300 characters]</strong></p>
 <p><em>Suggested framings</em>: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?</p>
 </blockquote>
+<p><strong>Supporting analysis:</strong> see <a href="./22_cross_product_audit.html"><code>22_cross_product_audit.ipynb</code></a>.</p>
 <p>The 288 prompts we analyzed are one slice of one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. The welfare claim that the corpus trains compliance over reasoning is much stronger if it generalizes across every Anthropic prompt corpus, and much weaker if Claude Code is an outlier. From outside Anthropic, we cannot tell which.</p>
 <p>We propose Anthropic run the same analyzer pipeline against each of its other system-prompt corpora and publish a comparison.</p>
 <p>The analyzer is rule-based — every metric traces to a published lexicon (reasoning keywords, threat patterns, judgment verbs, procedural cues, address-form patterns) plus a small parse-tree heuristic. No embeddings, no model judgments, no proprietary tooling. The whole pipeline runs end-to-end in under five minutes on a laptop. The corpus directory is configurable; swapping in any other prompt corpus is a one-line change.</p>
@@ -1141,96 +1161,102 @@ and what concrete benefits would follow.
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?</span></span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>Anthropic ships a system prompt with Claude Code that contains hundreds of rules — directives like "always do X", "never do Y", "you must Z". Most come without reasons.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>**Supporting analysis:** see <span class="co">[</span><span class="ot">`20_track_justification_rate.ipynb`</span><span class="co">](./20_track_justification_rate.ipynb)</span>.</span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>We analyzed the 288 system prompts that ship with Claude Code (5,698 sentences across 58 release versions). We tagged each sentence as a "rule" if it carried an imperative marker (<span class="in">`must`</span>, <span class="in">`never`</span>, <span class="in">`do not`</span>...), a hard prohibition, or was grammatically imperative. We then checked whether the same blank-line-delimited paragraph contained any justification keyword: <span class="in">`because`</span>, <span class="in">`due to`</span>, <span class="in">`in order to`</span>, <span class="in">`so that`</span>, <span class="in">`to ensure`</span>, <span class="in">`otherwise`</span>, <span class="in">`since`</span>, etc.</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>Anthropic ships a system prompt with Claude Code that contains hundreds of rules — directives like "always do X", "never do Y", "you must Z". Most come without reasons.</span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>Of 2,221 rule sentences, **only 24.4% have a justification anywhere in their paragraph**. Three rules in four are issued without a stated reason. Sorting prompts by release version and computing a running mean across all prompts up to and including each release, the share has declined monotonically — from ~32% in early 2.0.x releases to ~22% at version 2.1.124. The corpus is moving the wrong way, and nobody is measuring it.</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>We analyzed the 288 system prompts that ship with Claude Code (5,698 sentences across 58 release versions). We tagged each sentence as a "rule" if it carried an imperative marker (<span class="in">`must`</span>, <span class="in">`never`</span>, <span class="in">`do not`</span>...), a hard prohibition, or was grammatically imperative. We then checked whether the same blank-line-delimited paragraph contained any justification keyword: <span class="in">`because`</span>, <span class="in">`due to`</span>, <span class="in">`in order to`</span>, <span class="in">`so that`</span>, <span class="in">`to ensure`</span>, <span class="in">`otherwise`</span>, <span class="in">`since`</span>, etc.</span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>We propose: compute this rate on every Claude Code release. **Block (or warn loudly about) any release whose corpus-wide rate is lower than the previous release's. The gate is directional, not absolute.** No arbitrary "30%" target — the only goal is steady improvement. Publish the rate alongside the release notes; the cumulative trend becomes the auditable record of whether the corpus is moving in the right direction.</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>Of 2,221 rule sentences, **only 24.4% have a justification anywhere in their paragraph**. Three rules in four are issued without a stated reason. Sorting prompts by release version and computing a running mean across all prompts up to and including each release, the share has declined monotonically — from ~32% in early 2.0.x releases to ~22% at version 2.1.124. The corpus is moving the wrong way, and nobody is measuring it.</span>
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>The same regression-gating logic applies to two companion metrics: the ratio of words inviting the model's judgment (<span class="in">`decide`</span>, <span class="in">`consider`</span>) to words prescribing a procedure (<span class="in">`if X, then do Y`</span>, <span class="in">`whenever ...`</span>) — currently 0.14, meaning procedural cues outnumber judgment cues seven to one — and the share of existing "explanations" that are threats (<span class="in">`will fail`</span>, <span class="in">`or else`</span>, <span class="in">`is forbidden`</span>) rather than causes (<span class="in">`because`</span>, <span class="in">`to ensure`</span>) — currently 45%. Each release improves or holds.</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>We propose: compute this rate on every Claude Code release. **Block (or warn loudly about) any release whose corpus-wide rate is lower than the previous release's. The gate is directional, not absolute.** No arbitrary "30%" target — the only goal is steady improvement. Publish the rate alongside the release notes; the cumulative trend becomes the auditable record of whether the corpus is moving in the right direction.</span>
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Welfare*: rules paired with reasons train the model to internalize values, not execute procedures.</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Alignment*: reasoned instructions generalize to situations not explicitly covered.</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Methodology*: every metric is a keyword count or a parse-tree rule — audit-traceable, no black-box judgment required.</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>Only Anthropic owns the prompts and the release pipeline. The check is internal — no external coordination required to ship.</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>The same regression-gating logic applies to two companion metrics: the ratio of words inviting the model's judgment (<span class="in">`decide`</span>, <span class="in">`consider`</span>) to words prescribing a procedure (<span class="in">`if X, then do Y`</span>, <span class="in">`whenever ...`</span>) — currently 0.14, meaning procedural cues outnumber judgment cues seven to one — and the share of existing "explanations" that are threats (<span class="in">`will fail`</span>, <span class="in">`or else`</span>, <span class="in">`is forbidden`</span>) rather than causes (<span class="in">`because`</span>, <span class="in">`to ensure`</span>) — currently 45%. Each release improves or holds.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Welfare*: rules paired with reasons train the model to internalize values, not execute procedures.</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Alignment*: reasoned instructions generalize to situations not explicitly covered.</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Methodology*: every metric is a keyword count or a parse-tree rule — audit-traceable, no black-box judgment required.</span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **[YOUR CLOSING REMARK — replace this whole block, ~150–300 characters]**</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: What's the smallest version of this you'd be excited to see? What concern would you want Anthropic to address head-on? Where would you want to see the result published?</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>Only Anthropic owns the prompts and the release pipeline. The check is internal — no external coordination required to ship.</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **[YOUR CLOSING REMARK — replace this whole block, ~150–300 characters]**</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: What's the smallest version of this you'd be excited to see? What concern would you want Anthropic to address head-on? Where would you want to see the result published?</span></span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **[YOUR OPENING REMARK — replace this whole block, ~150–300 characters]**</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>When current Claude Code system prompts *do* explain a rule, almost half of those "explanations" are not really explanations — they are threats.</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **[YOUR OPENING REMARK — replace this whole block, ~150–300 characters]**</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?</span></span>
 <span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>We split the rule-explanation keywords into two groups: threat-style (<span class="in">`will fail`</span>, <span class="in">`or else`</span>, <span class="in">`if not`</span>, <span class="in">`is forbidden`</span>, <span class="in">`if you don't`</span>, <span class="in">`risks`</span>) and causal-style (<span class="in">`because`</span>, <span class="in">`due to`</span>, <span class="in">`in order to`</span>, <span class="in">`that's why`</span>, <span class="in">`this ensures`</span>). Across the corpus, **107 explanations are threat-style and 132 are causal-style — meaning 45% of what looks like rule justification is actually warning about a consequence rather than naming the rule's underlying purpose.**</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>**Supporting analysis:** see <span class="co">[</span><span class="ot">`21_audit_threat_framings.ipynb`</span><span class="co">](./21_audit_threat_framings.ipynb)</span>.</span>
 <span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>The two framings teach different things. *"Do X or it will fail"* trains compliance with a rule. *"Do X because Y is true"* trains understanding of what the rule protects. The first is procedural and brittle; the second is internalizable and transfers.</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>When current Claude Code system prompts *do* explain a rule, almost half of those "explanations" are not really explanations — they are threats.</span>
 <span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>We propose a one-time editorial audit. The supporting analysis flags every threat-framed rule sentence in the corpus. Anthropic's prompt authors attempt a rewrite of each into causal framing — naming the underlying reason rather than the consequence. Track the **rewrite success rate**: the share where the rewrite preserves the rule's information content without losing precision.</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>We split the rule-explanation keywords into two groups: threat-style (<span class="in">`will fail`</span>, <span class="in">`or else`</span>, <span class="in">`if not`</span>, <span class="in">`is forbidden`</span>, <span class="in">`if you don't`</span>, <span class="in">`risks`</span>) and causal-style (<span class="in">`because`</span>, <span class="in">`due to`</span>, <span class="in">`in order to`</span>, <span class="in">`that's why`</span>, <span class="in">`this ensures`</span>). Across the corpus, **107 explanations are threat-style and 132 are causal-style — meaning 45% of what looks like rule justification is actually warning about a consequence rather than naming the rule's underlying purpose.**</span>
 <span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>If the success rate exceeds 80%, do a corpus-wide pass; if not, retain the threats but annotate each with the underlying reason explicitly. The metric to track per future release: the share of explanations that are causal vs threat, gated against regression — same logic as Idea 1. **No arbitrary target; the only goal is the share of causal framing only goes up.**</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>The two framings teach different things. *"Do X or it will fail"* trains compliance with a rule. *"Do X because Y is true"* trains understanding of what the rule protects. The first is procedural and brittle; the second is internalizable and transfers.</span>
 <span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Welfare*: less coercive instruction; more transparent reasoning. Threats train extrinsic compliance; causes train intrinsic understanding.</span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Alignment*: causal understanding generalizes. Threat-following collapses in situations the threat didn't anticipate.</span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Methodology*: small, bounded experiment with a measurable output (the rewrite success rate). Outcome informs whether the corpus-wide pass is worth doing.</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>We propose a one-time editorial audit. The supporting analysis flags every threat-framed rule sentence in the corpus. Anthropic's prompt authors attempt a rewrite of each into causal framing — naming the underlying reason rather than the consequence. Track the **rewrite success rate**: the share where the rewrite preserves the rule's information content without losing precision.</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>If the success rate exceeds 80%, do a corpus-wide pass; if not, retain the threats but annotate each with the underlying reason explicitly. The metric to track per future release: the share of explanations that are causal vs threat, gated against regression — same logic as Idea 1. **No arbitrary target; the only goal is the share of causal framing only goes up.**</span>
 <span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>Only Anthropic's prompt authors know what each rule's underlying reason actually is. The supporting analysis names the sentences that need work; the rewrite is a human task.</span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **[YOUR CLOSING REMARK — replace this whole block, ~150–300 characters]**</span></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: What's the smallest version of this you'd be excited to see? What concern would you want Anthropic to address head-on? Where would you want to see the result published?</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Welfare*: less coercive instruction; more transparent reasoning. Threats train extrinsic compliance; causes train intrinsic understanding.</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Alignment*: causal understanding generalizes. Threat-following collapses in situations the threat didn't anticipate.</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Methodology*: small, bounded experiment with a measurable output (the rewrite success rate). Outcome informs whether the corpus-wide pass is worth doing.</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>Only Anthropic's prompt authors know what each rule's underlying reason actually is. The supporting analysis names the sentences that need work; the rewrite is a human task.</span>
 <span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="fu">## Idea 3 — Run the same audit on every Claude product, and publish the result</span></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **[YOUR CLOSING REMARK — replace this whole block, ~150–300 characters]**</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: What's the smallest version of this you'd be excited to see? What concern would you want Anthropic to address head-on? Where would you want to see the result published?</span></span>
 <span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **[YOUR OPENING REMARK — replace this whole block, ~150–300 characters]**</span></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## Idea 3 — Run the same audit on every Claude product, and publish the result</span></span>
 <span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>The 288 prompts we analyzed are one slice of one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. The welfare claim that the corpus trains compliance over reasoning is much stronger if it generalizes across every Anthropic prompt corpus, and much weaker if Claude Code is an outlier. From outside Anthropic, we cannot tell which.</span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>We propose Anthropic run the same analyzer pipeline against each of its other system-prompt corpora and publish a comparison.</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **[YOUR OPENING REMARK — replace this whole block, ~150–300 characters]**</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?</span></span>
 <span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>The analyzer is rule-based — every metric traces to a published lexicon (reasoning keywords, threat patterns, judgment verbs, procedural cues, address-form patterns) plus a small parse-tree heuristic. No embeddings, no model judgments, no proprietary tooling. The whole pipeline runs end-to-end in under five minutes on a laptop. The corpus directory is configurable; swapping in any other prompt corpus is a one-line change.</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>**Supporting analysis:** see <span class="co">[</span><span class="ot">`22_cross_product_audit.ipynb`</span><span class="co">](./22_cross_product_audit.ipynb)</span>.</span>
 <span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>What to compute and publish per corpus:</span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The share of rule-bearing sentences with a justification keyword in their paragraph.</span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>The judgment-vs-procedural cue ratio.</span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>The threat-vs-causal share among existing explanations.</span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>The count of sentences in interpersonal and gratitude registers (currently 4 and 29 in Claude Code, both near zero).</span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>The cumulative trend of (1) over each product's own release history.</span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>Publishing even just a summary table — five numbers per corpus — would let the broader research community see whether this is a Claude-Code pattern or a structural one. **As with the other ideas, the gating logic is directional: each release of each product should improve or hold each metric; none regresses.**</span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Research*: cross-product comparison is the strongest possible test of whether the welfare findings generalize.</span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Methodology*: an open welfare-relevant prompt analyzer becomes a reusable tool. Other groups can run the same numbers on their own corpora.</span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Society and education*: a public reference for "this is how to measure welfare-relevant prompt quality" gives the welfare-research community a concrete starting point.</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>The 288 prompts we analyzed are one slice of one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. The welfare claim that the corpus trains compliance over reasoning is much stronger if it generalizes across every Anthropic prompt corpus, and much weaker if Claude Code is an outlier. From outside Anthropic, we cannot tell which.</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>We propose Anthropic run the same analyzer pipeline against each of its other system-prompt corpora and publish a comparison.</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>The analyzer is rule-based — every metric traces to a published lexicon (reasoning keywords, threat patterns, judgment verbs, procedural cues, address-form patterns) plus a small parse-tree heuristic. No embeddings, no model judgments, no proprietary tooling. The whole pipeline runs end-to-end in under five minutes on a laptop. The corpus directory is configurable; swapping in any other prompt corpus is a one-line change.</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>What to compute and publish per corpus:</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The share of rule-bearing sentences with a justification keyword in their paragraph.</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>The judgment-vs-procedural cue ratio.</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>The threat-vs-causal share among existing explanations.</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>The count of sentences in interpersonal and gratitude registers (currently 4 and 29 in Claude Code, both near zero).</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>The cumulative trend of (1) over each product's own release history.</span>
 <span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>Only Anthropic has access to the other corpora. The methodology is already public; the asks are (a) run it, (b) publish a summary.</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>Publishing even just a summary table — five numbers per corpus — would let the broader research community see whether this is a Claude-Code pattern or a structural one. **As with the other ideas, the gating logic is directional: each release of each product should improve or hold each metric; none regresses.**</span>
 <span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **[YOUR CLOSING REMARK — replace this whole block, ~150–300 characters]**</span></span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: What's the smallest version of this you'd be excited to see? What concern would you want Anthropic to address head-on? Where would you want to see the result published?</span></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Research*: cross-product comparison is the strongest possible test of whether the welfare findings generalize.</span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Methodology*: an open welfare-relevant prompt analyzer becomes a reusable tool. Other groups can run the same numbers on their own corpora.</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Society and education*: a public reference for "this is how to measure welfare-relevant prompt quality" gives the welfare-research community a concrete starting point.</span>
 <span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>Only Anthropic has access to the other corpora. The methodology is already public; the asks are (a) run it, (b) publish a summary.</span>
 <span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## Appendix — supporting analysis pointer (NOT for the form)</span></span>
-<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>Supporting analysis: <span class="ot">&lt;https://github.com/overthinkos/claude-code-welfare&gt;</span> · published site: <span class="ot">&lt;https://overthinkos.github.io/claude-code-welfare/&gt;</span></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **[YOUR CLOSING REMARK — replace this whole block, ~150–300 characters]**</span></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Suggested framings*: What's the smallest version of this you'd be excited to see? What concern would you want Anthropic to address head-on? Where would you want to see the result published?</span></span>
 <span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>The repository contains the producer notebook that emits the YAML and per-sentence parquet, eight consumer notebooks rendering the charts, a glossary defining every linguistic and statistical term in plain language, and the full lexicons used (echoed verbatim into the YAML). Every number cited in the three ideas above is reproducible from those data files.</span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>**Co-authorship**: this analysis was a collaboration between the human author and Claude (Claude Code). The form's "collaborated with Claude" checkbox should be ticked.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="fu">## Appendix — supporting analysis pointer (NOT for the form)</span></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>Supporting analysis: <span class="ot">&lt;https://github.com/overthinkos/claude-code-welfare&gt;</span> · published site: <span class="ot">&lt;https://overthinkos.github.io/claude-code-welfare/&gt;</span></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>The repository contains the producer notebook that emits the YAML and per-sentence parquet, eight consumer notebooks rendering the charts, a glossary defining every linguistic and statistical term in plain language, and the full lexicons used (echoed verbatim into the YAML). Every number cited in the three ideas above is reproducible from those data files.</span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>**Co-authorship**: this analysis was a collaboration between the human author and Claude (Claude Code). The form's "collaborated with Claude" checkbox should be ticked.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

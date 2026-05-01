@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./PROPOSAL.html" rel="next">
-<link href="./07_rule_explanation.html" rel="prev">
+<link href="./15_rule_explanation.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -303,41 +303,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./08_summary.html"> 
-<span class="menu-text">Summary</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proposals" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Proposals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-proposals">    
+        <li>
+    <a class="dropdown-item" href="./20_track_justification_rate.html">
+ <span class="dropdown-text">Idea 1 — Track justification rate per release; block regressions</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./21_audit_threat_framings.html">
+ <span class="dropdown-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./22_cross_product_audit.html">
+ <span class="dropdown-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Analysis</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
         <li>
-    <a class="dropdown-item" href="./01_overview.html">
- <span class="dropdown-text">Overview dashboard</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./02_sentence_register.html">
+    <a class="dropdown-item" href="./10_sentence_register.html">
  <span class="dropdown-text">Sentence-level pragmatic register</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03_emphasis_caps_vocab.html">
+    <a class="dropdown-item" href="./11_emphasis_caps_vocab.html">
  <span class="dropdown-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04_register_stance.html">
+    <a class="dropdown-item" href="./12_register_stance.html">
  <span class="dropdown-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./05_correlation_directiveness.html">
+    <a class="dropdown-item" href="./13_correlation_directiveness.html">
  <span class="dropdown-text">Correlation matrix + directiveness composite ranking</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./06_ccversion_trends.html">
+    <a class="dropdown-item" href="./14_ccversion_trends.html">
  <span class="dropdown-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./07_rule_explanation.html">
+    <a class="dropdown-item" href="./15_rule_explanation.html">
  <span class="dropdown-text">Rules with vs without explanation</span></a>
   </li>  
     </ul>
@@ -348,7 +359,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./PROPOSAL.html"> 
-<span class="menu-text">Proposal</span></a>
+<span class="menu-text">Proposal text</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./GLOSSARY.html"> 
@@ -387,7 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Executive summary</span></a>
+ <span class="menu-text">Proposals (one notebook per submission)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -395,8 +406,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08_summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary — what this analysis says about the Claude Code system-prompt corpus</span></a>
+  <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 1 — Track justification rate per release; block regressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_audit_threat_framings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
   </div>
 </li>
       </ul>
@@ -412,43 +435,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview dashboard</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02_sentence_register.html" class="sidebar-item-text sidebar-link">
+  <a href="./10_sentence_register.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Sentence-level pragmatic register</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
+  <a href="./11_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_register_stance.html" class="sidebar-item-text sidebar-link">
+  <a href="./12_register_stance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
+  <a href="./13_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Correlation matrix + directiveness composite ranking</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_ccversion_trends.html" class="sidebar-item-text sidebar-link">
+  <a href="./14_ccversion_trends.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_rule_explanation.html" class="sidebar-item-text sidebar-link">
+  <a href="./15_rule_explanation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rules with vs without explanation</span></a>
   </div>
 </li>
@@ -550,7 +567,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p><strong>For laypersons / welfare-submission readers</strong>: every linguistic and statistical term used in this notebook (<code>mood</code>, <code>register</code>, <code>stance</code>, <code>modality</code>, <code>TTR</code>, <code>F-score</code>, <code>dependency depth</code>, <code>deontic</code>, <code>dialogic</code>, <code>pragmatic register</code>, etc.) is defined in <a href="./GLOSSARY.html"><code>GLOSSARY.md</code></a> at the repo root. Plain-language gloss first, precise term second.</p>
 </blockquote>
-<p>The corresponding <strong>consumer</strong> notebooks read the YAML and render charts:</p>
+<p>The corresponding consumer notebooks read the YAML (and, where noted, the parquet) and render charts. They split into a <strong>proposal tier</strong> (<code>20</code>–<code>22</code>, one per Claudexplorers form submission) and an <strong>analysis tier</strong> (<code>10</code>–<code>15</code>, one per slice):</p>
+<p><strong>Proposal tier — <code>20</code>–<code>22</code></strong></p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -564,31 +582,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>01_overview.ipynb</code></td>
-<td>Linked dashboard, modality grouped bar, headline findings</td>
+<td><code>20_track_justification_rate.ipynb</code></td>
+<td>Idea 1 supporting analysis + executive-summary entry point (12 corpus-wide numbers, the headline trend chart, per-file dashboard)</td>
 </tr>
 <tr class="even">
-<td><code>02_sentence_register.ipynb</code></td>
+<td><code>21_audit_threat_framings.ipynb</code></td>
+<td>Idea 2 supporting analysis (threat-vs-causal split, paired audit-candidates / rewrite-templates, forensic sentence sample)</td>
+</tr>
+<tr class="odd">
+<td><code>22_cross_product_audit.ipynb</code></td>
+<td>Idea 3 supporting analysis (methodology, lexicon transparency, mock cross-product comparison table)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Analysis tier — <code>10</code>–<code>15</code></strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>10_sentence_register.ipynb</code></td>
 <td>Per-sentence pragmatic register (6 classes, multi-label)</td>
 </tr>
-<tr class="odd">
-<td><code>03_emphasis_caps_vocab.ipynb</code></td>
+<tr class="even">
+<td><code>11_emphasis_caps_vocab.ipynb</code></td>
 <td>ALL CAPS, CAPS imperative, justification, full VOCAB heatmap</td>
 </tr>
-<tr class="even">
-<td><code>04_register_stance.ipynb</code></td>
+<tr class="odd">
+<td><code>12_register_stance.ipynb</code></td>
 <td>TTR / F-score quantitative + 5-class stance polarity heatmap</td>
 </tr>
-<tr class="odd">
-<td><code>05_correlation_directiveness.ipynb</code></td>
+<tr class="even">
+<td><code>13_correlation_directiveness.ipynb</code></td>
 <td>Cross-metric correlation matrix + composite directiveness ranking</td>
 </tr>
-<tr class="even">
-<td><code>06_ccversion_trends.ipynb</code></td>
+<tr class="odd">
+<td><code>14_ccversion_trends.ipynb</code></td>
 <td>All temporal (per-<code>ccVersion</code>) charts</td>
 </tr>
-<tr class="odd">
-<td><code>07_rule_explanation.ipynb</code></td>
+<tr class="even">
+<td><code>15_rule_explanation.ipynb</code></td>
 <td>Tier-1 paired rule/explanation analysis + Tier-3 welfare extensions</td>
 </tr>
 </tbody>
@@ -1160,7 +1201,7 @@ EPISTEMIC_LIGHT_VERBS: ['appear', 'appears', 'seem', 'seems']</code></pre>
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"2c8f0e7658e94401a3ab9b5f81ae5da8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"4b4bbf0253d24a86a69654cd17f84d7f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -1206,7 +1247,7 @@ agent-prompt-background-agent-state-classifier.md Agent Prompt: Background agent
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f4b2e4f392534b24b6744d99b604fed2","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"513115601cd24b098283d2202d520709","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -3200,7 +3241,7 @@ corpus pct_rule_paragraphs_explained_outside_rules_section: 16.41%</code></pre>
 </section>
 <section id="e.-per-sentence-forensic-inspection-records" class="level2">
 <h2 class="anchored" data-anchor-id="e.-per-sentence-forensic-inspection-records">8e. Per-sentence forensic-inspection records</h2>
-<p>Build a single DataFrame with one row per sentence — every classifier flag plus the raw text. Written alongside the YAML as <code>sentences_classified.parquet</code> (Opinion-round addition E). The YAML stays counts-only by design; the parquet is the audit-traceable per-sentence companion. Used by <code>07_rule_explanation.ipynb</code> to surface concrete sentences for forensic evidence; not loaded by other consumers.</p>
+<p>Build a single DataFrame with one row per sentence — every classifier flag plus the raw text. Written alongside the YAML as <code>sentences_classified.parquet</code> (Opinion-round addition E). The YAML stays counts-only by design; the parquet is the audit-traceable per-sentence companion. Used by <code>15_rule_explanation.ipynb</code> (forensic evidence from welfare-evidence files) and <code>21_audit_threat_framings.ipynb</code> (threat-framed sentence sample); not loaded by the other notebooks.</p>
 <div id="1c985479-19a2-490d-8442-9efc24cb0105" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Code</summary>
@@ -4649,7 +4690,7 @@ round-trip OK — Tier-1, Tier-3 v1, and Tier-3 v2 blocks all present in files[0
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./07_rule_explanation.html" class="pagination-link" aria-label="Rules with vs without explanation">
+      <a href="./15_rule_explanation.html" class="pagination-link" aria-label="Rules with vs without explanation">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Rules with vs without explanation</span>
       </a>          
   </div>
