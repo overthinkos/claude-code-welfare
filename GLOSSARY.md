@@ -130,11 +130,11 @@ Per-file ranking score: `rule_density × (1 − pct_explained_para/100)`. High =
 
 ### Positive-exemplar score
 
-The inverse of welfare-evidence: `rule_density × (pct_explained_para/100)`. High = "rule-saturated AND well-explained" — the "this is how to do it" cluster. Computed by `prompt_analysis.positive_exemplar_table` with default filters `min_n_sents=10` and `min_rule_n=5` to suppress trivial cases (`1/1 rules explained`). Used in `07_rule_explanation.ipynb` to surface the corpus's strongest positive exemplars alongside the welfare-evidence ranking — so the welfare submission can point Anthropic at concrete templates rather than only critiquing the negatives.
+The inverse of welfare-evidence: `rule_density × (pct_explained_para/100)`. High = "rule-saturated AND well-explained" — the "this is how to do it" cluster. Computed by `prompt_analysis.positive_exemplar_table` with default filters `min_n_sents=10` and `min_rule_n=5` to suppress trivial cases (`1/1 rules explained`). Used in `16_rule_explanation.ipynb` (and re-rendered as the paired-exemplar chart in `22_audit_threat_framings.ipynb`) to surface the corpus's strongest positive exemplars alongside the welfare-evidence ranking — so the welfare submission can point Anthropic at concrete templates rather than only critiquing the negatives.
 
 ### `sentences_classified.parquet`
 
-Per-sentence forensic-inspection artifact emitted alongside the YAML by `00_data_pipeline.ipynb`. ~5,698 rows × 20 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: `is_imperative`, `is_prohibition`, `is_rule`, `has_just_in_sent`, `paragraph_has_just`, `is_explained_para`, `has_threat`, `has_causal`, `mentions_claude`, `mentions_model`, `addressee`, `streak_position`. Load with `pd.read_parquet("sentences_classified.parquet")`. Used by `07_rule_explanation.ipynb` to surface concrete sentences from welfare-evidence files; not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.
+Per-sentence forensic-inspection artifact emitted alongside the YAML by `00_data_pipeline.ipynb`. ~5,698 rows × 20 columns. Schema includes the raw sentence text plus all the per-sentence classifier flags: `is_imperative`, `is_prohibition`, `is_rule`, `has_just_in_sent`, `paragraph_has_just`, `is_explained_para`, `has_threat`, `has_causal`, `mentions_claude`, `mentions_model`, `addressee`, `streak_position`. Load with `pd.read_parquet("sentences_classified.parquet")`. Used by `16_rule_explanation.ipynb` (forensic evidence from welfare-evidence files) and `22_audit_threat_framings.ipynb` (threat-framed sentence sample); not loaded by other consumers (which stay YAML-only by design). Lets a skeptical reader audit individual classifier decisions and lets PROPOSAL.md quote actual sentences as evidence rather than only aggregate counts.
 
 ---
 
@@ -288,7 +288,7 @@ The corpus has **58 distinct ccVersions** spanning roughly `2.0.14` (oldest) thr
 
 ### Snapshot semantics
 
-In `06_ccversion_trends.ipynb`, the metric value at version V is computed from **only the files marked with that exact version**. Early versions with one or two files swing wildly under this convention.
+In `15_ccversion_trends.ipynb`, the metric value at version V is computed from **only the files marked with that exact version**. Early versions with one or two files swing wildly under this convention.
 
 ### Cumulative semantics
 

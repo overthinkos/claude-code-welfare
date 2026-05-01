@@ -1,7 +1,8 @@
-"""Shared helpers for the consumer notebooks (01_overview, 02_sentence_register, ...).
+"""Shared helpers for the analysis-tier (11_*–16_*) and proposal-tier (21_*–23_*) notebooks.
 
 The data pipeline lives in `00_data_pipeline.ipynb`; it writes
-`prompt_linguistic_analysis.yaml`. Every consumer notebook starts with:
+`prompt_linguistic_analysis.yaml` and `sentences_classified.parquet`. Every
+consumer notebook starts with:
 
     from prompt_analysis import (load_yaml, build_alt_df, version_order,
                                   category_colors, SR_CLASS_COLORS,
@@ -231,7 +232,7 @@ def _zscore(s: pd.Series) -> pd.Series:
 def directiveness(alt_df: pd.DataFrame) -> pd.Series:
     """Composite directiveness z-score per file (extended formula).
 
-    Used by 05_correlation_directiveness and 06_ccversion_trends — kept
+    Used by 14_correlation_directiveness and 15_ccversion_trends — kept
     centrally so both notebooks compute the same composite.
 
     Higher = more authoritative. The three "soft" classes subtract because

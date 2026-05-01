@@ -2,7 +2,7 @@
 
 ## What this repo is
 
-Quantitative linguistic analysis of the **288-file `claude-code-system-prompts`** corpus (Piebald-AI's reverse-engineered collection of Claude Code's shipping prompts). Eight cells of spaCy + custom analyzers profile every prompt along nine dimensions (mood / register / stance / sentence_register / modality / vocab / ALL CAPS / CAPS imperative / justification), aggregate per-file + per-category + corpus-wide, and emit a single ~1 MiB YAML data file. Six consumer notebooks render Altair dashboards on top.
+Quantitative linguistic analysis of the **288-file `claude-code-system-prompts`** corpus (Piebald-AI's reverse-engineered collection of Claude Code's shipping prompts). Eight cells of spaCy + custom analyzers profile every prompt along nine dimensions (mood / register / stance / sentence_register / modality / vocab / ALL CAPS / CAPS imperative / justification), aggregate per-file + per-category + corpus-wide, and emit a single ~1 MiB YAML data file. Six **analysis-tier** notebooks (`11`–`16`) render slice-by-slice Altair dashboards on top; three **proposal-tier** notebooks (`21`–`23`), one per Claudexplorers submission, distill the analysis into supporting evidence for the three ideas in `PROPOSAL.md`.
 
 This analysis is the empirical foundation for a **Claude Explorer AI Welfare submission** titled **"Claude Code should encourage reasoning over blind obedience"**, intended for the Claudexplorers community feedback initiative collecting proposals for Kyle Fish (Anthropic's Model Welfare Lead). See [§ 8](#8-the-claude-explorer-submission) below for the framing.
 
@@ -23,16 +23,16 @@ Required Python deps (already in the project's JupyterLab kernel):
 
 `spacy>=3.8` · `en_core_web_sm` 3.8.0 · `pandas` · `pyyaml` · `pyarrow` · `altair>=6` · `vl-convert-python` · `vega_datasets` · `python-frontmatter` · `tqdm`
 
-(`pyarrow` is for the `sentences_classified.parquet` artifact emitted by `00_data_pipeline.ipynb` alongside the YAML. `vl-convert-python` is the Altair PNG export backend used by `08_summary.ipynb` to write the headline charts under `figures/`.)
+(`pyarrow` is for the `sentences_classified.parquet` artifact emitted by `00_data_pipeline.ipynb` alongside the YAML. `vl-convert-python` is the Altair PNG export backend used by `21_track_justification_rate.ipynb` and `22_audit_threat_framings.ipynb` to write the headline charts under `figures/`.)
 
 **Run order** (always producer first):
 
 1. Open `00_data_pipeline.ipynb` in JupyterLab → Run All. Produces `prompt_linguistic_analysis.yaml` (~1.8 MiB, 288 files × per-file metric tree + lexicons + corpus + per-category) AND `sentences_classified.parquet` (~5,698 rows, per-sentence forensic-inspection table).
-2. Open any consumer notebook (`01_*` … `08_*`). Each loads the YAML (and optionally the parquet, in `07_rule_explanation.ipynb` and `08_summary.ipynb`) and renders charts. Consumers do **not** re-run spaCy — they're pure data viewers. Start with `08_summary.ipynb` for the executive-summary view; the other consumers each focus on one slice of the analysis.
+2. Open any analysis-tier notebook (`11_*` … `16_*`) or proposal-tier notebook (`21_*` … `23_*`). Each loads the YAML (and optionally the parquet, in `16_rule_explanation.ipynb` and `22_audit_threat_framings.ipynb`) and renders charts. They do **not** re-run spaCy — they're pure data viewers. Start with `21_track_justification_rate.ipynb` for the executive-summary view (it doubles as the supporting analysis for Idea 1); the analysis tier focuses on one slice each.
 
 ---
 
-## 2. Architecture (producer / consumer split)
+## 2. Architecture (producer / analysis tier / proposal tier)
 
 ```
  claude-code-system-prompts/ (git submodule)
@@ -44,26 +44,36 @@ Required Python deps (already in the project's JupyterLab kernel):
  └──────────────────────────────────────────────┘
  │
  ▼
- prompt_linguistic_analysis.yaml (~1.4 MiB cache)
+ prompt_linguistic_analysis.yaml (~1.8 MiB cache) + sentences_classified.parquet (~395 KiB)
  │
- ┌─────────┬─────────┬─┴───────┬─────────┬─────────┬─────────┬─────────┐
- ▼ ▼ ▼ ▼ ▼ ▼ ▼ ▼
- 01 02 03 04 05 06 07 08
- overview sent_reg emphasis reg_stance corr_dir ccVer rule_expl summary
+ ├─────── Proposal tier (one notebook per Claudexplorers submission) ───────┐
+ │       21_track_justification_rate     22_audit_threat_framings           │
+ │       23_cross_product_audit                                             │
+ │                                                                          │
+ └─────── Analysis tier (one notebook per slice) ───────────────────────────┐
+         11_sentence_register   12_emphasis_caps_vocab   13_register_stance  │
+         14_correlation_directiveness   15_ccversion_trends                  │
+         16_rule_explanation                                                 │
 ```
 
-### Consumer notebooks (each ~5–8 cells, all charts in Altair)
+### Proposal tier — `21`–`23` (one notebook per Claudexplorers form submission)
+
+| File | Inheriting from | Content |
+|---|---|---|
+| `21_track_justification_rate.ipynb` | Idea 1 in PROPOSAL.md + executive-summary content | **Entry-point notebook.** Headline-data block (12 corpus-level numbers, source-tagged to the analysis tier), cumulative `judgment_to_procedural_ratio` over ccVersion (the single most-important chart), per-file linked dashboard (scatter ↔ category bars), per-category positive-evaluative split + modality breakdowns, findings, and per-proposal conclusions / recommendations / limitations. Use this as the welfare-thesis overview |
+| `22_audit_threat_framings.ipynb` | Idea 2 in PROPOSAL.md | Threat-share data, per-category `threat_share` chart, paired top-10 (re-framed: welfare-evidence files = audit candidates; positive exemplars = rewrite templates), forensic-sample sentences from `sentences_classified.parquet`, per-proposal conclusions / recommendations / limitations |
+| `23_cross_product_audit.ipynb` | Idea 3 in PROPOSAL.md | Methodology summary (the five metrics to publish per corpus), lexicon-transparency notes, mock cross-product comparison table (Claude Code row filled live; other corpora are placeholders), reproducibility note, per-proposal conclusions / recommendations / limitations |
+
+### Analysis tier — `11`–`16` (each ~5–13 cells, all charts in Altair)
 
 | File | Charts |
 |---|---|
-| `01_overview.ipynb` | Linked dashboard (per-file scatter ↔ per-category bars), modality grouped bar, headline findings markdown |
-| `02_sentence_register.ipynb` | 6-class pragmatic register profile (multi-label, near-zero classes deliberately preserved), per-file outliers (4-panel) |
-| `03_emphasis_caps_vocab.ipynb` | Emphasis 3-panel (ALL CAPS / CAPS imperative / justification), text outlier table, top tokens + 11-class VOCAB heatmap |
-| `04_register_stance.ipynb` | 5-class polarity-split stance heatmap + register heatmap + per-file justification box, TTR×F-score scatter, sent-len/dep-depth distributions |
-| `05_correlation_directiveness.ipynb` | 20-metric correlation matrix, top-25 directiveness ranking, per-word vs per-sentence comparison |
-| `06_ccversion_trends.ipynb` | ccVersion timeline (snapshot scatter), corpus-growth area chart, loudness/imperatives 4-panel small-multiples (snapshot + cumulative running mean), sentence-register 6-panel (snapshot + cumulative) |
-| `07_rule_explanation.ipynb` | Rule-pairing analysis: per-category bars, explained-vs-unexplained stacks, imperatives-vs-prohibitions split, density×explanation scatter, top-25 "loudest least-explained" welfare evidence ranking, cumulative `pct_explained_para` over ccVersion. Tier-3 v1: judgment-vs-procedural ratio, threat-vs-causal split, address-form mix, cumulative judgment-to-procedural trend. Tier-3 v2: imperative-streak counts + top-15 streak ranking, in-vs-outside RULES-section explanation gap. Refinement-round additions: positive-exemplar ranking, self-bias correlation check, parquet-based forensic-evidence sample |
-| `08_summary.ipynb` | Cross-cutting synthesis: headline-data block (12 corpus-level numbers), the single most-important chart (cumulative `judgment_to_procedural_ratio`), welfare-evidence + positive-exemplar paired top-10, final conclusions, recommendations to Anthropic, limitations. Standalone-runnable; the executive-summary entry point for PROPOSAL.md drafting |
+| `11_sentence_register.ipynb` | 6-class pragmatic register profile (multi-label, near-zero classes deliberately preserved), per-file outliers (4-panel) |
+| `12_emphasis_caps_vocab.ipynb` | Emphasis 3-panel (ALL CAPS / CAPS imperative / justification), text outlier table, top tokens + 11-class VOCAB heatmap |
+| `13_register_stance.ipynb` | 5-class polarity-split stance heatmap + register heatmap + per-file justification box, TTR×F-score scatter, sent-len/dep-depth distributions |
+| `14_correlation_directiveness.ipynb` | 20-metric correlation matrix, top-25 directiveness ranking, per-word vs per-sentence comparison |
+| `15_ccversion_trends.ipynb` | ccVersion timeline (snapshot scatter), corpus-growth area chart, loudness/imperatives 4-panel small-multiples (snapshot + cumulative running mean), sentence-register 6-panel (snapshot + cumulative) |
+| `16_rule_explanation.ipynb` | Rule-pairing analysis: per-category bars, explained-vs-unexplained stacks, imperatives-vs-prohibitions split, density×explanation scatter, top-25 "loudest least-explained" welfare evidence ranking, cumulative `pct_explained_para` over ccVersion. Tier-3 v1: judgment-vs-procedural ratio, threat-vs-causal split, address-form mix, cumulative judgment-to-procedural trend. Tier-3 v2: imperative-streak counts + top-15 streak ranking, in-vs-outside RULES-section explanation gap. Refinement-round additions: positive-exemplar ranking, self-bias correlation check, parquet-based forensic-evidence sample |
 
 ---
 
@@ -91,7 +101,7 @@ welfare_evidence_table(alt_df, top_n=25) # top-N "loudest, least-explained" file
 positive_exemplar_table(alt_df, top_n=25, min_n_sents=10, min_rule_n=5) # top-N "rules-with-reasons" exemplars (inverse welfare-evidence)
 ```
 
-**Per-sentence forensic-inspection artifact**: `sentences_classified.parquet` is emitted alongside the YAML. Load with `pd.read_parquet("sentences_classified.parquet")` for individual-sentence inspection (raw text + classifier flags). Schema documented in the producer cell that writes it. ~5,698 rows × 20 columns. Used by `07_rule_explanation.ipynb` for forensic evidence; other consumers stay YAML-only.
+**Per-sentence forensic-inspection artifact**: `sentences_classified.parquet` is emitted alongside the YAML. Load with `pd.read_parquet("sentences_classified.parquet")` for individual-sentence inspection (raw text + classifier flags). Schema documented in the producer cell that writes it. ~5,698 rows × 20 columns. Used by `16_rule_explanation.ipynb` (forensic evidence from welfare-evidence files) and `22_audit_threat_framings.ipynb` (threat-framed sentence sample); other notebooks stay YAML-only.
 
 **Opinion cells convention**: notebooks 00–07 contain markdown cells visually marked `### My perspective (Claude) — opinion, not data` or `### My wish for future versions of this analysis — methodology, not data` (with horizontal-rule frames + blockquoted bodies). These are interpretation, not measurement, and can be skipped for a pure-data read.
 
@@ -164,17 +174,24 @@ The MCP server is configured in `.mcp.json` at `http://localhost:8888/mcp` and e
 ```
 claude-prompts-analysis/
 ├── CLAUDE.md ← you are here
+├── README.md ← user-facing repo overview
+├── PROPOSAL.md ← Claudexplorers form-paste source (3 ideas, ≤3,000 chars each)
 ├── prompt_analysis.py ← shared module (load YAML, palettes, helpers)
-├── 00_data_pipeline.ipynb ← PRODUCER (~34 cells; runs spaCy + writes YAML)
-├── prompt_linguistic_analysis.yaml ← producer output (~1.04 MiB, the cache point)
-├── 01_overview.ipynb ← CONSUMER
-├── 02_sentence_register.ipynb ← CONSUMER
-├── 03_emphasis_caps_vocab.ipynb ← CONSUMER
-├── 04_register_stance.ipynb ← CONSUMER
-├── 05_correlation_directiveness.ipynb ← CONSUMER
-├── 06_ccversion_trends.ipynb ← CONSUMER
-├── 07_rule_explanation.ipynb ← CONSUMER (Tier-1 rule-pairing + Tier-3 welfare extensions)
-├── prompt_linguistic_analysis.ipynb ← original monolith (kept; safe to delete after the split is trusted)
+├── 00_data_pipeline.ipynb ← PRODUCER (~34 cells; runs spaCy + writes YAML and parquet)
+├── prompt_linguistic_analysis.yaml ← producer output (~1.8 MiB, the cache point)
+├── sentences_classified.parquet ← producer output (~395 KiB; per-sentence forensic table)
+├── 21_track_justification_rate.ipynb ← PROPOSAL TIER (Idea 1; doubles as executive summary)
+├── 22_audit_threat_framings.ipynb ← PROPOSAL TIER (Idea 2)
+├── 23_cross_product_audit.ipynb ← PROPOSAL TIER (Idea 3)
+├── 11_sentence_register.ipynb ← ANALYSIS TIER
+├── 12_emphasis_caps_vocab.ipynb ← ANALYSIS TIER
+├── 13_register_stance.ipynb ← ANALYSIS TIER
+├── 14_correlation_directiveness.ipynb ← ANALYSIS TIER
+├── 15_ccversion_trends.ipynb ← ANALYSIS TIER
+├── 16_rule_explanation.ipynb ← ANALYSIS TIER (Tier-1 rule-pairing + Tier-3 welfare extensions)
+├── GLOSSARY.md ← plain-English definitions of every linguistic/statistical term
+├── index.qmd, _quarto.yml ← Quarto site configuration
+├── figures/ ← exported PNGs (judgment_procedural_trend.png, welfare_evidence_pairing.png)
 ├── claude-code-system-prompts/ ← git submodule, the corpus (288.md files)
 │ ├── system-prompts/ *.md (288 files)
 │ └── tools/
@@ -239,7 +256,7 @@ The corpus submodule pulls from `https://github.com/Piebald-AI/claude-code-syste
 - **Positive-evaluative split** (the positive_evaluative split): the new `positive_evaluative_quality` (`good`, `optimal`, `recommended`, `safe`) and `positive_evaluative_emphasis` (`important`, `critical`, `essential`, `key`) lexicons split the union 483 positive-evaluative tokens into **290 quality + 193 emphasis**. The corrected positive-vs-negative ratio (quality only / negative=149) is **1.95×** — sharper than the original union 3.24× headline. ~40% of the "positive" count was emphasis-of-rule words masquerading as positive.
 - **Self-bias correlation** (the self-bias correlation check): Pearson r between `selfref_claude` and `rule_explained_para_pct` per file is **−0.027** (essentially uncorrelated, very slightly negative). r between `selfref_model` and `rule_explained_para_pct` is **+0.076** (essentially uncorrelated, slightly positive). The address-form preference (anthropomorphic naming → reasoning-inviting prose) is **NOT empirically supported** — a self-bias check that disconfirmed the hypothesis it was designed to test.
 - **Positive exemplars** (the positive-exemplar ranking): the inverse welfare-evidence ranking surfaces `system-prompt-worker-instructions.md` as the corpus's strongest exemplar (7 rules, 100% explained at paragraph level). Top-5 also includes `system-prompt-auto-mode.md`, `tool-description-bash-git-commit-and-pr-creation-instructions.md`, `agent-prompt-quick-pr-creation.md`, `system-prompt-fork-usage-guidelines.md`. These are the "this is how to do it" templates for PROPOSAL.md.
-- **Per-sentence forensic-inspection artifact** (the per-sentence parquet artifact): `sentences_classified.parquet` (~395 KB, 5,698 rows × 20 columns) emitted alongside the YAML by the producer notebook. Used by `07_rule_explanation.ipynb` for sentence-level forensic evidence; quotable in PROPOSAL.md.
+- **Per-sentence forensic-inspection artifact** (the per-sentence parquet artifact): `sentences_classified.parquet` (~395 KB, 5,698 rows × 20 columns) emitted alongside the YAML by the producer notebook. Used by `16_rule_explanation.ipynb` for sentence-level forensic evidence and by `22_audit_threat_framings.ipynb` for the threat-framed sentence sample; quotable in PROPOSAL.md.
 
 ---
 

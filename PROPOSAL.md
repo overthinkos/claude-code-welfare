@@ -40,6 +40,8 @@ and what concrete benefits would follow.
 >
 > *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?
 
+**Supporting analysis:** see [`21_track_justification_rate.ipynb`](./21_track_justification_rate.ipynb).
+
 Anthropic ships a system prompt with Claude Code that contains hundreds of rules — directives like "always do X", "never do Y", "you must Z". Most come without reasons.
 
 We analyzed the 288 system prompts that ship with Claude Code (5,698 sentences across 58 release versions). We tagged each sentence as a "rule" if it carried an imperative marker (`must`, `never`, `do not`...), a hard prohibition, or was grammatically imperative. We then checked whether the same blank-line-delimited paragraph contained any justification keyword: `because`, `due to`, `in order to`, `so that`, `to ensure`, `otherwise`, `since`, etc.
@@ -68,6 +70,8 @@ Only Anthropic owns the prompts and the release pipeline. The check is internal 
 >
 > *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?
 
+**Supporting analysis:** see [`22_audit_threat_framings.ipynb`](./22_audit_threat_framings.ipynb).
+
 When current Claude Code system prompts *do* explain a rule, almost half of those "explanations" are not really explanations — they are threats.
 
 We split the rule-explanation keywords into two groups: threat-style (`will fail`, `or else`, `if not`, `is forbidden`, `if you don't`, `risks`) and causal-style (`because`, `due to`, `in order to`, `that's why`, `this ensures`). Across the corpus, **107 explanations are threat-style and 132 are causal-style — meaning 45% of what looks like rule justification is actually warning about a consequence rather than naming the rule's underlying purpose.**
@@ -95,6 +99,8 @@ Only Anthropic's prompt authors know what each rule's underlying reason actually
 > **[YOUR OPENING REMARK — replace this whole block, ~150–300 characters]**
 >
 > *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?
+
+**Supporting analysis:** see [`23_cross_product_audit.ipynb`](./23_cross_product_audit.ipynb).
 
 The 288 prompts we analyzed are one slice of one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. The welfare claim that the corpus trains compliance over reasoning is much stronger if it generalizes across every Anthropic prompt corpus, and much weaker if Claude Code is an outlier. From outside Anthropic, we cannot tell which.
 
