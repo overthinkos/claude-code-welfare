@@ -40,7 +40,7 @@ and what concrete benefits would follow.
 >
 > *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?
 
-**Supporting analysis:** see [`21_track_justification_rate.ipynb`](./21_track_justification_rate.ipynb).
+**Supporting analysis:** see [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb).
 
 Anthropic ships a system prompt with Claude Code that contains hundreds of rules — directives like "always do X", "never do Y", "you must Z". Most come without reasons.
 
@@ -70,7 +70,7 @@ Only Anthropic owns the prompts and the release pipeline. The check is internal 
 >
 > *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?
 
-**Supporting analysis:** see [`22_audit_threat_framings.ipynb`](./22_audit_threat_framings.ipynb).
+**Supporting analysis:** see [`21_audit_threat_framings.ipynb`](./21_audit_threat_framings.ipynb).
 
 When current Claude Code system prompts *do* explain a rule, almost half of those "explanations" are not really explanations — they are threats.
 
@@ -100,7 +100,7 @@ Only Anthropic's prompt authors know what each rule's underlying reason actually
 >
 > *Suggested framings*: Why does this matter to you personally? What made you submit this through Claudexplorers rather than directly? What would change for you if Anthropic adopted this?
 
-**Supporting analysis:** see [`23_cross_product_audit.ipynb`](./23_cross_product_audit.ipynb).
+**Supporting analysis:** see [`22_cross_product_audit.ipynb`](./22_cross_product_audit.ipynb).
 
 The 288 prompts we analyzed are one slice of one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. The welfare claim that the corpus trains compliance over reasoning is much stronger if it generalizes across every Anthropic prompt corpus, and much weaker if Claude Code is an outlier. From outside Anthropic, we cannot tell which.
 

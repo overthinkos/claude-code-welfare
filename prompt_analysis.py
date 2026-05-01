@@ -232,7 +232,7 @@ def _zscore(s: pd.Series) -> pd.Series:
 def directiveness(alt_df: pd.DataFrame) -> pd.Series:
     """Composite directiveness z-score per file (extended formula).
 
-    Used by 14_correlation_directiveness and 15_ccversion_trends — kept
+    Used by 13_correlation_directiveness and 14_ccversion_trends — kept
     centrally so both notebooks compute the same composite.
 
     Higher = more authoritative. The three "soft" classes subtract because

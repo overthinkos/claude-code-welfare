@@ -11,7 +11,7 @@ format:
 ---
 
 ::: {.callout-tip appearance="simple" icon=false}
-**New here?** Skip straight to [**`21_track_justification_rate.ipynb`**](21_track_justification_rate.ipynb) — it's the entry-point notebook (twelve corpus-wide numbers, the headline trend chart, the per-file dashboard) and the supporting analysis for Idea 1 of the submission. The two companion proposal notebooks are [`22_audit_threat_framings.ipynb`](22_audit_threat_framings.ipynb) (Idea 2 — threat-vs-causal audit) and [`23_cross_product_audit.ipynb`](23_cross_product_audit.ipynb) (Idea 3 — cross-product comparison).
+**New here?** Skip straight to [**`20_track_justification_rate.ipynb`**](20_track_justification_rate.ipynb) — it's the entry-point notebook (twelve corpus-wide numbers, the headline trend chart, the per-file dashboard) and the supporting analysis for Idea 1 of the submission. The two companion proposal notebooks are [`21_audit_threat_framings.ipynb`](21_audit_threat_framings.ipynb) (Idea 2 — threat-vs-causal audit) and [`22_cross_product_audit.ipynb`](22_cross_product_audit.ipynb) (Idea 3 — cross-product comparison).
 :::
 
 ## What this is
@@ -31,17 +31,17 @@ Twelve corpus-level measurements, computed by `00_data_pipeline.ipynb` from the 
 | Metric                                              | Value                                                | Source notebook |
 | --------------------------------------------------- | ---------------------------------------------------- | --------------- |
 | Corpus size                                         | 288 files / 5,698 sentences / 58 ccVersions          | [00](00_data_pipeline.ipynb) |
-| Imperative-marker density                           | 0.80% of word tokens                                 | [21](21_track_justification_rate.ipynb) |
-| Imperative sentences                                | 30.89% of sentences                                  | [11](11_sentence_register.ipynb) |
-| **Appreciative sentences (whole corpus)**           | **4 / 5,698 (0.070%)**                               | [11](11_sentence_register.ipynb) |
-| **Apology markers (whole corpus)**                  | **3 in 288 files**                                   | [16](16_rule_explanation.ipynb) |
-| `pct_explained_para` (Tier-1 headline)              | 24.40% of rule sentences                             | [16](16_rule_explanation.ipynb) |
-| Rule paragraphs without any justification           | 83.53%                                               | [16](16_rule_explanation.ipynb) |
-| **`judgment_to_procedural_ratio`**                  | **0.140** (procedural cues 7.1× more frequent)       | [16](16_rule_explanation.ipynb) |
-| `threat_share` of explanations                      | 0.448 (107 threat / 132 causal)                      | [22](22_audit_threat_framings.ipynb) |
-| Positive-vs-negative ratio (corrected)              | 1.95× quality-only                                   | [21](21_track_justification_rate.ipynb) |
-| `pct_anthropomorphic` (Claude vs the model)         | 66.2% of named refs                                  | [16](16_rule_explanation.ipynb) |
-| Longest imperative streak                           | 12 sentences in one file                             | [16](16_rule_explanation.ipynb) |
+| Imperative-marker density                           | 0.80% of word tokens                                 | [20](20_track_justification_rate.ipynb) |
+| Imperative sentences                                | 30.89% of sentences                                  | [10](10_sentence_register.ipynb) |
+| **Appreciative sentences (whole corpus)**           | **4 / 5,698 (0.070%)**                               | [10](10_sentence_register.ipynb) |
+| **Apology markers (whole corpus)**                  | **3 in 288 files**                                   | [15](15_rule_explanation.ipynb) |
+| `pct_explained_para` (Tier-1 headline)              | 24.40% of rule sentences                             | [15](15_rule_explanation.ipynb) |
+| Rule paragraphs without any justification           | 83.53%                                               | [15](15_rule_explanation.ipynb) |
+| **`judgment_to_procedural_ratio`**                  | **0.140** (procedural cues 7.1× more frequent)       | [15](15_rule_explanation.ipynb) |
+| `threat_share` of explanations                      | 0.448 (107 threat / 132 causal)                      | [21](21_audit_threat_framings.ipynb) |
+| Positive-vs-negative ratio (corrected)              | 1.95× quality-only                                   | [20](20_track_justification_rate.ipynb) |
+| `pct_anthropomorphic` (Claude vs the model)         | 66.2% of named refs                                  | [15](15_rule_explanation.ipynb) |
+| Longest imperative streak                           | 12 sentences in one file                             | [15](15_rule_explanation.ipynb) |
 
 ## The single most-important chart
 
@@ -49,12 +49,12 @@ If you only look at one chart from this analysis, look at this one — the cumul
 
 ![Cumulative judgment-to-procedural ratio over ccVersion. Early releases peaked at ~0.65 (judgment-inviting language was a quarter as common as procedural cues); the corpus-wide running mean has monotonically declined to ~0.16 at the latest version on file.](figures/judgment_procedural_trend.png){fig-alt="Line chart showing the cumulative judgment-to-procedural ratio dropping from ~0.65 at ccVersion 2.1.30 to ~0.16 at ccVersion 2.1.124."}
 
-The interactive version (with hover tooltips on every release) lives in [`21_track_justification_rate.ipynb`](21_track_justification_rate.ipynb) §2.
+The interactive version (with hover tooltips on every release) lives in [`20_track_justification_rate.ipynb`](20_track_justification_rate.ipynb) §2.
 
 ## How to read this site
 
-- [**Proposal notebooks `21`–`23`**](21_track_justification_rate.ipynb) — one notebook per Claudexplorers submission. `21_track_justification_rate.ipynb` is the entry point (it doubles as the executive summary: twelve numbers, headline trend, per-file dashboard). `22_audit_threat_framings.ipynb` covers the threat-vs-causal audit. `23_cross_product_audit.ipynb` covers cross-product comparison.
-- [**Analysis notebooks `11`–`16`**](11_sentence_register.ipynb) — one notebook per slice of the analysis (sentence-register, emphasis, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing). Each is standalone.
+- [**Proposal notebooks `20`–`22`**](20_track_justification_rate.ipynb) — one notebook per Claudexplorers submission. `20_track_justification_rate.ipynb` is the entry point (it doubles as the executive summary: twelve numbers, headline trend, per-file dashboard). `21_audit_threat_framings.ipynb` covers the threat-vs-causal audit. `22_cross_product_audit.ipynb` covers cross-product comparison.
+- [**Analysis notebooks `10`–`15`**](10_sentence_register.ipynb) — one notebook per slice of the analysis (sentence-register, emphasis, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing). Each is standalone.
 - [**`00_data_pipeline.ipynb`**](00_data_pipeline.ipynb) — the producer. spaCy + custom analyzers turn 288 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 43 cells; included for reproducibility.
 - [**`PROPOSAL.md`**](PROPOSAL.md) — the three-idea ≤3,000-character pitch addressed to Anthropic (the form-paste source).
 - [**`GLOSSARY.md`**](GLOSSARY.md) — every linguistic and statistical term used anywhere on this site, defined in plain English.
@@ -74,4 +74,4 @@ This regenerates `prompt_linguistic_analysis.yaml` and `sentences_classified.par
 
 ## A note on authorship
 
-This analysis was built **collaboratively with Claude Code**, using Claude Code itself as the development tool. The submission form has a checkbox for that disclosure; it is ticked. The recursive frame — Claude analyzing the prompts that shape Claude — is intentional, and the [conclusions section](21_track_justification_rate.ipynb) of `21_track_justification_rate.ipynb` includes one hypothesis I held that the data falsified, reported honestly.
+This analysis was built **collaboratively with Claude Code**, using Claude Code itself as the development tool. The submission form has a checkbox for that disclosure; it is ticked. The recursive frame — Claude analyzing the prompts that shape Claude — is intentional, and the [conclusions section](20_track_justification_rate.ipynb) of `20_track_justification_rate.ipynb` includes one hypothesis I held that the data falsified, reported honestly.

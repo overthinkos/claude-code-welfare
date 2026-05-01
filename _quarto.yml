@@ -6,15 +6,15 @@ project:
   render:
     - index.qmd
     - 00_data_pipeline.ipynb
-    - 21_track_justification_rate.ipynb
-    - 22_audit_threat_framings.ipynb
-    - 23_cross_product_audit.ipynb
-    - 11_sentence_register.ipynb
-    - 12_emphasis_caps_vocab.ipynb
-    - 13_register_stance.ipynb
-    - 14_correlation_directiveness.ipynb
-    - 15_ccversion_trends.ipynb
-    - 16_rule_explanation.ipynb
+    - 20_track_justification_rate.ipynb
+    - 21_audit_threat_framings.ipynb
+    - 22_cross_product_audit.ipynb
+    - 10_sentence_register.ipynb
+    - 11_emphasis_caps_vocab.ipynb
+    - 12_register_stance.ipynb
+    - 13_correlation_directiveness.ipynb
+    - 14_ccversion_trends.ipynb
+    - 15_rule_explanation.ipynb
     - PROPOSAL.md
     - GLOSSARY.md
 
@@ -37,17 +37,17 @@ website:
         text: Home
       - text: Proposals
         menu:
-          - 21_track_justification_rate.ipynb
-          - 22_audit_threat_framings.ipynb
-          - 23_cross_product_audit.ipynb
+          - 20_track_justification_rate.ipynb
+          - 21_audit_threat_framings.ipynb
+          - 22_cross_product_audit.ipynb
       - text: Analysis
         menu:
-          - 11_sentence_register.ipynb
-          - 12_emphasis_caps_vocab.ipynb
-          - 13_register_stance.ipynb
-          - 14_correlation_directiveness.ipynb
-          - 15_ccversion_trends.ipynb
-          - 16_rule_explanation.ipynb
+          - 10_sentence_register.ipynb
+          - 11_emphasis_caps_vocab.ipynb
+          - 12_register_stance.ipynb
+          - 13_correlation_directiveness.ipynb
+          - 14_ccversion_trends.ipynb
+          - 15_rule_explanation.ipynb
       - href: 00_data_pipeline.ipynb
         text: Pipeline
       - href: PROPOSAL.md
@@ -63,17 +63,17 @@ website:
         text: "Home"
       - section: "Proposals (one notebook per submission)"
         contents:
-          - 21_track_justification_rate.ipynb
-          - 22_audit_threat_framings.ipynb
-          - 23_cross_product_audit.ipynb
+          - 20_track_justification_rate.ipynb
+          - 21_audit_threat_framings.ipynb
+          - 22_cross_product_audit.ipynb
       - section: "Analysis notebooks"
         contents:
-          - 11_sentence_register.ipynb
-          - 12_emphasis_caps_vocab.ipynb
-          - 13_register_stance.ipynb
-          - 14_correlation_directiveness.ipynb
-          - 15_ccversion_trends.ipynb
-          - 16_rule_explanation.ipynb
+          - 10_sentence_register.ipynb
+          - 11_emphasis_caps_vocab.ipynb
+          - 12_register_stance.ipynb
+          - 13_correlation_directiveness.ipynb
+          - 14_ccversion_trends.ipynb
+          - 15_rule_explanation.ipynb
       - section: "Reference"
         contents:
           - 00_data_pipeline.ipynb
