@@ -489,12 +489,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#sentence-level-pragmatic-register" id="toc-sentence-level-pragmatic-register" class="nav-link active" data-scroll-target="#sentence-level-pragmatic-register">Sentence-level pragmatic register</a>
-  <ul class="collapse">
-  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
+  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link active" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
   <li><a href="#sentence-register-per-category-distribution-addressee-drilldown" id="toc-sentence-register-per-category-distribution-addressee-drilldown" class="nav-link" data-scroll-target="#sentence-register-per-category-distribution-addressee-drilldown">Sentence-register per category — distribution + addressee drilldown</a></li>
   <li><a href="#per-file-outliers-top-10-files-for-each-attested-class" id="toc-per-file-outliers-top-10-files-for-each-attested-class" class="nav-link" data-scroll-target="#per-file-outliers-top-10-files-for-each-attested-class">Per-file outliers — top 10 files for each attested class</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/10_sentence_register.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -522,10 +519,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>This notebook renders the per-sentence multi-label classifier from <code>00_data_pipeline.ipynb</code> § 3b. Six classes (<code>collaborative</code>, <code>permissive</code>, <code>appreciative</code>, <code>imperative</code>, <code>directive</code>, <code>configuring</code>) plotted as % of sentences per category, plus an addressee drilldown for the two near-zero classes and a per-file outlier panel. The producer’s <code>sentence_register</code> block is the data source.</p>
-<p>The notable per-sentence finding — <code>appreciative</code> sentences are essentially absent (4 in 5,702 across the whole corpus) — is a <em>per-sentence</em> claim, not a per-document claim. Aggregate metrics like “imperative-marker density” can’t surface that absence; the sentence-level multi-label classifier can. This is the <strong>analysis-tier</strong> notebook for the pragmatic-register slice.# Sentence-level pragmatic register</p>
-<p>This notebook renders the per-sentence multi-label classifier from <code>00_data_pipeline.ipynb</code> § 3b. Six classes (<code>collaborative</code>, <code>permissive</code>, <code>appreciative</code>, <code>imperative</code>, <code>directive</code>, <code>configuring</code>) plotted as % of sentences per category, plus an addressee drilldown for the two near-zero classes and a per-file outlier panel. The producer’s <code>sentence_register</code> block is the data source.</p>
 <p>The notable per-sentence finding — <code>appreciative</code> sentences are essentially absent (4 in 5,702 across the whole corpus) — is a <em>per-sentence</em> claim, not a per-document claim. Aggregate metrics like “imperative-marker density” can’t surface that absence; the sentence-level multi-label classifier can. This is the <strong>analysis-tier</strong> notebook for the pragmatic-register slice.</p>
-<div id="87850017" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:45.553120Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:45.552992Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.394168Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.393872Z&quot;}}" data-execution_count="6">
+<p><strong>Two figures</strong>: per-category × per-class distribution + addressee drilldown for the two near-zero classes (<code>appreciative</code>, <code>collaborative</code>); per-file outliers (top 10 files for each attested class).</p>
+<div id="87850017" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:45.553120Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:45.552992Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.394168Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.393872Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -540,7 +536,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)   <span class="co"># pick up edits without restarting the kernel</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> (</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    load_yaml, build_alt_df, version_order, category_colors,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    directiveness,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    directiveness, headline_numbers,</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    SR_CLASS_COLORS, SENT_REGISTER_CLASSES, TABLEAU10,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -548,91 +544,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()                  <span class="co"># default: prompt_linguistic_analysis.yaml</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>cats              <span class="op">=</span> <span class="bu">list</span>(by_category.keys())</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>VOCAB_KEYS        <span class="op">=</span> <span class="bu">list</span>(data[<span class="st">"lexicons"</span>][<span class="st">"VOCAB"</span>].keys())</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite directiveness column — used by 05 and 06.</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>alt_df[<span class="st">"directiveness"</span>] <span class="op">=</span> directiveness(alt_df)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-category palette + Altair encodings used across charts.</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>HEADLINE          <span class="op">=</span> headline_numbers(data)       <span class="co"># canonical corpus-wide numbers (see 00 § 12)</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>cats              <span class="op">=</span> <span class="bu">list</span>(by_category.keys())</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>VOCAB_KEYS        <span class="op">=</span> <span class="bu">list</span>(data[<span class="st">"lexicons"</span>][<span class="st">"VOCAB"</span>].keys())</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite directiveness column — used by 05 and 06.</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>alt_df[<span class="st">"directiveness"</span>] <span class="op">=</span> directiveness(alt_df)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-category palette + Altair encodings used across charts.</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>loaded 286 files | 179 columns | 7 categories | 11 VOCAB keys</code></pre>
 </div>
 </div>
-<section id="sentence-level-pragmatic-register" class="level1">
-<h1>Sentence-level pragmatic register</h1>
-<p>A per-sentence multi-label classifier — each sentence may carry several flags simultaneously. Six classes:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Class</th>
-<th>Detector</th>
-<th>Expected in this corpus</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>imperative</code></td>
-<td><code>classify_sent_mood(sent) == "imperative"</code> (parse-tree heuristic)</td>
-<td>High — directive prompts</td>
-</tr>
-<tr class="even">
-<td><code>directive</code></td>
-<td>overlaps any <code>STANCE_MARKERS["directive"]</code> span</td>
-<td>High</td>
-</tr>
-<tr class="odd">
-<td><code>collaborative</code></td>
-<td><code>M_SENT_REGISTER["collaborative"]</code> OR <code>we + modal + V</code> parse pattern</td>
-<td><strong>Near-zero — that’s a finding.</strong> Claude Code system prompts are functional/directive, not interpersonal.</td>
-</tr>
-<tr class="even">
-<td><code>permissive</code></td>
-<td><code>M_SENT_REGISTER["permissive"]</code> OR <code>consider X-ing</code> parse pattern</td>
-<td>Modest (<code>please</code>, <code>you can</code>, <code>you may</code>)</td>
-</tr>
-<tr class="odd">
-<td><code>appreciative</code></td>
-<td><code>M_SENT_REGISTER["appreciative"]</code></td>
-<td><strong>Near-zero — that’s a finding.</strong> Same reason.</td>
-</tr>
-<tr class="even">
-<td><code>configuring</code></td>
-<td><code>M_SENT_REGISTER["configuring"]</code> OR <code>param-noun + setter-verb</code> pattern</td>
-<td>High in tool descriptions</td>
-</tr>
-</tbody>
-</table>
-<p>A sentence with none of the six flags is <code>none</code>. The four content <code>*_sent_pct</code> values can sum &gt;100% (intentional — multi-label).</p>
-<p><strong>Why we keep the near-zero classes.</strong> Knowing what a corpus <em>isn’t</em> doing is as important as knowing what it is. A near-zero <code>appreciative_sent_pct</code> across 287 prompts is a structural fact — kept deliberately, not pruned.</p>
-<p>The two charts below: per-category × class profile (every category × every class), and per-file outliers (top files for each attested class).</p>
 <section id="terms-used-in-this-notebook" class="level3">
 <h3 class="anchored" data-anchor-id="terms-used-in-this-notebook">Terms used in this notebook</h3>
-<p>The six pragmatic register classes (full definitions in <code>00_data_pipeline.ipynb</code> § 3b):</p>
-<ul>
-<li><strong><code>imperative</code></strong> — bare commands (<code>Run the tests.</code>).</li>
-<li><strong><code>directive</code></strong> — declarative-but-rule-asserting (<code>You must use the X tool.</code>).</li>
-<li><strong><code>configuring</code></strong> — config / parameter speech (<code>The format must be JSON.</code>).</li>
-<li><strong><code>permissive</code></strong> — soft-directive / permission (<code>Please consider X.</code>, <code>You may X.</code>).</li>
-<li><strong><code>collaborative</code></strong> — interpersonal first-person plural (<code>We should ship X.</code>, <code>Let's X.</code>).</li>
-<li><strong><code>appreciative</code></strong> — gratitude / praise (<code>Thank you for X.</code>, <code>Great job.</code>).</li>
-</ul>
+<p>The six pragmatic register classes (<code>imperative</code>, <code>directive</code>, <code>configuring</code>, <code>permissive</code>, <code>collaborative</code>, <code>appreciative</code>) and the detector mechanics that distinguish them are defined in <code>00_data_pipeline.ipynb</code> § 3b.</p>
 <p><strong>Multi-label, with a concrete example.</strong> A single sentence can carry several flags at once. Take a hypothetical sentence: <code>"Please, we should consider running the migration."</code> That single sentence would carry <strong><code>permissive</code></strong> (<code>please</code>), <strong><code>collaborative</code></strong> (<code>we should</code>), <strong><code>imperative</code></strong> (the verb <code>consider</code> is grammatically imperative-like), and arguably <strong><code>directive</code></strong> (the modal <code>should</code>). Because the same sentence contributes to multiple class counts, per-class <strong><code>sent_pct</code> values can sum to more than 100%</strong> when added across all six classes within a category. That is intentional and reflects the multi-label nature of the classifier — not a bug.</p>
-<p><strong>Detector mechanics</strong>: classes are detected via <code>PhraseMatcher</code> (keyword lists from <code>SENTENCE_REGISTER_MARKERS</code>), reused <code>classify_sent_mood</code> from cell 10 (parse-tree heuristic for grammatical imperative), the <code>STANCE_MARKERS["directive"]</code> matcher (for <code>directive</code>), and three <code>DependencyMatcher</code> parse patterns (for <code>we should ...</code>, <code>consider X-ing</code>, and <code>param-noun + setter-verb</code>). Producer details: see <code>00_data_pipeline.ipynb</code> cell 16.</p>
 </section>
 <section id="sentence-register-per-category-distribution-addressee-drilldown" class="level3">
 <h3 class="anchored" data-anchor-id="sentence-register-per-category-distribution-addressee-drilldown">Sentence-register per category — distribution + addressee drilldown</h3>
@@ -642,7 +578,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Bottom</strong> — addressee breakdown for the two near-zero classes (<code>appreciative</code>, <code>collaborative</code>): claude / user / unknown. Tells you whether the prompt author <em>speaks to Claude</em> in those registers or <em>instructs Claude to use</em> them with the user.</li>
 </ul>
 <p>A forensic-inspection sample of sentences matching appreciative keywords is printed alongside (sourced from <code>sentences_classified.parquet</code>).</p>
-<div id="b8b9f100-4f87-4d70-aa8c-57e2aa9acd25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:48.395177Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:48.395040Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.451615Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.451254Z&quot;}}" data-execution_count="7">
+<div id="b8b9f100-4f87-4d70-aa8c-57e2aa9acd25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:48.395177Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:48.395040Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.451615Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.451254Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Sentence-register per category × class + addressee drilldown — vconcat composite."""</span></span>
@@ -757,26 +693,26 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
  system-prompt-insights-session-facets-extraction.md 1. **goal_categories**: Count ONLY what the USER explicitly asked for.\n   - ...    claude
                    tool-description-enterplanmode.md **User Preferences Matter**: The implementation could reasonably go multiple ...    claude</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="4">
 
 <style>
-  #altair-viz-6bf5e29a69594c4488dd7702f48309b4.vega-embed {
+  #altair-viz-82acd6e2e9b842ba94fefd39aeb567e8.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-6bf5e29a69594c4488dd7702f48309b4.vega-embed details,
-  #altair-viz-6bf5e29a69594c4488dd7702f48309b4.vega-embed details summary {
+  #altair-viz-82acd6e2e9b842ba94fefd39aeb567e8.vega-embed details,
+  #altair-viz-82acd6e2e9b842ba94fefd39aeb567e8.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-6bf5e29a69594c4488dd7702f48309b4"></div>
+<div id="altair-viz-82acd6e2e9b842ba94fefd39aeb567e8"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-6bf5e29a69594c4488dd7702f48309b4") {
-      outputDiv = document.getElementById("altair-viz-6bf5e29a69594c4488dd7702f48309b4");
+    if (outputDiv.id !== "altair-viz-82acd6e2e9b842ba94fefd39aeb567e8") {
+      outputDiv = document.getElementById("altair-viz-82acd6e2e9b842ba94fefd39aeb567e8");
     }
 
     const paths = {
@@ -833,7 +769,7 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
 <section id="per-file-outliers-top-10-files-for-each-attested-class" class="level3">
 <h3 class="anchored" data-anchor-id="per-file-outliers-top-10-files-for-each-attested-class">Per-file outliers — top 10 files for each attested class</h3>
 <p>Four panels showing which individual files contribute most to each class. For <code>collaborative</code> and <code>appreciative</code> (near-zero overall), the panels surface the few files that do attest the class — useful as concrete examples of what the absent register would look like if it were present. For <code>permissive</code> and <code>configuring</code>, the panels rank the top files by their per-sentence rate.</p>
-<div id="6bcb8239-a7f3-4f4d-b989-31a404dd0ddb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:48.452429Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:48.452339Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.485310Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.484932Z&quot;}}" data-execution_count="8">
+<div id="6bcb8239-a7f3-4f4d-b989-31a404dd0ddb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:48.452429Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:48.452339Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.485310Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.484932Z&quot;}}" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-file outliers for sentence_register — Altair 4-panel.</span></span>
@@ -883,26 +819,26 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
 <span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>(panels[<span class="dv">0</span>] <span class="op">|</span> panels[<span class="dv">1</span>]) <span class="op">&amp;</span> (panels[<span class="dv">2</span>] <span class="op">|</span> panels[<span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="5">
 
 <style>
-  #altair-viz-bb05fa7e25444ff6b5ab3f61ef2ff949.vega-embed {
+  #altair-viz-188859ed3834438fa007e6209d7eba59.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-bb05fa7e25444ff6b5ab3f61ef2ff949.vega-embed details,
-  #altair-viz-bb05fa7e25444ff6b5ab3f61ef2ff949.vega-embed details summary {
+  #altair-viz-188859ed3834438fa007e6209d7eba59.vega-embed details,
+  #altair-viz-188859ed3834438fa007e6209d7eba59.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-bb05fa7e25444ff6b5ab3f61ef2ff949"></div>
+<div id="altair-viz-188859ed3834438fa007e6209d7eba59"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-bb05fa7e25444ff6b5ab3f61ef2ff949") {
-      outputDiv = document.getElementById("altair-viz-bb05fa7e25444ff6b5ab3f61ef2ff949");
+    if (outputDiv.id !== "altair-viz-188859ed3834438fa007e6209d7eba59") {
+      outputDiv = document.getElementById("altair-viz-188859ed3834438fa007e6209d7eba59");
     }
 
     const paths = {
@@ -956,7 +892,6 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
 </div>
 
 
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->

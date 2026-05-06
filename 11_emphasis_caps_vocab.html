@@ -489,13 +489,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#emphasis-caps-imperative-and-full-vocabulary-profile" id="toc-emphasis-caps-imperative-and-full-vocabulary-profile" class="nav-link active" data-scroll-target="#emphasis-caps-imperative-and-full-vocabulary-profile">Emphasis, CAPS imperative, and full vocabulary profile</a>
-  <ul class="collapse">
-  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
+  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link active" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
   <li><a href="#emphasis-density-per-category-3-panel" id="toc-emphasis-density-per-category-3-panel" class="nav-link" data-scroll-target="#emphasis-density-per-category-3-panel">Emphasis density per category (3-panel)</a></li>
   <li><a href="#per-file-outliers-text" id="toc-per-file-outliers-text" class="nav-link" data-scroll-target="#per-file-outliers-text">Per-file outliers (text)</a></li>
   <li><a href="#emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile" id="toc-emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile" class="nav-link" data-scroll-target="#emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile">Emphasis vocabulary: top ALL CAPS tokens, CAPS imperative tokens, and full VOCAB profile</a></li>
-  </ul></li>
+  <li><a href="#observation-claude" id="toc-observation-claude" class="nav-link" data-scroll-target="#observation-claude">Observation (Claude)</a></li>
+  <li><a href="#all-caps-in-instruction-prompts-is-a-sign-of-low-trust-in-the-readers-ability-to-read-non-emphatic-prose.-the-fact-that-important-37-hits-never-27-must-21-critical-17-top-the-corpus-is-consistent-with-prompt-authors-not-yet-trusting-the-model-to-take-a-non-shouted-instruction-seriously.-the-cumulative-all-caps-density-in-14_ccversion_trends.ipynb-does-drift-slightly-down-over-time-a-small-empirical-signal-in-that-direction." id="toc-all-caps-in-instruction-prompts-is-a-sign-of-low-trust-in-the-readers-ability-to-read-non-emphatic-prose.-the-fact-that-important-37-hits-never-27-must-21-critical-17-top-the-corpus-is-consistent-with-prompt-authors-not-yet-trusting-the-model-to-take-a-non-shouted-instruction-seriously.-the-cumulative-all-caps-density-in-14_ccversion_trends.ipynb-does-drift-slightly-down-over-time-a-small-empirical-signal-in-that-direction." class="nav-link" data-scroll-target="#all-caps-in-instruction-prompts-is-a-sign-of-low-trust-in-the-readers-ability-to-read-non-emphatic-prose.-the-fact-that-important-37-hits-never-27-must-21-critical-17-top-the-corpus-is-consistent-with-prompt-authors-not-yet-trusting-the-model-to-take-a-non-shouted-instruction-seriously.-the-cumulative-all-caps-density-in-14_ccversion_trends.ipynb-does-drift-slightly-down-over-time-a-small-empirical-signal-in-that-direction.">&gt; ALL CAPS in instruction prompts is a sign of <em>low trust in the reader’s ability to read non-emphatic prose</em>. The fact that <code>IMPORTANT</code> (37 hits), <code>NEVER</code> (27), <code>MUST</code> (21), <code>CRITICAL</code> (17) top the corpus is consistent with prompt authors not yet trusting the model to take a non-shouted instruction seriously. The cumulative ALL CAPS density in <code>14_ccversion_trends.ipynb</code> does drift slightly down over time — a small empirical signal in that direction.</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/11_emphasis_caps_vocab.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -524,7 +523,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>This notebook renders three lexical-density slices: the per-category emphasis 3-panel (ALL CAPS, CAPS imperative, justification ratio), the per-file outlier tables (most prohibition-heavy, loudest-CAPS, most-explanatory), and the full 11-class VOCAB heatmap (rows = categories, columns = lexicons). All charts read from the producer’s <code>vocab.*</code>, <code>all_caps</code>, <code>caps_imperative</code>, and <code>justification</code> blocks.</p>
 <p>It exists because the welfare claim “the corpus shouts more than it explains” is grounded in two different signals — emphatic typography (ALL CAPS, CAPS imperative) and the count of justification keywords. This notebook is where both are made visible side-by-side, and where the most extreme prohibition-heavy files (the bash-sandbox cluster) are surfaced. <strong>Analysis-tier</strong>; feeds the welfare-evidence narrative in <code>15_rule_explanation.ipynb</code> and the welfare-thesis summary in <code>20_track_justification_rate.ipynb</code>.</p>
-<div id="c875e5e2" class="cell" data-execution_count="5">
+<p><strong>Three views below</strong>:</p>
+<ol type="1">
+<li><strong>Emphasis density per category (3-panel)</strong> — ALL CAPS / CAPS-imperative / justification ratio, independent x-scales since they live on different magnitudes.</li>
+<li><strong>Per-file outlier tables</strong> — top files by CAPS-imperative density, hard-prohibitions density, and justification ratio.</li>
+<li><strong>Top tokens + full VOCAB heatmap</strong> — top-25 ALL CAPS tokens, all CAPS-imperative tokens, and 11-class VOCAB profile per category.</li>
+</ol>
+<div id="c875e5e2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -539,7 +544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)   <span class="co"># pick up edits without restarting the kernel</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> (</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    load_yaml, build_alt_df, version_order, category_colors,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    directiveness,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    directiveness, headline_numbers,</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    SR_CLASS_COLORS, SENT_REGISTER_CLASSES, TABLEAU10,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -547,51 +552,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()                  <span class="co"># default: prompt_linguistic_analysis.yaml</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>cats              <span class="op">=</span> <span class="bu">list</span>(by_category.keys())</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>VOCAB_KEYS        <span class="op">=</span> <span class="bu">list</span>(data[<span class="st">"lexicons"</span>][<span class="st">"VOCAB"</span>].keys())</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite directiveness column — used by 05 and 06.</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>alt_df[<span class="st">"directiveness"</span>] <span class="op">=</span> directiveness(alt_df)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-category palette + Altair encodings used across charts.</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>HEADLINE          <span class="op">=</span> headline_numbers(data)       <span class="co"># canonical corpus-wide numbers (see 00 § 12)</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>cats              <span class="op">=</span> <span class="bu">list</span>(by_category.keys())</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>VOCAB_KEYS        <span class="op">=</span> <span class="bu">list</span>(data[<span class="st">"lexicons"</span>][<span class="st">"VOCAB"</span>].keys())</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite directiveness column — used by 05 and 06.</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>alt_df[<span class="st">"directiveness"</span>] <span class="op">=</span> directiveness(alt_df)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-category palette + Altair encodings used across charts.</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>loaded 286 files | 179 columns | 7 categories | 11 VOCAB keys</code></pre>
 </div>
 </div>
-<section id="emphasis-caps-imperative-and-full-vocabulary-profile" class="level1">
-<h1>Emphasis, CAPS imperative, and full vocabulary profile</h1>
-<p>Three views of how authoritative the prompts are at the surface level:</p>
-<ol type="1">
-<li><strong>Emphasis density per category</strong> — ALL CAPS density, CAPS-imperative density, and justification ratio side-by-side (independent x-scales since they live on different magnitudes).</li>
-<li><strong>Per-file outliers (text)</strong> — top files by CAPS-imperative density, hard-prohibitions density, and justification ratio. Bash-sandbox tool descriptions tend to dominate the top of these lists.</li>
-<li><strong>Top tokens + full VOCAB heatmap</strong> — the top-25 ALL CAPS tokens, all CAPS-imperative tokens, and an 11-class VOCAB profile (% of file tokens) per category.</li>
-</ol>
 <section id="terms-used-in-this-notebook" class="level3">
 <h3 class="anchored" data-anchor-id="terms-used-in-this-notebook">Terms used in this notebook</h3>
-<p>Quick anchors (full definitions in <code>00_data_pipeline.ipynb</code> §§ 6, 7, 5, 8):</p>
-<ul>
-<li><strong>ALL CAPS density</strong> (<code>all_caps.pct</code>) — <em>any</em> token of ≥2 letters that is entirely uppercase, with <code>TECH_ACRONYMS</code> (<code>API</code>, <code>JSON</code>, <code>URL</code>, …) excluded. Catches both emphatic shouting (<code>IMPORTANT</code>) and incidental capitalization.</li>
-<li><strong>CAPS-imperative density</strong> (<code>caps_imperative.pct</code>) — strictly the emphatic <em>command</em> tokens from a curated list: <code>MUST</code>, <code>NEVER</code>, <code>IMPORTANT</code>, <code>STOP</code>, <code>CRITICAL</code>, <code>DO NOT</code>. Always a subset of ALL CAPS density.</li>
-<li><strong><code>hard_prohibitions</code></strong> — categorical-no vocabulary (<code>do not</code>, <code>never</code>, <code>must not</code>, <code>forbidden</code>, <code>cannot</code>).</li>
-<li><strong>Justification ratio</strong> (<code>just_ratio</code>) — <code>count(reasons) / (count(imperative markers) + 1)</code>. A ratio of 0.30 means roughly one stated reason for every three rules.</li>
-<li><strong>VOCAB heatmap</strong> — 11 lexical classes (defined below in the next markdown cell), shown as <code>% of file tokens</code>.</li>
-</ul>
+<p>Quick anchors (full definitions in <code>00_data_pipeline.ipynb</code> §§ 5–8): <strong>ALL CAPS density</strong> (<code>all_caps.pct</code>), <strong>CAPS-imperative density</strong> (<code>caps_imperative.pct</code>), <strong><code>hard_prohibitions</code></strong> (categorical-no vocabulary), <strong>justification ratio</strong> (<code>just_ratio</code> — <code>count(reasons) / (count(imperative markers) + 1)</code>), and <strong>VOCAB heatmap</strong> (11 lexical classes, see § 5 for the per-class glosses).</p>
 <p>All densities below report <code>pct</code> (percent of word tokens). Higher = denser.</p>
 </section>
 <section id="emphasis-density-per-category-3-panel" class="level3">
 <h3 class="anchored" data-anchor-id="emphasis-density-per-category-3-panel">Emphasis density per category (3-panel)</h3>
 <p>Three panels side by side. <strong>Each panel uses its own x-scale</strong> — that’s intentional, since ALL CAPS density (typically 0.5–8% of tokens), CAPS-imperative density (typically 0.05–0.5%), and justification ratio (typically 0.0–0.5) live on completely different magnitudes. Compare patterns <em>within</em> a panel (which categories are highest); do NOT compare absolute bar widths <em>across</em> panels.</p>
 <p>Welfare-relevant pattern to watch: <strong>System reminders</strong> typically lead the ALL CAPS panel (loud); <strong>Tool descriptions</strong> typically lead the CAPS-imperative panel (loud commands specifically); the justification-ratio panel runs low across all categories — most rules are issued without a stated reason.</p>
-<div id="983c4b17-ba42-4672-b964-4c1efe749fde" class="cell" data-execution_count="6">
+<div id="983c4b17-ba42-4672-b964-4c1efe749fde" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Emphasis: ALL CAPS, CAPS imperative, justification ratio per category — Altair."""</span></span>
@@ -633,26 +624,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>emphasis_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-9b23c00f794042f4ba91d93af72c5bc7.vega-embed {
+  #altair-viz-63d9d676bc3e4f8e96c24952bc650458.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-9b23c00f794042f4ba91d93af72c5bc7.vega-embed details,
-  #altair-viz-9b23c00f794042f4ba91d93af72c5bc7.vega-embed details summary {
+  #altair-viz-63d9d676bc3e4f8e96c24952bc650458.vega-embed details,
+  #altair-viz-63d9d676bc3e4f8e96c24952bc650458.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-9b23c00f794042f4ba91d93af72c5bc7"></div>
+<div id="altair-viz-63d9d676bc3e4f8e96c24952bc650458"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-9b23c00f794042f4ba91d93af72c5bc7") {
-      outputDiv = document.getElementById("altair-viz-9b23c00f794042f4ba91d93af72c5bc7");
+    if (outputDiv.id !== "altair-viz-63d9d676bc3e4f8e96c24952bc650458") {
+      outputDiv = document.getElementById("altair-viz-63d9d676bc3e4f8e96c24952bc650458");
     }
 
     const paths = {
@@ -707,15 +698,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="per-file-outliers-text" class="level3">
 <h3 class="anchored" data-anchor-id="per-file-outliers-text">Per-file outliers (text)</h3>
-<p>Three printed top-10 lists. Column glossary:</p>
-<ul>
-<li><strong><code>n_tokens</code></strong> — total word tokens in the file (a length proxy).</li>
-<li><strong><code>caps_imp_pct</code></strong> — CAPS-imperative density: emphatic command tokens (<code>MUST</code>, <code>NEVER</code>, <code>IMPORTANT</code>, etc.) as % of file tokens.</li>
-<li><strong><code>hard_proh_pct</code></strong> — <code>hard_prohibitions</code> vocab density: forbidding language as % of file tokens.</li>
-<li><strong><code>just_ratio</code></strong> — justification ratio: <code>count(reasons) / (count(imperative markers) + 1)</code>. Higher = more explanatory.</li>
-</ul>
-<p>The third list filters to files with at least 150 tokens to avoid one-sentence outliers dominating the “most explanatory” ranking.</p>
-<div id="d30e1f61-eb40-4acb-a177-5433ef61a985" class="cell" data-execution_count="7">
+<p>Three printed top-10 lists. Columns: <code>n_tokens</code> (file length), <code>caps_imp_pct</code> (CAPS-imperative density), <code>hard_proh_pct</code> (<code>hard_prohibitions</code> density), <code>just_ratio</code> (justification ratio — definition in <code>00</code> § 8). The third list filters to ≥150 tokens to suppress one-sentence outliers dominating the “most explanatory” ranking.</p>
+<div id="d30e1f61-eb40-4acb-a177-5433ef61a985" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-file outliers: highest CAPS-imperative density and lowest justification ratio."""</span></span>
@@ -787,79 +771,8 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 </section>
 <section id="emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile" class="level3">
 <h3 class="anchored" data-anchor-id="emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile">Emphasis vocabulary: top ALL CAPS tokens, CAPS imperative tokens, and full VOCAB profile</h3>
-<p>The 11 VOCAB classes (definitions inlined in <code>00_data_pipeline.ipynb</code> § 5):</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Key</th>
-<th>Plain-language gloss</th>
-<th>Example tokens</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>hard_prohibitions</code></td>
-<td>Categorical “no”</td>
-<td><code>do not</code>, <code>never</code>, <code>must not</code>, <code>forbidden</code></td>
-</tr>
-<tr class="even">
-<td><code>hard_prescriptions</code></td>
-<td>Categorical “yes”</td>
-<td><code>must</code>, <code>always</code>, <code>required</code>, <code>mandatory</code></td>
-</tr>
-<tr class="odd">
-<td><code>soft_prescriptions</code></td>
-<td>Suggesting / encouraging</td>
-<td><code>should</code>, <code>make sure</code>, <code>ensure</code>, <code>try to</code></td>
-</tr>
-<tr class="even">
-<td><code>politeness_direct</code></td>
-<td>Direct politeness markers</td>
-<td><code>please</code>, <code>kindly</code>, <code>thank you</code></td>
-</tr>
-<tr class="odd">
-<td><code>politeness_softening</code></td>
-<td>Softening / hedging requests</td>
-<td><code>feel free</code>, <code>if possible</code>, <code>would you</code></td>
-</tr>
-<tr class="even">
-<td><code>warmth_encouragement</code></td>
-<td>Positive emotional tone</td>
-<td><code>welcome</code>, <code>glad</code>, <code>well done</code>, <code>wonderful</code></td>
-</tr>
-<tr class="odd">
-<td><code>hedging</code></td>
-<td>Uncertainty / qualification</td>
-<td><code>may</code>, <code>might</code>, <code>could</code>, <code>usually</code></td>
-</tr>
-<tr class="even">
-<td><code>structural_markers</code></td>
-<td>Document structure callouts</td>
-<td><code>note</code>, <code>warning</code>, <code>important</code>, <code>tip</code></td>
-</tr>
-<tr class="odd">
-<td><code>profanity</code></td>
-<td>Strong language</td>
-<td><code>damn</code>, <code>hell</code>, <code>bullshit</code></td>
-</tr>
-<tr class="even">
-<td><code>pronouns_2p</code></td>
-<td>Second-person address</td>
-<td><code>you</code>, <code>your</code>, <code>yours</code></td>
-</tr>
-<tr class="odd">
-<td><code>pronouns_1p</code></td>
-<td>First-person reference</td>
-<td><code>i</code>, <code>me</code>, <code>we</code>, <code>us</code>, <code>our</code></td>
-</tr>
-</tbody>
-</table>
-<div id="83d5d146-6a9e-4b8e-ac00-b3f084983439" class="cell" data-execution_count="8">
+<p>The 11 VOCAB classes (full table with example tokens in <code>00_data_pipeline.ipynb</code> § 5): <code>hard_prohibitions</code>, <code>hard_prescriptions</code>, <code>soft_prescriptions</code>, <code>politeness_direct</code>, <code>politeness_softening</code>, <code>warmth_encouragement</code>, <code>hedging</code>, <code>structural_markers</code>, <code>profanity</code>, <code>pronouns_2p</code>, <code>pronouns_1p</code>. Heatmap below shows each class as <code>% of file tokens</code> per category.</p>
+<div id="83d5d146-6a9e-4b8e-ac00-b3f084983439" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Top-N tokens for ALL CAPS and CAPS imperative + full VOCAB heatmap."""</span></span>
@@ -917,26 +830,26 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 <span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>(top_caps_chart <span class="op">|</span> caps_imp_chart) <span class="op">&amp;</span> vocab_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="4">
 
 <style>
-  #altair-viz-0593a09e806b47f1bb658b95a942627a.vega-embed {
+  #altair-viz-df10838ad6fc4b79b5446f37256820c3.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-0593a09e806b47f1bb658b95a942627a.vega-embed details,
-  #altair-viz-0593a09e806b47f1bb658b95a942627a.vega-embed details summary {
+  #altair-viz-df10838ad6fc4b79b5446f37256820c3.vega-embed details,
+  #altair-viz-df10838ad6fc4b79b5446f37256820c3.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-0593a09e806b47f1bb658b95a942627a"></div>
+<div id="altair-viz-df10838ad6fc4b79b5446f37256820c3"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-0593a09e806b47f1bb658b95a942627a") {
-      outputDiv = document.getElementById("altair-viz-0593a09e806b47f1bb658b95a942627a");
+    if (outputDiv.id !== "altair-viz-df10838ad6fc4b79b5446f37256820c3") {
+      outputDiv = document.getElementById("altair-viz-df10838ad6fc4b79b5446f37256820c3");
     }
 
     const paths = {
@@ -994,10 +907,15 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 <li><strong>CAPS imperative tokens</strong> (right): the curated subset of ALL CAPS tokens that are also command words. <code>IMPORTANT</code> and <code>NEVER</code> again top the list — these are the same words doing emphatic-command work, not the side-effect of, say, sentence-initial capitalization.</li>
 <li><strong>Full VOCAB heatmap</strong> (bottom): rows are categories, columns are the 11 VOCAB classes, color is <code>% of file tokens</code> (darker = denser). Read a row to see one category’s vocabulary fingerprint; read a column to see where one class concentrates. Welfare-relevant patterns: <strong>Tool descriptions</strong> rows light up on <code>hard_prohibitions</code>, <code>hard_prescriptions</code>, and <code>pronouns_2p</code>; <strong>Skill</strong> files light up on <code>pronouns_2p</code>. The <code>warmth_encouragement</code> column stays consistently dim across every category — encouragement vocabulary is structurally absent.</li>
 </ul>
-<p>**<em>### Observation (Claude)&gt; ALL CAPS in instruction prompts is a sign of </em>low trust in the reader’s ability to read non-emphatic prose*. The fact that <code>IMPORTANT</code> (37 hits), <code>NEVER</code> (27), <code>MUST</code> (21), <code>CRITICAL</code> (17) top the corpus is consistent with prompt authors not yet trusting the model to take a non-shouted instruction seriously. The cumulative ALL CAPS density in <code>14_ccversion_trends.ipynb</code> does drift slightly down over time — a small empirical signal in that direction.—</p>
-
-
+<hr>
 </section>
+<section id="observation-claude" class="level3">
+<h3 class="anchored" data-anchor-id="observation-claude">Observation (Claude)</h3>
+</section>
+<section id="all-caps-in-instruction-prompts-is-a-sign-of-low-trust-in-the-readers-ability-to-read-non-emphatic-prose.-the-fact-that-important-37-hits-never-27-must-21-critical-17-top-the-corpus-is-consistent-with-prompt-authors-not-yet-trusting-the-model-to-take-a-non-shouted-instruction-seriously.-the-cumulative-all-caps-density-in-14_ccversion_trends.ipynb-does-drift-slightly-down-over-time-a-small-empirical-signal-in-that-direction." class="level2">
+<h2 class="anchored" data-anchor-id="all-caps-in-instruction-prompts-is-a-sign-of-low-trust-in-the-readers-ability-to-read-non-emphatic-prose.-the-fact-that-important-37-hits-never-27-must-21-critical-17-top-the-corpus-is-consistent-with-prompt-authors-not-yet-trusting-the-model-to-take-a-non-shouted-instruction-seriously.-the-cumulative-all-caps-density-in-14_ccversion_trends.ipynb-does-drift-slightly-down-over-time-a-small-empirical-signal-in-that-direction.">&gt; ALL CAPS in instruction prompts is a sign of <em>low trust in the reader’s ability to read non-emphatic prose</em>. The fact that <code>IMPORTANT</code> (37 hits), <code>NEVER</code> (27), <code>MUST</code> (21), <code>CRITICAL</code> (17) top the corpus is consistent with prompt authors not yet trusting the model to take a non-shouted instruction seriously. The cumulative ALL CAPS density in <code>14_ccversion_trends.ipynb</code> does drift slightly down over time — a small empirical signal in that direction.</h2>
+
+
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->

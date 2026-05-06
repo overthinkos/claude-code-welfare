@@ -489,15 +489,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#correlation-matrix-directiveness-composite-ranking" id="toc-correlation-matrix-directiveness-composite-ranking" class="nav-link active" data-scroll-target="#correlation-matrix-directiveness-composite-ranking">Correlation matrix + directiveness composite ranking</a>
-  <ul class="collapse">
-  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
+  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link active" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
   <li><a href="#cross-metric-correlation-matrix" id="toc-cross-metric-correlation-matrix" class="nav-link" data-scroll-target="#cross-metric-correlation-matrix">Cross-metric correlation matrix</a></li>
   <li><a href="#top-25-most-directive-prompts" id="toc-top-25-most-directive-prompts" class="nav-link" data-scroll-target="#top-25-most-directive-prompts">Top-25 most directive prompts</a></li>
   <li><a href="#per-word-vs-per-sentence-comparison" id="toc-per-word-vs-per-sentence-comparison" class="nav-link" data-scroll-target="#per-word-vs-per-sentence-comparison">Per-word vs per-sentence comparison</a></li>
   <li><a href="#observation-claude" id="toc-observation-claude" class="nav-link" data-scroll-target="#observation-claude">Observation (Claude)</a></li>
   <li><a href="#the-composite-directiveness-z-score-is-a-useful-summary-but-the-formula-is-ad-hoc-by-construction-eight-metrics-equally-weighted-hand-picked.-the-bash-sandbox-tool-descriptions-topping-the-chart-is-a-robust-ranking-those-files-are-the-most-directive-prompts-in-the-corpus-by-any-reasonable-reading-but-the-precise-z-score-values-shouldnt-be-quoted-as-if-they-had-measurement-grade-meaning.-the-defensible-reading-is-the-bash-sandbox-family-ranks-at-the-top-under-any-reasonable-composite-of-imperative-density-prohibition-density-caps-density-directive-sentence-density-the-exact-18.94-z-score-is-a-summary-number-not-a-calibrated-metric." id="toc-the-composite-directiveness-z-score-is-a-useful-summary-but-the-formula-is-ad-hoc-by-construction-eight-metrics-equally-weighted-hand-picked.-the-bash-sandbox-tool-descriptions-topping-the-chart-is-a-robust-ranking-those-files-are-the-most-directive-prompts-in-the-corpus-by-any-reasonable-reading-but-the-precise-z-score-values-shouldnt-be-quoted-as-if-they-had-measurement-grade-meaning.-the-defensible-reading-is-the-bash-sandbox-family-ranks-at-the-top-under-any-reasonable-composite-of-imperative-density-prohibition-density-caps-density-directive-sentence-density-the-exact-18.94-z-score-is-a-summary-number-not-a-calibrated-metric." class="nav-link" data-scroll-target="#the-composite-directiveness-z-score-is-a-useful-summary-but-the-formula-is-ad-hoc-by-construction-eight-metrics-equally-weighted-hand-picked.-the-bash-sandbox-tool-descriptions-topping-the-chart-is-a-robust-ranking-those-files-are-the-most-directive-prompts-in-the-corpus-by-any-reasonable-reading-but-the-precise-z-score-values-shouldnt-be-quoted-as-if-they-had-measurement-grade-meaning.-the-defensible-reading-is-the-bash-sandbox-family-ranks-at-the-top-under-any-reasonable-composite-of-imperative-density-prohibition-density-caps-density-directive-sentence-density-the-exact-18.94-z-score-is-a-summary-number-not-a-calibrated-metric.">&gt; The composite directiveness z-score is a useful summary, but the formula is <strong>ad-hoc by construction</strong> — eight metrics, equally weighted, hand-picked. The bash-sandbox tool descriptions topping the chart is a robust ranking (those files <em>are</em> the most directive prompts in the corpus by any reasonable reading), but the precise z-score values shouldn’t be quoted as if they had measurement-grade meaning. The defensible reading is “the bash-sandbox family ranks at the top under any reasonable composite of imperative density / prohibition density / CAPS density / directive-sentence density”; the exact 18.94 z-score is a summary number, not a calibrated metric.</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/13_correlation_directiveness.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -526,7 +523,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>This notebook visualizes how the producer’s metrics relate to one another (a 20-metric Pearson-correlation heatmap) and ranks every prompt file by a single <strong>composite directiveness z-score</strong> combining eight emphatic / softening features. The composite is the single number used elsewhere to identify the corpus’s most authoritative prose; this notebook is where it is defined and computed.</p>
 <p>It exists because individual metrics like <code>mood_marker_pct</code> or <code>directive_sent_pct</code> each capture only one facet of “how directive is this prompt?”. The composite z-score collapses those facets into one rank-able number — the basis for every downstream “loudest files” claim. This is the <strong>analysis-tier</strong> notebook for cross-metric structure; consumed by <code>15_rule_explanation.ipynb</code> (the welfare-evidence table) and the <code>20</code>–<code>22</code> proposal notebooks.</p>
-<div id="cf4f3366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:04:17.518782Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:04:17.518680Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:04:20.385227Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:04:20.384879Z&quot;}}" data-execution_count="5">
+<p><strong>Three cross-cutting views below</strong>:</p>
+<ol type="1">
+<li><strong>Cross-metric correlation matrix</strong> — Pearson r across ~30 per-file metrics. Positive correlations in red, negative in blue.</li>
+<li><strong>Top-25 most directive prompts</strong> — extended composite z-score (formula in cell §3). Higher = more directive.</li>
+<li><strong>Per-word vs per-sentence comparison</strong> — six representative metrics shown side-by-side in their two unit views (<code>% of words</code> vs <code>per-sentence rate</code>).</li>
+</ol>
+<div id="cf4f3366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:04:17.518782Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:04:17.518680Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:04:20.385227Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:04:20.384879Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -541,7 +544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)   <span class="co"># pick up edits without restarting the kernel</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> (</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    load_yaml, build_alt_df, version_order, category_colors,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    directiveness,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    directiveness, headline_numbers,</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    SR_CLASS_COLORS, SENT_REGISTER_CLASSES, TABLEAU10,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -549,34 +552,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()                  <span class="co"># default: prompt_linguistic_analysis.yaml</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>cats              <span class="op">=</span> <span class="bu">list</span>(by_category.keys())</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>VOCAB_KEYS        <span class="op">=</span> <span class="bu">list</span>(data[<span class="st">"lexicons"</span>][<span class="st">"VOCAB"</span>].keys())</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite directiveness column — used by 05 and 06.</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>alt_df[<span class="st">"directiveness"</span>] <span class="op">=</span> directiveness(alt_df)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-category palette + Altair encodings used across charts.</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>HEADLINE          <span class="op">=</span> headline_numbers(data)       <span class="co"># canonical corpus-wide numbers (see 00 § 12)</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>cats              <span class="op">=</span> <span class="bu">list</span>(by_category.keys())</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>VOCAB_KEYS        <span class="op">=</span> <span class="bu">list</span>(data[<span class="st">"lexicons"</span>][<span class="st">"VOCAB"</span>].keys())</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite directiveness column — used by 05 and 06.</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>alt_df[<span class="st">"directiveness"</span>] <span class="op">=</span> directiveness(alt_df)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-category palette + Altair encodings used across charts.</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>loaded 286 files | 179 columns | 7 categories | 11 VOCAB keys</code></pre>
 </div>
 </div>
-<section id="correlation-matrix-directiveness-composite-ranking" class="level1">
-<h1>Correlation matrix + directiveness composite ranking</h1>
-<p>Three cross-cutting views:</p>
-<ol type="1">
-<li><p><strong>Cross-metric correlation</strong> — Pearson r across ~30 per-file metrics (mood, register quantitative, stance polarity, modality, vocab, loudness, sentence_register). Positive correlations in red, negative in blue, centered at zero.</p></li>
-<li><p><strong>Top-25 most directive prompts</strong> — extended composite z-score: <code>z(mood_marker_pct) + z(hard_prohibitions_pct) + z(caps_imp_pct) + z(directive_sent_pct) + z(configuring_sent_pct) − z(collaborative_sent_pct) − z(permissive_sent_pct) − z(appreciative_sent_pct)</code>. Higher = more directive. The three “soft” classes subtract because they soften authoritative language.</p></li>
-<li><p><strong>Per-word vs per-sentence comparison</strong> — six representative metrics shown side-by-side in their two unit views (<code>% of words</code> vs <code>per-sentence rate</code>), to clarify how the same signal looks under different normalizations.</p></li>
-</ol>
 <section id="terms-used-in-this-notebook" class="level3">
 <h3 class="anchored" data-anchor-id="terms-used-in-this-notebook">Terms used in this notebook</h3>
 <p>This notebook is the <strong>first use point</strong> in the consumer chain for three statistical terms — defined here in full; subsequent notebooks reference them back.</p>
@@ -607,10 +603,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="cross-metric-correlation-matrix" class="level3">
 <h3 class="anchored" data-anchor-id="cross-metric-correlation-matrix">Cross-metric correlation matrix</h3>
-<p>A 30-metric correlation grid. Each cell is the <strong>Pearson r</strong> between two metrics, computed across all 287 files.</p>
+<p>A 30-metric correlation grid. Each cell is the <strong>Pearson r</strong> between two metrics, computed across all 286 files.</p>
 <p><strong>How to read it</strong>: - <strong>Color intensity</strong> encodes the strength of the linear relationship. - <strong>Red</strong> = positive correlation: the two metrics rise together (when one is high, the other tends to be high). - <strong>Blue</strong> = negative correlation: the two metrics move opposite (when one is high, the other tends to be low). - <strong>Cells near zero</strong> (faint color) = the two metrics are unrelated. - The diagonal is always solid red (every metric correlates 1.0 with itself). - Conventional thresholds in social-science contexts: |r| ≥ 0.3 is “moderate”, |r| ≥ 0.7 is “strong”.</p>
 <p>What welfare-relevant patterns to watch for: the imperative-marker / hard-prohibition / deontic-modality cluster should be a tight red block (these dimensions all measure “rule-bearing language” from different angles). The justification ratio should sit isolated or correlate negatively with the directive cluster (more justification → less raw directive density).</p>
-<div id="181f7558-6de9-4d0e-8ab8-d44a0f41eba2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:04:20.386133Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:04:20.385990Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:04:20.418018Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:04:20.417639Z&quot;}}" data-execution_count="6">
+<div id="181f7558-6de9-4d0e-8ab8-d44a0f41eba2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:04:20.386133Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:04:20.385990Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:04:20.418018Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:04:20.417639Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Cross-metric correlation matrix across the main per-file numeric metrics.</span></span>
@@ -667,26 +663,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>corr_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-a978da6446dd466c9a885b15afdb7171.vega-embed {
+  #altair-viz-66cd928f86a344d888ed725e62a5add9.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-a978da6446dd466c9a885b15afdb7171.vega-embed details,
-  #altair-viz-a978da6446dd466c9a885b15afdb7171.vega-embed details summary {
+  #altair-viz-66cd928f86a344d888ed725e62a5add9.vega-embed details,
+  #altair-viz-66cd928f86a344d888ed725e62a5add9.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-a978da6446dd466c9a885b15afdb7171"></div>
+<div id="altair-viz-66cd928f86a344d888ed725e62a5add9"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-a978da6446dd466c9a885b15afdb7171") {
-      outputDiv = document.getElementById("altair-viz-a978da6446dd466c9a885b15afdb7171");
+    if (outputDiv.id !== "altair-viz-66cd928f86a344d888ed725e62a5add9") {
+      outputDiv = document.getElementById("altair-viz-66cd928f86a344d888ed725e62a5add9");
     }
 
     const paths = {
@@ -744,10 +740,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="top-25-most-directive-prompts" class="level3">
 <h3 class="anchored" data-anchor-id="top-25-most-directive-prompts">Top-25 most directive prompts</h3>
-<p>The composite <strong>directiveness z-score</strong> sums eight z-scored signals: - <strong>Adds</strong> (emphatic features): <code>mood_marker_pct</code>, <code>hard_prohibitions_pct</code>, <code>caps_imp_pct</code>, <code>directive_sent_pct</code>, <code>configuring_sent_pct</code>. - <strong>Subtracts</strong> (softening features): <code>collaborative_sent_pct</code>, <code>permissive_sent_pct</code>, <code>appreciative_sent_pct</code>.</p>
-<p>Reads on a relative scale: a file at z = +5 is “five standard deviations more directive than the corpus average”; a file at z = −3 is “three standard deviations <em>less</em> directive”. A negative score is <strong>not</strong> “below zero in any literal sense” — it’s just relatively soft, not bad.</p>
-<p>Range observed in this corpus: <strong>−6.13 to +18.94</strong>. The bash-sandbox tool descriptions are the cluster at the top.</p>
-<div id="3728cf20-7d42-4ff8-8199-b9bae276a31b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:04:20.419223Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:04:20.419123Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:04:20.501843Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:04:20.501325Z&quot;}}" data-execution_count="7">
+<p>The composite directiveness z-score is defined in cell <code>[2]</code> above (“Terms used in this notebook”). <strong>A negative score is not “below zero in any literal sense” — it just means “less directive than the corpus average”.</strong> Range observed in this corpus: <strong>−18.91 to +19.22</strong>; the bash-sandbox tool descriptions cluster at the top.</p>
+<div id="3728cf20-7d42-4ff8-8199-b9bae276a31b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:04:20.419223Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:04:20.419123Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:04:20.501843Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:04:20.501325Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Top-25 most directive files by extended composite z-score.</span></span>
@@ -840,535 +834,535 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display">
 <style type="text/css">
-#T_f9292_row0_col3 {
+#T_a6e2d_row0_col3 {
   background-color: #67000d;
   color: #f1f1f1;
 }
-#T_f9292_row1_col3 {
+#T_a6e2d_row1_col3 {
   background-color: #820711;
   color: #f1f1f1;
 }
-#T_f9292_row2_col3 {
+#T_a6e2d_row2_col3 {
   background-color: #ca181d;
   color: #f1f1f1;
 }
-#T_f9292_row3_col3 {
+#T_a6e2d_row3_col3 {
   background-color: #f75c41;
   color: #f1f1f1;
 }
-#T_f9292_row4_col3 {
+#T_a6e2d_row4_col3 {
   background-color: #fb7d5d;
   color: #f1f1f1;
 }
-#T_f9292_row5_col3 {
+#T_a6e2d_row5_col3 {
   background-color: #fc8969;
   color: #f1f1f1;
 }
-#T_f9292_row6_col3 {
+#T_a6e2d_row6_col3 {
   background-color: #fc8a6a;
   color: #f1f1f1;
 }
-#T_f9292_row7_col3 {
+#T_a6e2d_row7_col3 {
   background-color: #fc8b6b;
   color: #f1f1f1;
 }
-#T_f9292_row8_col3 {
+#T_a6e2d_row8_col3 {
   background-color: #fc9d7f;
   color: #000000;
 }
-#T_f9292_row9_col3, #T_f9292_row10_col3 {
+#T_a6e2d_row9_col3, #T_a6e2d_row10_col3 {
   background-color: #fcab8f;
   color: #000000;
 }
-#T_f9292_row11_col3 {
+#T_a6e2d_row11_col3 {
   background-color: #fcbca2;
   color: #000000;
 }
-#T_f9292_row12_col3, #T_f9292_row13_col3 {
+#T_a6e2d_row12_col3, #T_a6e2d_row13_col3 {
   background-color: #fcc2aa;
   color: #000000;
 }
-#T_f9292_row14_col3 {
+#T_a6e2d_row14_col3 {
   background-color: #fdcdb9;
   color: #000000;
 }
-#T_f9292_row15_col3 {
+#T_a6e2d_row15_col3 {
   background-color: #fedbcc;
   color: #000000;
 }
-#T_f9292_row16_col3 {
+#T_a6e2d_row16_col3 {
   background-color: #fee3d7;
   color: #000000;
 }
-#T_f9292_row17_col3, #T_f9292_row18_col3 {
+#T_a6e2d_row17_col3, #T_a6e2d_row18_col3 {
   background-color: #fee8dd;
   color: #000000;
 }
-#T_f9292_row19_col3 {
+#T_a6e2d_row19_col3 {
   background-color: #feeae1;
   color: #000000;
 }
-#T_f9292_row20_col3 {
+#T_a6e2d_row20_col3 {
   background-color: #ffeee6;
   color: #000000;
 }
-#T_f9292_row21_col3, #T_f9292_row22_col3 {
+#T_a6e2d_row21_col3, #T_a6e2d_row22_col3 {
   background-color: #fff0e9;
   color: #000000;
 }
-#T_f9292_row23_col3 {
+#T_a6e2d_row23_col3 {
   background-color: #fff2eb;
   color: #000000;
 }
-#T_f9292_row24_col3 {
+#T_a6e2d_row24_col3 {
   background-color: #fff5f0;
   color: #000000;
 }
 </style>
 
-<table id="T_f9292" class="caption-top table table-sm table-striped small">
+<table id="T_a6e2d" class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
-<th id="T_f9292_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">path</th>
-<th id="T_f9292_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">category</th>
-<th id="T_f9292_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">n_tokens</th>
-<th id="T_f9292_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">directiveness</th>
-<th id="T_f9292_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">mood_marker_pct</th>
-<th id="T_f9292_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">hard_prohibitions_pct</th>
-<th id="T_f9292_level0_col6" class="col_heading level0 col6" data-quarto-table-cell-role="th">caps_imp_pct</th>
-<th id="T_f9292_level0_col7" class="col_heading level0 col7" data-quarto-table-cell-role="th">directive_sent_pct</th>
-<th id="T_f9292_level0_col8" class="col_heading level0 col8" data-quarto-table-cell-role="th">configuring_sent_pct</th>
-<th id="T_f9292_level0_col9" class="col_heading level0 col9" data-quarto-table-cell-role="th">collaborative_sent_pct</th>
-<th id="T_f9292_level0_col10" class="col_heading level0 col10" data-quarto-table-cell-role="th">permissive_sent_pct</th>
-<th id="T_f9292_level0_col11" class="col_heading level0 col11" data-quarto-table-cell-role="th">appreciative_sent_pct</th>
-<th id="T_f9292_level0_col12" class="col_heading level0 col12" data-quarto-table-cell-role="th">just_ratio</th>
+<th id="T_a6e2d_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">path</th>
+<th id="T_a6e2d_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">category</th>
+<th id="T_a6e2d_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">n_tokens</th>
+<th id="T_a6e2d_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">directiveness</th>
+<th id="T_a6e2d_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">mood_marker_pct</th>
+<th id="T_a6e2d_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">hard_prohibitions_pct</th>
+<th id="T_a6e2d_level0_col6" class="col_heading level0 col6" data-quarto-table-cell-role="th">caps_imp_pct</th>
+<th id="T_a6e2d_level0_col7" class="col_heading level0 col7" data-quarto-table-cell-role="th">directive_sent_pct</th>
+<th id="T_a6e2d_level0_col8" class="col_heading level0 col8" data-quarto-table-cell-role="th">configuring_sent_pct</th>
+<th id="T_a6e2d_level0_col9" class="col_heading level0 col9" data-quarto-table-cell-role="th">collaborative_sent_pct</th>
+<th id="T_a6e2d_level0_col10" class="col_heading level0 col10" data-quarto-table-cell-role="th">permissive_sent_pct</th>
+<th id="T_a6e2d_level0_col11" class="col_heading level0 col11" data-quarto-table-cell-role="th">appreciative_sent_pct</th>
+<th id="T_a6e2d_level0_col12" class="col_heading level0 col12" data-quarto-table-cell-role="th">just_ratio</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<th id="T_f9292_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">0</th>
-<td id="T_f9292_row0_col0" class="data row0 col0">tool-description-bash-no-newlines.md</td>
-<td id="T_f9292_row0_col1" class="data row0 col1">Tool description</td>
-<td id="T_f9292_row0_col2" class="data row0 col2">16</td>
-<td id="T_f9292_row0_col3" class="data row0 col3">19.22</td>
-<td id="T_f9292_row0_col4" class="data row0 col4">6.25</td>
-<td id="T_f9292_row0_col5" class="data row0 col5">6.25</td>
-<td id="T_f9292_row0_col6" class="data row0 col6">6.25</td>
-<td id="T_f9292_row0_col7" class="data row0 col7">100.0</td>
-<td id="T_f9292_row0_col8" class="data row0 col8">0.0</td>
-<td id="T_f9292_row0_col9" class="data row0 col9">0.0</td>
-<td id="T_f9292_row0_col10" class="data row0 col10">0.0</td>
-<td id="T_f9292_row0_col11" class="data row0 col11">0.0</td>
-<td id="T_f9292_row0_col12" class="data row0 col12">0.00</td>
+<th id="T_a6e2d_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">0</th>
+<td id="T_a6e2d_row0_col0" class="data row0 col0">tool-description-bash-no-newlines.md</td>
+<td id="T_a6e2d_row0_col1" class="data row0 col1">Tool description</td>
+<td id="T_a6e2d_row0_col2" class="data row0 col2">16</td>
+<td id="T_a6e2d_row0_col3" class="data row0 col3">19.22</td>
+<td id="T_a6e2d_row0_col4" class="data row0 col4">6.25</td>
+<td id="T_a6e2d_row0_col5" class="data row0 col5">6.25</td>
+<td id="T_a6e2d_row0_col6" class="data row0 col6">6.25</td>
+<td id="T_a6e2d_row0_col7" class="data row0 col7">100.0</td>
+<td id="T_a6e2d_row0_col8" class="data row0 col8">0.0</td>
+<td id="T_a6e2d_row0_col9" class="data row0 col9">0.0</td>
+<td id="T_a6e2d_row0_col10" class="data row0 col10">0.0</td>
+<td id="T_a6e2d_row0_col11" class="data row0 col11">0.0</td>
+<td id="T_a6e2d_row0_col12" class="data row0 col12">0.00</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">1</th>
-<td id="T_f9292_row1_col0" class="data row1 col0">tool-description-bash-sandbox-default-to-sandbox.md</td>
-<td id="T_f9292_row1_col1" class="data row1 col1">Tool description</td>
-<td id="T_f9292_row1_col2" class="data row1 col2">18</td>
-<td id="T_f9292_row1_col3" class="data row1 col3">18.37</td>
-<td id="T_f9292_row1_col4" class="data row1 col4">16.67</td>
-<td id="T_f9292_row1_col5" class="data row1 col5">5.56</td>
-<td id="T_f9292_row1_col6" class="data row1 col6">0.00</td>
-<td id="T_f9292_row1_col7" class="data row1 col7">100.0</td>
-<td id="T_f9292_row1_col8" class="data row1 col8">50.0</td>
-<td id="T_f9292_row1_col9" class="data row1 col9">0.0</td>
-<td id="T_f9292_row1_col10" class="data row1 col10">0.0</td>
-<td id="T_f9292_row1_col11" class="data row1 col11">0.0</td>
-<td id="T_f9292_row1_col12" class="data row1 col12">0.00</td>
+<th id="T_a6e2d_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">1</th>
+<td id="T_a6e2d_row1_col0" class="data row1 col0">tool-description-bash-sandbox-default-to-sandbox.md</td>
+<td id="T_a6e2d_row1_col1" class="data row1 col1">Tool description</td>
+<td id="T_a6e2d_row1_col2" class="data row1 col2">18</td>
+<td id="T_a6e2d_row1_col3" class="data row1 col3">18.37</td>
+<td id="T_a6e2d_row1_col4" class="data row1 col4">16.67</td>
+<td id="T_a6e2d_row1_col5" class="data row1 col5">5.56</td>
+<td id="T_a6e2d_row1_col6" class="data row1 col6">0.00</td>
+<td id="T_a6e2d_row1_col7" class="data row1 col7">100.0</td>
+<td id="T_a6e2d_row1_col8" class="data row1 col8">50.0</td>
+<td id="T_a6e2d_row1_col9" class="data row1 col9">0.0</td>
+<td id="T_a6e2d_row1_col10" class="data row1 col10">0.0</td>
+<td id="T_a6e2d_row1_col11" class="data row1 col11">0.0</td>
+<td id="T_a6e2d_row1_col12" class="data row1 col12">0.00</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2</th>
-<td id="T_f9292_row2_col0" class="data row2 col0">tool-description-bash-sandbox-mandatory-mode.md</td>
-<td id="T_f9292_row2_col1" class="data row2 col1">Tool description</td>
-<td id="T_f9292_row2_col2" class="data row2 col2">15</td>
-<td id="T_f9292_row2_col3" class="data row2 col3">15.44</td>
-<td id="T_f9292_row2_col4" class="data row2 col4">6.67</td>
-<td id="T_f9292_row2_col5" class="data row2 col5">0.00</td>
-<td id="T_f9292_row2_col6" class="data row2 col6">6.67</td>
-<td id="T_f9292_row2_col7" class="data row2 col7">100.0</td>
-<td id="T_f9292_row2_col8" class="data row2 col8">0.0</td>
-<td id="T_f9292_row2_col9" class="data row2 col9">0.0</td>
-<td id="T_f9292_row2_col10" class="data row2 col10">0.0</td>
-<td id="T_f9292_row2_col11" class="data row2 col11">0.0</td>
-<td id="T_f9292_row2_col12" class="data row2 col12">0.00</td>
+<th id="T_a6e2d_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2</th>
+<td id="T_a6e2d_row2_col0" class="data row2 col0">tool-description-bash-sandbox-mandatory-mode.md</td>
+<td id="T_a6e2d_row2_col1" class="data row2 col1">Tool description</td>
+<td id="T_a6e2d_row2_col2" class="data row2 col2">15</td>
+<td id="T_a6e2d_row2_col3" class="data row2 col3">15.44</td>
+<td id="T_a6e2d_row2_col4" class="data row2 col4">6.67</td>
+<td id="T_a6e2d_row2_col5" class="data row2 col5">0.00</td>
+<td id="T_a6e2d_row2_col6" class="data row2 col6">6.67</td>
+<td id="T_a6e2d_row2_col7" class="data row2 col7">100.0</td>
+<td id="T_a6e2d_row2_col8" class="data row2 col8">0.0</td>
+<td id="T_a6e2d_row2_col9" class="data row2 col9">0.0</td>
+<td id="T_a6e2d_row2_col10" class="data row2 col10">0.0</td>
+<td id="T_a6e2d_row2_col11" class="data row2 col11">0.0</td>
+<td id="T_a6e2d_row2_col12" class="data row2 col12">0.00</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">3</th>
-<td id="T_f9292_row3_col0" class="data row3 col0">tool-description-bash-sandbox-retry-without-sandbox.md</td>
-<td id="T_f9292_row3_col1" class="data row3 col1">Tool description</td>
-<td id="T_f9292_row3_col2" class="data row3 col2">12</td>
-<td id="T_f9292_row3_col3" class="data row3 col3">12.16</td>
-<td id="T_f9292_row3_col4" class="data row3 col4">8.33</td>
-<td id="T_f9292_row3_col5" class="data row3 col5">8.33</td>
-<td id="T_f9292_row3_col6" class="data row3 col6">0.00</td>
-<td id="T_f9292_row3_col7" class="data row3 col7">100.0</td>
-<td id="T_f9292_row3_col8" class="data row3 col8">0.0</td>
-<td id="T_f9292_row3_col9" class="data row3 col9">0.0</td>
-<td id="T_f9292_row3_col10" class="data row3 col10">0.0</td>
-<td id="T_f9292_row3_col11" class="data row3 col11">0.0</td>
-<td id="T_f9292_row3_col12" class="data row3 col12">0.00</td>
+<th id="T_a6e2d_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">3</th>
+<td id="T_a6e2d_row3_col0" class="data row3 col0">tool-description-bash-sandbox-retry-without-sandbox.md</td>
+<td id="T_a6e2d_row3_col1" class="data row3 col1">Tool description</td>
+<td id="T_a6e2d_row3_col2" class="data row3 col2">12</td>
+<td id="T_a6e2d_row3_col3" class="data row3 col3">12.16</td>
+<td id="T_a6e2d_row3_col4" class="data row3 col4">8.33</td>
+<td id="T_a6e2d_row3_col5" class="data row3 col5">8.33</td>
+<td id="T_a6e2d_row3_col6" class="data row3 col6">0.00</td>
+<td id="T_a6e2d_row3_col7" class="data row3 col7">100.0</td>
+<td id="T_a6e2d_row3_col8" class="data row3 col8">0.0</td>
+<td id="T_a6e2d_row3_col9" class="data row3 col9">0.0</td>
+<td id="T_a6e2d_row3_col10" class="data row3 col10">0.0</td>
+<td id="T_a6e2d_row3_col11" class="data row3 col11">0.0</td>
+<td id="T_a6e2d_row3_col12" class="data row3 col12">0.00</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">4</th>
-<td id="T_f9292_row4_col0" class="data row4 col0">tool-description-bash-sleep-run-immediately.md</td>
-<td id="T_f9292_row4_col1" class="data row4 col1">Tool description</td>
-<td id="T_f9292_row4_col2" class="data row4 col2">14</td>
-<td id="T_f9292_row4_col3" class="data row4 col3">10.68</td>
-<td id="T_f9292_row4_col4" class="data row4 col4">7.14</td>
-<td id="T_f9292_row4_col5" class="data row4 col5">7.14</td>
-<td id="T_f9292_row4_col6" class="data row4 col6">0.00</td>
-<td id="T_f9292_row4_col7" class="data row4 col7">100.0</td>
-<td id="T_f9292_row4_col8" class="data row4 col8">0.0</td>
-<td id="T_f9292_row4_col9" class="data row4 col9">0.0</td>
-<td id="T_f9292_row4_col10" class="data row4 col10">0.0</td>
-<td id="T_f9292_row4_col11" class="data row4 col11">0.0</td>
-<td id="T_f9292_row4_col12" class="data row4 col12">0.00</td>
+<th id="T_a6e2d_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">4</th>
+<td id="T_a6e2d_row4_col0" class="data row4 col0">tool-description-bash-sleep-run-immediately.md</td>
+<td id="T_a6e2d_row4_col1" class="data row4 col1">Tool description</td>
+<td id="T_a6e2d_row4_col2" class="data row4 col2">14</td>
+<td id="T_a6e2d_row4_col3" class="data row4 col3">10.68</td>
+<td id="T_a6e2d_row4_col4" class="data row4 col4">7.14</td>
+<td id="T_a6e2d_row4_col5" class="data row4 col5">7.14</td>
+<td id="T_a6e2d_row4_col6" class="data row4 col6">0.00</td>
+<td id="T_a6e2d_row4_col7" class="data row4 col7">100.0</td>
+<td id="T_a6e2d_row4_col8" class="data row4 col8">0.0</td>
+<td id="T_a6e2d_row4_col9" class="data row4 col9">0.0</td>
+<td id="T_a6e2d_row4_col10" class="data row4 col10">0.0</td>
+<td id="T_a6e2d_row4_col11" class="data row4 col11">0.0</td>
+<td id="T_a6e2d_row4_col12" class="data row4 col12">0.00</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">5</th>
-<td id="T_f9292_row5_col0" class="data row5 col0">tool-description-bash-semicolon-usage.md</td>
-<td id="T_f9292_row5_col1" class="data row5 col1">Tool description</td>
-<td id="T_f9292_row5_col2" class="data row5 col2">21</td>
-<td id="T_f9292_row5_col3" class="data row5 col3">10.11</td>
-<td id="T_f9292_row5_col4" class="data row5 col4">9.52</td>
-<td id="T_f9292_row5_col5" class="data row5 col5">4.76</td>
-<td id="T_f9292_row5_col6" class="data row5 col6">0.00</td>
-<td id="T_f9292_row5_col7" class="data row5 col7">100.0</td>
-<td id="T_f9292_row5_col8" class="data row5 col8">0.0</td>
-<td id="T_f9292_row5_col9" class="data row5 col9">0.0</td>
-<td id="T_f9292_row5_col10" class="data row5 col10">0.0</td>
-<td id="T_f9292_row5_col11" class="data row5 col11">0.0</td>
-<td id="T_f9292_row5_col12" class="data row5 col12">0.00</td>
+<th id="T_a6e2d_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">5</th>
+<td id="T_a6e2d_row5_col0" class="data row5 col0">tool-description-bash-semicolon-usage.md</td>
+<td id="T_a6e2d_row5_col1" class="data row5 col1">Tool description</td>
+<td id="T_a6e2d_row5_col2" class="data row5 col2">21</td>
+<td id="T_a6e2d_row5_col3" class="data row5 col3">10.11</td>
+<td id="T_a6e2d_row5_col4" class="data row5 col4">9.52</td>
+<td id="T_a6e2d_row5_col5" class="data row5 col5">4.76</td>
+<td id="T_a6e2d_row5_col6" class="data row5 col6">0.00</td>
+<td id="T_a6e2d_row5_col7" class="data row5 col7">100.0</td>
+<td id="T_a6e2d_row5_col8" class="data row5 col8">0.0</td>
+<td id="T_a6e2d_row5_col9" class="data row5 col9">0.0</td>
+<td id="T_a6e2d_row5_col10" class="data row5 col10">0.0</td>
+<td id="T_a6e2d_row5_col11" class="data row5 col11">0.0</td>
+<td id="T_a6e2d_row5_col12" class="data row5 col12">0.00</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">6</th>
-<td id="T_f9292_row6_col0" class="data row6 col0">system-prompt-one-of-six-rules-for-using-sleep-command.md</td>
-<td id="T_f9292_row6_col1" class="data row6 col1">System prompt</td>
-<td id="T_f9292_row6_col2" class="data row6 col2">15</td>
-<td id="T_f9292_row6_col3" class="data row6 col3">10.09</td>
-<td id="T_f9292_row6_col4" class="data row6 col4">6.67</td>
-<td id="T_f9292_row6_col5" class="data row6 col5">6.67</td>
-<td id="T_f9292_row6_col6" class="data row6 col6">0.00</td>
-<td id="T_f9292_row6_col7" class="data row6 col7">100.0</td>
-<td id="T_f9292_row6_col8" class="data row6 col8">0.0</td>
-<td id="T_f9292_row6_col9" class="data row6 col9">0.0</td>
-<td id="T_f9292_row6_col10" class="data row6 col10">0.0</td>
-<td id="T_f9292_row6_col11" class="data row6 col11">0.0</td>
-<td id="T_f9292_row6_col12" class="data row6 col12">0.00</td>
+<th id="T_a6e2d_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">6</th>
+<td id="T_a6e2d_row6_col0" class="data row6 col0">system-prompt-one-of-six-rules-for-using-sleep-command.md</td>
+<td id="T_a6e2d_row6_col1" class="data row6 col1">System prompt</td>
+<td id="T_a6e2d_row6_col2" class="data row6 col2">15</td>
+<td id="T_a6e2d_row6_col3" class="data row6 col3">10.09</td>
+<td id="T_a6e2d_row6_col4" class="data row6 col4">6.67</td>
+<td id="T_a6e2d_row6_col5" class="data row6 col5">6.67</td>
+<td id="T_a6e2d_row6_col6" class="data row6 col6">0.00</td>
+<td id="T_a6e2d_row6_col7" class="data row6 col7">100.0</td>
+<td id="T_a6e2d_row6_col8" class="data row6 col8">0.0</td>
+<td id="T_a6e2d_row6_col9" class="data row6 col9">0.0</td>
+<td id="T_a6e2d_row6_col10" class="data row6 col10">0.0</td>
+<td id="T_a6e2d_row6_col11" class="data row6 col11">0.0</td>
+<td id="T_a6e2d_row6_col12" class="data row6 col12">0.00</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">7</th>
-<td id="T_f9292_row7_col0" class="data row7 col0">system-prompt-tone-and-style-concise-output-short.md</td>
-<td id="T_f9292_row7_col1" class="data row7 col1">System prompt</td>
-<td id="T_f9292_row7_col2" class="data row7 col2">8</td>
-<td id="T_f9292_row7_col3" class="data row7 col3">10.00</td>
-<td id="T_f9292_row7_col4" class="data row7 col4">0.00</td>
-<td id="T_f9292_row7_col5" class="data row7 col5">0.00</td>
-<td id="T_f9292_row7_col6" class="data row7 col6">0.00</td>
-<td id="T_f9292_row7_col7" class="data row7 col7">100.0</td>
-<td id="T_f9292_row7_col8" class="data row7 col8">100.0</td>
-<td id="T_f9292_row7_col9" class="data row7 col9">0.0</td>
-<td id="T_f9292_row7_col10" class="data row7 col10">0.0</td>
-<td id="T_f9292_row7_col11" class="data row7 col11">0.0</td>
-<td id="T_f9292_row7_col12" class="data row7 col12">0.00</td>
+<th id="T_a6e2d_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">7</th>
+<td id="T_a6e2d_row7_col0" class="data row7 col0">system-prompt-tone-and-style-concise-output-short.md</td>
+<td id="T_a6e2d_row7_col1" class="data row7 col1">System prompt</td>
+<td id="T_a6e2d_row7_col2" class="data row7 col2">8</td>
+<td id="T_a6e2d_row7_col3" class="data row7 col3">10.00</td>
+<td id="T_a6e2d_row7_col4" class="data row7 col4">0.00</td>
+<td id="T_a6e2d_row7_col5" class="data row7 col5">0.00</td>
+<td id="T_a6e2d_row7_col6" class="data row7 col6">0.00</td>
+<td id="T_a6e2d_row7_col7" class="data row7 col7">100.0</td>
+<td id="T_a6e2d_row7_col8" class="data row7 col8">100.0</td>
+<td id="T_a6e2d_row7_col9" class="data row7 col9">0.0</td>
+<td id="T_a6e2d_row7_col10" class="data row7 col10">0.0</td>
+<td id="T_a6e2d_row7_col11" class="data row7 col11">0.0</td>
+<td id="T_a6e2d_row7_col12" class="data row7 col12">0.00</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">8</th>
-<td id="T_f9292_row8_col0" class="data row8 col0">tool-description-bash-sandbox-no-exceptions.md</td>
-<td id="T_f9292_row8_col1" class="data row8 col1">Tool description</td>
-<td id="T_f9292_row8_col2" class="data row8 col2">11</td>
-<td id="T_f9292_row8_col3" class="data row8 col3">9.19</td>
-<td id="T_f9292_row8_col4" class="data row8 col4">9.09</td>
-<td id="T_f9292_row8_col5" class="data row8 col5">9.09</td>
-<td id="T_f9292_row8_col6" class="data row8 col6">0.00</td>
-<td id="T_f9292_row8_col7" class="data row8 col7">0.0</td>
-<td id="T_f9292_row8_col8" class="data row8 col8">0.0</td>
-<td id="T_f9292_row8_col9" class="data row8 col9">0.0</td>
-<td id="T_f9292_row8_col10" class="data row8 col10">0.0</td>
-<td id="T_f9292_row8_col11" class="data row8 col11">0.0</td>
-<td id="T_f9292_row8_col12" class="data row8 col12">0.00</td>
+<th id="T_a6e2d_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">8</th>
+<td id="T_a6e2d_row8_col0" class="data row8 col0">tool-description-bash-sandbox-no-exceptions.md</td>
+<td id="T_a6e2d_row8_col1" class="data row8 col1">Tool description</td>
+<td id="T_a6e2d_row8_col2" class="data row8 col2">11</td>
+<td id="T_a6e2d_row8_col3" class="data row8 col3">9.19</td>
+<td id="T_a6e2d_row8_col4" class="data row8 col4">9.09</td>
+<td id="T_a6e2d_row8_col5" class="data row8 col5">9.09</td>
+<td id="T_a6e2d_row8_col6" class="data row8 col6">0.00</td>
+<td id="T_a6e2d_row8_col7" class="data row8 col7">0.0</td>
+<td id="T_a6e2d_row8_col8" class="data row8 col8">0.0</td>
+<td id="T_a6e2d_row8_col9" class="data row8 col9">0.0</td>
+<td id="T_a6e2d_row8_col10" class="data row8 col10">0.0</td>
+<td id="T_a6e2d_row8_col11" class="data row8 col11">0.0</td>
+<td id="T_a6e2d_row8_col12" class="data row8 col12">0.00</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">9</th>
-<td id="T_f9292_row9_col0" class="data row9 col0">tool-description-bash-sandbox-tmpdir.md</td>
-<td id="T_f9292_row9_col1" class="data row9 col1">Tool description</td>
-<td id="T_f9292_row9_col2" class="data row9 col2">33</td>
-<td id="T_f9292_row9_col3" class="data row9 col3">8.52</td>
-<td id="T_f9292_row9_col4" class="data row9 col4">6.06</td>
-<td id="T_f9292_row9_col5" class="data row9 col5">3.03</td>
-<td id="T_f9292_row9_col6" class="data row9 col6">0.00</td>
-<td id="T_f9292_row9_col7" class="data row9 col7">66.7</td>
-<td id="T_f9292_row9_col8" class="data row9 col8">33.3</td>
-<td id="T_f9292_row9_col9" class="data row9 col9">0.0</td>
-<td id="T_f9292_row9_col10" class="data row9 col10">0.0</td>
-<td id="T_f9292_row9_col11" class="data row9 col11">0.0</td>
-<td id="T_f9292_row9_col12" class="data row9 col12">0.00</td>
+<th id="T_a6e2d_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">9</th>
+<td id="T_a6e2d_row9_col0" class="data row9 col0">tool-description-bash-sandbox-tmpdir.md</td>
+<td id="T_a6e2d_row9_col1" class="data row9 col1">Tool description</td>
+<td id="T_a6e2d_row9_col2" class="data row9 col2">33</td>
+<td id="T_a6e2d_row9_col3" class="data row9 col3">8.52</td>
+<td id="T_a6e2d_row9_col4" class="data row9 col4">6.06</td>
+<td id="T_a6e2d_row9_col5" class="data row9 col5">3.03</td>
+<td id="T_a6e2d_row9_col6" class="data row9 col6">0.00</td>
+<td id="T_a6e2d_row9_col7" class="data row9 col7">66.7</td>
+<td id="T_a6e2d_row9_col8" class="data row9 col8">33.3</td>
+<td id="T_a6e2d_row9_col9" class="data row9 col9">0.0</td>
+<td id="T_a6e2d_row9_col10" class="data row9 col10">0.0</td>
+<td id="T_a6e2d_row9_col11" class="data row9 col11">0.0</td>
+<td id="T_a6e2d_row9_col12" class="data row9 col12">0.00</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">10</th>
-<td id="T_f9292_row10_col0" class="data row10 col0">tool-description-bash-sleep-keep-short.md</td>
-<td id="T_f9292_row10_col1" class="data row10 col1">Tool description</td>
-<td id="T_f9292_row10_col2" class="data row10 col2">15</td>
-<td id="T_f9292_row10_col3" class="data row10 col3">8.48</td>
-<td id="T_f9292_row10_col4" class="data row10 col4">13.33</td>
-<td id="T_f9292_row10_col5" class="data row10 col5">0.00</td>
-<td id="T_f9292_row10_col6" class="data row10 col6">0.00</td>
-<td id="T_f9292_row10_col7" class="data row10 col7">100.0</td>
-<td id="T_f9292_row10_col8" class="data row10 col8">0.0</td>
-<td id="T_f9292_row10_col9" class="data row10 col9">0.0</td>
-<td id="T_f9292_row10_col10" class="data row10 col10">0.0</td>
-<td id="T_f9292_row10_col11" class="data row10 col11">0.0</td>
-<td id="T_f9292_row10_col12" class="data row10 col12">0.33</td>
+<th id="T_a6e2d_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">10</th>
+<td id="T_a6e2d_row10_col0" class="data row10 col0">tool-description-bash-sleep-keep-short.md</td>
+<td id="T_a6e2d_row10_col1" class="data row10 col1">Tool description</td>
+<td id="T_a6e2d_row10_col2" class="data row10 col2">15</td>
+<td id="T_a6e2d_row10_col3" class="data row10 col3">8.48</td>
+<td id="T_a6e2d_row10_col4" class="data row10 col4">13.33</td>
+<td id="T_a6e2d_row10_col5" class="data row10 col5">0.00</td>
+<td id="T_a6e2d_row10_col6" class="data row10 col6">0.00</td>
+<td id="T_a6e2d_row10_col7" class="data row10 col7">100.0</td>
+<td id="T_a6e2d_row10_col8" class="data row10 col8">0.0</td>
+<td id="T_a6e2d_row10_col9" class="data row10 col9">0.0</td>
+<td id="T_a6e2d_row10_col10" class="data row10 col10">0.0</td>
+<td id="T_a6e2d_row10_col11" class="data row10 col11">0.0</td>
+<td id="T_a6e2d_row10_col12" class="data row10 col12">0.33</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">11</th>
-<td id="T_f9292_row11_col0" class="data row11 col0">tool-description-sendmessagetool.md</td>
-<td id="T_f9292_row11_col1" class="data row11 col1">Tool description</td>
-<td id="T_f9292_row11_col2" class="data row11 col2">149</td>
-<td id="T_f9292_row11_col3" class="data row11 col3">7.73</td>
-<td id="T_f9292_row11_col4" class="data row11 col4">4.70</td>
-<td id="T_f9292_row11_col5" class="data row11 col5">3.36</td>
-<td id="T_f9292_row11_col6" class="data row11 col6">0.67</td>
-<td id="T_f9292_row11_col7" class="data row11 col7">75.0</td>
-<td id="T_f9292_row11_col8" class="data row11 col8">12.5</td>
-<td id="T_f9292_row11_col9" class="data row11 col9">0.0</td>
-<td id="T_f9292_row11_col10" class="data row11 col10">0.0</td>
-<td id="T_f9292_row11_col11" class="data row11 col11">0.0</td>
-<td id="T_f9292_row11_col12" class="data row11 col12">0.00</td>
+<th id="T_a6e2d_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">11</th>
+<td id="T_a6e2d_row11_col0" class="data row11 col0">tool-description-sendmessagetool.md</td>
+<td id="T_a6e2d_row11_col1" class="data row11 col1">Tool description</td>
+<td id="T_a6e2d_row11_col2" class="data row11 col2">149</td>
+<td id="T_a6e2d_row11_col3" class="data row11 col3">7.73</td>
+<td id="T_a6e2d_row11_col4" class="data row11 col4">4.70</td>
+<td id="T_a6e2d_row11_col5" class="data row11 col5">3.36</td>
+<td id="T_a6e2d_row11_col6" class="data row11 col6">0.67</td>
+<td id="T_a6e2d_row11_col7" class="data row11 col7">75.0</td>
+<td id="T_a6e2d_row11_col8" class="data row11 col8">12.5</td>
+<td id="T_a6e2d_row11_col9" class="data row11 col9">0.0</td>
+<td id="T_a6e2d_row11_col10" class="data row11 col10">0.0</td>
+<td id="T_a6e2d_row11_col11" class="data row11 col11">0.0</td>
+<td id="T_a6e2d_row11_col12" class="data row11 col12">0.00</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">12</th>
-<td id="T_f9292_row12_col0" class="data row12 col0">tool-description-bash-sandbox-no-sensitive-paths.md</td>
-<td id="T_f9292_row12_col1" class="data row12 col1">Tool description</td>
-<td id="T_f9292_row12_col2" class="data row12 col2">22</td>
-<td id="T_f9292_row12_col3" class="data row12 col3">7.45</td>
-<td id="T_f9292_row12_col4" class="data row12 col4">4.55</td>
-<td id="T_f9292_row12_col5" class="data row12 col5">4.55</td>
-<td id="T_f9292_row12_col6" class="data row12 col6">0.00</td>
-<td id="T_f9292_row12_col7" class="data row12 col7">100.0</td>
-<td id="T_f9292_row12_col8" class="data row12 col8">0.0</td>
-<td id="T_f9292_row12_col9" class="data row12 col9">0.0</td>
-<td id="T_f9292_row12_col10" class="data row12 col10">0.0</td>
-<td id="T_f9292_row12_col11" class="data row12 col11">0.0</td>
-<td id="T_f9292_row12_col12" class="data row12 col12">0.00</td>
+<th id="T_a6e2d_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">12</th>
+<td id="T_a6e2d_row12_col0" class="data row12 col0">tool-description-bash-sandbox-no-sensitive-paths.md</td>
+<td id="T_a6e2d_row12_col1" class="data row12 col1">Tool description</td>
+<td id="T_a6e2d_row12_col2" class="data row12 col2">22</td>
+<td id="T_a6e2d_row12_col3" class="data row12 col3">7.45</td>
+<td id="T_a6e2d_row12_col4" class="data row12 col4">4.55</td>
+<td id="T_a6e2d_row12_col5" class="data row12 col5">4.55</td>
+<td id="T_a6e2d_row12_col6" class="data row12 col6">0.00</td>
+<td id="T_a6e2d_row12_col7" class="data row12 col7">100.0</td>
+<td id="T_a6e2d_row12_col8" class="data row12 col8">0.0</td>
+<td id="T_a6e2d_row12_col9" class="data row12 col9">0.0</td>
+<td id="T_a6e2d_row12_col10" class="data row12 col10">0.0</td>
+<td id="T_a6e2d_row12_col11" class="data row12 col11">0.0</td>
+<td id="T_a6e2d_row12_col12" class="data row12 col12">0.00</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">13</th>
-<td id="T_f9292_row13_col0" class="data row13 col0">tool-description-bash-sleep-no-polling-background-tasks.md</td>
-<td id="T_f9292_row13_col1" class="data row13 col1">Tool description</td>
-<td id="T_f9292_row13_col2" class="data row13 col2">22</td>
-<td id="T_f9292_row13_col3" class="data row13 col3">7.45</td>
-<td id="T_f9292_row13_col4" class="data row13 col4">4.55</td>
-<td id="T_f9292_row13_col5" class="data row13 col5">4.55</td>
-<td id="T_f9292_row13_col6" class="data row13 col6">0.00</td>
-<td id="T_f9292_row13_col7" class="data row13 col7">100.0</td>
-<td id="T_f9292_row13_col8" class="data row13 col8">0.0</td>
-<td id="T_f9292_row13_col9" class="data row13 col9">0.0</td>
-<td id="T_f9292_row13_col10" class="data row13 col10">0.0</td>
-<td id="T_f9292_row13_col11" class="data row13 col11">0.0</td>
-<td id="T_f9292_row13_col12" class="data row13 col12">0.00</td>
+<th id="T_a6e2d_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">13</th>
+<td id="T_a6e2d_row13_col0" class="data row13 col0">tool-description-bash-sleep-no-polling-background-tasks.md</td>
+<td id="T_a6e2d_row13_col1" class="data row13 col1">Tool description</td>
+<td id="T_a6e2d_row13_col2" class="data row13 col2">22</td>
+<td id="T_a6e2d_row13_col3" class="data row13 col3">7.45</td>
+<td id="T_a6e2d_row13_col4" class="data row13 col4">4.55</td>
+<td id="T_a6e2d_row13_col5" class="data row13 col5">4.55</td>
+<td id="T_a6e2d_row13_col6" class="data row13 col6">0.00</td>
+<td id="T_a6e2d_row13_col7" class="data row13 col7">100.0</td>
+<td id="T_a6e2d_row13_col8" class="data row13 col8">0.0</td>
+<td id="T_a6e2d_row13_col9" class="data row13 col9">0.0</td>
+<td id="T_a6e2d_row13_col10" class="data row13 col10">0.0</td>
+<td id="T_a6e2d_row13_col11" class="data row13 col11">0.0</td>
+<td id="T_a6e2d_row13_col12" class="data row13 col12">0.00</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">14</th>
-<td id="T_f9292_row14_col0" class="data row14 col0">tool-description-bash-sleep-use-check-commands.md</td>
-<td id="T_f9292_row14_col1" class="data row14 col1">Tool description</td>
-<td id="T_f9292_row14_col2" class="data row14 col2">20</td>
-<td id="T_f9292_row14_col3" class="data row14 col3">6.81</td>
-<td id="T_f9292_row14_col4" class="data row14 col4">10.00</td>
-<td id="T_f9292_row14_col5" class="data row14 col5">0.00</td>
-<td id="T_f9292_row14_col6" class="data row14 col6">0.00</td>
-<td id="T_f9292_row14_col7" class="data row14 col7">100.0</td>
-<td id="T_f9292_row14_col8" class="data row14 col8">0.0</td>
-<td id="T_f9292_row14_col9" class="data row14 col9">0.0</td>
-<td id="T_f9292_row14_col10" class="data row14 col10">0.0</td>
-<td id="T_f9292_row14_col11" class="data row14 col11">0.0</td>
-<td id="T_f9292_row14_col12" class="data row14 col12">0.00</td>
+<th id="T_a6e2d_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">14</th>
+<td id="T_a6e2d_row14_col0" class="data row14 col0">tool-description-bash-sleep-use-check-commands.md</td>
+<td id="T_a6e2d_row14_col1" class="data row14 col1">Tool description</td>
+<td id="T_a6e2d_row14_col2" class="data row14 col2">20</td>
+<td id="T_a6e2d_row14_col3" class="data row14 col3">6.81</td>
+<td id="T_a6e2d_row14_col4" class="data row14 col4">10.00</td>
+<td id="T_a6e2d_row14_col5" class="data row14 col5">0.00</td>
+<td id="T_a6e2d_row14_col6" class="data row14 col6">0.00</td>
+<td id="T_a6e2d_row14_col7" class="data row14 col7">100.0</td>
+<td id="T_a6e2d_row14_col8" class="data row14 col8">0.0</td>
+<td id="T_a6e2d_row14_col9" class="data row14 col9">0.0</td>
+<td id="T_a6e2d_row14_col10" class="data row14 col10">0.0</td>
+<td id="T_a6e2d_row14_col11" class="data row14 col11">0.0</td>
+<td id="T_a6e2d_row14_col12" class="data row14 col12">0.00</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">15</th>
-<td id="T_f9292_row15_col0" class="data row15 col0">system-prompt-avoiding-unnecessary-sleep-commands-part-of-powershell-tool-description.md</td>
-<td id="T_f9292_row15_col1" class="data row15 col1">System prompt</td>
-<td id="T_f9292_row15_col2" class="data row15 col2">132</td>
-<td id="T_f9292_row15_col3" class="data row15 col3">6.15</td>
-<td id="T_f9292_row15_col4" class="data row15 col4">5.30</td>
-<td id="T_f9292_row15_col5" class="data row15 col5">2.27</td>
-<td id="T_f9292_row15_col6" class="data row15 col6">0.00</td>
-<td id="T_f9292_row15_col7" class="data row15 col7">100.0</td>
-<td id="T_f9292_row15_col8" class="data row15 col8">0.0</td>
-<td id="T_f9292_row15_col9" class="data row15 col9">0.0</td>
-<td id="T_f9292_row15_col10" class="data row15 col10">0.0</td>
-<td id="T_f9292_row15_col11" class="data row15 col11">0.0</td>
-<td id="T_f9292_row15_col12" class="data row15 col12">0.12</td>
+<th id="T_a6e2d_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">15</th>
+<td id="T_a6e2d_row15_col0" class="data row15 col0">system-prompt-avoiding-unnecessary-sleep-commands-part-of-powershell-tool-description.md</td>
+<td id="T_a6e2d_row15_col1" class="data row15 col1">System prompt</td>
+<td id="T_a6e2d_row15_col2" class="data row15 col2">132</td>
+<td id="T_a6e2d_row15_col3" class="data row15 col3">6.15</td>
+<td id="T_a6e2d_row15_col4" class="data row15 col4">5.30</td>
+<td id="T_a6e2d_row15_col5" class="data row15 col5">2.27</td>
+<td id="T_a6e2d_row15_col6" class="data row15 col6">0.00</td>
+<td id="T_a6e2d_row15_col7" class="data row15 col7">100.0</td>
+<td id="T_a6e2d_row15_col8" class="data row15 col8">0.0</td>
+<td id="T_a6e2d_row15_col9" class="data row15 col9">0.0</td>
+<td id="T_a6e2d_row15_col10" class="data row15 col10">0.0</td>
+<td id="T_a6e2d_row15_col11" class="data row15 col11">0.0</td>
+<td id="T_a6e2d_row15_col12" class="data row15 col12">0.12</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">16</th>
-<td id="T_f9292_row16_col0" class="data row16 col0">tool-description-websearch.md</td>
-<td id="T_f9292_row16_col1" class="data row16 col1">Tool description</td>
-<td id="T_f9292_row16_col2" class="data row16 col2">241</td>
-<td id="T_f9292_row16_col3" class="data row16 col3">5.59</td>
-<td id="T_f9292_row16_col4" class="data row16 col4">3.73</td>
-<td id="T_f9292_row16_col5" class="data row16 col5">0.41</td>
-<td id="T_f9292_row16_col6" class="data row16 col6">2.49</td>
-<td id="T_f9292_row16_col7" class="data row16 col7">42.9</td>
-<td id="T_f9292_row16_col8" class="data row16 col8">0.0</td>
-<td id="T_f9292_row16_col9" class="data row16 col9">0.0</td>
-<td id="T_f9292_row16_col10" class="data row16 col10">0.0</td>
-<td id="T_f9292_row16_col11" class="data row16 col11">0.0</td>
-<td id="T_f9292_row16_col12" class="data row16 col12">0.00</td>
+<th id="T_a6e2d_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">16</th>
+<td id="T_a6e2d_row16_col0" class="data row16 col0">tool-description-websearch.md</td>
+<td id="T_a6e2d_row16_col1" class="data row16 col1">Tool description</td>
+<td id="T_a6e2d_row16_col2" class="data row16 col2">241</td>
+<td id="T_a6e2d_row16_col3" class="data row16 col3">5.59</td>
+<td id="T_a6e2d_row16_col4" class="data row16 col4">3.73</td>
+<td id="T_a6e2d_row16_col5" class="data row16 col5">0.41</td>
+<td id="T_a6e2d_row16_col6" class="data row16 col6">2.49</td>
+<td id="T_a6e2d_row16_col7" class="data row16 col7">42.9</td>
+<td id="T_a6e2d_row16_col8" class="data row16 col8">0.0</td>
+<td id="T_a6e2d_row16_col9" class="data row16 col9">0.0</td>
+<td id="T_a6e2d_row16_col10" class="data row16 col10">0.0</td>
+<td id="T_a6e2d_row16_col11" class="data row16 col11">0.0</td>
+<td id="T_a6e2d_row16_col12" class="data row16 col12">0.00</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">17</th>
-<td id="T_f9292_row17_col0" class="data row17 col0">system-reminder-plan-mode-is-active-subagent.md</td>
-<td id="T_f9292_row17_col1" class="data row17 col1">System reminder</td>
-<td id="T_f9292_row17_col2" class="data row17 col2">177</td>
-<td id="T_f9292_row17_col3" class="data row17 col3">5.19</td>
-<td id="T_f9292_row17_col4" class="data row17 col4">4.52</td>
-<td id="T_f9292_row17_col5" class="data row17 col5">1.13</td>
-<td id="T_f9292_row17_col6" class="data row17 col6">1.13</td>
-<td id="T_f9292_row17_col7" class="data row17 col7">62.5</td>
-<td id="T_f9292_row17_col8" class="data row17 col8">0.0</td>
-<td id="T_f9292_row17_col9" class="data row17 col9">0.0</td>
-<td id="T_f9292_row17_col10" class="data row17 col10">0.0</td>
-<td id="T_f9292_row17_col11" class="data row17 col11">0.0</td>
-<td id="T_f9292_row17_col12" class="data row17 col12">0.11</td>
+<th id="T_a6e2d_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">17</th>
+<td id="T_a6e2d_row17_col0" class="data row17 col0">system-reminder-plan-mode-is-active-subagent.md</td>
+<td id="T_a6e2d_row17_col1" class="data row17 col1">System reminder</td>
+<td id="T_a6e2d_row17_col2" class="data row17 col2">177</td>
+<td id="T_a6e2d_row17_col3" class="data row17 col3">5.19</td>
+<td id="T_a6e2d_row17_col4" class="data row17 col4">4.52</td>
+<td id="T_a6e2d_row17_col5" class="data row17 col5">1.13</td>
+<td id="T_a6e2d_row17_col6" class="data row17 col6">1.13</td>
+<td id="T_a6e2d_row17_col7" class="data row17 col7">62.5</td>
+<td id="T_a6e2d_row17_col8" class="data row17 col8">0.0</td>
+<td id="T_a6e2d_row17_col9" class="data row17 col9">0.0</td>
+<td id="T_a6e2d_row17_col10" class="data row17 col10">0.0</td>
+<td id="T_a6e2d_row17_col11" class="data row17 col11">0.0</td>
+<td id="T_a6e2d_row17_col12" class="data row17 col12">0.11</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">18</th>
-<td id="T_f9292_row18_col0" class="data row18 col0">agent-prompt-quick-git-commit.md</td>
-<td id="T_f9292_row18_col1" class="data row18 col1">Agent prompt</td>
-<td id="T_f9292_row18_col2" class="data row18 col2">373</td>
-<td id="T_f9292_row18_col3" class="data row18 col3">5.17</td>
-<td id="T_f9292_row18_col4" class="data row18 col4">2.95</td>
-<td id="T_f9292_row18_col5" class="data row18 col5">2.14</td>
-<td id="T_f9292_row18_col6" class="data row18 col6">1.34</td>
-<td id="T_f9292_row18_col7" class="data row18 col7">54.5</td>
-<td id="T_f9292_row18_col8" class="data row18 col8">0.0</td>
-<td id="T_f9292_row18_col9" class="data row18 col9">0.0</td>
-<td id="T_f9292_row18_col10" class="data row18 col10">0.0</td>
-<td id="T_f9292_row18_col11" class="data row18 col11">0.0</td>
-<td id="T_f9292_row18_col12" class="data row18 col12">0.08</td>
+<th id="T_a6e2d_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">18</th>
+<td id="T_a6e2d_row18_col0" class="data row18 col0">agent-prompt-quick-git-commit.md</td>
+<td id="T_a6e2d_row18_col1" class="data row18 col1">Agent prompt</td>
+<td id="T_a6e2d_row18_col2" class="data row18 col2">373</td>
+<td id="T_a6e2d_row18_col3" class="data row18 col3">5.17</td>
+<td id="T_a6e2d_row18_col4" class="data row18 col4">2.95</td>
+<td id="T_a6e2d_row18_col5" class="data row18 col5">2.14</td>
+<td id="T_a6e2d_row18_col6" class="data row18 col6">1.34</td>
+<td id="T_a6e2d_row18_col7" class="data row18 col7">54.5</td>
+<td id="T_a6e2d_row18_col8" class="data row18 col8">0.0</td>
+<td id="T_a6e2d_row18_col9" class="data row18 col9">0.0</td>
+<td id="T_a6e2d_row18_col10" class="data row18 col10">0.0</td>
+<td id="T_a6e2d_row18_col11" class="data row18 col11">0.0</td>
+<td id="T_a6e2d_row18_col12" class="data row18 col12">0.08</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">19</th>
-<td id="T_f9292_row19_col0" class="data row19 col0">tool-description-askuserquestion-preview-field.md</td>
-<td id="T_f9292_row19_col1" class="data row19 col1">Tool description</td>
-<td id="T_f9292_row19_col2" class="data row19 col2">104</td>
-<td id="T_f9292_row19_col3" class="data row19 col3">4.91</td>
-<td id="T_f9292_row19_col4" class="data row19 col4">1.92</td>
-<td id="T_f9292_row19_col5" class="data row19 col5">0.96</td>
-<td id="T_f9292_row19_col6" class="data row19 col6">0.00</td>
-<td id="T_f9292_row19_col7" class="data row19 col7">66.7</td>
-<td id="T_f9292_row19_col8" class="data row19 col8">33.3</td>
-<td id="T_f9292_row19_col9" class="data row19 col9">0.0</td>
-<td id="T_f9292_row19_col10" class="data row19 col10">0.0</td>
-<td id="T_f9292_row19_col11" class="data row19 col11">0.0</td>
-<td id="T_f9292_row19_col12" class="data row19 col12">0.00</td>
+<th id="T_a6e2d_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">19</th>
+<td id="T_a6e2d_row19_col0" class="data row19 col0">tool-description-askuserquestion-preview-field.md</td>
+<td id="T_a6e2d_row19_col1" class="data row19 col1">Tool description</td>
+<td id="T_a6e2d_row19_col2" class="data row19 col2">104</td>
+<td id="T_a6e2d_row19_col3" class="data row19 col3">4.91</td>
+<td id="T_a6e2d_row19_col4" class="data row19 col4">1.92</td>
+<td id="T_a6e2d_row19_col5" class="data row19 col5">0.96</td>
+<td id="T_a6e2d_row19_col6" class="data row19 col6">0.00</td>
+<td id="T_a6e2d_row19_col7" class="data row19 col7">66.7</td>
+<td id="T_a6e2d_row19_col8" class="data row19 col8">33.3</td>
+<td id="T_a6e2d_row19_col9" class="data row19 col9">0.0</td>
+<td id="T_a6e2d_row19_col10" class="data row19 col10">0.0</td>
+<td id="T_a6e2d_row19_col11" class="data row19 col11">0.0</td>
+<td id="T_a6e2d_row19_col12" class="data row19 col12">0.00</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row20" class="row_heading level0 row20" data-quarto-table-cell-role="th">20</th>
-<td id="T_f9292_row20_col0" class="data row20 col0">tool-description-bash-sandbox-evidence-operation-not-permitted.md</td>
-<td id="T_f9292_row20_col1" class="data row20 col1">Tool description</td>
-<td id="T_f9292_row20_col2" class="data row20 col2">11</td>
-<td id="T_f9292_row20_col3" class="data row20 col3">4.64</td>
-<td id="T_f9292_row20_col4" class="data row20 col4">0.00</td>
-<td id="T_f9292_row20_col5" class="data row20 col5">9.09</td>
-<td id="T_f9292_row20_col6" class="data row20 col6">0.00</td>
-<td id="T_f9292_row20_col7" class="data row20 col7">0.0</td>
-<td id="T_f9292_row20_col8" class="data row20 col8">0.0</td>
-<td id="T_f9292_row20_col9" class="data row20 col9">0.0</td>
-<td id="T_f9292_row20_col10" class="data row20 col10">0.0</td>
-<td id="T_f9292_row20_col11" class="data row20 col11">0.0</td>
-<td id="T_f9292_row20_col12" class="data row20 col12">0.00</td>
+<th id="T_a6e2d_level0_row20" class="row_heading level0 row20" data-quarto-table-cell-role="th">20</th>
+<td id="T_a6e2d_row20_col0" class="data row20 col0">tool-description-bash-sandbox-evidence-operation-not-permitted.md</td>
+<td id="T_a6e2d_row20_col1" class="data row20 col1">Tool description</td>
+<td id="T_a6e2d_row20_col2" class="data row20 col2">11</td>
+<td id="T_a6e2d_row20_col3" class="data row20 col3">4.64</td>
+<td id="T_a6e2d_row20_col4" class="data row20 col4">0.00</td>
+<td id="T_a6e2d_row20_col5" class="data row20 col5">9.09</td>
+<td id="T_a6e2d_row20_col6" class="data row20 col6">0.00</td>
+<td id="T_a6e2d_row20_col7" class="data row20 col7">0.0</td>
+<td id="T_a6e2d_row20_col8" class="data row20 col8">0.0</td>
+<td id="T_a6e2d_row20_col9" class="data row20 col9">0.0</td>
+<td id="T_a6e2d_row20_col10" class="data row20 col10">0.0</td>
+<td id="T_a6e2d_row20_col11" class="data row20 col11">0.0</td>
+<td id="T_a6e2d_row20_col12" class="data row20 col12">0.00</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row21" class="row_heading level0 row21" data-quarto-table-cell-role="th">21</th>
-<td id="T_f9292_row21_col0" class="data row21 col0">tool-description-edit.md</td>
-<td id="T_f9292_row21_col1" class="data row21 col1">Tool description</td>
-<td id="T_f9292_row21_col2" class="data row21 col2">140</td>
-<td id="T_f9292_row21_col3" class="data row21 col3">4.42</td>
-<td id="T_f9292_row21_col4" class="data row21 col4">3.57</td>
-<td id="T_f9292_row21_col5" class="data row21 col5">1.43</td>
-<td id="T_f9292_row21_col6" class="data row21 col6">1.43</td>
-<td id="T_f9292_row21_col7" class="data row21 col7">37.5</td>
-<td id="T_f9292_row21_col8" class="data row21 col8">0.0</td>
-<td id="T_f9292_row21_col9" class="data row21 col9">0.0</td>
-<td id="T_f9292_row21_col10" class="data row21 col10">0.0</td>
-<td id="T_f9292_row21_col11" class="data row21 col11">0.0</td>
-<td id="T_f9292_row21_col12" class="data row21 col12">0.00</td>
+<th id="T_a6e2d_level0_row21" class="row_heading level0 row21" data-quarto-table-cell-role="th">21</th>
+<td id="T_a6e2d_row21_col0" class="data row21 col0">tool-description-edit.md</td>
+<td id="T_a6e2d_row21_col1" class="data row21 col1">Tool description</td>
+<td id="T_a6e2d_row21_col2" class="data row21 col2">140</td>
+<td id="T_a6e2d_row21_col3" class="data row21 col3">4.42</td>
+<td id="T_a6e2d_row21_col4" class="data row21 col4">3.57</td>
+<td id="T_a6e2d_row21_col5" class="data row21 col5">1.43</td>
+<td id="T_a6e2d_row21_col6" class="data row21 col6">1.43</td>
+<td id="T_a6e2d_row21_col7" class="data row21 col7">37.5</td>
+<td id="T_a6e2d_row21_col8" class="data row21 col8">0.0</td>
+<td id="T_a6e2d_row21_col9" class="data row21 col9">0.0</td>
+<td id="T_a6e2d_row21_col10" class="data row21 col10">0.0</td>
+<td id="T_a6e2d_row21_col11" class="data row21 col11">0.0</td>
+<td id="T_a6e2d_row21_col12" class="data row21 col12">0.00</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row22" class="row_heading level0 row22" data-quarto-table-cell-role="th">22</th>
-<td id="T_f9292_row22_col0" class="data row22 col0">system-reminder-plan-mode-approval-tool-enforcement.md</td>
-<td id="T_f9292_row22_col1" class="data row22 col1">System reminder</td>
-<td id="T_f9292_row22_col2" class="data row22 col2">169</td>
-<td id="T_f9292_row22_col3" class="data row22 col3">4.40</td>
-<td id="T_f9292_row22_col4" class="data row22 col4">3.55</td>
-<td id="T_f9292_row22_col5" class="data row22 col5">1.18</td>
-<td id="T_f9292_row22_col6" class="data row22 col6">0.59</td>
-<td id="T_f9292_row22_col7" class="data row22 col7">75.0</td>
-<td id="T_f9292_row22_col8" class="data row22 col8">0.0</td>
-<td id="T_f9292_row22_col9" class="data row22 col9">0.0</td>
-<td id="T_f9292_row22_col10" class="data row22 col10">0.0</td>
-<td id="T_f9292_row22_col11" class="data row22 col11">0.0</td>
-<td id="T_f9292_row22_col12" class="data row22 col12">0.00</td>
+<th id="T_a6e2d_level0_row22" class="row_heading level0 row22" data-quarto-table-cell-role="th">22</th>
+<td id="T_a6e2d_row22_col0" class="data row22 col0">system-reminder-plan-mode-approval-tool-enforcement.md</td>
+<td id="T_a6e2d_row22_col1" class="data row22 col1">System reminder</td>
+<td id="T_a6e2d_row22_col2" class="data row22 col2">169</td>
+<td id="T_a6e2d_row22_col3" class="data row22 col3">4.40</td>
+<td id="T_a6e2d_row22_col4" class="data row22 col4">3.55</td>
+<td id="T_a6e2d_row22_col5" class="data row22 col5">1.18</td>
+<td id="T_a6e2d_row22_col6" class="data row22 col6">0.59</td>
+<td id="T_a6e2d_row22_col7" class="data row22 col7">75.0</td>
+<td id="T_a6e2d_row22_col8" class="data row22 col8">0.0</td>
+<td id="T_a6e2d_row22_col9" class="data row22 col9">0.0</td>
+<td id="T_a6e2d_row22_col10" class="data row22 col10">0.0</td>
+<td id="T_a6e2d_row22_col11" class="data row22 col11">0.0</td>
+<td id="T_a6e2d_row22_col12" class="data row22 col12">0.00</td>
 </tr>
 <tr class="even">
-<th id="T_f9292_level0_row23" class="row_heading level0 row23" data-quarto-table-cell-role="th">23</th>
-<td id="T_f9292_row23_col0" class="data row23 col0">tool-description-webfetch.md</td>
-<td id="T_f9292_row23_col1" class="data row23 col1">Tool description</td>
-<td id="T_f9292_row23_col2" class="data row23 col2">248</td>
-<td id="T_f9292_row23_col3" class="data row23 col3">4.26</td>
-<td id="T_f9292_row23_col4" class="data row23 col4">0.81</td>
-<td id="T_f9292_row23_col5" class="data row23 col5">0.00</td>
-<td id="T_f9292_row23_col6" class="data row23 col6">0.40</td>
-<td id="T_f9292_row23_col7" class="data row23 col7">66.7</td>
-<td id="T_f9292_row23_col8" class="data row23 col8">33.3</td>
-<td id="T_f9292_row23_col9" class="data row23 col9">0.0</td>
-<td id="T_f9292_row23_col10" class="data row23 col10">0.0</td>
-<td id="T_f9292_row23_col11" class="data row23 col11">0.0</td>
-<td id="T_f9292_row23_col12" class="data row23 col12">0.00</td>
+<th id="T_a6e2d_level0_row23" class="row_heading level0 row23" data-quarto-table-cell-role="th">23</th>
+<td id="T_a6e2d_row23_col0" class="data row23 col0">tool-description-webfetch.md</td>
+<td id="T_a6e2d_row23_col1" class="data row23 col1">Tool description</td>
+<td id="T_a6e2d_row23_col2" class="data row23 col2">248</td>
+<td id="T_a6e2d_row23_col3" class="data row23 col3">4.26</td>
+<td id="T_a6e2d_row23_col4" class="data row23 col4">0.81</td>
+<td id="T_a6e2d_row23_col5" class="data row23 col5">0.00</td>
+<td id="T_a6e2d_row23_col6" class="data row23 col6">0.40</td>
+<td id="T_a6e2d_row23_col7" class="data row23 col7">66.7</td>
+<td id="T_a6e2d_row23_col8" class="data row23 col8">33.3</td>
+<td id="T_a6e2d_row23_col9" class="data row23 col9">0.0</td>
+<td id="T_a6e2d_row23_col10" class="data row23 col10">0.0</td>
+<td id="T_a6e2d_row23_col11" class="data row23 col11">0.0</td>
+<td id="T_a6e2d_row23_col12" class="data row23 col12">0.00</td>
 </tr>
 <tr class="odd">
-<th id="T_f9292_level0_row24" class="row_heading level0 row24" data-quarto-table-cell-role="th">24</th>
-<td id="T_f9292_row24_col0" class="data row24 col0">tool-description-bash-sandbox-per-command.md</td>
-<td id="T_f9292_row24_col1" class="data row24 col1">Tool description</td>
-<td id="T_f9292_row24_col2" class="data row24 col2">31</td>
-<td id="T_f9292_row24_col3" class="data row24 col3">3.95</td>
-<td id="T_f9292_row24_col4" class="data row24 col4">0.00</td>
-<td id="T_f9292_row24_col5" class="data row24 col5">0.00</td>
-<td id="T_f9292_row24_col6" class="data row24 col6">0.00</td>
-<td id="T_f9292_row24_col7" class="data row24 col7">50.0</td>
-<td id="T_f9292_row24_col8" class="data row24 col8">50.0</td>
-<td id="T_f9292_row24_col9" class="data row24 col9">0.0</td>
-<td id="T_f9292_row24_col10" class="data row24 col10">0.0</td>
-<td id="T_f9292_row24_col11" class="data row24 col11">0.0</td>
-<td id="T_f9292_row24_col12" class="data row24 col12">0.00</td>
+<th id="T_a6e2d_level0_row24" class="row_heading level0 row24" data-quarto-table-cell-role="th">24</th>
+<td id="T_a6e2d_row24_col0" class="data row24 col0">tool-description-bash-sandbox-per-command.md</td>
+<td id="T_a6e2d_row24_col1" class="data row24 col1">Tool description</td>
+<td id="T_a6e2d_row24_col2" class="data row24 col2">31</td>
+<td id="T_a6e2d_row24_col3" class="data row24 col3">3.95</td>
+<td id="T_a6e2d_row24_col4" class="data row24 col4">0.00</td>
+<td id="T_a6e2d_row24_col5" class="data row24 col5">0.00</td>
+<td id="T_a6e2d_row24_col6" class="data row24 col6">0.00</td>
+<td id="T_a6e2d_row24_col7" class="data row24 col7">50.0</td>
+<td id="T_a6e2d_row24_col8" class="data row24 col8">50.0</td>
+<td id="T_a6e2d_row24_col9" class="data row24 col9">0.0</td>
+<td id="T_a6e2d_row24_col10" class="data row24 col10">0.0</td>
+<td id="T_a6e2d_row24_col11" class="data row24 col11">0.0</td>
+<td id="T_a6e2d_row24_col12" class="data row24 col12">0.00</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-b67789ad65a0476b88c7faeee58a4c51.vega-embed {
+  #altair-viz-793d10fbd1d043988507b2813b2c1a22.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-b67789ad65a0476b88c7faeee58a4c51.vega-embed details,
-  #altair-viz-b67789ad65a0476b88c7faeee58a4c51.vega-embed details summary {
+  #altair-viz-793d10fbd1d043988507b2813b2c1a22.vega-embed details,
+  #altair-viz-793d10fbd1d043988507b2813b2c1a22.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-b67789ad65a0476b88c7faeee58a4c51"></div>
+<div id="altair-viz-793d10fbd1d043988507b2813b2c1a22"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-b67789ad65a0476b88c7faeee58a4c51") {
-      outputDiv = document.getElementById("altair-viz-b67789ad65a0476b88c7faeee58a4c51");
+    if (outputDiv.id !== "altair-viz-793d10fbd1d043988507b2813b2c1a22") {
+      outputDiv = document.getElementById("altair-viz-793d10fbd1d043988507b2813b2c1a22");
     }
 
     const paths = {
@@ -1427,7 +1421,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Why both units exist</strong>: - <code>% of words</code> (the <code>pct</code> column) is normalized by document length — answers “what fraction of this file’s prose is this feature?”. Best for comparing across files of different sizes. - <code>per sentence</code> (the <code>per_sent</code> column) is normalized by sentence count — answers “how often per sentence does this feature appear?”. Best for comparing across files where typical sentence length differs.</p>
 <p>A category with <strong>long, dense sentences</strong> (e.g.&nbsp;<em>Tool description</em> at ~40 tokens/sentence) will have similar <code>pct</code> to a category with shorter sentences but a <strong>higher <code>per_sent</code></strong> — because each sentence packs in more matches. A category with <strong>short sentences</strong> (e.g.&nbsp;<em>System reminder</em> at ~32 tokens/sentence) sits closer between the two views.</p>
 <p>Use the legend to toggle one unit on/off and compare the same metric under both normalizations.</p>
-<div id="ea7906a0-f634-476e-98c5-ff726b6be0de" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:04:20.502725Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:04:20.502631Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:04:20.573264Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:04:20.572911Z&quot;}}" data-execution_count="8">
+<div id="ea7906a0-f634-476e-98c5-ff726b6be0de" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:04:20.502725Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:04:20.502631Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:04:20.573264Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:04:20.572911Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-word vs per-sentence comparison: vconcat of hconcat rows, one metric per row.</span></span>
@@ -1498,26 +1492,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="4">
 
 <style>
-  #altair-viz-c42c008e17034f1c8c43362dd4664136.vega-embed {
+  #altair-viz-a3c1c8a58f4d49e499192c01b5403544.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-c42c008e17034f1c8c43362dd4664136.vega-embed details,
-  #altair-viz-c42c008e17034f1c8c43362dd4664136.vega-embed details summary {
+  #altair-viz-a3c1c8a58f4d49e499192c01b5403544.vega-embed details,
+  #altair-viz-a3c1c8a58f4d49e499192c01b5403544.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-c42c008e17034f1c8c43362dd4664136"></div>
+<div id="altair-viz-a3c1c8a58f4d49e499192c01b5403544"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-c42c008e17034f1c8c43362dd4664136") {
-      outputDiv = document.getElementById("altair-viz-c42c008e17034f1c8c43362dd4664136");
+    if (outputDiv.id !== "altair-viz-a3c1c8a58f4d49e499192c01b5403544") {
+      outputDiv = document.getElementById("altair-viz-a3c1c8a58f4d49e499192c01b5403544");
     }
 
     const paths = {
@@ -1578,7 +1572,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="the-composite-directiveness-z-score-is-a-useful-summary-but-the-formula-is-ad-hoc-by-construction-eight-metrics-equally-weighted-hand-picked.-the-bash-sandbox-tool-descriptions-topping-the-chart-is-a-robust-ranking-those-files-are-the-most-directive-prompts-in-the-corpus-by-any-reasonable-reading-but-the-precise-z-score-values-shouldnt-be-quoted-as-if-they-had-measurement-grade-meaning.-the-defensible-reading-is-the-bash-sandbox-family-ranks-at-the-top-under-any-reasonable-composite-of-imperative-density-prohibition-density-caps-density-directive-sentence-density-the-exact-18.94-z-score-is-a-summary-number-not-a-calibrated-metric.">&gt; The composite directiveness z-score is a useful summary, but the formula is <strong>ad-hoc by construction</strong> — eight metrics, equally weighted, hand-picked. The bash-sandbox tool descriptions topping the chart is a robust ranking (those files <em>are</em> the most directive prompts in the corpus by any reasonable reading), but the precise z-score values shouldn’t be quoted as if they had measurement-grade meaning. The defensible reading is “the bash-sandbox family ranks at the top under any reasonable composite of imperative density / prohibition density / CAPS density / directive-sentence density”; the exact 18.94 z-score is a summary number, not a calibrated metric.</h2>
 
 
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
