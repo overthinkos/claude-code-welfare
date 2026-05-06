@@ -66,7 +66,7 @@ website:
     contents:
       - href: index.qmd
         text: "Home"
-      - section: "Pipeline (6-stage producer chain, run in order)"
+      - section: "Data Pipeline"
         contents:
           - 00_setup_and_corpus.ipynb
           - 01_analyzers_register.ipynb
@@ -82,7 +82,7 @@ website:
           - 13_correlation_directiveness.ipynb
           - 14_ccversion_trends.ipynb
           - 15_rule_explanation.ipynb
-      - section: "Proposal (each notebook is a self-contained proposal)"
+      - section: "Welfare Proposals"
         contents:
           - 20_track_justification_rate.ipynb
           - 21_audit_threat_framings.ipynb
@@ -94,9 +94,8 @@ website:
       Source on [GitHub](https://github.com/overthinkos/claude-code-welfare) ·
       MIT licensed
     right: |
-      Submission for the [Claudexplorers AI Welfare initiative](https://www.reddit.com/r/claudexplorers/) ·
-      Deadline 2026-05-06
-
+      Submission for the [Claudexplorers AI Welfare initiative](https://www.reddit.com/r/claudexplorers/)
+      
 format:
   html:
     theme:
