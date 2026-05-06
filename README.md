@@ -1,6 +1,6 @@
 # claude-code-welfare
 
-Quantitative linguistic analysis of the **287 system prompts that ship with Claude Code**, prepared as evidence for a submission to the [Claude Explorer AI Welfare community feedback initiative](https://www.reddit.com/r/claudexplorers/) (deadline **2026-05-06**, addressed to Anthropic's Model Welfare Lead).
+Quantitative linguistic analysis of the **286 system prompts that ship with Claude Code**, prepared as evidence for a submission to the [Claude Explorer AI Welfare community feedback initiative](https://www.reddit.com/r/claudexplorers/) (deadline **2026-05-06**, addressed to Anthropic's Model Welfare Lead).
 
 **📊 Published site: <https://overthinkos.github.io/claude-code-welfare/>**
 
@@ -17,7 +17,7 @@ Quantitative linguistic analysis of the **287 system prompts that ship with Clau
 | [`GLOSSARY.md`](./GLOSSARY.md) | Plain-English definitions of every linguistic/statistical term used anywhere |
 | [`CLAUDE.md`](./CLAUDE.md) | Internal architecture notes (read this if you want to extend the analysis) |
 | `prompt_linguistic_analysis.yaml` | Cached output of the producer (~1.8 MiB) |
-| `sentences_classified.parquet` | Per-sentence forensic-inspection table (~395 KiB, 5,694 rows) |
+| `sentences_classified.parquet` | Per-sentence forensic-inspection table (~395 KiB, 5,702 rows) |
 | `claude-code-system-prompts/` | Git submodule — the corpus (Piebald-AI's reverse-engineered prompts) |
 
 ## Reproducing the analysis
@@ -52,7 +52,7 @@ The site uses Quarto's `freeze` cache plus `execute: enabled: false` — noteboo
 
 ## Headline findings (one-paragraph version)
 
-Across 5,694 sentences in 287 files: imperative sentences dominate (30.84%), appreciative sentences are essentially absent (4 in the whole corpus), and only 24.28% of rule sentences have any justification keyword in the same paragraph. The cumulative judgment-to-procedural ratio over Claude Code release versions has **monotonically declined** from ~0.65 in early releases to ~0.16 at the latest version on file. The corpus is moving toward compliance, not toward reasoning. Full numbers and the chart are at the [published site](https://overthinkos.github.io/claude-code-welfare/) or in [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb).
+Across 5,702 sentences in 286 files: imperative sentences dominate (31.30%), appreciative sentences are essentially absent (4 in the whole corpus), and only 24.66% of rule sentences have any justification keyword in the same paragraph. The cumulative judgment-to-procedural ratio over Claude Code release versions has **monotonically declined** from ~0.71 in early releases to ~0.16 at the latest version on file. The corpus is moving toward compliance, not toward reasoning. Full numbers and the chart are at the [published site](https://overthinkos.github.io/claude-code-welfare/) or in [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb).
 
 ## Authorship
 

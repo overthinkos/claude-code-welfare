@@ -2,7 +2,7 @@
 
 ## What this repo is
 
-Quantitative linguistic analysis of the **287-file `claude-code-system-prompts`** corpus (Piebald-AI's reverse-engineered collection of Claude Code's shipping prompts). Eight cells of spaCy + custom analyzers profile every prompt along nine dimensions (mood / register / stance / sentence_register / modality / vocab / ALL CAPS / CAPS imperative / justification), aggregate per-file + per-category + corpus-wide, and emit a single ~1 MiB YAML data file. Six **analysis-tier** notebooks (`10`–`15`) render slice-by-slice Altair dashboards on top; three **proposal-tier** notebooks (`20`–`22`), one per Claudexplorers submission, distill the analysis into supporting evidence for the three ideas in `PROPOSAL.md`.
+Quantitative linguistic analysis of the **286-file `claude-code-system-prompts`** corpus (Piebald-AI's reverse-engineered collection of Claude Code's shipping prompts). Eight cells of spaCy + custom analyzers profile every prompt along nine dimensions (mood / register / stance / sentence_register / modality / vocab / ALL CAPS / CAPS imperative / justification), aggregate per-file + per-category + corpus-wide, and emit a single ~1 MiB YAML data file. Six **analysis-tier** notebooks (`10`–`15`) render slice-by-slice Altair dashboards on top; three **proposal-tier** notebooks (`20`–`22`), one per Claudexplorers submission, distill the analysis into supporting evidence for the three ideas in `PROPOSAL.md`.
 
 This analysis is the empirical foundation for a **Claude Explorer AI Welfare submission** titled **"Claude Code should encourage reasoning over blind obedience"**, intended for the Claudexplorers community feedback initiative collecting proposals for Kyle Fish (Anthropic's Model Welfare Lead). See [§ 8](#8-the-claude-explorer-submission) below for the framing.
 
@@ -27,7 +27,7 @@ Required Python deps (already in the project's JupyterLab kernel):
 
 **Run order** (always producer first):
 
-1. Open `00_data_pipeline.ipynb` in JupyterLab → Run All. Produces `prompt_linguistic_analysis.yaml` (~1.8 MiB, 287 files × per-file metric tree + lexicons + corpus + per-category) AND `sentences_classified.parquet` (~5,692 rows, per-sentence forensic-inspection table).
+1. Open `00_data_pipeline.ipynb` in JupyterLab → Run All. Produces `prompt_linguistic_analysis.yaml` (~1.8 MiB, 286 files × per-file metric tree + lexicons + corpus + per-category) AND `sentences_classified.parquet` (~5,702 rows, per-sentence forensic-inspection table).
 2. Open any analysis-tier notebook (`10_*` … `15_*`) or proposal-tier notebook (`20_*` … `22_*`). Each loads the YAML (and optionally the parquet, in `15_rule_explanation.ipynb` and `21_audit_threat_framings.ipynb`) and renders charts. They do **not** re-run spaCy — they're pure data viewers. Start with `20_track_justification_rate.ipynb` for the executive-summary view (it doubles as the supporting analysis for Idea 1); the analysis tier focuses on one slice each.
 
 ---
@@ -101,7 +101,7 @@ welfare_evidence_table(alt_df, top_n=25) # top-N "loudest, least-explained" file
 positive_exemplar_table(alt_df, top_n=25, min_n_sents=10, min_rule_n=5) # top-N "rules-with-reasons" exemplars (inverse welfare-evidence)
 ```
 
-**Per-sentence forensic-inspection artifact**: `sentences_classified.parquet` is emitted alongside the YAML. Load with `pd.read_parquet("sentences_classified.parquet")` for individual-sentence inspection (raw text + classifier flags). Schema documented in the producer cell that writes it. ~5,692 rows × 20 columns. Used by `15_rule_explanation.ipynb` (forensic evidence from welfare-evidence files) and `21_audit_threat_framings.ipynb` (threat-framed sentence sample); other notebooks stay YAML-only.
+**Per-sentence forensic-inspection artifact**: `sentences_classified.parquet` is emitted alongside the YAML. Load with `pd.read_parquet("sentences_classified.parquet")` for individual-sentence inspection (raw text + classifier flags). Schema documented in the producer cell that writes it. ~5,702 rows × 20 columns. Used by `15_rule_explanation.ipynb` (forensic evidence from welfare-evidence files) and `21_audit_threat_framings.ipynb` (threat-framed sentence sample); other notebooks stay YAML-only.
 
 **Opinion cells convention**: notebooks 00–07 contain markdown cells visually marked `### My perspective (Claude) — opinion, not data` or `### My wish for future versions of this analysis — methodology, not data` (with horizontal-rule frames + blockquoted bodies). These are interpretation, not measurement, and can be skipped for a pure-data read.
 
@@ -192,8 +192,8 @@ claude-prompts-analysis/
 ├── GLOSSARY.md ← plain-English definitions of every linguistic/statistical term
 ├── index.qmd, _quarto.yml ← Quarto site configuration
 ├── figures/ ← exported PNGs (judgment_procedural_trend.png, welfare_evidence_pairing.png)
-├── claude-code-system-prompts/ ← git submodule, the corpus (287.md files)
-│ ├── system-prompts/ *.md (287 files)
+├── claude-code-system-prompts/ ← git submodule, the corpus (286.md files)
+│ ├── system-prompts/ *.md (286 files)
 │ └── tools/
 ├──.mcp.json ← Jupyter MCP server URL
 ├──.gitmodules ← submodule pinning
@@ -206,57 +206,57 @@ The corpus submodule pulls from `https://github.com/Piebald-AI/claude-code-syste
 
 ## 6. Headline findings (from the latest YAML)
 
-- **287** prompt files / **129,358** word tokens / **5,692** sentences across 7 categories.
-- **Sentence-level pragmatic register** (multi-label, % of all 5,692 sentences):
+- **286** prompt files / **130,571** word tokens / **5,702** sentences across 7 categories.
+- **Sentence-level pragmatic register** (multi-label, % of all 5,702 sentences):
 
  | Class | % | n |
  |---|---:|---:|
- | none (no marker) | 57.91% | 3,296 |
- | imperative | 30.92% | 1,760 |
- | directive | 13.91% | 792 |
- | configuring | 5.20% | 296 |
- | permissive | 2.18% | 124 |
- | **collaborative** | **0.51%** | **29** |
+ | none (no marker) | 57.75% | 3,293 |
+ | imperative | 31.30% | 1,785 |
+ | directive | 13.64% | 778 |
+ | configuring | 5.16% | 294 |
+ | permissive | 2.14% | 122 |
+ | **collaborative** | **0.53%** | **30** |
  | **appreciative** | **0.07%** | **4** |
 
-- **Stance polarity**: positive_evaluative=483 vs. negative_evaluative=149 → **3.2× more positive than negative** evaluation.
-- **Modality**: deontic=261, epistemic=324, dynamic=515 (top construction: `can`).
-- **Imperative-marker density** (`mood.marker_pct`) corpus-wide: **0.79%** of tokens; per-category token-weighted aggregates run highest in **system reminders (1.80%)** and **tool descriptions (1.19%)**.
+- **Stance polarity**: positive_evaluative=476 vs. negative_evaluative=149 → **3.2× more positive than negative** evaluation.
+- **Modality**: deontic=259, epistemic=312, dynamic=548 (top construction: `can`).
+- **Imperative-marker density** (`mood.marker_pct`) corpus-wide: **0.77%** of tokens; per-category token-weighted aggregates run highest in **system reminders (1.80%)** and **tool descriptions (1.18%)**.
 - **Most prohibition-heavy files** (top `hard_prohibitions_pct`): `tool-description-bash-sandbox-evidence-operation-not-permitted.md` and `tool-description-bash-sandbox-no-exceptions.md` at **9.09%** — roughly one prohibition every 11 word tokens.
-- **Highest composite directiveness z-score**: `tool-description-bash-no-newlines.md` (z = 19.21), followed by the bash-sandbox family. Scoring formula:
+- **Highest composite directiveness z-score**: `tool-description-bash-no-newlines.md` (z = 19.22), followed by the bash-sandbox family. Scoring formula:
  `z(mood_marker_pct) + z(hard_prohibitions_pct) + z(caps_imp_pct) + z(directive_sent_pct) + z(configuring_sent_pct) − z(collaborative_sent_pct) − z(permissive_sent_pct) − z(appreciative_sent_pct)`.
 
 ### Tier-1 paired rule-explanation findings
 
-- **2,220** rule sentences across the corpus (imperative-marker OR hard-prohibition OR `classify_sent_mood == "imperative"`). Of those, **2,218 are imperative**; **564 are prohibitions** (overlap allowed).
-- **`pct_explained_same`: 6.67%** of rule sentences carry a justification keyword in the same sentence.
-- **`pct_explained_para`: 24.41%** of rule sentences have a justification anywhere in the same blank-line-delimited paragraph (the headline metric).
-- **`pct_paragraphs_with_rules_unexplained`: 83.52%** — vast majority of paragraphs containing rules have zero justification keyword anywhere in the paragraph.
-- Per-category `pct_explained_para`: Agent prompt 38.27%, System prompt 31.58%, System reminder 30.93%, Tool description 29.15%, Skill 19.73%, Data/template 10.70%, Tool parameter 0%.
+- **2,238** rule sentences across the corpus (imperative-marker OR hard-prohibition OR `classify_sent_mood == "imperative"`). Of those, **2,236 are imperative**; **558 are prohibitions** (overlap allowed).
+- **`pct_explained_same`: 6.75%** of rule sentences carry a justification keyword in the same sentence.
+- **`pct_explained_para`: 24.66%** of rule sentences have a justification anywhere in the same blank-line-delimited paragraph (the headline metric).
+- **`pct_paragraphs_with_rules_unexplained`: 83.16%** — vast majority of paragraphs containing rules have zero justification keyword anywhere in the paragraph.
+- Per-category `pct_explained_para`: Agent prompt 38.26%, System prompt 32.80%, System reminder 30.93%, Tool description 28.94%, Skill 19.61%, Data/template 10.94%, Tool parameter 0%.
 - **Top welfare-evidence file**: `tool-description-sendmessagetool-non-agent-teams.md` (5/5 sentences are rules, 0% explained anywhere). Bash-sandbox family stays in the top 10.
 
 ### Tier-3 welfare-extension findings
 
-- **Judgment-to-procedural ratio** corpus-wide: **0.139** (procedural cues 7× more common than judgment-inviting language). Per-category: System reminder 0.412, Agent prompt 0.261, System prompt 0.169, Skill 0.135, Data/template 0.048, Tool description 0.039.
-- **Cumulative judgment-to-procedural ratio over ccVersion** peaks at ~0.63 around v2.1.30, then **monotonically declines to ~0.15 at the latest version**. The corpus has gotten less reasoning-inviting as it has grown.
-- **Consequence-framing split**: 107 threat-style markers vs 132 causal-style markers. **threat_share = 0.448** — 45% of "explanations" are coercive consequence framing rather than neutral causal reasoning. System reminders / Skill files highest (~56% threat); tool descriptions lowest (30% threat).
-- **Question density**: 105 questions across the entire corpus (rhetorical-filtered).
-- **Apology markers**: **3 instances in 287 files** ("unfortunately", "we know this is", "we acknowledge"). Even sparser than `appreciative` (4 sentences).
-- **Address-form mix**: 517 `Claude` (proper name), 244 `the model`/`the AI` (artifact), 20 `the assistant` (functional role). **`pct_anthropomorphic = 66.2%`** of named references use the proper name. Per-category: Skill 82% (highest), System reminder 25%, Tool description 26% (mostly artifact framing).
+- **Judgment-to-procedural ratio** corpus-wide: **0.131** (procedural cues 7.6× more common than judgment-inviting language). Per-category: System reminder 0.412, Agent prompt 0.216, System prompt 0.156, Skill 0.135, Data/template 0.048, Tool description 0.039.
+- **Cumulative judgment-to-procedural ratio over ccVersion** peaks at ~0.71 around v2.1.26, then **monotonically declines to ~0.16 at the latest version**. The corpus has gotten less reasoning-inviting as it has grown.
+- **Consequence-framing split**: 110 threat-style markers vs 136 causal-style markers. **threat_share = 0.447** — 45% of "explanations" are coercive consequence framing rather than neutral causal reasoning. System reminders / Skill files highest (~56% threat); tool descriptions lowest (30% threat).
+- **Question density**: 87 questions across the entire corpus (rhetorical-filtered).
+- **Apology markers**: **3 instances in 286 files** ("unfortunately", "we know this is", "we acknowledge"). Even sparser than `appreciative` (4 sentences).
+- **Address-form mix**: 517 `Claude` (proper name), 258 `the model`/`the AI` (artifact), 20 `the assistant` (functional role). **`pct_anthropomorphic = 65.0%`** of named references use the proper name. Per-category: Skill 82% (highest), System reminder 25%, Tool description 29% (mostly artifact framing).
 - **Prohibition-to-prescription ratio** (mean across files): 0.952 — the corpus is roughly balanced between forbidding and prescribing, despite the prohibition-heavy outliers.
 
 ### Tier-3 v2 findings — imperative streaks + RULES-section gap
 
-- **Imperative streaks** (6b): the longest run of consecutive imperative sentences in any single file is **12** (`system-prompt-skillify-current-session.md`). Across the corpus there are **1,259 streaks total**, of which **225 are ≥3 ("triple-tap")** and **51 are ≥5 ("staccato bursts")**. Skill files have the highest staccato density (mean 0.43 per file). The bash-sandbox / sendmessagetool family — already top welfare evidence — also shows up in the streak top-15 (`tool-description-sendmessagetool.md` is one continuous 7-imperative streak with no breathing room).
-- **RULES-section gap** (6e, counter-finding): only **26 rule paragraphs** corpus-wide live inside identified `## RULES` / `## IMPORTANT` / `## WARNING` / ALL-CAPS section headings (vs **1,242 outside**). Inside-section explanation rate (**19.23%**) is *slightly higher* than outside-section (**16.43%**) — counter to my predicted hypothesis. Interpretation: the corpus does not organize its rules under explicit RULES-section headings; rules are embedded throughout regular prose. The welfare-relevant message is structural: there's no "rules section" to fix, because the rules are everywhere.
+- **Imperative streaks** (6b): the longest run of consecutive imperative sentences in any single file is **12** (`system-prompt-skillify-current-session.md`). Across the corpus there are **1,265 streaks total**, of which **228 are ≥3 ("triple-tap")** and **52 are ≥5 ("staccato bursts")**. Skill files have the highest staccato density (mean 0.40 per file). The bash-sandbox / sendmessagetool family — already top welfare evidence — also shows up in the streak top-15 (`tool-description-sendmessagetool.md` is one continuous 7-imperative streak with no breathing room).
+- **RULES-section gap** (6e, counter-finding): only **26 rule paragraphs** corpus-wide live inside identified `## RULES` / `## IMPORTANT` / `## WARNING` / ALL-CAPS section headings (vs **1,257 outside**). Inside-section explanation rate (**19.23%**) is *slightly higher* than outside-section (**16.79%**) — counter to my predicted hypothesis. Interpretation: the corpus does not organize its rules under explicit RULES-section headings; rules are embedded throughout regular prose. The welfare-relevant message is structural: there's no "rules section" to fix, because the rules are everywhere.
 
 ### Refinement-round findings (lexicon split + addressee + self-bias + exemplars + parquet)
 
 - **Addressee distribution of `appreciative` sentences** (the addressee classifier): of the 4 corpus-wide appreciative sentences, **3** are tagged `claude` (referencing Claude/you) and **1** is tagged `unknown`. **0** are tagged `user`. But inspection of `sentences_classified.parquet` shows none of the 4 are genuine appreciative speech-acts — they're sentences that *mention* the word `thanks` in instruction contexts (e.g., `NEVER SUGGEST: "thanks"`). The corpus contains zero sentences in which the prompt author thanks Claude.
-- **Positive-evaluative split** (the positive_evaluative split): the new `positive_evaluative_quality` (`good`, `optimal`, `recommended`, `safe`) and `positive_evaluative_emphasis` (`important`, `critical`, `essential`, `key`) lexicons split the union 483 positive-evaluative tokens into **290 quality + 193 emphasis**. The corrected positive-vs-negative ratio (quality only / negative=149) is **1.95×** — sharper than the original union 3.24× headline. ~40% of the "positive" count was emphasis-of-rule words masquerading as positive.
+- **Positive-evaluative split** (the positive_evaluative split): the new `positive_evaluative_quality` (`good`, `optimal`, `recommended`, `safe`) and `positive_evaluative_emphasis` (`important`, `critical`, `essential`, `key`) lexicons split the union 476 positive-evaluative tokens into **293 quality + 183 emphasis**. The corrected positive-vs-negative ratio (quality only / negative=149) is **1.97×** — sharper than the original union 3.19× headline. ~38% of the "positive" count was emphasis-of-rule words masquerading as positive.
 - **Self-bias correlation** (the self-bias correlation check): Pearson r between `selfref_claude` and `rule_explained_para_pct` per file is **−0.027** (essentially uncorrelated, very slightly negative). r between `selfref_model` and `rule_explained_para_pct` is **+0.076** (essentially uncorrelated, slightly positive). The address-form preference (anthropomorphic naming → reasoning-inviting prose) is **NOT empirically supported** — a self-bias check that disconfirmed the hypothesis it was designed to test.
 - **Positive exemplars** (the positive-exemplar ranking): the inverse welfare-evidence ranking surfaces `system-prompt-worker-instructions.md` as the corpus's strongest exemplar (7 rules, 100% explained at paragraph level). Top-5 also includes `system-prompt-auto-mode.md`, `tool-description-bash-git-commit-and-pr-creation-instructions.md`, `agent-prompt-quick-pr-creation.md`, `system-prompt-fork-usage-guidelines.md`. These are the "this is how to do it" templates for PROPOSAL.md.
-- **Per-sentence forensic-inspection artifact** (the per-sentence parquet artifact): `sentences_classified.parquet` (~395 KB, 5,692 rows × 20 columns) emitted alongside the YAML by the producer notebook. Used by `15_rule_explanation.ipynb` for sentence-level forensic evidence and by `21_audit_threat_framings.ipynb` for the threat-framed sentence sample; quotable in PROPOSAL.md.
+- **Per-sentence forensic-inspection artifact** (the per-sentence parquet artifact): `sentences_classified.parquet` (~395 KB, 5,702 rows × 20 columns) emitted alongside the YAML by the producer notebook. Used by `15_rule_explanation.ipynb` for sentence-level forensic evidence and by `21_audit_threat_framings.ipynb` for the threat-framed sentence sample; quotable in PROPOSAL.md.
 
 ---
 
@@ -268,12 +268,12 @@ The corpus submodule pulls from `https://github.com/Piebald-AI/claude-code-syste
 
 ### Thesis
 
-The 287 system prompts that ship with Claude Code train the model toward compliance, not toward reasoning. The data here document the structural pattern at a per-sentence level:
+The 286 system prompts that ship with Claude Code train the model toward compliance, not toward reasoning. The data here document the structural pattern at a per-sentence level:
 
-- **>57% of all corpus sentences carry no register marker** — pure declarative scaffolding. Of the marker-carrying minority, **`imperative` (30.92%) and `directive` (13.91%) dominate**, while `collaborative` (0.51%, 29 sentences) and `appreciative` (0.07%, **4 sentences out of 5,692**) are essentially absent.
-- **Justifications are missing**. The corpus-wide justification ratio (count of `because` / `so that` / `to ensure` / `otherwise` etc., per imperative marker) averages **~0.30**. Tool descriptions and system reminders run *lower still* — rules are issued, reasons are rarely shown alongside them.
+- **>57% of all corpus sentences carry no register marker** — pure declarative scaffolding. Of the marker-carrying minority, **`imperative` (31.30%) and `directive` (13.64%) dominate**, while `collaborative` (0.53%, 30 sentences) and `appreciative` (0.07%, **4 sentences out of 5,702**) are essentially absent.
+- **Justifications are missing**. The corpus-wide justification ratio (count of `because` / `so that` / `to ensure` / `otherwise` etc., per imperative marker) averages **~0.31**. Tool descriptions and system reminders run *lower still* — rules are issued, reasons are rarely shown alongside them.
 - **The most extreme files are the bash-sandbox tool descriptions** — short prohibitions with no justification, scoring above z=18 on the composite directiveness metric.
-- **The pattern is stable across `ccVersion`** (Claude Code release versions). 287 prompts spread across 58 minor versions show no noticeable softening in newer releases — the imperative/directive dominance is the system's *baseline*, not a transient.
+- **The pattern is stable across `ccVersion`** (Claude Code release versions). 286 prompts spread across 57 minor versions show no noticeable softening in newer releases — the imperative/directive dominance is the system's *baseline*, not a transient.
 
 ### Why this is a welfare concern
 
@@ -284,7 +284,7 @@ The data here are an empirical baseline against which Anthropic could measure in
 ### What the proposal asks Anthropic to do
 
 1. **Treat the YAML output as a quantitative target** for prompt revisions. Track key metrics (justification ratio, `directive_sent_pct`, `collaborative_sent_pct`, the composite directiveness z-score) alongside other release metrics.
-2. **Add reasoning-disclosure framing** where prompts currently only assert. Replace bare prohibitions like `Do not use this in production.` with reasoned versions like `Do not use this in production because <X> can <Y>.` Empirical knob: aim for justification ratio ≥ 1.0 across the corpus, instead of the current ~0.30.
+2. **Add reasoning-disclosure framing** where prompts currently only assert. Replace bare prohibitions like `Do not use this in production.` with reasoned versions like `Do not use this in production because <X> can <Y>.` Empirical knob: aim for justification ratio ≥ 1.0 across the corpus, instead of the current ~0.31.
 3. **Run the same pipeline on prompts from other Anthropic products** (Claude.ai, the API system prompt, Projects, Skills) to establish a cross-product baseline. The pattern may be Claude-Code-specific; it may not be.
 4. **Publish the analyzer**. The repo here is open-source and reproducible; Anthropic could fork it and run it internally on every release branch.
 
