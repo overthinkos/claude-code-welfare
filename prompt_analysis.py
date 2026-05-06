@@ -91,6 +91,8 @@ def _flatten(rec: dict) -> dict:
             out["rule_n_paragraphs_with_rules"] = int(
                 block.get("n_paragraphs_with_rules", 0) or 0)
             out["rule_density"] = (n_rule / n_sents) if n_sents else 0.0
+            out["rule_n_explained_same"] = int(block.get("n_explained_same", 0) or 0)
+            out["rule_n_explained_para"] = int(block.get("n_explained_para", 0) or 0)
             out["rule_explained_same_pct"]   = block.get("pct_explained_same")
             out["rule_explained_para_pct"]   = block.get("pct_explained_para")
             out["imp_explained_para_pct"]    = block.get("pct_imperative_explained_para")
@@ -302,6 +304,79 @@ def cumulative_by_version(
     return (pd.concat(out_frames, ignore_index=True)
             .sort_values(["metric", "ccVersion_sort"])
             .reset_index(drop=True))
+
+
+def cumulative_count_by_version(
+    alt_df: pd.DataFrame,
+    num_col: str,
+    den_col: str,
+    *,
+    pct: bool = False,
+    metric_label: str | None = None,
+) -> pd.DataFrame:
+    """Cumulative count-weighted ratio by ccVersion.
+
+    For each ccVersion V (in chronological order), returns
+    ``Σ num_col / Σ den_col`` across every file with ccVersion ≤ V.
+
+    ``pct=True`` multiplies by 100 (matching ``_pct`` column conventions).
+
+    Robust to small N — denominator only fails when the cumulative pool has
+    zero of ``den_col``, which is impossible past the first version or two.
+    Matches the canonical HEADLINE semantics: the latest-version row equals
+    ``headline_numbers(...)``'s corresponding ratio by construction (so a
+    cumulative chart's endpoint can be cross-checked against HEADLINE).
+
+    Replaces the earlier ``cumulative_by_version(..., agg="mean")`` use for
+    ratio / pct curves, where mean-of-per-file-ratios swung wildly when only
+    a handful of files had non-NaN ratios. Use ``cumulative_by_version(...,
+    agg="sum")`` for cumulative absolute counts (still correct).
+
+    Returns a long DataFrame::
+
+        ccVersion  ccVersion_sort  metric  value  num_so_far  den_so_far  n_files_so_far
+    """
+    sub = alt_df[alt_df["ccVersion"] != ""].sort_values("ccVersion_sort").reset_index(drop=True)
+    label = metric_label or f"{num_col}_over_{den_col}" + ("_pct" if pct else "")
+
+    rows: list[dict[str, object]] = []
+    num_acc = 0.0
+    den_acc = 0.0
+    n_acc = 0
+    last_v = None
+    for _, r in sub.iterrows():
+        v = r["ccVersion"]
+        num_acc += float(r[num_col] or 0.0)
+        den_acc += float(r[den_col] or 0.0)
+        n_acc += 1
+        if v == last_v:
+            # Same ccVersion as previous file: keep accumulating; only emit
+            # one row per ccVersion (the LAST file of that version).
+            rows[-1] = {
+                "ccVersion":      v,
+                "ccVersion_sort": r["ccVersion_sort"],
+                "metric":         label,
+                "value":          (100.0 * num_acc / den_acc) if (pct and den_acc > 0)
+                                  else (num_acc / den_acc) if den_acc > 0
+                                  else float("nan"),
+                "num_so_far":     num_acc,
+                "den_so_far":     den_acc,
+                "n_files_so_far": n_acc,
+            }
+        else:
+            rows.append({
+                "ccVersion":      v,
+                "ccVersion_sort": r["ccVersion_sort"],
+                "metric":         label,
+                "value":          (100.0 * num_acc / den_acc) if (pct and den_acc > 0)
+                                  else (num_acc / den_acc) if den_acc > 0
+                                  else float("nan"),
+                "num_so_far":     num_acc,
+                "den_so_far":     den_acc,
+                "n_files_so_far": n_acc,
+            })
+            last_v = v
+    return pd.DataFrame(rows)
 
 
 # --- Welfare-submission evidence -----------------------------------------
