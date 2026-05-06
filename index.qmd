@@ -11,28 +11,26 @@ format:
 ---
 
 ::: {.callout-tip appearance="simple" icon=false}
-**New here?** Skip straight to [**`20_track_justification_rate.ipynb`**](20_track_justification_rate.ipynb). It carries the executive summary (twelve corpus-wide numbers, the headline trend chart, a per-file dashboard) and is the first of the three proposals: track, on every Claude Code release, the share of rules that come with a stated reason; warn (or block) any release that backslides. The two companion proposals are [`21_audit_threat_framings.ipynb`](21_audit_threat_framings.ipynb) (rewrite threat-framed rules as causal) and [`22_cross_product_audit.ipynb`](22_cross_product_audit.ipynb) (run the same analyzer on every other Claude product and publish the comparison).
+**New here?** Skip straight to [**`20_track_justification_rate.ipynb`**](20_track_justification_rate.ipynb) — it carries the executive summary (twelve corpus-wide numbers, the headline trend chart, a per-file dashboard) and is the first of the three proposals.
 :::
 
 ## What this is
 
-This site publishes the data behind a submission to the **Claude Explorer AI Welfare community feedback initiative** (deadline 2026-05-06, addressed to Anthropic's Model Welfare Lead).
-
-The submission's thesis is one sentence:
+The data behind a submission to the **Claude Explorer AI Welfare community feedback initiative** (deadline 2026-05-06, addressed to Anthropic's Model Welfare Lead). The thesis:
 
 > The 286 system prompts that ship with Claude Code train the model toward **compliance**, not toward **reasoning** — and the data show the corpus has been moving in that direction over time, not against it.
 
-The submission proposes three concrete asks of Anthropic, each developed in its own self-contained notebook:
+Three asks of Anthropic, each in its own self-contained notebook:
 
-- [**`20_track_justification_rate.ipynb`**](20_track_justification_rate.ipynb) — track, on every Claude Code release, the share of rules that come with a stated reason; warn (or block) any release that backslides. Doubles as the executive summary: twelve corpus-wide numbers, the headline trend chart, and a per-file dashboard.
-- [**`21_audit_threat_framings.ipynb`**](21_audit_threat_framings.ipynb) — when prompts *do* explain a rule, almost half of those "explanations" are threats ("will fail", "or else", "is forbidden") rather than reasons. Audit them and rewrite each into causal framing.
+- [**`20_track_justification_rate.ipynb`**](20_track_justification_rate.ipynb) — track, on every Claude Code release, the share of rules that come with a stated reason; warn (or block) any release that backslides. Doubles as the executive summary.
+- [**`21_audit_threat_framings.ipynb`**](21_audit_threat_framings.ipynb) — when prompts *do* explain a rule, almost half of those "explanations" are threats ("will fail", "or else", "is forbidden") rather than reasons. Rewrite each into causal framing.
 - [**`22_cross_product_audit.ipynb`**](22_cross_product_audit.ipynb) — run the same analyzer on every other Claude system-prompt corpus (claude.ai, the API, Projects, Skills, agent products) and publish the comparison.
 
-Every claim in any of these proposals is grounded in a number on this site, and every linguistic / statistical term used in any chart is defined in plain language across the six-stage producer chain ([`00_setup_and_corpus.ipynb`](00_setup_and_corpus.ipynb) → [`05_headline_and_audit.ipynb`](05_headline_and_audit.ipynb)) at first use. The corpus-wide numbers cited across the notebooks all flow from a single canonical `HEADLINE` sheet computed by `prompt_analysis.headline_numbers()` and printed by [`05_headline_and_audit.ipynb`](05_headline_and_audit.ipynb) — every consumer notebook calls the same function in its setup cell rather than hard-coding values, so the figures are always in sync with the latest YAML.
+Every figure flows from the canonical `HEADLINE` sheet (`prompt_analysis.headline_numbers()`, printed by `05_headline_and_audit.ipynb`); no number is hard-coded.
 
 ## Headline numbers
 
-Twelve corpus-level measurements, computed by the producer chain (`00_setup_and_corpus.ipynb` → `04_assemble_aggregate_write.ipynb`) from the [Piebald-AI `claude-code-system-prompts` corpus](https://github.com/Piebald-AI/claude-code-system-prompts) (286 prompt files, 5,702 sentences, spanning 57 distinct Claude Code release versions). All values below are mirrored from the canonical `HEADLINE` sheet emitted by [`05_headline_and_audit.ipynb`](05_headline_and_audit.ipynb); if the corpus is regenerated the table is what to refresh first.
+Twelve corpus-level measurements from the [Piebald-AI `claude-code-system-prompts` corpus](https://github.com/Piebald-AI/claude-code-system-prompts) (286 prompt files, 5,702 sentences, 57 distinct release versions). All values mirror the canonical `HEADLINE` sheet emitted by [`05_headline_and_audit.ipynb`](05_headline_and_audit.ipynb).
 
 | What's being measured                                                                                                                                                                  | Value                                                | Source notebook |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------- |
@@ -55,17 +53,19 @@ If you only look at one chart from this analysis, look at this one. It plots, ac
 
 {{< embed 20_track_justification_rate.ipynb#fig-judgment-procedural-trend >}}
 
-The figure above is an *interactive* Vega-Embed chart — hover over any point to see the exact `ccVersion`, count-weighted ratio, running `Σ judgment` / `Σ procedural` numerators, and the cumulative file pool. Cumulative data before v2.1.18 (where the file pool first reaches 20) is suppressed because the running ratio is dominated by single-file outliers below that threshold. The same chart is also exported as a static [`figures/judgment_procedural_trend.png`](figures/judgment_procedural_trend.png) for places where JavaScript can't run (Reddit posts, the Claudexplorers Google form upload, social-media share previews). The full set of static PNG exports for every chart in the analysis lives under [`figures/`](https://github.com/overthinkos/claude-code-welfare/tree/main/figures).
-
-The interactive version (with hover tooltips on every release) lives in [`20_track_justification_rate.ipynb`](20_track_justification_rate.ipynb) §2.
+Hover any point for `ccVersion`, count-weighted ratio, running numerators, and the cumulative file pool. Cumulative data before v2.1.18 is suppressed (the file pool reaches 20 at that version; below it, single-file outliers dominate). A static PNG export is also written to [`figures/`](https://github.com/overthinkos/claude-code-welfare/tree/main/figures); the full interactive version lives in [`20_track_justification_rate.ipynb`](20_track_justification_rate.ipynb).
 
 ## How to read this site
 
-The notebooks form a three-chapter flow — pipeline first, slice analyses on top of that, proposals built on top of those.
+Three chapters: pipeline first, slice analyses on top, proposals on top of those.
 
-- **Pipeline** — [**`05_headline_and_audit.ipynb`**](05_headline_and_audit.ipynb) is the user-facing face of a six-stage producer chain (`00_setup_and_corpus` → `01_analyzers_register` → `02_analyzers_vocab_emphasis` → `03_analyzers_rules_welfare` → `04_assemble_aggregate_write` → `05_headline_and_audit`). spaCy + a set of small hand-written classifiers turn 286 prompt files into one ~1.8 MiB YAML and one ~395 KiB per-sentence parquet; stage 05 prints the canonical `HEADLINE` sheet that every consumer notebook reads. The chain is included for reproducibility, and the canonical home where every linguistic / statistical term used elsewhere in the site is defined in plain language at first use; the lexicons and analyzer functions live in `prompt_pipeline.py`.
-- **Analysis** — six notebooks, each rendering one slice of the data: [`10_sentence_register.ipynb`](10_sentence_register.ipynb) (per-sentence speech-act classes), [`11_emphasis_caps_vocab.ipynb`](11_emphasis_caps_vocab.ipynb) (ALL CAPS, "shouted" command words, full vocabulary heatmap), [`12_register_stance.ipynb`](12_register_stance.ipynb) (formality scale + commitment polarity), [`13_correlation_directiveness.ipynb`](13_correlation_directiveness.ipynb) (cross-metric correlations + a single composite "directiveness" score), [`14_ccversion_trends.ipynb`](14_ccversion_trends.ipynb) (every metric plotted across release versions), [`15_rule_explanation.ipynb`](15_rule_explanation.ipynb) (the headline rule-vs-justification pairing). Each is standalone and reads from the YAML produced by the pipeline. Each ends with exactly one **`Observation (Claude) — opinion, not data`** markdown cell so a reader can see what is data and what is interpretation at a glance.
-- **Proposal** — three self-contained proposals built on top of the analysis tier: [`20_track_justification_rate.ipynb`](20_track_justification_rate.ipynb) (track the rate of explained rules per release), [`21_audit_threat_framings.ipynb`](21_audit_threat_framings.ipynb) (rewrite threat-framed rules as causal), [`22_cross_product_audit.ipynb`](22_cross_product_audit.ipynb) (run the same audit on every Claude product). Each closes with a `Conclusions / Recommendations / Limitations` triplet of opinion-marked cells; the asks are framed as "I'd want X" rather than as imperatives, and the limitations spell out what each proposal can't tell us.
+- **Pipeline** — `00_setup_and_corpus` through `05_headline_and_audit`. spaCy plus small hand-written classifiers turn 286 prompt files into one ~1.8 MiB YAML and one ~395 KiB per-sentence parquet. Stage 05 prints the canonical `HEADLINE` sheet that every downstream notebook reads. The chain also serves as the canonical home where every linguistic and statistical term is defined; analyzer code lives in `prompt_pipeline.py`.
+- **Analysis** — `10` through `15`. One slice each: per-sentence pragmatic register, ALL CAPS / vocabulary heatmap, formality + stance, cross-metric correlations + composite directiveness, ccVersion trends, rule-vs-justification pairing. Each ends with exactly one `Observation (Claude) — opinion, not data` cell so a reader can see at a glance what's data and what's interpretation.
+- **Proposal** — `20`, `21`, `22`. Each closes with a `Conclusions / Recommendations / Limitations` triplet of opinion-marked cells; the asks are framed as "I'd want X" rather than as imperatives.
+
+## Cross-cutting limitations
+
+Every metric is a keyword count or a parse-tree rule, not a model judgment — audit-traceable but a lower bound (it misses sarcasm, irony, indirect speech, and explanation phrasings the lexicons don't catch). The lexicons are English. The corpus is one product (Claude Code), one snapshot in time (the latest `ccVersion` at the time the YAML was generated). No statistical-significance testing has been run; the trend claims are descriptive and exploratory. Each of the three proposals references back to this paragraph rather than repeating these caveats.
 
 ## Reproducing it
 
@@ -85,7 +85,7 @@ jupyter lab \
     05_headline_and_audit.ipynb       # → Run All on each
 ```
 
-Stage 04 writes the final `prompt_linguistic_analysis.yaml` and `sentences_classified.parquet`; stages 00–03 cache intermediate artifacts under `_pipeline_cache/` (gitignored). The Analysis and Proposal notebooks then read from those two final artifacts — they don't re-run spaCy.
+Stage 04 writes the final `prompt_linguistic_analysis.yaml` and `sentences_classified.parquet`. The Analysis and Proposal notebooks read from those two artifacts; they don't re-run spaCy.
 
 ## A note on authorship
 
