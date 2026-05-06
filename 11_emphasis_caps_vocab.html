@@ -529,7 +529,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Per-file outlier tables</strong> — top files by CAPS-imperative density, hard-prohibitions density, and justification ratio.</li>
 <li><strong>Top tokens + full VOCAB heatmap</strong> — top-25 ALL CAPS tokens, all CAPS-imperative tokens, and 11-class VOCAB profile per category.</li>
 </ol>
-<div id="c875e5e2" class="cell" data-execution_count="5">
+<div id="c875e5e2" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -544,7 +544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)   <span class="co"># pick up edits without restarting the kernel</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> (</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    load_yaml, build_alt_df, version_order, category_colors,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    directiveness, headline_numbers,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    directiveness, headline_numbers, save_chart,</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    SR_CLASS_COLORS, SENT_REGISTER_CLASSES, TABLEAU10,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -570,7 +570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>loaded 286 files | 179 columns | 7 categories | 11 VOCAB keys</code></pre>
+<pre><code>loaded 286 files | 181 columns | 7 categories | 11 VOCAB keys</code></pre>
 </div>
 </div>
 <section id="terms-used-in-this-notebook" class="level3">
@@ -582,7 +582,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="emphasis-density-per-category-3-panel">Emphasis density per category (3-panel)</h3>
 <p>Three panels side by side. <strong>Each panel uses its own x-scale</strong> — that’s intentional, since ALL CAPS density (typically 0.5–8% of tokens), CAPS-imperative density (typically 0.05–0.5%), and justification ratio (typically 0.0–0.5) live on completely different magnitudes. Compare patterns <em>within</em> a panel (which categories are highest); do NOT compare absolute bar widths <em>across</em> panels.</p>
 <p>Welfare-relevant pattern to watch: <strong>System reminders</strong> typically lead the ALL CAPS panel (loud); <strong>Tool descriptions</strong> typically lead the CAPS-imperative panel (loud commands specifically); the justification-ratio panel runs low across all categories — most rules are issued without a stated reason.</p>
-<div id="983c4b17-ba42-4672-b964-4c1efe749fde" class="cell" data-execution_count="2">
+<div id="983c4b17-ba42-4672-b964-4c1efe749fde" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Emphasis: ALL CAPS, CAPS imperative, justification ratio per category — Altair."""</span></span>
@@ -622,136 +622,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">240</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Emphasis density per category (independent x-scales)"</span>)</span>
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>emphasis_chart</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co">"""Emphasis: ALL CAPS, CAPS imperative, justification ratio per category — Altair."""</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>emphasis_long <span class="op">=</span> pd.DataFrame([</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"category"</span>: cat, <span class="st">"metric"</span>: metric, <span class="st">"value"</span>: value}</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cat <span class="kw">in</span> cats</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric, value <span class="kw">in</span> [</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"ALL CAPS (% tokens)"</span>,</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            by_category[cat][<span class="st">"metrics"</span>][<span class="st">"all_caps"</span>][<span class="st">"pct"</span>]),</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"CAPS imperative (% tokens)"</span>,</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>            by_category[cat][<span class="st">"metrics"</span>][<span class="st">"caps_imperative"</span>][<span class="st">"pct"</span>]),</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Justification ratio"</span>,</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>            by_category[cat][<span class="st">"metrics"</span>][<span class="st">"justification"</span>][<span class="st">"ratio"</span>]),</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>emphasis_chart <span class="op">=</span> (</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    alt.Chart(emphasis_long)</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"value:Q"</span>, title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span>cats, title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>cats,</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>                                         <span class="bu">range</span><span class="op">=</span>[CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]),</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>                         legend<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>        column<span class="op">=</span>alt.Column(<span class="st">"metric:N"</span>, title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>                            sort<span class="op">=</span>[<span class="st">"ALL CAPS (% tokens)"</span>,</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"CAPS imperative (% tokens)"</span>,</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Justification ratio"</span>]),</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"metric:N"</span>),</span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"value:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>)],</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    .resolve_scale(x<span class="op">=</span><span class="st">"independent"</span>)</span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">240</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Emphasis density per category (independent x-scales)"</span>)</span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>emphasis_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>save_chart(emphasis_chart, <span class="st">"11-emphasis-3panel"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="9">
 
 <style>
-  #altair-viz-63d9d676bc3e4f8e96c24952bc650458.vega-embed {
+  #altair-viz-91c983d779ce459e9dfa023878f61883.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-63d9d676bc3e4f8e96c24952bc650458.vega-embed details,
-  #altair-viz-63d9d676bc3e4f8e96c24952bc650458.vega-embed details summary {
+  #altair-viz-91c983d779ce459e9dfa023878f61883.vega-embed details,
+  #altair-viz-91c983d779ce459e9dfa023878f61883.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-63d9d676bc3e4f8e96c24952bc650458"></div>
+<div id="altair-viz-91c983d779ce459e9dfa023878f61883"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-63d9d676bc3e4f8e96c24952bc650458") {
-      outputDiv = document.getElementById("altair-viz-63d9d676bc3e4f8e96c24952bc650458");
-    }
-
-    const paths = {
-      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
-      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
-      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.4.1?noext",
-      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
-    };
-
-    function maybeLoadScript(lib, version) {
-      var key = `${lib.replace("-", "")}_version`;
-      return (VEGA_DEBUG[key] == version) ?
-        Promise.resolve(paths[lib]) :
-        new Promise(function(resolve, reject) {
-          var s = document.createElement('script');
-          document.getElementsByTagName("head")[0].appendChild(s);
-          s.async = true;
-          s.onload = () => {
-            VEGA_DEBUG[key] = version;
-            return resolve(paths[lib]);
-          };
-          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
-          s.src = paths[lib];
-        });
-    }
-
-    function showError(err) {
-      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
-      throw err;
-    }
-
-    function displayChart(vegaEmbed) {
-      vegaEmbed(outputDiv, spec, embedOpt)
-        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
-    }
-
-    if(typeof define === "function" && define.amd) {
-      requirejs.config({paths});
-      let deps = ["vega-embed"];
-      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
-    } else {
-      maybeLoadScript("vega", "6")
-        .then(() => maybeLoadScript("vega-lite", "6.4.1"))
-        .then(() => maybeLoadScript("vega-embed", "7"))
-        .catch(showError)
-        .then(() => displayChart(vegaEmbed));
-    }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-145e0bf0e60a72e7d0b058c4acb2c30e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": null, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "column": {"field": "metric", "sort": ["ALL CAPS (% tokens)", "CAPS imperative (% tokens)", "Justification ratio"], "title": null, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "metric", "type": "nominal"}, {"field": "value", "format": ".3f", "type": "quantitative"}], "x": {"field": "value", "title": null, "type": "quantitative"}, "y": {"field": "category", "sort": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "title": null, "type": "nominal"}}, "height": 240, "resolve": {"scale": {"x": "independent"}}, "title": "Emphasis density per category (independent x-scales)", "width": 240, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-145e0bf0e60a72e7d0b058c4acb2c30e": [{"category": "Agent prompt", "metric": "ALL CAPS (% tokens)", "value": 1.6617}, {"category": "Agent prompt", "metric": "CAPS imperative (% tokens)", "value": 0.1244}, {"category": "Agent prompt", "metric": "Justification ratio", "value": 0.347}, {"category": "Data / template", "metric": "ALL CAPS (% tokens)", "value": 0.3344}, {"category": "Data / template", "metric": "CAPS imperative (% tokens)", "value": 0.0033}, {"category": "Data / template", "metric": "Justification ratio", "value": 0.218}, {"category": "Skill", "metric": "ALL CAPS (% tokens)", "value": 0.7242}, {"category": "Skill", "metric": "CAPS imperative (% tokens)", "value": 0.0286}, {"category": "Skill", "metric": "Justification ratio", "value": 0.312}, {"category": "System prompt", "metric": "ALL CAPS (% tokens)", "value": 1.1117}, {"category": "System prompt", "metric": "CAPS imperative (% tokens)", "value": 0.1507}, {"category": "System prompt", "metric": "Justification ratio", "value": 0.354}, {"category": "System reminder", "metric": "ALL CAPS (% tokens)", "value": 3.41}, {"category": "System reminder", "metric": "CAPS imperative (% tokens)", "value": 0.4494}, {"category": "System reminder", "metric": "Justification ratio", "value": 0.246}, {"category": "Tool description", "metric": "ALL CAPS (% tokens)", "value": 1.5642}, {"category": "Tool description", "metric": "CAPS imperative (% tokens)", "value": 0.3279}, {"category": "Tool description", "metric": "Justification ratio", "value": 0.333}, {"category": "Tool parameter", "metric": "ALL CAPS (% tokens)", "value": 0.0}, {"category": "Tool parameter", "metric": "CAPS imperative (% tokens)", "value": 0.0}, {"category": "Tool parameter", "metric": "Justification ratio", "value": 0.0}]}}, {"mode": "vega-lite"});
-</script>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-
-<style>
-  #altair-viz-63d9d676bc3e4f8e96c24952bc650458.vega-embed {
-    width: 100%;
-    display: flex;
-  }
-
-  #altair-viz-63d9d676bc3e4f8e96c24952bc650458.vega-embed details,
-  #altair-viz-63d9d676bc3e4f8e96c24952bc650458.vega-embed details summary {
-    position: relative;
-  }
-</style>
-<div id="altair-viz-63d9d676bc3e4f8e96c24952bc650458"></div>
-<script type="text/javascript">
-  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
-  (function(spec, embedOpt){
-    let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-63d9d676bc3e4f8e96c24952bc650458") {
-      outputDiv = document.getElementById("altair-viz-63d9d676bc3e4f8e96c24952bc650458");
+    if (outputDiv.id !== "altair-viz-91c983d779ce459e9dfa023878f61883") {
+      outputDiv = document.getElementById("altair-viz-91c983d779ce459e9dfa023878f61883");
     }
 
     const paths = {
@@ -880,7 +772,7 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 <section id="emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile" class="level3">
 <h3 class="anchored" data-anchor-id="emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile">Emphasis vocabulary: top ALL CAPS tokens, CAPS imperative tokens, and full VOCAB profile</h3>
 <p>The 11 VOCAB classes (full table with example tokens in <code>00_data_pipeline.ipynb</code> § 5): <code>hard_prohibitions</code>, <code>hard_prescriptions</code>, <code>soft_prescriptions</code>, <code>politeness_direct</code>, <code>politeness_softening</code>, <code>warmth_encouragement</code>, <code>hedging</code>, <code>structural_markers</code>, <code>profanity</code>, <code>pronouns_2p</code>, <code>pronouns_1p</code>. Heatmap below shows each class as <code>% of file tokens</code> per category.</p>
-<div id="83d5d146-6a9e-4b8e-ac00-b3f084983439" class="cell" data-execution_count="7">
+<div id="83d5d146-6a9e-4b8e-ac00-b3f084983439" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Top-N tokens for ALL CAPS and CAPS imperative + full VOCAB heatmap."""</span></span>
@@ -940,7 +832,8 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 <span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Full VOCAB profile per category (</span><span class="sc">% o</span><span class="st">f file tokens)"</span>)</span>
 <span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>(top_caps_chart <span class="op">|</span> caps_imp_chart) <span class="op">&amp;</span> vocab_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>emphasis_top_tokens <span class="op">=</span> (top_caps_chart <span class="op">|</span> caps_imp_chart) <span class="op">&amp;</span> vocab_chart</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>save_chart(emphasis_top_tokens, <span class="st">"11-top-tokens-and-vocab-heatmap"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Top CAPS-imperative tokens (corpus-wide counts):
@@ -949,26 +842,26 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
   MUST        18
   CRITICAL    15</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="10">
 
 <style>
-  #altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea.vega-embed {
+  #altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea.vega-embed details,
-  #altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea.vega-embed details summary {
+  #altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf.vega-embed details,
+  #altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea"></div>
+<div id="altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea") {
-      outputDiv = document.getElementById("altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea");
+    if (outputDiv.id !== "altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf") {
+      outputDiv = document.getElementById("altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf");
     }
 
     const paths = {

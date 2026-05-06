@@ -523,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The notable per-sentence finding — <code>appreciative</code> sentences are essentially absent across the whole corpus — is a <em>per-sentence</em> claim, not a per-document claim. Aggregate metrics like “imperative-marker density” can’t surface that absence; the sentence-level multi-label classifier can. This is the <strong>analysis-tier</strong> notebook for the pragmatic-register slice.</p>
 <p>The exact per-class counts come from <code>HEADLINE</code> (printed by the setup cell below) and from the per-category chart that follows. Prose in this notebook stays qualitative; the precise figures live in the chart’s tooltip and in the corpus-wide <code>HEADLINE</code> numbers documented in <code>00_data_pipeline.ipynb</code> § 12.</p>
 <p><strong>Two figures</strong>: per-category × per-class distribution + addressee drilldown for the two near-zero classes (<code>appreciative</code>, <code>collaborative</code>); per-file outliers (top 10 files for each attested class).</p>
-<div id="87850017" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:45.553120Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:45.552992Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.394168Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.393872Z&quot;}}" data-execution_count="3">
+<div id="87850017" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:45.553120Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:45.552992Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.394168Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.393872Z&quot;}}" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -538,7 +538,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)   <span class="co"># pick up edits without restarting the kernel</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> (</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    load_yaml, build_alt_df, version_order, category_colors,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    directiveness, headline_numbers,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    directiveness, headline_numbers, save_chart,</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    SR_CLASS_COLORS, SENT_REGISTER_CLASSES, TABLEAU10,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -564,7 +564,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>loaded 286 files | 179 columns | 7 categories | 11 VOCAB keys</code></pre>
+<pre><code>loaded 286 files | 181 columns | 7 categories | 11 VOCAB keys</code></pre>
 </div>
 </div>
 <section id="terms-used-in-this-notebook" class="level3">
@@ -580,7 +580,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Bottom</strong> — addressee breakdown for the two near-zero classes (<code>appreciative</code>, <code>collaborative</code>): claude / user / unknown. Tells you whether the prompt author <em>speaks to Claude</em> in those registers or <em>instructs Claude to use</em> them with the user.</li>
 </ul>
 <p>A forensic-inspection sample of sentences matching appreciative keywords is printed alongside (sourced from <code>sentences_classified.parquet</code>).</p>
-<div id="b8b9f100-4f87-4d70-aa8c-57e2aa9acd25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:48.395177Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:48.395040Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.451615Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.451254Z&quot;}}" data-execution_count="4">
+<div id="b8b9f100-4f87-4d70-aa8c-57e2aa9acd25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:48.395177Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:48.395040Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.451615Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.451254Z&quot;}}" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Sentence-register per category × class + addressee drilldown — vconcat composite."""</span></span>
@@ -672,14 +672,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Forensic inspection — sentences containing appreciative keywords:"</span>)</span>
 <span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(appr_sample.to_string(index<span class="op">=</span><span class="va">False</span>, max_colwidth<span class="op">=</span><span class="dv">80</span>))</span>
 <span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>alt.vconcat(sr_chart, addr_chart).resolve_scale(color<span class="op">=</span><span class="st">"independent"</span>).properties(</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>sr_composite <span class="op">=</span> alt.vconcat(sr_chart, addr_chart).resolve_scale(color<span class="op">=</span><span class="st">"independent"</span>).properties(</span>
 <span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>alt.TitleParams(</span>
 <span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Sentence-register per category + addressee drilldown"</span>,</span>
 <span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>        subtitle<span class="op">=</span>[<span class="st">"Top: 4-class distribution per category. "</span></span>
 <span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Bottom: who is being addressed in the two near-zero classes."</span>],</span>
 <span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>        anchor<span class="op">=</span><span class="st">"start"</span>,</span>
 <span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>save_chart(sr_composite, <span class="st">"10-sentence-register-by-category"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Corpus-wide addressee distribution for the two near-zero classes:
@@ -695,26 +696,26 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
  system-prompt-insights-session-facets-extraction.md 1. **goal_categories**: Count ONLY what the USER explicitly asked for.\n   - ...    claude
                    tool-description-enterplanmode.md **User Preferences Matter**: The implementation could reasonably go multiple ...    claude</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="7">
 
 <style>
-  #altair-viz-82acd6e2e9b842ba94fefd39aeb567e8.vega-embed {
+  #altair-viz-9c28f85c7d634f73b74699df671c1136.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-82acd6e2e9b842ba94fefd39aeb567e8.vega-embed details,
-  #altair-viz-82acd6e2e9b842ba94fefd39aeb567e8.vega-embed details summary {
+  #altair-viz-9c28f85c7d634f73b74699df671c1136.vega-embed details,
+  #altair-viz-9c28f85c7d634f73b74699df671c1136.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-82acd6e2e9b842ba94fefd39aeb567e8"></div>
+<div id="altair-viz-9c28f85c7d634f73b74699df671c1136"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-82acd6e2e9b842ba94fefd39aeb567e8") {
-      outputDiv = document.getElementById("altair-viz-82acd6e2e9b842ba94fefd39aeb567e8");
+    if (outputDiv.id !== "altair-viz-9c28f85c7d634f73b74699df671c1136") {
+      outputDiv = document.getElementById("altair-viz-9c28f85c7d634f73b74699df671c1136");
     }
 
     const paths = {
@@ -771,7 +772,7 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
 <section id="per-file-outliers-top-10-files-for-each-attested-class" class="level3">
 <h3 class="anchored" data-anchor-id="per-file-outliers-top-10-files-for-each-attested-class">Per-file outliers — top 10 files for each attested class</h3>
 <p>Four panels showing which individual files contribute most to each class. For <code>collaborative</code> and <code>appreciative</code> (near-zero overall), the panels surface the few files that do attest the class — useful as concrete examples of what the absent register would look like if it were present. For <code>permissive</code> and <code>configuring</code>, the panels rank the top files by their per-sentence rate.</p>
-<div id="6bcb8239-a7f3-4f4d-b989-31a404dd0ddb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:48.452429Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:48.452339Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.485310Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.484932Z&quot;}}" data-execution_count="5">
+<div id="6bcb8239-a7f3-4f4d-b989-31a404dd0ddb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-01T00:05:48.452429Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-01T00:05:48.452339Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-01T00:05:48.485310Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-01T00:05:48.484932Z&quot;}}" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-file outliers for sentence_register — Altair 4-panel.</span></span>
@@ -819,28 +820,29 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
 <span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    panels.append(panel)</span>
 <span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>(panels[<span class="dv">0</span>] <span class="op">|</span> panels[<span class="dv">1</span>]) <span class="op">&amp;</span> (panels[<span class="dv">2</span>] <span class="op">|</span> panels[<span class="dv">3</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>sr_outliers_chart <span class="op">=</span> (panels[<span class="dv">0</span>] <span class="op">|</span> panels[<span class="dv">1</span>]) <span class="op">&amp;</span> (panels[<span class="dv">2</span>] <span class="op">|</span> panels[<span class="dv">3</span>])</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>save_chart(sr_outliers_chart, <span class="st">"10-per-file-outliers"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="8">
 
 <style>
-  #altair-viz-188859ed3834438fa007e6209d7eba59.vega-embed {
+  #altair-viz-2c6eb0a2ee5543bb862520fcd991b4ea.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-188859ed3834438fa007e6209d7eba59.vega-embed details,
-  #altair-viz-188859ed3834438fa007e6209d7eba59.vega-embed details summary {
+  #altair-viz-2c6eb0a2ee5543bb862520fcd991b4ea.vega-embed details,
+  #altair-viz-2c6eb0a2ee5543bb862520fcd991b4ea.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-188859ed3834438fa007e6209d7eba59"></div>
+<div id="altair-viz-2c6eb0a2ee5543bb862520fcd991b4ea"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-188859ed3834438fa007e6209d7eba59") {
-      outputDiv = document.getElementById("altair-viz-188859ed3834438fa007e6209d7eba59");
+    if (outputDiv.id !== "altair-viz-2c6eb0a2ee5543bb862520fcd991b4ea") {
+      outputDiv = document.getElementById("altair-viz-2c6eb0a2ee5543bb862520fcd991b4ea");
     }
 
     const paths = {

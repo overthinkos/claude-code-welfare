@@ -63,7 +63,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -113,6 +113,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -482,9 +485,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="20_track_justification_rate-preview.html"><i class="bi bi-journal-code"></i>Track justification rate per release; block regressions</a></li></ul></div></div>
 <!-- main -->
-<main class="content column-page-right" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -495,7 +499,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-title-meta column-page-right">
+<div class="quarto-title-meta column-body">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -622,12 +626,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-single-most-important-chart" class="level2">
 <h2 class="anchored" data-anchor-id="the-single-most-important-chart">The single most-important chart</h2>
 <p>If you only look at one chart from this analysis, look at this one. It plots, across every Claude Code release version on file, the running ratio of <strong>language that invites the model’s judgment</strong> (<code>decide</code>, <code>consider</code>, <code>your judgment</code>, …) to <strong>language that prescribes a procedure</strong> (<code>if you …</code>, <code>when the …</code>, <code>whenever</code>, <code>step 1</code>, …).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/judgment_procedural_trend.png" class="img-fluid figure-img" alt="Line chart showing the cumulative count-weighted ratio of judgment-inviting to procedure-prescribing language declining monotonically over Claude Code release versions, with early small-N points visibly faded."></p>
-<figcaption>Cumulative count-weighted ratio (Σ judgment / Σ procedural) of judgment-inviting language to procedure-prescribing language across all Claude Code release versions on file. Each point’s opacity scales with the cumulative file count so early-version points (small-N, structurally noisy) are visibly faded; the dashed grey guide marks the version where the cumulative pool first crosses 20 files. Once the pool stabilises, the running ratio declines monotonically and ends at the canonical corpus-wide value documented in <code>00_data_pipeline.ipynb</code> § Phase 0 audit. The corpus has become <em>less</em> reasoning-inviting as it has grown.</figcaption>
+<div class="quarto-embed-nb-cell">
+<div id="cell-fig-judgment-procedural-trend" class="cell" data-execution_count="13">
+<div id="fig-judgment-procedural-trend" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="13">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-judgment-procedural-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+
+<style>
+  #altair-viz-a5f76489943b42fab4bb20c24d4df7c5.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-a5f76489943b42fab4bb20c24d4df7c5.vega-embed details,
+  #altair-viz-a5f76489943b42fab4bb20c24d4df7c5.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-a5f76489943b42fab4bb20c24d4df7c5"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-a5f76489943b42fab4bb20c24d4df7c5") {
+      outputDiv = document.getElementById("altair-viz-a5f76489943b42fab4bb20c24d4df7c5");
+    }
+
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@6?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@6.4.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@7?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "6")
+        .then(() => maybeLoadScript("vega-lite", "6.4.1"))
+        .then(() => maybeLoadScript("vega-embed", "7"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "line", "color": "#4e79a7", "strokeWidth": 2.5}, "encoding": {"tooltip": [{"field": "ccVersion", "type": "nominal"}, {"field": "value", "format": ".3f", "title": "count-weighted ratio", "type": "quantitative"}, {"field": "num_so_far", "format": ",.0f", "title": "\u03a3 judgment", "type": "quantitative"}, {"field": "den_so_far", "format": ",.0f", "title": "\u03a3 procedural", "type": "quantitative"}, {"field": "n_files_so_far", "title": "files \u2264 V", "type": "quantitative"}], "x": {"axis": {"labelAngle": -90, "labelLimit": 80, "labelOverlap": false}, "field": "ccVersion", "sort": ["2.0.14", "2.0.52", "2.0.71", "2.0.73", "2.0.77", "2.1.3", "2.1.14", "2.1.16", "2.1.18", "2.1.20", "2.1.26", "2.1.30", "2.1.31", "2.1.32", "2.1.33", "2.1.38", "2.1.45", "2.1.47", "2.1.53", "2.1.63", "2.1.69", "2.1.71", "2.1.72", "2.1.73", "2.1.74", "2.1.75", "2.1.77", "2.1.78", "2.1.79", "2.1.81", "2.1.83", "2.1.84", "2.1.85", "2.1.86", "2.1.88", "2.1.89", "2.1.91", "2.1.92", "2.1.94", "2.1.97", "2.1.98", "2.1.101", "2.1.104", "2.1.105", "2.1.107", "2.1.108", "2.1.110", "2.1.111", "2.1.113", "2.1.116", "2.1.118", "2.1.119", "2.1.120", "2.1.122", "2.1.124", "2.1.128", "2.1.129"], "title": "ccVersion (oldest \u2192 newest)", "type": "nominal"}, "y": {"field": "value", "title": "judgment / procedural (count-weighted, cumulative)", "type": "quantitative"}}}, {"mark": {"type": "point", "color": "#4e79a7", "filled": true, "size": 55}, "encoding": {"tooltip": [{"field": "ccVersion", "type": "nominal"}, {"field": "value", "format": ".3f", "title": "count-weighted ratio", "type": "quantitative"}, {"field": "num_so_far", "format": ",.0f", "title": "\u03a3 judgment", "type": "quantitative"}, {"field": "den_so_far", "format": ",.0f", "title": "\u03a3 procedural", "type": "quantitative"}, {"field": "n_files_so_far", "title": "files \u2264 V", "type": "quantitative"}], "x": {"axis": {"labelAngle": -90, "labelLimit": 80, "labelOverlap": false}, "field": "ccVersion", "sort": ["2.0.14", "2.0.52", "2.0.71", "2.0.73", "2.0.77", "2.1.3", "2.1.14", "2.1.16", "2.1.18", "2.1.20", "2.1.26", "2.1.30", "2.1.31", "2.1.32", "2.1.33", "2.1.38", "2.1.45", "2.1.47", "2.1.53", "2.1.63", "2.1.69", "2.1.71", "2.1.72", "2.1.73", "2.1.74", "2.1.75", "2.1.77", "2.1.78", "2.1.79", "2.1.81", "2.1.83", "2.1.84", "2.1.85", "2.1.86", "2.1.88", "2.1.89", "2.1.91", "2.1.92", "2.1.94", "2.1.97", "2.1.98", "2.1.101", "2.1.104", "2.1.105", "2.1.107", "2.1.108", "2.1.110", "2.1.111", "2.1.113", "2.1.116", "2.1.118", "2.1.119", "2.1.120", "2.1.122", "2.1.124", "2.1.128", "2.1.129"], "title": "ccVersion (oldest \u2192 newest)", "type": "nominal"}, "y": {"field": "value", "title": "judgment / procedural (count-weighted, cumulative)", "type": "quantitative"}}}], "data": {"name": "data-964d33c492be23e654c7b665a3cbdd7a"}, "height": 260, "title": "Cumulative judgment-to-procedural ratio over ccVersion (welfare-thesis trend, from n\u226520)", "width": 820, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-964d33c492be23e654c7b665a3cbdd7a": [{"ccVersion": "2.1.18", "ccVersion_sort": [2, 1, 18], "metric": "judgment / procedural", "value": 0.42105263157894735, "num_so_far": 8.0, "den_so_far": 19.0, "n_files_so_far": 37}, {"ccVersion": "2.1.20", "ccVersion_sort": [2, 1, 20], "metric": "judgment / procedural", "value": 0.3225806451612903, "num_so_far": 10.0, "den_so_far": 31.0, "n_files_so_far": 43}, {"ccVersion": "2.1.26", "ccVersion_sort": [2, 1, 26], "metric": "judgment / procedural", "value": 0.375, "num_so_far": 12.0, "den_so_far": 32.0, "n_files_so_far": 44}, {"ccVersion": "2.1.30", "ccVersion_sort": [2, 1, 30], "metric": "judgment / procedural", "value": 0.3888888888888889, "num_so_far": 14.0, "den_so_far": 36.0, "n_files_so_far": 52}, {"ccVersion": "2.1.31", "ccVersion_sort": [2, 1, 31], "metric": "judgment / procedural", "value": 0.3684210526315789, "num_so_far": 14.0, "den_so_far": 38.0, "n_files_so_far": 55}, {"ccVersion": "2.1.32", "ccVersion_sort": [2, 1, 32], "metric": "judgment / procedural", "value": 0.3684210526315789, "num_so_far": 14.0, "den_so_far": 38.0, "n_files_so_far": 56}, {"ccVersion": "2.1.33", "ccVersion_sort": [2, 1, 33], "metric": "judgment / procedural", "value": 0.35, "num_so_far": 14.0, "den_so_far": 40.0, "n_files_so_far": 57}, {"ccVersion": "2.1.38", "ccVersion_sort": [2, 1, 38], "metric": "judgment / procedural", "value": 0.35, "num_so_far": 14.0, "den_so_far": 40.0, "n_files_so_far": 59}, {"ccVersion": "2.1.45", "ccVersion_sort": [2, 1, 45], "metric": "judgment / procedural", "value": 0.34146341463414637, "num_so_far": 14.0, "den_so_far": 41.0, "n_files_so_far": 60}, {"ccVersion": "2.1.47", "ccVersion_sort": [2, 1, 47], "metric": "judgment / procedural", "value": 0.3181818181818182, "num_so_far": 14.0, "den_so_far": 44.0, "n_files_so_far": 61}, {"ccVersion": "2.1.53", "ccVersion_sort": [2, 1, 53], "metric": "judgment / procedural", "value": 0.26666666666666666, "num_so_far": 16.0, "den_so_far": 60.0, "n_files_so_far": 108}, {"ccVersion": "2.1.63", "ccVersion_sort": [2, 1, 63], "metric": "judgment / procedural", "value": 0.25, "num_so_far": 16.0, "den_so_far": 64.0, "n_files_so_far": 110}, {"ccVersion": "2.1.69", "ccVersion_sort": [2, 1, 69], "metric": "judgment / procedural", "value": 0.25, "num_so_far": 16.0, "den_so_far": 64.0, "n_files_so_far": 113}, {"ccVersion": "2.1.71", "ccVersion_sort": [2, 1, 71], "metric": "judgment / procedural", "value": 0.24615384615384617, "num_so_far": 16.0, "den_so_far": 65.0, "n_files_so_far": 114}, {"ccVersion": "2.1.72", "ccVersion_sort": [2, 1, 72], "metric": "judgment / procedural", "value": 0.22535211267605634, "num_so_far": 16.0, "den_so_far": 71.0, "n_files_so_far": 116}, {"ccVersion": "2.1.73", "ccVersion_sort": [2, 1, 73], "metric": "judgment / procedural", "value": 0.21621621621621623, "num_so_far": 16.0, "den_so_far": 74.0, "n_files_so_far": 117}, {"ccVersion": "2.1.74", "ccVersion_sort": [2, 1, 74], "metric": "judgment / procedural", "value": 0.21333333333333335, "num_so_far": 16.0, "den_so_far": 75.0, "n_files_so_far": 119}, {"ccVersion": "2.1.75", "ccVersion_sort": [2, 1, 75], "metric": "judgment / procedural", "value": 0.21333333333333335, "num_so_far": 16.0, "den_so_far": 75.0, "n_files_so_far": 121}, {"ccVersion": "2.1.77", "ccVersion_sort": [2, 1, 77], "metric": "judgment / procedural", "value": 0.20238095238095238, "num_so_far": 17.0, "den_so_far": 84.0, "n_files_so_far": 124}, {"ccVersion": "2.1.78", "ccVersion_sort": [2, 1, 78], "metric": "judgment / procedural", "value": 0.21052631578947367, "num_so_far": 20.0, "den_so_far": 95.0, "n_files_so_far": 129}, {"ccVersion": "2.1.79", "ccVersion_sort": [2, 1, 79], "metric": "judgment / procedural", "value": 0.21052631578947367, "num_so_far": 20.0, "den_so_far": 95.0, "n_files_so_far": 130}, {"ccVersion": "2.1.81", "ccVersion_sort": [2, 1, 81], "metric": "judgment / procedural", "value": 0.2268041237113402, "num_so_far": 22.0, "den_so_far": 97.0, "n_files_so_far": 134}, {"ccVersion": "2.1.83", "ccVersion_sort": [2, 1, 83], "metric": "judgment / procedural", "value": 0.21568627450980393, "num_so_far": 22.0, "den_so_far": 102.0, "n_files_so_far": 137}, {"ccVersion": "2.1.84", "ccVersion_sort": [2, 1, 84], "metric": "judgment / procedural", "value": 0.176, "num_so_far": 22.0, "den_so_far": 125.0, "n_files_so_far": 145}, {"ccVersion": "2.1.85", "ccVersion_sort": [2, 1, 85], "metric": "judgment / procedural", "value": 0.184, "num_so_far": 23.0, "den_so_far": 125.0, "n_files_so_far": 146}, {"ccVersion": "2.1.86", "ccVersion_sort": [2, 1, 86], "metric": "judgment / procedural", "value": 0.18253968253968253, "num_so_far": 23.0, "den_so_far": 126.0, "n_files_so_far": 148}, {"ccVersion": "2.1.88", "ccVersion_sort": [2, 1, 88], "metric": "judgment / procedural", "value": 0.1643835616438356, "num_so_far": 24.0, "den_so_far": 146.0, "n_files_so_far": 155}, {"ccVersion": "2.1.89", "ccVersion_sort": [2, 1, 89], "metric": "judgment / procedural", "value": 0.15, "num_so_far": 24.0, "den_so_far": 160.0, "n_files_so_far": 157}, {"ccVersion": "2.1.91", "ccVersion_sort": [2, 1, 91], "metric": "judgment / procedural", "value": 0.14201183431952663, "num_so_far": 24.0, "den_so_far": 169.0, "n_files_so_far": 159}, {"ccVersion": "2.1.92", "ccVersion_sort": [2, 1, 92], "metric": "judgment / procedural", "value": 0.15028901734104047, "num_so_far": 26.0, "den_so_far": 173.0, "n_files_so_far": 161}, {"ccVersion": "2.1.94", "ccVersion_sort": [2, 1, 94], "metric": "judgment / procedural", "value": 0.14673913043478262, "num_so_far": 27.0, "den_so_far": 184.0, "n_files_so_far": 170}, {"ccVersion": "2.1.97", "ccVersion_sort": [2, 1, 97], "metric": "judgment / procedural", "value": 0.14814814814814814, "num_so_far": 28.0, "den_so_far": 189.0, "n_files_so_far": 172}, {"ccVersion": "2.1.98", "ccVersion_sort": [2, 1, 98], "metric": "judgment / procedural", "value": 0.1457286432160804, "num_so_far": 29.0, "den_so_far": 199.0, "n_files_so_far": 176}, {"ccVersion": "2.1.101", "ccVersion_sort": [2, 1, 101], "metric": "judgment / procedural", "value": 0.1318181818181818, "num_so_far": 29.0, "den_so_far": 220.0, "n_files_so_far": 183}, {"ccVersion": "2.1.104", "ccVersion_sort": [2, 1, 104], "metric": "judgment / procedural", "value": 0.12946428571428573, "num_so_far": 29.0, "den_so_far": 224.0, "n_files_so_far": 184}, {"ccVersion": "2.1.105", "ccVersion_sort": [2, 1, 105], "metric": "judgment / procedural", "value": 0.12301587301587301, "num_so_far": 31.0, "den_so_far": 252.0, "n_files_so_far": 195}, {"ccVersion": "2.1.107", "ccVersion_sort": [2, 1, 107], "metric": "judgment / procedural", "value": 0.12301587301587301, "num_so_far": 31.0, "den_so_far": 252.0, "n_files_so_far": 198}, {"ccVersion": "2.1.108", "ccVersion_sort": [2, 1, 108], "metric": "judgment / procedural", "value": 0.1245136186770428, "num_so_far": 32.0, "den_so_far": 257.0, "n_files_so_far": 202}, {"ccVersion": "2.1.110", "ccVersion_sort": [2, 1, 110], "metric": "judgment / procedural", "value": 0.12307692307692308, "num_so_far": 32.0, "den_so_far": 260.0, "n_files_so_far": 203}, {"ccVersion": "2.1.111", "ccVersion_sort": [2, 1, 111], "metric": "judgment / procedural", "value": 0.12455516014234876, "num_so_far": 35.0, "den_so_far": 281.0, "n_files_so_far": 210}, {"ccVersion": "2.1.113", "ccVersion_sort": [2, 1, 113], "metric": "judgment / procedural", "value": 0.12237762237762238, "num_so_far": 35.0, "den_so_far": 286.0, "n_files_so_far": 213}, {"ccVersion": "2.1.116", "ccVersion_sort": [2, 1, 116], "metric": "judgment / procedural", "value": 0.12027491408934708, "num_so_far": 35.0, "den_so_far": 291.0, "n_files_so_far": 215}, {"ccVersion": "2.1.118", "ccVersion_sort": [2, 1, 118], "metric": "judgment / procedural", "value": 0.11949685534591195, "num_so_far": 38.0, "den_so_far": 318.0, "n_files_so_far": 232}, {"ccVersion": "2.1.119", "ccVersion_sort": [2, 1, 119], "metric": "judgment / procedural", "value": 0.14841849148418493, "num_so_far": 61.0, "den_so_far": 411.0, "n_files_so_far": 249}, {"ccVersion": "2.1.120", "ccVersion_sort": [2, 1, 120], "metric": "judgment / procedural", "value": 0.14418604651162792, "num_so_far": 62.0, "den_so_far": 430.0, "n_files_so_far": 257}, {"ccVersion": "2.1.122", "ccVersion_sort": [2, 1, 122], "metric": "judgment / procedural", "value": 0.14814814814814814, "num_so_far": 64.0, "den_so_far": 432.0, "n_files_so_far": 261}, {"ccVersion": "2.1.124", "ccVersion_sort": [2, 1, 124], "metric": "judgment / procedural", "value": 0.14746543778801843, "num_so_far": 64.0, "den_so_far": 434.0, "n_files_so_far": 264}, {"ccVersion": "2.1.128", "ccVersion_sort": [2, 1, 128], "metric": "judgment / procedural", "value": 0.13595706618962433, "num_so_far": 76.0, "den_so_far": 559.0, "n_files_so_far": 284}, {"ccVersion": "2.1.129", "ccVersion_sort": [2, 1, 129], "metric": "judgment / procedural", "value": 0.13139931740614336, "num_so_far": 77.0, "den_so_far": 586.0, "n_files_so_far": 286}]}}, {"mode": "vega-lite"});
+</script>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-judgment-procedural-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Cumulative judgment-to-procedural ratio over ccVersion (count-weighted; starts at v2.1.18 once the cumulative file pool reaches 20).
+</figcaption>
 </figure>
 </div>
+</div>
+<a class="quarto-notebook-link" id="nblink-1" href="20_track_justification_rate-preview.html#cell-fig-judgment-procedural-trend">Source: Track justification rate per release; block regressions</a></div>
+<p>The figure above is an <em>interactive</em> Vega-Embed chart — hover over any point to see the exact <code>ccVersion</code>, count-weighted ratio, running <code>Σ judgment</code> / <code>Σ procedural</code> numerators, and the cumulative file pool. Cumulative data before v2.1.18 (where the file pool first reaches 20) is suppressed because the running ratio is dominated by single-file outliers below that threshold. The same chart is also exported as a static <a href="figures/judgment_procedural_trend.png"><code>figures/judgment_procedural_trend.png</code></a> for places where JavaScript can’t run (Reddit posts, the Claudexplorers Google form upload, social-media share previews). The full set of static PNG exports for every chart in the analysis lives under <a href="https://github.com/overthinkos/claude-code-welfare/tree/main/figures"><code>figures/</code></a>.</p>
 <p>The interactive version (with hover tooltips on every release) lives in <a href="./20_track_justification_rate.html"><code>20_track_justification_rate.ipynb</code></a> §2.</p>
 </section>
 <section id="how-to-read-this-site" class="level2">
@@ -1127,7 +1207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script>
-<nav class="page-navigation column-page-right">
+<nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
@@ -1191,34 +1271,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>If you only look at one chart from this analysis, look at this one. It plots, across every Claude Code release version on file, the running ratio of **language that invites the model's judgment** (`decide`, `consider`, `your judgment`, …) to **language that prescribes a procedure** (<span class="in">`if you …`</span>, <span class="in">`when the …`</span>, <span class="in">`whenever`</span>, <span class="in">`step 1`</span>, …).</span>
 <span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="al">![Cumulative count-weighted ratio (Σ judgment / Σ procedural) of judgment-inviting language to procedure-prescribing language across all Claude Code release versions on file. Each point's opacity scales with the cumulative file count so early-version points (small-N, structurally noisy) are visibly faded; the dashed grey guide marks the version where the cumulative pool first crosses 20 files. Once the pool stabilises, the running ratio declines monotonically and ends at the canonical corpus-wide value documented in `00_data_pipeline.ipynb` § Phase 0 audit. The corpus has become *less* reasoning-inviting as it has grown.](figures/judgment_procedural_trend.png)</span>{fig-alt="Line chart showing the cumulative count-weighted ratio of judgment-inviting to procedure-prescribing language declining monotonically over Claude Code release versions, with early small-N points visibly faded."}</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>{{&lt; embed 20_track_justification_rate.ipynb#fig-judgment-procedural-trend &gt;}}</span>
 <span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>The interactive version (with hover tooltips on every release) lives in <span class="co">[</span><span class="ot">`20_track_justification_rate.ipynb`</span><span class="co">](20_track_justification_rate.ipynb)</span> §2.</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>The figure above is an *interactive* Vega-Embed chart — hover over any point to see the exact <span class="in">`ccVersion`</span>, count-weighted ratio, running <span class="in">`Σ judgment`</span> / <span class="in">`Σ procedural`</span> numerators, and the cumulative file pool. Cumulative data before v2.1.18 (where the file pool first reaches 20) is suppressed because the running ratio is dominated by single-file outliers below that threshold. The same chart is also exported as a static <span class="co">[</span><span class="ot">`figures/judgment_procedural_trend.png`</span><span class="co">](figures/judgment_procedural_trend.png)</span> for places where JavaScript can't run (Reddit posts, the Claudexplorers Google form upload, social-media share previews). The full set of static PNG exports for every chart in the analysis lives under <span class="co">[</span><span class="ot">`figures/`</span><span class="co">](https://github.com/overthinkos/claude-code-welfare/tree/main/figures)</span>.</span>
 <span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to read this site</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>The interactive version (with hover tooltips on every release) lives in <span class="co">[</span><span class="ot">`20_track_justification_rate.ipynb`</span><span class="co">](20_track_justification_rate.ipynb)</span> §2.</span>
 <span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>The notebooks form a three-chapter flow — pipeline first, slice analyses on top of that, proposals built on top of those.</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to read this site</span></span>
 <span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Pipeline** — [**`00_data_pipeline.ipynb`**](00_data_pipeline.ipynb). The data producer: spaCy + a set of small hand-written classifiers turn 286 prompt files into one ~1.8 MiB YAML and one ~395 KiB per-sentence parquet, plus the canonical <span class="in">`HEADLINE`</span> sheet that every consumer notebook reads. Included for reproducibility, and the canonical home where every linguistic / statistical term used elsewhere in the site is defined in plain language at first use.</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Analysis** — six notebooks, each rendering one slice of the data: [`10_sentence_register.ipynb`](10_sentence_register.ipynb) (per-sentence speech-act classes), [`11_emphasis_caps_vocab.ipynb`](11_emphasis_caps_vocab.ipynb) (ALL CAPS, "shouted" command words, full vocabulary heatmap), [`12_register_stance.ipynb`](12_register_stance.ipynb) (formality scale + commitment polarity), [`13_correlation_directiveness.ipynb`](13_correlation_directiveness.ipynb) (cross-metric correlations + a single composite "directiveness" score), [`14_ccversion_trends.ipynb`](14_ccversion_trends.ipynb) (every metric plotted across release versions), [`15_rule_explanation.ipynb`](15_rule_explanation.ipynb) (the headline rule-vs-justification pairing). Each is standalone and reads from the YAML produced by the pipeline. Each ends with exactly one **`Observation (Claude) — opinion, not data`** markdown cell so a reader can see what is data and what is interpretation at a glance.</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Proposal** — three self-contained proposals built on top of the analysis tier: <span class="co">[</span><span class="ot">`20_track_justification_rate.ipynb`</span><span class="co">](20_track_justification_rate.ipynb)</span> (track the rate of explained rules per release), <span class="co">[</span><span class="ot">`21_audit_threat_framings.ipynb`</span><span class="co">](21_audit_threat_framings.ipynb)</span> (rewrite threat-framed rules as causal), <span class="co">[</span><span class="ot">`22_cross_product_audit.ipynb`</span><span class="co">](22_cross_product_audit.ipynb)</span> (run the same audit on every Claude product). Each closes with a <span class="in">`Conclusions / Recommendations / Limitations`</span> triplet of opinion-marked cells; the asks are framed as "I'd want X" rather than as imperatives, and the limitations spell out what each proposal can't tell us.</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducing it</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>The notebooks form a three-chapter flow — pipeline first, slice analyses on top of that, proposals built on top of those.</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Pipeline** — [**`00_data_pipeline.ipynb`**](00_data_pipeline.ipynb). The data producer: spaCy + a set of small hand-written classifiers turn 286 prompt files into one ~1.8 MiB YAML and one ~395 KiB per-sentence parquet, plus the canonical <span class="in">`HEADLINE`</span> sheet that every consumer notebook reads. Included for reproducibility, and the canonical home where every linguistic / statistical term used elsewhere in the site is defined in plain language at first use.</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Analysis** — six notebooks, each rendering one slice of the data: [`10_sentence_register.ipynb`](10_sentence_register.ipynb) (per-sentence speech-act classes), [`11_emphasis_caps_vocab.ipynb`](11_emphasis_caps_vocab.ipynb) (ALL CAPS, "shouted" command words, full vocabulary heatmap), [`12_register_stance.ipynb`](12_register_stance.ipynb) (formality scale + commitment polarity), [`13_correlation_directiveness.ipynb`](13_correlation_directiveness.ipynb) (cross-metric correlations + a single composite "directiveness" score), [`14_ccversion_trends.ipynb`](14_ccversion_trends.ipynb) (every metric plotted across release versions), [`15_rule_explanation.ipynb`](15_rule_explanation.ipynb) (the headline rule-vs-justification pairing). Each is standalone and reads from the YAML produced by the pipeline. Each ends with exactly one **`Observation (Claude) — opinion, not data`** markdown cell so a reader can see what is data and what is interpretation at a glance.</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Proposal** — three self-contained proposals built on top of the analysis tier: <span class="co">[</span><span class="ot">`20_track_justification_rate.ipynb`</span><span class="co">](20_track_justification_rate.ipynb)</span> (track the rate of explained rules per release), <span class="co">[</span><span class="ot">`21_audit_threat_framings.ipynb`</span><span class="co">](21_audit_threat_framings.ipynb)</span> (rewrite threat-framed rules as causal), <span class="co">[</span><span class="ot">`22_cross_product_audit.ipynb`</span><span class="co">](22_cross_product_audit.ipynb)</span> (run the same audit on every Claude product). Each closes with a <span class="in">`Conclusions / Recommendations / Limitations`</span> triplet of opinion-marked cells; the asks are framed as "I'd want X" rather than as imperatives, and the limitations spell out what each proposal can't tell us.</span>
 <span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>The full source is at <span class="co">[</span><span class="ot">github.com/overthinkos/claude-code-welfare</span><span class="co">](https://github.com/overthinkos/claude-code-welfare)</span>. To rebuild the data from scratch:</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducing it</span></span>
 <span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--recurse-submodules</span> https://github.com/overthinkos/claude-code-welfare</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> claude-code-welfare</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> spacy download en_core_web_sm   <span class="co"># if not already installed</span></span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab 00_data_pipeline.ipynb        <span class="co"># → Run All</span></span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>This regenerates <span class="in">`prompt_linguistic_analysis.yaml`</span> and <span class="in">`sentences_classified.parquet`</span> from the corpus submodule. The Analysis and Proposal notebooks then read from those two artifacts — they don't re-run spaCy.</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>The full source is at <span class="co">[</span><span class="ot">github.com/overthinkos/claude-code-welfare</span><span class="co">](https://github.com/overthinkos/claude-code-welfare)</span>. To rebuild the data from scratch:</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--recurse-submodules</span> https://github.com/overthinkos/claude-code-welfare</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> claude-code-welfare</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> spacy download en_core_web_sm   <span class="co"># if not already installed</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab 00_data_pipeline.ipynb        <span class="co"># → Run All</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## A note on authorship</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>This regenerates <span class="in">`prompt_linguistic_analysis.yaml`</span> and <span class="in">`sentences_classified.parquet`</span> from the corpus submodule. The Analysis and Proposal notebooks then read from those two artifacts — they don't re-run spaCy.</span>
 <span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>This analysis was built **collaboratively with Claude Code**, using Claude Code itself as the development tool. The submission form has a checkbox for that disclosure; it is ticked. The recursive frame — Claude analyzing the prompts that shape Claude — is intentional, and the <span class="co">[</span><span class="ot">conclusions section</span><span class="co">](20_track_justification_rate.ipynb)</span> of <span class="in">`20_track_justification_rate.ipynb`</span> includes one hypothesis I held that the data falsified, reported honestly.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## A note on authorship</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>This analysis was built **collaboratively with Claude Code**, using Claude Code itself as the development tool. The submission form has a checkbox for that disclosure; it is ticked. The recursive frame — Claude analyzing the prompts that shape Claude — is intentional, and the <span class="co">[</span><span class="ot">conclusions section</span><span class="co">](20_track_justification_rate.ipynb)</span> of <span class="in">`20_track_justification_rate.ipynb`</span> includes one hypothesis I held that the data falsified, reported honestly.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
