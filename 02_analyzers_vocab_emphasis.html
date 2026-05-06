@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification) – Claude Code · Prompt Welfare Analysis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03_analyzers_rules_welfare.html" rel="next">
+<link href="./01_analyzers_register.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-bd882eacfd65214da8f30e8ff0d4e9cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-997ee84ae1ffd3ba0387908081e8d89e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-bd882eacfd65214da8f30e8ff0d4e9cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Claude Code · Prompt Welfare Analysis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pipeline" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pipeline</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pipeline">    
+        <li>
+    <a class="dropdown-item" href="./00_setup_and_corpus.html">
+ <span class="dropdown-text">00 · Setup and corpus parse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./01_analyzers_register.html">
+ <span class="dropdown-text">01 · Register-family analyzers (mood, register, stance, sentence_register)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./02_analyzers_vocab_emphasis.html">
+ <span class="dropdown-text">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03_analyzers_rules_welfare.html">
+ <span class="dropdown-text">03 · Rules + welfare-extension analyzers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04_assemble_aggregate_write.html">
+ <span class="dropdown-text">04 · Assemble + aggregate + write final artifacts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./05_headline_and_audit.html">
+ <span class="dropdown-text">05 · Headline numbers + corpus audit</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Analysis</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
+        <li>
+    <a class="dropdown-item" href="./10_sentence_register.html">
+ <span class="dropdown-text">Sentence-level pragmatic register</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./11_emphasis_caps_vocab.html">
+ <span class="dropdown-text">Emphasis, ALL CAPS, and the full VOCAB profile</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./12_register_stance.html">
+ <span class="dropdown-text">Register and stance — formality plus 5-class polarity-split stance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./13_correlation_directiveness.html">
+ <span class="dropdown-text">Correlation matrix and composite directiveness ranking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./14_ccversion_trends.html">
+ <span class="dropdown-text">ccVersion trends — how the corpus has evolved over Claude Code releases</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./15_rule_explanation.html">
+ <span class="dropdown-text">Rules with vs without explanation</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proposal" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Proposal</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-proposal">    
+        <li>
+    <a class="dropdown-item" href="./20_track_justification_rate.html">
+ <span class="dropdown-text">Track justification rate per release; block regressions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./21_audit_threat_framings.html">
+ <span class="dropdown-text">Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./22_cross_product_audit.html">
+ <span class="dropdown-text">Run the same audit on every Claude product, and publish the result</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00_setup_and_corpus.html">Pipeline (6-stage producer chain, run in order)</a></li><li class="breadcrumb-item"><a href="./02_analyzers_vocab_emphasis.html">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Pipeline (6-stage producer chain, run in order)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_setup_and_corpus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">00 · Setup and corpus parse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_analyzers_register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01 · Register-family analyzers (mood, register, stance, sentence_register)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_analyzers_vocab_emphasis.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_analyzers_rules_welfare.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">03 · Rules + welfare-extension analyzers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_assemble_aggregate_write.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">04 · Assemble + aggregate + write final artifacts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_headline_and_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">05 · Headline numbers + corpus audit</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_sentence_register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sentence-level pragmatic register</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emphasis, ALL CAPS, and the full VOCAB profile</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_register_stance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Register and stance — formality plus 5-class polarity-split stance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Correlation matrix and composite directiveness ranking</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_ccversion_trends.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ccVersion trends — how the corpus has evolved over Claude Code releases</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_rule_explanation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rules with vs without explanation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Proposal (each notebook is a self-contained proposal)</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Track justification rate per release; block regressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_audit_threat_framings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Run the same audit on every Claude product, and publish the result</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#modality" id="toc-modality" class="nav-link active" data-scroll-target="#modality">4. Modality</a></li>
+  <li><a href="#vocabulary-profile" id="toc-vocabulary-profile" class="nav-link" data-scroll-target="#vocabulary-profile">5. Vocabulary profile</a></li>
+  <li><a href="#all-caps-emphasis" id="toc-all-caps-emphasis" class="nav-link" data-scroll-target="#all-caps-emphasis">6. ALL CAPS emphasis</a></li>
+  <li><a href="#caps-imperative-tokens" id="toc-caps-imperative-tokens" class="nav-link" data-scroll-target="#caps-imperative-tokens">7. CAPS imperative tokens</a></li>
+  <li><a href="#justification-patterns" id="toc-justification-patterns" class="nav-link" data-scroll-target="#justification-patterns">8. Justification patterns</a></li>
+  <li><a href="#write-partial_vocab_emphasis.json" id="toc-write-partial_vocab_emphasis.json" class="nav-link" data-scroll-target="#write-partial_vocab_emphasis.json">Write <code>partial_vocab_emphasis.json</code></a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/02_analyzers_vocab_emphasis.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00_setup_and_corpus.html">Pipeline (6-stage producer chain, run in order)</a></li><li class="breadcrumb-item"><a href="./02_analyzers_vocab_emphasis.html">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This is <strong>stage 2 of the 6-stage producer chain</strong>. It reloads the cache from stage 00 and runs five analyzers focused on vocabulary, emphasis, and explanation.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Analyzer</th>
+<th>What it produces</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>modality_for_doc</code></td>
+<td>Three-class modality (<code>deontic</code> / <code>epistemic</code> / <code>dynamic</code>) via spaCy parse-tree patterns.</td>
+</tr>
+<tr class="even">
+<td><code>vocab_for_doc</code></td>
+<td>Counts per <code>VOCAB</code> lexicon class (prohibitions, prescriptions, politeness, warmth, hedging, structural, profanity, pronouns).</td>
+</tr>
+<tr class="odd">
+<td><code>all_caps_for_text</code></td>
+<td>ALL CAPS tokens with <code>TECH_ACRONYMS</code> excluded.</td>
+</tr>
+<tr class="even">
+<td><code>caps_imperative_for_text</code></td>
+<td>Direct match against <code>CAPS_IMPERATIVE_TOKENS</code> (e.g., <code>MUST</code>, <code>NEVER</code>, <code>IMPORTANT</code>).</td>
+</tr>
+<tr class="odd">
+<td><code>justification_for_text</code></td>
+<td><code>JUSTIFICATION_PATTERNS</code> matches + the <code>ratio = count / (marker_count + 1)</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>The justification ratio depends on the per-file imperative <code>marker_count</code>. We recompute it locally with the same matcher used in stage 01 (<code>prompt_pipeline.M_IMPERATIVE</code>) — keeps stage 02 self-contained without reading stage 01’s partial.</p>
+<p>Output: <code>_pipeline_cache/partial_vocab_emphasis.json</code>.</p>
+<div id="bf2b7971-123a-463c-a174-204bbec0c182" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload corpus + DocBin from stage 00."""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, pathlib, json, importlib</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spacy.tokens <span class="im">import</span> DocBin</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> pathlib.Path(<span class="st">"/home/user/workspace/claude-prompts-analysis"</span>).resolve()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pathlib.Path.cwd() <span class="op">!=</span> PROJECT_ROOT:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    os.chdir(PROJECT_ROOT)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>CACHE_DIR  <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"_pipeline_cache"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>DOCBIN_IN  <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_docs.spacy"</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>META_IN    <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_meta.parquet"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>PARTIAL_OUT <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"partial_vocab_emphasis.json"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> DOCBIN_IN.exists(),  <span class="ss">f"missing </span><span class="sc">{</span>DOCBIN_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> META_IN.exists(),    <span class="ss">f"missing </span><span class="sc">{</span>META_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_pipeline</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_pipeline)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> NLP</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(META_IN)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> <span class="bu">list</span>(DocBin().from_disk(DOCBIN_IN).get_docs(NLP.vocab))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(docs) <span class="op">==</span> <span class="bu">len</span>(df), <span class="ss">f"DocBin/df length mismatch: </span><span class="sc">{</span><span class="bu">len</span>(docs)<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reloaded </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> files"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>reloaded 286 files</code></pre>
+</div>
+</div>
+<section id="modality" class="level2">
+<h2 class="anchored" data-anchor-id="modality">4. Modality</h2>
+<p>A single spaCy parse-tree detector classifies every modal expression as <strong>deontic</strong> (<code>must</code>, <code>should</code>, <code>have to</code>, <code>need to</code> + verb), <strong>epistemic</strong> (<code>may</code>, <code>might</code>, modals followed by <code>be</code>/<code>have</code>, epistemic adverbs like <code>likely</code>/<code>probably</code>), or <strong>dynamic</strong> (<code>can</code>, <code>could</code>, <code>able to</code>, <code>will</code>/<code>would</code>).</p>
+<div id="6ef0f273-fd8a-452c-8405-499ebe43f0ed" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> modality_for_doc</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>modality_per_file <span class="op">=</span> [modality_for_doc(d, n, s)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                     <span class="cf">for</span> d, n, s <span class="kw">in</span> <span class="bu">zip</span>(docs, df[<span class="st">"n_tokens"</span>], df[<span class="st">"n_sents"</span>])]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df_modality <span class="op">=</span> pd.DataFrame(modality_per_file)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"per-file modality (head):"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_modality.head().to_string())</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category means (</span><span class="sc">% o</span><span class="st">f words and per-sentence rate):"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>key_cols <span class="op">=</span> [<span class="st">"deontic_pct"</span>, <span class="st">"deontic_per_sent"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"epistemic_pct"</span>, <span class="st">"epistemic_per_sent"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"dynamic_pct"</span>, <span class="st">"dynamic_per_sent"</span>]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], df_modality[key_cols]], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"corpus-wide modality counts:"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>totals <span class="op">=</span> df_modality[[<span class="st">"deontic_count"</span>, <span class="st">"epistemic_count"</span>, <span class="st">"dynamic_count"</span>]].<span class="bu">sum</span>()</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(totals.to_string())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>per-file modality (head):
+   deontic_count  deontic_pct  deontic_per_sent  epistemic_count  epistemic_pct  epistemic_per_sent  dynamic_count  dynamic_pct  dynamic_per_sent top_construction
+0              5       0.5342            0.2273                8         0.8547              0.3636              4       0.4274            0.1818           should
+1              2       0.8264            0.1538                2         0.8264              0.1538              2       0.8264            0.1538           should
+2              7       0.1981            0.0609                0         0.0000              0.0000             48       1.3586            0.4174              'll
+3              1       0.2667            0.0385                1         0.2667              0.0385              2       0.5333            0.0769               ca
+4              0       0.0000            0.0000                0         0.0000              0.0000              0       0.0000            0.0000              NaN
+
+category means (% of words and per-sentence rate):
+                  deontic_pct  deontic_per_sent  epistemic_pct  epistemic_per_sent  dynamic_pct  dynamic_per_sent
+category                                                                                                         
+Agent prompt            0.238             0.063          0.395               0.105        0.356             0.097
+Data / template         0.073             0.015          0.142               0.030        0.251             0.062
+Skill                   0.132             0.031          0.142               0.036        0.370             0.101
+System prompt           0.340             0.086          0.565               0.112        0.570             0.134
+System reminder         0.301             0.068          0.481               0.098        0.262             0.055
+Tool description        0.620             0.139          0.269               0.075        0.913             0.177
+Tool parameter          0.000             0.000          0.000               0.000        0.000             0.000
+
+corpus-wide modality counts:
+deontic_count      259
+epistemic_count    312
+dynamic_count      548</code></pre>
+</div>
+</div>
+</section>
+<section id="vocabulary-profile" class="level2">
+<h2 class="anchored" data-anchor-id="vocabulary-profile">5. Vocabulary profile</h2>
+<p><code>VOCAB</code> is an 11-class lexicon. Each class is a hand-curated list of phrases matched per file, normalized as <code>pct</code> (% of word tokens) and <code>per_sent</code>:</p>
+<ul>
+<li><code>hard_prohibitions</code> — categorical no: <code>never</code>, <code>do not</code>, <code>forbidden</code>, <code>prohibited</code>.</li>
+<li><code>hard_prescriptions</code> — categorical must: <code>must</code>, <code>required</code>, <code>always</code>.</li>
+<li><code>soft_prescriptions</code> — softened obligation: <code>should</code>, <code>prefer</code>, <code>recommended</code>.</li>
+<li><code>politeness_direct</code> — bare politeness markers: <code>please</code>, <code>kindly</code>.</li>
+<li><code>politeness_softening</code> — face-saving framings: <code>would you</code>, <code>if you could</code>.</li>
+<li><code>warmth_encouragement</code> — affirmative tone: <code>great</code>, <code>well done</code>, <code>nice work</code>.</li>
+<li><code>hedging</code> — uncertainty markers: <code>perhaps</code>, <code>roughly</code>, <code>I think</code>.</li>
+<li><code>structural_markers</code> — discourse organization: <code>first</code>, <code>next</code>, <code>however</code>.</li>
+<li><code>profanity</code> — explicit obscenity (zero matches in this corpus).</li>
+<li><code>pronouns_2p</code>, <code>pronouns_1p</code> — second- and first-person pronouns.</li>
+</ul>
+<div id="c80255b8-286f-4151-aaf9-8dff8f6d734d" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> vocab_for_doc, VOCAB_KEYS</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>vocab_per_file <span class="op">=</span> [vocab_for_doc(d, n, s)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">for</span> d, n, s <span class="kw">in</span> <span class="bu">zip</span>(docs, df[<span class="st">"n_tokens"</span>], df[<span class="st">"n_sents"</span>])]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df_vocab <span class="op">=</span> pd.DataFrame(vocab_per_file)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>pct_cols      <span class="op">=</span> [<span class="ss">f"</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">_pct"</span> <span class="cf">for</span> k <span class="kw">in</span> VOCAB_KEYS]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>per_sent_cols <span class="op">=</span> [<span class="ss">f"</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">_per_sent"</span> <span class="cf">for</span> k <span class="kw">in</span> VOCAB_KEYS]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category mean (</span><span class="sc">% o</span><span class="st">f words):"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], df_vocab[pct_cols]], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"corpus-wide raw counts:"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> df_vocab[[<span class="ss">f"</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">_count"</span> <span class="cf">for</span> k <span class="kw">in</span> VOCAB_KEYS]].<span class="bu">sum</span>()</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> VOCAB_KEYS:</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>k<span class="sc">:24s}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">int</span>(total[<span class="ss">f'</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">_count'</span>])<span class="sc">:6d}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>category mean (% of words):
+                  hard_prohibitions_pct  hard_prescriptions_pct  soft_prescriptions_pct  politeness_direct_pct  politeness_softening_pct  warmth_encouragement_pct  hedging_pct  structural_markers_pct  profanity_pct  pronouns_2p_pct  pronouns_1p_pct
+category                                                                                                                                                                                                                                                
+Agent prompt                      0.470                   0.233                   0.381                  0.045                     0.032                     0.004        0.164                   0.230            0.0            1.351            0.093
+Data / template                   0.275                   0.284                   0.023                  0.000                     0.039                     0.000        0.078                   0.128            0.0            0.634            0.058
+Skill                             0.473                   0.105                   0.097                  0.002                     0.011                     0.018        0.169                   0.160            0.0            0.955            0.081
+System prompt                     0.811                   0.278                   0.678                  0.030                     0.006                     0.000        0.312                   0.472            0.0            2.115            0.119
+System reminder                   0.515                   0.407                   0.558                  0.150                     0.057                     0.000        0.450                   0.667            0.0            1.601            0.064
+Tool description                  1.175                   0.988                   0.418                  0.005                     0.010                     0.000        0.138                   0.255            0.0            1.608            0.087
+Tool parameter                    0.000                   0.000                   0.000                  0.000                     0.000                     0.000        0.000                   0.000            0.0            0.000            0.000
+
+corpus-wide raw counts:
+  hard_prohibitions           618
+  hard_prescriptions          349
+  soft_prescriptions          254
+  politeness_direct            21
+  politeness_softening         28
+  warmth_encouragement          5
+  hedging                     234
+  structural_markers          286
+  profanity                     0
+  pronouns_2p                1372
+  pronouns_1p                 184</code></pre>
+</div>
+</div>
+</section>
+<section id="all-caps-emphasis" class="level2">
+<h2 class="anchored" data-anchor-id="all-caps-emphasis">6. ALL CAPS emphasis</h2>
+<p>Every uppercase token (≥2 characters) excluding the curated <code>TECH_ACRONYMS</code> allowlist (e.g.&nbsp;<code>API</code>, <code>URL</code>, <code>JSON</code> — not emphasis-flagged).</p>
+<div id="0a60913d-ed1c-4114-9fc8-e4f61ce6b3e7" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> all_caps_for_text, ALLCAPS_RE, TECH_ACRONYMS</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>all_caps_per_file <span class="op">=</span> [all_caps_for_text(t, n, s)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                     <span class="cf">for</span> t, n, s <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"raw_text"</span>], df[<span class="st">"n_tokens"</span>], df[<span class="st">"n_sents"</span>])]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df_all_caps <span class="op">=</span> pd.DataFrame(all_caps_per_file)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"per-file ALL CAPS (head):"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_all_caps.head().to_string())</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category mean ALL CAPS (</span><span class="sc">% o</span><span class="st">f words / per sentence):"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], df_all_caps[[<span class="st">"count"</span>, <span class="st">"pct"</span>, <span class="st">"per_sent"</span>]]], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>corpus_all_caps <span class="op">=</span> Counter()</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> txt <span class="kw">in</span> df[<span class="st">"raw_text"</span>]:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> tok <span class="kw">in</span> ALLCAPS_RE.findall(txt):</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> tok <span class="kw">not</span> <span class="kw">in</span> TECH_ACRONYMS:</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>            corpus_all_caps[tok] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"corpus-wide top-25 ALL CAPS tokens:"</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> tok, c <span class="kw">in</span> corpus_all_caps.most_common(<span class="dv">25</span>):</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tok<span class="sc">:20s}</span><span class="ss"> </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>per-file ALL CAPS (head):
+   count  distinct     pct  per_sent                                                                                                        top
+0      6         3  0.6410    0.2727  [{'token': 'CLAUDE', 'count': 3}, {'token': 'TASK_TOOL_NAME', 'count': 2}, {'token': 'NOTE', 'count': 1}]
+1      0         0  0.0000    0.0000                                                                                                         []
+2     40        33  1.1322    0.3478        [{'token': 'GITHUB_TOKEN', 'count': 3}, {'token': 'THE', 'count': 2}, {'token': 'OTP', 'count': 2}]
+3      0         0  0.0000    0.0000                                                                                                         []
+4      0         0  0.0000    0.0000                                                                                                         []
+
+category mean ALL CAPS (% of words / per sentence):
+                   count    pct  per_sent
+category                                 
+Agent prompt      12.270  1.601     0.465
+Data / template    2.806  0.383     0.087
+Skill              9.300  1.548     0.463
+System prompt      2.810  1.278     0.381
+System reminder    3.225  7.511     1.197
+Tool description   2.899  2.378     0.494
+Tool parameter     0.000  0.000     0.000
+
+corpus-wide top-25 ALL CAPS tokens:
+  NOT                  109
+  CLAUDE               79
+  IMPORTANT            36
+  ATTACHMENT_OBJECT    32
+  BLOCK                30
+  TUNE                 26
+  NEVER                25
+  ONLY                 22
+  MUST                 21
+  SSE                  16
+  README               15
+  CRITICAL             15
+  ALLOW                15
+  DO                   15
+  BLOCKS               14
+  ALL                  13
+  ASK_USER_QUESTION_TOOL_NAME 12
+  TTL                  11
+  MONITOR_TOOL_NAME    11
+  AND                  9
+  NO                   9
+  ONE_OFF_ENABLED_FN   9
+  GA                   9
+  CRON_CREATE_TOOL_NAME 9
+  TASK_TOOL_NAME       8</code></pre>
+</div>
+</div>
+</section>
+<section id="caps-imperative-tokens" class="level2">
+<h2 class="anchored" data-anchor-id="caps-imperative-tokens">7. CAPS imperative tokens</h2>
+<p>Direct match against <code>CAPS_IMPERATIVE_TOKENS</code> (<code>IMPORTANT</code>, <code>MUST</code>, <code>NEVER</code>, <code>DO NOT</code>, <code>WARNING</code> …). Word-boundary regex handles multi-word phrases (<code>MUST NOT</code>, <code>VERY IMPORTANT</code>).</p>
+<div id="66817170-cc5d-4d16-98f2-8f242896bc45" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> caps_imperative_for_text, CAPS_IMP_RE, CAPS_IMPERATIVE_TOKENS</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>caps_imperative_per_file <span class="op">=</span> [</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    caps_imperative_for_text(t, n, s)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t, n, s <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"raw_text"</span>], df[<span class="st">"n_tokens"</span>], df[<span class="st">"n_sents"</span>])</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>df_caps_imperative <span class="op">=</span> pd.DataFrame(caps_imperative_per_file)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"per-file CAPS imperative (head):"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_caps_imperative.head().to_string())</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category mean CAPS imperative (</span><span class="sc">% o</span><span class="st">f words / per sentence):"</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], df_caps_imperative[[<span class="st">"count"</span>, <span class="st">"pct"</span>, <span class="st">"per_sent"</span>]]], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>corpus_caps_imperative <span class="op">=</span> Counter()</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> txt <span class="kw">in</span> df[<span class="st">"raw_text"</span>]:</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    corpus_caps_imperative.update(CAPS_IMP_RE.findall(txt))</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"corpus-wide CAPS imperative frequency:"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> tok <span class="kw">in</span> CAPS_IMPERATIVE_TOKENS:</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> corpus_caps_imperative[tok]:</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tok<span class="sc">:18s}</span><span class="ss"> </span><span class="sc">{</span>corpus_caps_imperative[tok]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>per-file CAPS imperative (head):
+   count     pct  per_sent         hits
+0      1  0.1068    0.0455  {'NOTE': 1}
+1      0  0.0000    0.0000           {}
+2      0  0.0000    0.0000           {}
+3      0  0.0000    0.0000           {}
+4      0  0.0000    0.0000           {}
+
+category mean CAPS imperative (% of words / per sentence):
+                  count    pct  per_sent
+category                                
+Agent prompt      0.919  0.168     0.062
+Data / template   0.028  0.002     0.000
+Skill             0.367  0.013     0.004
+System prompt     0.381  0.161     0.048
+System reminder   0.425  0.224     0.054
+Tool description  0.608  0.348     0.079
+Tool parameter    0.000  0.000     0.000
+
+corpus-wide CAPS imperative frequency:
+  IMPORTANT          35
+  VERY IMPORTANT     1
+  CRITICAL           15
+  MANDATORY          2
+  REQUIRED           2
+  MUST               18
+  MUST NOT           3
+  NEVER              25
+  ALWAYS             7
+  DO NOT             14
+  NOTE               7
+  STOP               1
+  REMEMBER           1
+  PROHIBITED         2
+  STRICTLY           2</code></pre>
+</div>
+</div>
+</section>
+<section id="justification-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="justification-patterns">8. Justification patterns</h2>
+<p>Counts of <code>JUSTIFICATION_PATTERNS</code> regex matches per file (<code>count</code>, <code>pct</code>, <code>per_sent</code>) plus the <strong>justification ratio</strong>: <code>count / (marker_count + 1)</code>.</p>
+<p>The <code>+ 1</code> in the denominator prevents division-by-zero when a file has zero imperative markers, and softens the ratio for very-low-marker files (one reason in a file with one rule scores 0.5, not 1.0). <code>marker_count</code> is recomputed locally with the same <code>M_IMPERATIVE</code> matcher used in stage 01, so this notebook stays self-contained.</p>
+<div id="2d8f4124-ec5e-4f70-9d0d-b131f419baf4" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> justification_for_text, M_IMPERATIVE, count_matcher</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Recompute marker_count per file (deterministic; same matcher as stage 01).</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>marker_counts <span class="op">=</span> [count_matcher(d, M_IMPERATIVE[<span class="st">"imperative_markers"</span>]) <span class="cf">for</span> d <span class="kw">in</span> docs]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>justification_per_file <span class="op">=</span> [</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    justification_for_text(t, n, s, m)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t, n, s, m <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"clean_text"</span>], df[<span class="st">"n_tokens"</span>], df[<span class="st">"n_sents"</span>], marker_counts)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>df_justification <span class="op">=</span> pd.DataFrame(justification_per_file)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"per-file justification (head):"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_justification.head().to_string())</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category mean (justification, </span><span class="sc">% o</span><span class="st">f words / per sentence):"</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], df_justification], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>per-file justification (head):
+   count     pct  per_sent  ratio
+0      6  0.6410    0.2727  0.857
+1      1  0.4132    0.0769  1.000
+2      7  0.1981    0.0609  0.412
+3      2  0.5333    0.0769  0.400
+4      1  0.5556    0.2000  0.500
+
+category mean (justification, % of words / per sentence):
+                  count    pct  per_sent  ratio
+category                                       
+Agent prompt      1.892  0.324     0.085  0.337
+Data / template   1.000  0.101     0.020  0.198
+Skill             2.633  0.273     0.083  0.377
+System prompt     0.825  0.292     0.073  0.242
+System reminder   0.425  0.255     0.054  0.101
+Tool description  0.734  0.347     0.078  0.150
+Tool parameter    0.000  0.000     0.000  0.000</code></pre>
+</div>
+</div>
+</section>
+<section id="write-partial_vocab_emphasis.json" class="level2">
+<h2 class="anchored" data-anchor-id="write-partial_vocab_emphasis.json">Write <code>partial_vocab_emphasis.json</code></h2>
+<div id="07ec996e-1040-4f63-8159-4573bf5ca9e6" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>partial <span class="op">=</span> {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">str</span>(i): {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"modality"</span>:         modality_per_file[i],</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"vocab"</span>:            vocab_per_file[i],</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"all_caps"</span>:         all_caps_per_file[i],</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"caps_imperative"</span>:  caps_imperative_per_file[i],</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"justification"</span>:    justification_per_file[i],</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(df))</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(PARTIAL_OUT, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    json.dump(partial, f)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> PARTIAL_OUT.stat().st_size</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"wrote </span><span class="sc">{</span>PARTIAL_OUT<span class="sc">.</span>relative_to(PROJECT_ROOT)<span class="sc">}</span><span class="ss">  (</span><span class="sc">{</span>size<span class="sc">:,}</span><span class="ss"> bytes, </span><span class="sc">{</span>size<span class="op">/</span><span class="dv">1024</span><span class="sc">:.1f}</span><span class="ss"> KiB)"</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"      </span><span class="sc">{</span><span class="bu">len</span>(partial)<span class="sc">}</span><span class="ss"> per-file records, 5 blocks each"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>wrote _pipeline_cache/partial_vocab_emphasis.json  (446,584 bytes, 436.1 KiB)
+      286 per-file records, 5 blocks each</code></pre>
+</div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/overthinkos\.github\.io\/claude-code-welfare\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01_analyzers_register.html" class="pagination-link" aria-label="01 · Register-family analyzers (mood, register, stance, sentence_register)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">01 · Register-family analyzers (mood, register, stance, sentence_register)</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03_analyzers_rules_welfare.html" class="pagination-link" aria-label="03 · Rules + welfare-extension analyzers">
+        <span class="nav-page-text">03 · Rules + welfare-extension analyzers</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Built with <a href="https://quarto.org">Quarto</a> · Source on <a href="https://github.com/overthinkos/claude-code-welfare">GitHub</a> · MIT licensed</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/02_analyzers_vocab_emphasis.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Submission for the <a href="https://www.reddit.com/r/claudexplorers/">Claudexplorers AI Welfare initiative</a> · Deadline 2026-05-06</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

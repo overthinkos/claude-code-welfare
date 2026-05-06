@@ -302,10 +302,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./05_headline_and_audit.html"> 
-<span class="menu-text">Pipeline</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pipeline" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pipeline</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pipeline">    
+        <li>
+    <a class="dropdown-item" href="./00_setup_and_corpus.html">
+ <span class="dropdown-text">00 · Setup and corpus parse</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./01_analyzers_register.html">
+ <span class="dropdown-text">01 · Register-family analyzers (mood, register, stance, sentence_register)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./02_analyzers_vocab_emphasis.html">
+ <span class="dropdown-text">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03_analyzers_rules_welfare.html">
+ <span class="dropdown-text">03 · Rules + welfare-extension analyzers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04_assemble_aggregate_write.html">
+ <span class="dropdown-text">04 · Assemble + aggregate + write final artifacts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./05_headline_and_audit.html">
+ <span class="dropdown-text">05 · Headline numbers + corpus audit</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Analysis</span>
@@ -389,12 +416,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Pipeline</span></a>
+ <span class="menu-text">Pipeline (6-stage producer chain, run in order)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_setup_and_corpus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">00 · Setup and corpus parse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_analyzers_register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01 · Register-family analyzers (mood, register, stance, sentence_register)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_analyzers_vocab_emphasis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_analyzers_rules_welfare.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">03 · Rules + welfare-extension analyzers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_assemble_aggregate_write.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">04 · Assemble + aggregate + write final artifacts</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_headline_and_audit.html" class="sidebar-item-text sidebar-link">

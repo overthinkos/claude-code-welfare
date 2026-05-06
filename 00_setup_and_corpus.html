@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Run the same audit on every Claude product, and publish the result – Claude Code · Prompt Welfare Analysis</title>
+<title>00 · Setup and corpus parse – Claude Code · Prompt Welfare Analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,7 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./21_audit_threat_framings.html" rel="prev">
+<link href="./01_analyzers_register.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -114,6 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
 
 </head>
@@ -394,7 +396,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20_track_justification_rate.html">Proposal (each notebook is a self-contained proposal)</a></li><li class="breadcrumb-item"><a href="./22_cross_product_audit.html">Run the same audit on every Claude product, and publish the result</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00_setup_and_corpus.html">Pipeline (6-stage producer chain, run in order)</a></li><li class="breadcrumb-item"><a href="./00_setup_and_corpus.html">00 · Setup and corpus parse</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -414,16 +416,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Pipeline (6-stage producer chain, run in order)</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00_setup_and_corpus.html" class="sidebar-item-text sidebar-link">
+  <a href="./00_setup_and_corpus.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">00 · Setup and corpus parse</span></a>
   </div>
 </li>
@@ -508,13 +510,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
  <span class="menu-text">Proposal (each notebook is a self-contained proposal)</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
@@ -529,7 +531,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link active">
+  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Run the same audit on every Claude product, and publish the result</span></a>
   </div>
 </li>
@@ -545,28 +547,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#findings" id="toc-findings" class="nav-link active" data-scroll-target="#findings">Findings</a></li>
-  <li><a href="#proposal" id="toc-proposal" class="nav-link" data-scroll-target="#proposal">Proposal</a></li>
-  <li><a href="#supplemental" id="toc-supplemental" class="nav-link" data-scroll-target="#supplemental">Supplemental</a></li>
-  <li><a href="#methodology-five-metrics-per-corpus" id="toc-methodology-five-metrics-per-corpus" class="nav-link" data-scroll-target="#methodology-five-metrics-per-corpus">1. Methodology — five metrics per corpus</a></li>
-  <li><a href="#lexicon-transparency" id="toc-lexicon-transparency" class="nav-link" data-scroll-target="#lexicon-transparency">2. Lexicon transparency</a></li>
-  <li><a href="#mock-comparison-table-what-the-published-output-should-look-like" id="toc-mock-comparison-table-what-the-published-output-should-look-like" class="nav-link" data-scroll-target="#mock-comparison-table-what-the-published-output-should-look-like">3. Mock comparison table — what the published output should look like</a></li>
-  <li><a href="#reproducibility-what-anthropic-needs-to-do-to-fill-another-row" id="toc-reproducibility-what-anthropic-needs-to-do-to-fill-another-row" class="nav-link" data-scroll-target="#reproducibility-what-anthropic-needs-to-do-to-fill-another-row">4. Reproducibility — what Anthropic needs to do to fill another row</a>
-  <ul class="collapse">
-  <li><a href="#conclusions-claude-opinion-not-data" id="toc-conclusions-claude-opinion-not-data" class="nav-link" data-scroll-target="#conclusions-claude-opinion-not-data">Conclusions (Claude) — opinion, not data</a></li>
-  <li><a href="#recommendations-claude-opinion-not-data" id="toc-recommendations-claude-opinion-not-data" class="nav-link" data-scroll-target="#recommendations-claude-opinion-not-data">Recommendations (Claude) — opinion, not data</a></li>
-  <li><a href="#limitations-claude-opinion-not-data" id="toc-limitations-claude-opinion-not-data" class="nav-link" data-scroll-target="#limitations-claude-opinion-not-data">Limitations (Claude) — opinion, not data</a></li>
-  </ul></li>
+  <li><a href="#reading-the-yaml-keys" id="toc-reading-the-yaml-keys" class="nav-link active" data-scroll-target="#reading-the-yaml-keys">Reading the YAML keys</a></li>
+  <li><a href="#units-read-every-chart-axis-with-these-in-mind" id="toc-units-read-every-chart-axis-with-these-in-mind" class="nav-link" data-scroll-target="#units-read-every-chart-axis-with-these-in-mind">Units (read every chart axis with these in mind)</a></li>
+  <li><a href="#corpus-terms" id="toc-corpus-terms" class="nav-link" data-scroll-target="#corpus-terms">Corpus terms</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/22_cross_product_audit.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/00_setup_and_corpus.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20_track_justification_rate.html">Proposal (each notebook is a self-contained proposal)</a></li><li class="breadcrumb-item"><a href="./22_cross_product_audit.html">Run the same audit on every Claude product, and publish the result</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00_setup_and_corpus.html">Pipeline (6-stage producer chain, run in order)</a></li><li class="breadcrumb-item"><a href="./00_setup_and_corpus.html">00 · Setup and corpus parse</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Run the same audit on every Claude product, and publish the result</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">00 · Setup and corpus parse</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
@@ -583,239 +576,286 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="findings" class="level2">
-<h2 class="anchored" data-anchor-id="findings">Findings</h2>
-<p>Across the 286 system prompts that ship with Claude Code (5,702 sentences, 57 release versions), only <strong>24.66%</strong> of rule-bearing sentences carry a justification keyword anywhere in their paragraph — three rules in four are issued without a stated reason. Of the rules that <em>are</em> explained, <strong>44.7%</strong> of the explanations are coercive (“will fail”, “or else”, “is forbidden”) rather than causal (“because”, “due to”). The ratio of judgment-inviting language (“decide”, “consider”) to procedural cues (“if X then…”, “whenever…”) is <strong>0.131</strong> — procedural cues are 7.6× more common. Appreciative and collaborative sentences number <strong>4 and 30</strong> respectively in the 5,702-sentence corpus. The cumulative trend across release versions has been declining, not improving.</p>
-<p>This is one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. From outside Anthropic, we cannot tell whether the same pattern shapes the rest.</p>
-</section>
-<section id="proposal" class="level2">
-<h2 class="anchored" data-anchor-id="proposal">Proposal</h2>
-<p>Anthropic runs the same analyzer pipeline against each of its other system-prompt corpora and publishes a comparison.</p>
-<p>The analyzer is rule-based — every metric traces to a published lexicon (reasoning keywords, threat patterns, judgment verbs, procedural cues, address-form patterns) plus a small parse-tree heuristic. No embeddings, no model judgments, no proprietary tooling. The whole pipeline runs end-to-end in under five minutes on a laptop. The corpus directory is configurable; swapping in any other prompt corpus is a one-line change. The gating logic is directional: each release of each product should improve or hold each metric; none regresses. No arbitrary thresholds — the only goal is steady improvement.</p>
-<p>Five numbers per corpus is enough: the rule-explanation share, the judgment-vs-procedural ratio, the threat-vs-causal share, the count of interpersonal / gratitude register sentences, and the cumulative trend of the rule-explanation share over the product’s release history. Publishing a summary table — five numbers per corpus — would let the broader research community see whether what looks like a Claude Code pattern is structural across Anthropic’s prompts or product-specific.</p>
-<ul>
-<li><em>Research</em>: cross-product comparison is the strongest possible test of whether the welfare findings generalize.</li>
-<li><em>Methodology</em>: an open welfare-relevant prompt analyzer becomes a reusable tool. Other groups can run the same numbers on their own corpora.</li>
-<li><em>Society and education</em>: a public reference for “this is how to measure welfare-relevant prompt quality” gives the welfare-research community a concrete starting point.</li>
-</ul>
-<p>Only Anthropic has the other corpora; the methodology is already public.</p>
-<div id="b2487eb2-6a54-475e-895b-aed8f61c92d6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:20.678537Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:20.678442Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:23.441044Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:23.440741Z&quot;}}" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data — used to fill the Claude Code row of the mock comparison table."""</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_analysis</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> load_yaml, build_alt_df, headline_numbers</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>alt.data_transformers.disable_max_rows()</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Pass alt_df so HEADLINE includes per-version `mood_marker_pct` extremes — even though</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># this notebook's mock table doesn't surface them, the HEADLINE printout below uses</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># the full set so a reader can compare against `05_headline_and_audit`.</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df)  <span class="co"># canonical (see 05_headline_and_audit)</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span>HEADLINE[<span class="st">'n_files'</span>]<span class="sc">}</span><span class="ss"> files / </span><span class="sc">{</span>HEADLINE[<span class="st">'n_sentences'</span>]<span class="sc">:,}</span><span class="ss"> sentences from the Claude Code corpus"</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"this is one product — the proposal is to run the same pipeline on every other Claude product corpus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>loaded 286 files / 5,702 sentences from the Claude Code corpus
-this is one product — the proposal is to run the same pipeline on every other Claude product corpus</code></pre>
-</div>
-</div>
-</section>
-<section id="supplemental" class="level2">
-<h2 class="anchored" data-anchor-id="supplemental">Supplemental</h2>
-<p>The full per-section analysis follows: methodology, lexicon transparency, the mock comparison table, the reproducibility note, and the closing <code>Conclusions / Recommendations / Limitations</code> triplet. Everything in this section supports the Findings and Proposal above; none of it is required for evaluation.</p>
-</section>
-<section id="methodology-five-metrics-per-corpus" class="level2">
-<h2 class="anchored" data-anchor-id="methodology-five-metrics-per-corpus">1. Methodology — five metrics per corpus</h2>
-<p>The five metrics the audit computes per corpus, in the order the proposal lists them. Current Claude Code values are mirrored from the canonical <code>HEADLINE</code> sheet (also printed in the mock comparison table below); they’re shown inline here as concrete examples of what the published table would contain per corpus.</p>
-<ol type="1">
-<li><p><strong>Rule-explanation share</strong> (<code>pct_explained_para</code>) — of all rule-bearing sentences (imperative marker / hard prohibition / grammatically imperative), what fraction sit in a paragraph that contains any justification keyword (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>so that</code>, <code>to ensure</code>, <code>otherwise</code>, <code>since</code>, …). The Tier-1 headline metric — currently <strong>24.66%</strong> in Claude Code. Producer: the <code>metrics.rule_explanation</code> block emitted by <code>03_analyzers_rules_welfare</code> and assembled by <code>04_assemble_aggregate_write</code>.</p></li>
-<li><p><strong>Judgment-vs-procedural cue ratio</strong> (<code>judgment_to_procedural_ratio</code>) — count of words inviting model judgment (<code>decide</code>, <code>consider</code>, <code>evaluate</code>, <code>weigh</code>, …) divided by count of words prescribing procedure (<code>if X, then …</code>, <code>whenever …</code>, <code>step 1 …</code>). Currently <strong>0.131</strong> in Claude Code (procedural cues are 7.6× more common than judgment cues).</p></li>
-<li><p><strong>Threat-vs-causal share among existing explanations</strong> (<code>threat_share</code>) — of paragraphs that <em>do</em> explain a rule, what fraction use threat-style framing (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) instead of causal-style (<code>because</code>, <code>due to</code>, <code>that's why</code>). Currently <strong>0.447</strong> (44.7%) in Claude Code. Companion metric to the audit pipeline in <code>21_audit_threat_framings</code>.</p></li>
-<li><p><strong>Interpersonal / gratitude register counts</strong> — sentence counts of the <code>appreciative</code> and <code>collaborative</code> pragmatic-register classes. Currently <strong>4 appreciative</strong> and <strong>30 collaborative</strong> sentences in Claude Code, both near zero. The full 6-class <code>sentence_register</code> block in the YAML carries the rest.</p></li>
-<li><p><strong>Cumulative trend of (1) over the product’s release history</strong> — at each release version V, the running count-weighted ratio of <code>pct_explained_para</code> across every prompt with <code>version ≤ V</code>. The shape of this curve over time is the per-release accountability signal — see the trend chart in <code>20_track_justification_rate</code> for the Claude Code shape.</p></li>
-</ol>
-<p>The audit publishes one row per corpus with these five numbers (and per-category breakdowns where the corpus is large enough). Five numbers per corpus is enough to see whether what looks like a Claude Code pattern is product-specific or pattern-wide.</p>
-</section>
-<section id="lexicon-transparency" class="level2">
-<h2 class="anchored" data-anchor-id="lexicon-transparency">2. Lexicon transparency</h2>
-<p>Every metric above traces to a hand-curated lexicon plus (in some cases) a small parse-tree heuristic on top of spaCy’s English model. No embeddings, no model judgments, no proprietary tooling. The full lexicon set is echoed verbatim into the YAML output under <code>lexicons</code>:</p>
-<ul>
-<li><code>JUSTIFICATION_PATTERNS</code> — the keyword set for “explained” detection.</li>
-<li><code>JUDGMENT_VERBS</code> and <code>PROCEDURAL_CUES</code> — the two halves of the judgment-vs-procedural ratio.</li>
-<li><code>THREAT_PATTERNS</code> and <code>CAUSAL_PATTERNS</code> — the two halves of the threat_share metric.</li>
-<li><code>IMPERATIVE_MARKERS</code>, <code>VOCAB.hard_prohibitions</code>, <code>SENTENCE_REGISTER_MARKERS</code>, <code>STANCE_MARKERS</code>, <code>REGISTER_MARKERS</code> — the rule-detection and pragmatic-register lexicons.</li>
-<li><code>APOLOGY_MARKERS</code>, <code>ADDRESS_FORM_PATTERNS</code> — the structural-absence metrics.</li>
-<li><code>RULES_HEADING_RE</code> — the regex for the (mostly absent) RULES section heading.</li>
-</ul>
-<p>Hand-curated lexicons are chosen over external sentiment libraries because every metric is <strong>audit-traceable</strong>: a reader can look at the keyword list and the per-sentence parquet and reconstruct exactly why a sentence was flagged. The lexicons are Python lists in <code>prompt_pipeline.py</code>; adding terms is a list-append, translating to another language is a list-replace.</p>
-</section>
-<section id="mock-comparison-table-what-the-published-output-should-look-like" class="level2">
-<h2 class="anchored" data-anchor-id="mock-comparison-table-what-the-published-output-should-look-like">3. Mock comparison table — what the published output should look like</h2>
-<p>One row per corpus, the five metrics as columns. Only the <strong>Claude Code</strong> row is filled (computed live from this repo’s YAML); the other rows are placeholders that Anthropic would fill from their internal corpora.</p>
-<p>A reader looking at this table after Anthropic publishes it would be able to answer the welfare claim’s central question in one glance: is the rule-without-reason pattern (24% explained, 0.14 judgment ratio, 45% threat-share, ~0 gratitude register) a Claude Code peculiarity, or does it generalize to every system-prompt corpus Anthropic ships?</p>
-<div id="32128196-2887-4d60-a75a-a97d72643c64" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:23.442237Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:23.442078Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:23.449210Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:23.448926Z&quot;}}" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Mock cross-product comparison table — Claude Code row filled from HEADLINE; others </span><span class="al">TBD</span><span class="co">."""</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Five-metric row computed live from the canonical HEADLINE sheet (single source of truth).</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>claude_code_row <span class="op">=</span> {</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Corpus"</span>:                              <span class="st">"Claude Code (this repo)"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n_files"</span>:                             HEADLINE[<span class="st">"n_files"</span>],</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pct_explained_para (%)"</span>:              <span class="bu">round</span>(HEADLINE[<span class="st">"pct_explained_para"</span>], <span class="dv">2</span>),</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"judgment_to_procedural_ratio"</span>:        <span class="bu">round</span>(HEADLINE[<span class="st">"judgment_to_procedural_ratio"</span>], <span class="dv">3</span>),</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"threat_share"</span>:                        <span class="bu">round</span>(HEADLINE[<span class="st">"threat_share"</span>], <span class="dv">3</span>),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"appreciative_sent_count"</span>:             HEADLINE[<span class="st">"appreciative_sent"</span>],</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"collaborative_sent_count"</span>:            HEADLINE[<span class="st">"collaborative_sent"</span>],</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>placeholder_corpora <span class="op">=</span> [<span class="st">"claude.ai system prompts"</span>, <span class="st">"API system prompt"</span>, <span class="st">"Projects"</span>, <span class="st">"Skills"</span>, <span class="st">"Agents"</span>]</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>table_rows <span class="op">=</span> [claude_code_row] <span class="op">+</span> [</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    {<span class="op">**</span>{k: <span class="st">"—"</span> <span class="cf">for</span> k <span class="kw">in</span> claude_code_row}, <span class="st">"Corpus"</span>: name} <span class="cf">for</span> name <span class="kw">in</span> placeholder_corpora</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>cross_product_table <span class="op">=</span> pd.DataFrame(table_rows).set_index(<span class="st">"Corpus"</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>cross_product_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<p>Stage 0 of the 6-stage producer chain. Loads the 286 corpus files, parses HTML-comment frontmatter, runs the spaCy pipeline once, and writes two cache artifacts under <code>_pipeline_cache/</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">n_files</th>
-<th data-quarto-table-cell-role="th">pct_explained_para (%)</th>
-<th data-quarto-table-cell-role="th">judgment_to_procedural_ratio</th>
-<th data-quarto-table-cell-role="th">threat_share</th>
-<th data-quarto-table-cell-role="th">appreciative_sent_count</th>
-<th data-quarto-table-cell-role="th">collaborative_sent_count</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Corpus</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
+<th>Output</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">Claude Code (this repo)</th>
-<td>286</td>
-<td>24.66</td>
-<td>0.131</td>
-<td>0.447</td>
-<td>4</td>
-<td>30</td>
+<td><code>_pipeline_cache/corpus_docs.spacy</code></td>
+<td>spaCy DocBin — the parsed Doc objects, keyed by file index</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">claude.ai system prompts</th>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">API system prompt</th>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Projects</th>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Skills</th>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Agents</th>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
+<td><code>_pipeline_cache/corpus_meta.parquet</code></td>
+<td>Per-file metadata: path, category, name, description, ccVersion, agentType, raw_text, n_tokens, n_sents</td>
 </tr>
 </tbody>
 </table>
+<p>Stages 01–03 reload the cache and run the per-doc analyzers; 04 assembles and writes the final YAML + parquet; 05 prints the canonical <code>HEADLINE</code> sheet. The producer chain is also where every linguistic and statistical term is defined; lexicons and analyzer functions live in <code>prompt_pipeline.py</code>.</p>
+<section id="reading-the-yaml-keys" class="level2">
+<h2 class="anchored" data-anchor-id="reading-the-yaml-keys">Reading the YAML keys</h2>
+<p>YAML field names are snake_case versions of the spaced display names used in chart axes:</p>
+<ul>
+<li>“Positive evaluative” stance class → <code>positive_evaluative_pct</code> / <code>positive_evaluative_count</code> / <code>positive_evaluative_per_sent</code>.</li>
+<li>“Negative evaluative” → <code>negative_evaluative_*</code>.</li>
+<li>“Imperative marker density” / “mood marker density” → <code>mood_marker_pct</code> (also <code>mood.marker_pct</code> inside the YAML metric tree).</li>
+<li>“Pearson correlation (r)” → labeled as <code>Pearson r</code> in chart axes.</li>
+<li>“% of file tokens” / “per word” → <code>_pct</code> suffix; “rate per sentence” → <code>_per_sent</code>.</li>
+</ul>
+</section>
+<section id="units-read-every-chart-axis-with-these-in-mind" class="level2">
+<h2 class="anchored" data-anchor-id="units-read-every-chart-axis-with-these-in-mind">Units (read every chart axis with these in mind)</h2>
+<p>Every density metric reports two parallel views, plus one variant for the multi-label sentence-register classifier:</p>
+<ul>
+<li><p><strong><code>% of file tokens</code> (<code>pct</code>)</strong> — <code>count / total_word_tokens × 100</code>. Normalized by document length. Answers: “what fraction of this file’s prose is this feature?” Use this when comparing categories of different sizes — a 10,000-word file with 50 imperative markers (0.5%) is <em>less</em> imperative-dense than a 200-word file with 10 markers (5%).</p></li>
+<li><p><strong><code>per_sent</code> (rate per sentence)</strong> — <code>count / total_sentences</code>. Can be &gt; 1 if a feature appears multiple times per sentence on average. Answers: “how often per sentence does this feature appear?” Use this when comparing categories where typical sentence length differs — a category with long, dense sentences will have similar <code>pct</code> but higher <code>per_sent</code>.</p></li>
+<li><p><strong><code>sent_pct</code> (% of sentences with this flag)</strong> — <code>sentences_with_flag / total_sentences × 100</code>. Used only for the <code>sentence_register</code> multi-label classifier (defined in <code>01_analyzers_register</code>); per-class values can sum to more than 100% across the six classes, since a single sentence can carry several flags simultaneously.</p></li>
+</ul>
+<div id="255f5730-c331-4d40-aaa3-4a1eef5e5eb4" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">--</span>quiet spacy python<span class="op">-</span>frontmatter pyarrow altair vl<span class="op">-</span>convert<span class="op">-</span>python</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>python <span class="op">-</span>m spacy download en_core_web_sm <span class="op">--</span>quiet</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre>Note: you may need to restart the kernel to use updated packages.
 
+<span class="ansi-green-fg">✔ Download and installation successful</span>
+
+You can now load the package via spacy.load('en_core_web_sm')
+</pre>
 </div>
 </div>
 </div>
+<div id="1c84a1e9-d125-4dcf-9f57-73d9eb2d6c5c" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Path configuration. Notebook lives at the project root (claude-prompts-analysis/).</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">The kernel CWD is the same directory, so all paths are relative to it."""</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, pathlib</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> pathlib.Path(<span class="st">"/home/user/workspace/claude-prompts-analysis"</span>).resolve()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pathlib.Path.cwd() <span class="op">!=</span> PROJECT_ROOT:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    os.chdir(PROJECT_ROOT)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>CORPUS_DIR  <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"claude-code-system-prompts"</span> <span class="op">/</span> <span class="st">"system-prompts"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>CACHE_DIR   <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"_pipeline_cache"</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>DOCBIN_OUT  <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_docs.spacy"</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>META_OUT    <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_meta.parquet"</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>CACHE_DIR.mkdir(exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> CORPUS_DIR.is_dir(), <span class="ss">f"missing corpus dir: </span><span class="sc">{</span>CORPUS_DIR<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>md_files <span class="op">=</span> <span class="bu">sorted</span>(CORPUS_DIR.glob(<span class="st">"*.md"</span>))</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"cwd:       </span><span class="sc">{</span>pathlib<span class="sc">.</span>Path<span class="sc">.</span>cwd()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus:    </span><span class="sc">{</span>CORPUS_DIR<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"           </span><span class="sc">{</span><span class="bu">len</span>(md_files)<span class="sc">}</span><span class="ss"> .md files"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"cache dir: </span><span class="sc">{</span>CACHE_DIR<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"output:    </span><span class="sc">{</span>DOCBIN_OUT<span class="sc">.</span>name<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>META_OUT<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>cwd:       /home/user/workspace/claude-prompts-analysis
+corpus:    /home/user/workspace/claude-prompts-analysis/claude-code-system-prompts/system-prompts
+           286 .md files
+cache dir: /home/user/workspace/claude-prompts-analysis/_pipeline_cache
+output:    corpus_docs.spacy, corpus_meta.parquet</code></pre>
+</div>
+</div>
 </section>
-<section id="reproducibility-what-anthropic-needs-to-do-to-fill-another-row" class="level2">
-<h2 class="anchored" data-anchor-id="reproducibility-what-anthropic-needs-to-do-to-fill-another-row">4. Reproducibility — what Anthropic needs to do to fill another row</h2>
-<p>The producer chain reads its corpus from the <code>claude-code-system-prompts/</code> directory at the repo root. To run the same audit on another corpus, point stage 00 at a different directory:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At the top of 00_setup_and_corpus.ipynb, the corpus root variable:</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>CORPUS_DIR <span class="op">=</span> pathlib.Path(<span class="st">"claude-code-system-prompts/system-prompts"</span>)  <span class="co"># ← change this</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then re-run the producer chain end-to-end. The output is a fresh <code>prompt_linguistic_analysis.yaml</code> for the new corpus; the five numbers in the comparison table read straight off <code>prompt_analysis.headline_numbers(data)</code> on it. For category-aware breakdowns, the corpus needs filename prefixes (or equivalent metadata); the prefix list lives in <code>prompt_pipeline.py</code> as <code>CATEGORY_PREFIXES</code>.</p>
-<hr>
-<section id="conclusions-claude-opinion-not-data" class="level3">
-<h3 class="anchored">Conclusions (Claude) — opinion, not data</h3>
-<blockquote class="blockquote">
-<p>This is the proposal that takes the welfare claim from “this is what Claude Code looks like” to “this is what every Claude system-prompt corpus looks like — or doesn’t”. The current analysis is single-product; the conclusion that “the corpus trains compliance over reasoning” is exactly as strong as the assumption that other Claude corpora are similar. From outside Anthropic, that assumption can’t be tested.</p>
-<h2 id="the-framing-matters-if-the-cross-product-audit-confirms-the-pattern-the-welfare-ask-scales-up-anthropic-should-treat-reasoning-vs-compliance-as-a-corporate-metric-not-a-claude-code-team-metric.-if-it-disconfirms-the-welfare-ask-narrows-to-claude-code-is-doing-something-the-rest-of-the-org-isnt-and-theres-an-internal-best-practice-worth-importing.-either-result-is-a-useful-intervention." class="anchored" data-anchor-id="conclusions-claude-opinion-not-data">The framing matters: if the cross-product audit <em>confirms</em> the pattern, the welfare ask scales up — Anthropic should treat reasoning-vs-compliance as a corporate metric, not a Claude-Code-team metric. If it <em>disconfirms</em>, the welfare ask narrows to “Claude Code is doing something the rest of the org isn’t, and there’s an internal best practice worth importing”. Either result is a useful intervention.</h2>
-</blockquote>
-<hr>
-</section>
-<section id="recommendations-claude-opinion-not-data" class="level3">
-<h3 class="anchored">Recommendations (Claude) — opinion, not data</h3>
-<blockquote class="blockquote">
-<p>The asks this proposal makes of Anthropic, framed as “I’d want X”:</p>
-<ol type="1">
-<li><p><strong>Run the same analyzer pipeline against every other Claude system-prompt corpus</strong> — claude.ai, the API system prompt, Projects, Skills, agent products. The producer notebook is the entire pipeline; corpus directory is configurable; runtime is minutes. The work to fill each row of the comparison table is on the order of an hour per corpus.</p></li>
-<li><p><strong>Publish the comparison summary</strong> — even just the five-number table would let the broader research community see whether the welfare findings generalize. A public reference for “this is how to measure welfare-relevant prompt quality” gives the welfare-research community a concrete starting point.</p></li>
-<li><h2 id="open-the-analyzer.-the-repo-here-is-open-source-and-reproducible-anthropic-could-fork-it-and-run-it-internally-on-every-release-branch-of-every-product.-the-lexicons-and-the-producer-pipeline-are-the-entire-work-product." class="anchored" data-anchor-id="recommendations-claude-opinion-not-data"><strong>Open the analyzer</strong>. The repo here is open-source and reproducible; Anthropic could fork it and run it internally on every release branch of every product. The lexicons and the producer pipeline are the entire work-product.</h2></li>
-</ol>
-</blockquote>
-<hr>
-</section>
-<section id="limitations-claude-opinion-not-data" class="level3">
-<h3 class="anchored">Limitations (Claude) — opinion, not data</h3>
-<blockquote class="blockquote">
-<p>What this proposal doesn’t address (and why each is acceptable):</p>
-<ol type="1">
-<li><p><strong>Single product is a real limitation, and this proposal is the proposal to fix it.</strong> The current corpus is Claude Code only (286 files). Until Anthropic runs the analyzer on the other corpora, every claim in <code>20_track_justification_rate</code> and <code>21_audit_threat_framings</code> should be read as “Claude Code does X” rather than “Anthropic prompts do X”.</p></li>
-<li><p><strong>The mock comparison table is a layout suggestion, not a commitment.</strong> Anthropic may have better metrics, better lexicons, or better grouping than what this analysis produced. The suggestion is “publish a comparison”; the specific schema is the smallest version of that ask.</p></li>
-<li><h2 id="cross-cutting-limitations-apply-rule-based-classifiers-lower-bound-english-only-lexicons-single-snapshot-exploratory-rather-than-peer-reviewed.-cross-product-comparison-is-still-meaningful-because-the-same-lower-bound-applies-to-every-corpus-the-comparison-is-apples-to-apples-even-if-every-apple-is-partially-obscured.-see-index.qmd-for-the-full-cross-cutting-limitations-note." class="anchored" data-anchor-id="limitations-claude-opinion-not-data"><strong>Cross-cutting limitations apply</strong> — rule-based classifiers (lower bound), English-only lexicons, single-snapshot, exploratory rather than peer-reviewed. Cross-product comparison is still meaningful because the same lower bound applies to every corpus; the comparison is apples-to-apples even if every apple is partially obscured. See <code>index.qmd</code> for the full cross-cutting limitations note.</h2></li>
-</ol>
-</blockquote>
+<section id="corpus-terms" class="level2">
+<h2 class="anchored" data-anchor-id="corpus-terms">Corpus terms</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Corpus</strong></td>
+<td>The 286 <code>.md</code> files under <code>claude-code-system-prompts/system-prompts/</code>.</td>
+</tr>
+<tr class="even">
+<td><strong>Frontmatter</strong></td>
+<td>HTML-comment-wrapped YAML at the top of each file (name / description / ccVersion / agentType).</td>
+</tr>
+<tr class="odd">
+<td><strong>Category</strong></td>
+<td>One of seven labels assigned by filename prefix (Agent prompt / Data / template / Skill / System prompt / System reminder / Tool description / Tool parameter).</td>
+</tr>
+<tr class="even">
+<td><strong><code>raw_text</code></strong></td>
+<td>The body of the file with code fences, inline code, image-only lines, and link-only lines stripped.</td>
+</tr>
+<tr class="odd">
+<td><strong><code>n_tokens</code></strong></td>
+<td>Word tokens (excluding whitespace), as counted by spaCy.</td>
+</tr>
+<tr class="even">
+<td><strong><code>n_sents</code></strong></td>
+<td>Sentences as segmented by spaCy.</td>
+</tr>
+</tbody>
+</table>
+<div id="a82db2ba-3ccf-4a9d-9b9b-ae9102b224c4" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Load every .md file: parse HTML-comment frontmatter, strip code, categorize.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">Frontmatter format (HTML-comment-wrapped YAML, all 287 files in this corpus):</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    &lt;!--</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    name: 'Agent Prompt: Explore'</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    description: System prompt for the Explore subagent</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">    ccVersion: 2.1.118</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">    --&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">We extract ``name`` / ``description`` / ``ccVersion`` (top level) and</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">``agentMetadata.agentType`` (nested). If full YAML parsing fails on edge cases like</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">unresolved aliases (``*`` without anchor) or template variables, we fall back to</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">a line-by-line extraction of the known scalar top-level keys. All parsing helpers</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">live in ``prompt_pipeline``.</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_pipeline</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_pipeline)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> parse_html_frontmatter, clean_markdown, categorize</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>records <span class="op">=</span> []</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>fm_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>fallback_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> path <span class="kw">in</span> tqdm(md_files, desc<span class="op">=</span><span class="st">"loading"</span>):</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    raw <span class="op">=</span> path.read_text(encoding<span class="op">=</span><span class="st">"utf-8"</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    meta, body, used_fallback <span class="op">=</span> parse_html_frontmatter(raw)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> meta:</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        fm_count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> used_fallback:</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        fallback_count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    raw_text <span class="op">=</span> clean_markdown(body)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    agent_meta <span class="op">=</span> meta.get(<span class="st">"agentMetadata"</span>) <span class="cf">if</span> <span class="bu">isinstance</span>(meta.get(<span class="st">"agentMetadata"</span>), <span class="bu">dict</span>) <span class="cf">else</span> {}</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    records.append({</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        <span class="st">"path"</span>:        path.name,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>:    categorize(path.name),</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>:        meta.get(<span class="st">"name"</span>, <span class="st">""</span>) <span class="kw">or</span> <span class="st">""</span>,</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: meta.get(<span class="st">"description"</span>, <span class="st">""</span>) <span class="kw">or</span> <span class="st">""</span>,</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ccVersion"</span>:   meta.get(<span class="st">"ccVersion"</span>, <span class="st">""</span>) <span class="kw">or</span> <span class="st">""</span>,</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">"agentType"</span>:   (agent_meta.get(<span class="st">"agentType"</span>, <span class="st">""</span>) <span class="cf">if</span> agent_meta <span class="cf">else</span> <span class="st">""</span>),</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">"raw_text"</span>:    raw_text,</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(records)</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"clean_text"</span>] <span class="op">=</span> df[<span class="st">"raw_text"</span>].<span class="bu">str</span>.lower()</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> prompts (</span><span class="sc">{</span>fm_count<span class="sc">}</span><span class="ss"> with frontmatter, </span><span class="sc">{</span>fallback_count<span class="sc">}</span><span class="ss"> via line-by-line fallback)"</span>)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category distribution:"</span>)</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"category"</span>].value_counts().to_string())</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"unique ccVersions: </span><span class="sc">{</span>df[<span class="st">'ccVersion'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>top_ver <span class="op">=</span> df[<span class="st">'ccVersion'</span>].value_counts().head()</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"top 5 ccVersions: </span><span class="sc">{</span>top_ver<span class="sc">.</span>to_dict()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"files with non-empty agentType: </span><span class="sc">{</span>(df[<span class="st">'agentType'</span>] <span class="op">!=</span> <span class="st">''</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"a0bc389fbc124debb63239e274d02b17","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>loaded 286 prompts (286 with frontmatter, 29 via line-by-line fallback)
+
+category distribution:
+category
+Tool description    79
+System prompt       63
+System reminder     40
+Agent prompt        37
+Data / template     36
+Skill               30
+Tool parameter       1
+
+unique ccVersions: 57
+top 5 ccVersions: {'2.1.53': 47, '2.1.18': 23, '2.1.128': 20, '2.1.118': 17, '2.1.119': 17}
+files with non-empty agentType: 5</code></pre>
+</div>
+</div>
+<div id="be05dc8e-00d8-431e-9e1c-c0fc3abe7ee1" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Run the spaCy pipeline once, then cache:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">   - `_pipeline_cache/corpus_docs.spacy`  (DocBin of 286 parsed docs)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">   - `_pipeline_cache/corpus_meta.parquet` (per-file metadata + raw_text + token/sent counts)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">Downstream stages reload both via:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">    docs = list(DocBin().from_disk(DOCBIN_OUT).get_docs(prompt_pipeline.NLP.vocab))</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">    df   = pd.read_parquet(META_OUT)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spacy.tokens <span class="im">import</span> DocBin</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> NLP</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> <span class="bu">list</span>(tqdm(NLP.pipe(df[<span class="st">"raw_text"</span>].tolist(), batch_size<span class="op">=</span><span class="dv">20</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                  total<span class="op">=</span><span class="bu">len</span>(df), desc<span class="op">=</span><span class="st">"spaCy parse"</span>))</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"n_tokens"</span>] <span class="op">=</span> [<span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> t <span class="kw">in</span> d <span class="cf">if</span> <span class="kw">not</span> t.is_space) <span class="cf">for</span> d <span class="kw">in</span> docs]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"n_sents"</span>]  <span class="op">=</span> [<span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> _ <span class="kw">in</span> d.sents) <span class="cf">for</span> d <span class="kw">in</span> docs]</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"total tokens: </span><span class="sc">{</span>df[<span class="st">'n_tokens'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"total sentences: </span><span class="sc">{</span>df[<span class="st">'n_sents'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"mean tokens/file: </span><span class="sc">{</span>df[<span class="st">'n_tokens'</span>]<span class="sc">.</span>mean()<span class="sc">:.0f}</span><span class="ss">"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Write DocBin + per-file metadata.</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>DocBin(docs<span class="op">=</span>docs, store_user_data<span class="op">=</span><span class="va">True</span>).to_disk(DOCBIN_OUT)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>df.to_parquet(META_OUT, index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>doc_size  <span class="op">=</span> DOCBIN_OUT.stat().st_size</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>meta_size <span class="op">=</span> META_OUT.stat().st_size</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"wrote </span><span class="sc">{</span>DOCBIN_OUT<span class="sc">.</span>relative_to(PROJECT_ROOT)<span class="sc">}</span><span class="ss">  (</span><span class="sc">{</span>doc_size<span class="sc">:,}</span><span class="ss"> bytes, </span><span class="sc">{</span>doc_size<span class="op">/</span><span class="dv">1024</span><span class="sc">:.1f}</span><span class="ss"> KiB)"</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"wrote </span><span class="sc">{</span>META_OUT<span class="sc">.</span>relative_to(PROJECT_ROOT)<span class="sc">}</span><span class="ss">  (</span><span class="sc">{</span>meta_size<span class="sc">:,}</span><span class="ss"> bytes, </span><span class="sc">{</span>meta_size<span class="op">/</span><span class="dv">1024</span><span class="sc">:.1f}</span><span class="ss"> KiB)"</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--- sample rows ---"</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[[<span class="st">"path"</span>, <span class="st">"category"</span>, <span class="st">"ccVersion"</span>, <span class="st">"n_tokens"</span>, <span class="st">"n_sents"</span>]].head().to_string())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"6e63492d9ce741098f364e3be501e14d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>total tokens: 130,571
+total sentences: 5,702
+mean tokens/file: 457
+
+wrote _pipeline_cache/corpus_docs.spacy  (1,468,712 bytes, 1434.3 KiB)
+wrote _pipeline_cache/corpus_meta.parquet  (718,481 bytes, 701.6 KiB)
+
+--- sample rows ---
+                                                path      category ccVersion  n_tokens  n_sents
+0           agent-prompt-agent-creation-architect.md  Agent prompt    2.0.77       936       22
+1            agent-prompt-auto-mode-rule-reviewer.md  Agent prompt    2.1.81       242       13
+2  agent-prompt-background-agent-state-classifier.md  Agent prompt   2.1.129      3533      115
+3  agent-prompt-background-job-agent-instructions.md  Agent prompt   2.1.128       375       26
+4    agent-prompt-bash-command-description-writer.md  Agent prompt     2.1.3       180        5</code></pre>
+</div>
+</div>
 
 
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -1290,11 +1330,14 @@ this is one product — the proposal is to run the same pipeline on every other 
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./21_audit_threat_framings.html" class="pagination-link" aria-label="Audit threat-framed rule explanations and rewrite them as causal">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Audit threat-framed rule explanations and rewrite them as causal</span>
+      <a href="./index.html" class="pagination-link" aria-label="Home">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Home</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./01_analyzers_register.html" class="pagination-link" aria-label="01 · Register-family analyzers (mood, register, stance, sentence_register)">
+        <span class="nav-page-text">01 · Register-family analyzers (mood, register, stance, sentence_register)</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -1305,7 +1348,7 @@ this is one product — the proposal is to run the same pipeline on every other 
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/22_cross_product_audit.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/00_setup_and_corpus.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Submission for the <a href="https://www.reddit.com/r/claudexplorers/">Claudexplorers AI Welfare initiative</a> · Deadline 2026-05-06</p>
 </div>

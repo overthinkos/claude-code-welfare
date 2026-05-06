@@ -70,7 +70,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05_headline_and_audit.html" rel="next">
+<link href="./00_setup_and_corpus.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -303,10 +303,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./05_headline_and_audit.html"> 
-<span class="menu-text">Pipeline</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pipeline" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pipeline</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pipeline">    
+        <li>
+    <a class="dropdown-item" href="./00_setup_and_corpus.html">
+ <span class="dropdown-text">00 · Setup and corpus parse</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./01_analyzers_register.html">
+ <span class="dropdown-text">01 · Register-family analyzers (mood, register, stance, sentence_register)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./02_analyzers_vocab_emphasis.html">
+ <span class="dropdown-text">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03_analyzers_rules_welfare.html">
+ <span class="dropdown-text">03 · Rules + welfare-extension analyzers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04_assemble_aggregate_write.html">
+ <span class="dropdown-text">04 · Assemble + aggregate + write final artifacts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./05_headline_and_audit.html">
+ <span class="dropdown-text">05 · Headline numbers + corpus audit</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Analysis</span>
@@ -390,12 +417,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Pipeline</span></a>
+ <span class="menu-text">Pipeline (6-stage producer chain, run in order)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_setup_and_corpus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">00 · Setup and corpus parse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_analyzers_register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01 · Register-family analyzers (mood, register, stance, sentence_register)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_analyzers_vocab_emphasis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_analyzers_rules_welfare.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">03 · Rules + welfare-extension analyzers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_assemble_aggregate_write.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">04 · Assemble + aggregate + write final artifacts</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_headline_and_audit.html" class="sidebar-item-text sidebar-link">
@@ -1220,8 +1277,8 @@ Figure&nbsp;1: Cumulative judgment-to-procedural ratio over ccVersion (count-wei
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05_headline_and_audit.html" class="pagination-link" aria-label="05 · Headline numbers + corpus audit">
-        <span class="nav-page-text">05 · Headline numbers + corpus audit</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./00_setup_and_corpus.html" class="pagination-link" aria-label="00 · Setup and corpus parse">
+        <span class="nav-page-text">00 · Setup and corpus parse</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

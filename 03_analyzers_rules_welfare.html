@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>03 · Rules + welfare-extension analyzers – Claude Code · Prompt Welfare Analysis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./04_assemble_aggregate_write.html" rel="next">
+<link href="./02_analyzers_vocab_emphasis.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-bd882eacfd65214da8f30e8ff0d4e9cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-997ee84ae1ffd3ba0387908081e8d89e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-bd882eacfd65214da8f30e8ff0d4e9cb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Claude Code · Prompt Welfare Analysis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pipeline" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pipeline</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pipeline">    
+        <li>
+    <a class="dropdown-item" href="./00_setup_and_corpus.html">
+ <span class="dropdown-text">00 · Setup and corpus parse</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./01_analyzers_register.html">
+ <span class="dropdown-text">01 · Register-family analyzers (mood, register, stance, sentence_register)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./02_analyzers_vocab_emphasis.html">
+ <span class="dropdown-text">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03_analyzers_rules_welfare.html">
+ <span class="dropdown-text">03 · Rules + welfare-extension analyzers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04_assemble_aggregate_write.html">
+ <span class="dropdown-text">04 · Assemble + aggregate + write final artifacts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./05_headline_and_audit.html">
+ <span class="dropdown-text">05 · Headline numbers + corpus audit</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Analysis</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
+        <li>
+    <a class="dropdown-item" href="./10_sentence_register.html">
+ <span class="dropdown-text">Sentence-level pragmatic register</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./11_emphasis_caps_vocab.html">
+ <span class="dropdown-text">Emphasis, ALL CAPS, and the full VOCAB profile</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./12_register_stance.html">
+ <span class="dropdown-text">Register and stance — formality plus 5-class polarity-split stance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./13_correlation_directiveness.html">
+ <span class="dropdown-text">Correlation matrix and composite directiveness ranking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./14_ccversion_trends.html">
+ <span class="dropdown-text">ccVersion trends — how the corpus has evolved over Claude Code releases</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./15_rule_explanation.html">
+ <span class="dropdown-text">Rules with vs without explanation</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proposal" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Proposal</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-proposal">    
+        <li>
+    <a class="dropdown-item" href="./20_track_justification_rate.html">
+ <span class="dropdown-text">Track justification rate per release; block regressions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./21_audit_threat_framings.html">
+ <span class="dropdown-text">Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./22_cross_product_audit.html">
+ <span class="dropdown-text">Run the same audit on every Claude product, and publish the result</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00_setup_and_corpus.html">Pipeline (6-stage producer chain, run in order)</a></li><li class="breadcrumb-item"><a href="./03_analyzers_rules_welfare.html">03 · Rules + welfare-extension analyzers</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Pipeline (6-stage producer chain, run in order)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_setup_and_corpus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">00 · Setup and corpus parse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_analyzers_register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01 · Register-family analyzers (mood, register, stance, sentence_register)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_analyzers_vocab_emphasis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_analyzers_rules_welfare.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">03 · Rules + welfare-extension analyzers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_assemble_aggregate_write.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">04 · Assemble + aggregate + write final artifacts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_headline_and_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">05 · Headline numbers + corpus audit</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_sentence_register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sentence-level pragmatic register</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emphasis, ALL CAPS, and the full VOCAB profile</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_register_stance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Register and stance — formality plus 5-class polarity-split stance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Correlation matrix and composite directiveness ranking</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_ccversion_trends.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ccVersion trends — how the corpus has evolved over Claude Code releases</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_rule_explanation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rules with vs without explanation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Proposal (each notebook is a self-contained proposal)</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Track justification rate per release; block regressions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_audit_threat_framings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Audit threat-framed rule explanations and rewrite them as causal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Run the same audit on every Claude product, and publish the result</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#b.-ruleexplanation-pairing" id="toc-b.-ruleexplanation-pairing" class="nav-link active" data-scroll-target="#b.-ruleexplanation-pairing">8b. Rule/explanation pairing</a></li>
+  <li><a href="#c.-welfare-extension-analyzers-tier-3-v1" id="toc-c.-welfare-extension-analyzers-tier-3-v1" class="nav-link" data-scroll-target="#c.-welfare-extension-analyzers-tier-3-v1">8c. Welfare-extension analyzers (Tier-3 v1)</a></li>
+  <li><a href="#d.-welfare-extension-analyzers-tier-3-v2" id="toc-d.-welfare-extension-analyzers-tier-3-v2" class="nav-link" data-scroll-target="#d.-welfare-extension-analyzers-tier-3-v2">8d. Welfare-extension analyzers (Tier-3 v2)</a></li>
+  <li><a href="#e.-per-sentence-forensic-inspection-records" id="toc-e.-per-sentence-forensic-inspection-records" class="nav-link" data-scroll-target="#e.-per-sentence-forensic-inspection-records">8e. Per-sentence forensic-inspection records</a></li>
+  <li><a href="#write-partial_rules_welfare.json" id="toc-write-partial_rules_welfare.json" class="nav-link" data-scroll-target="#write-partial_rules_welfare.json">Write <code>partial_rules_welfare.json</code></a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/03_analyzers_rules_welfare.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00_setup_and_corpus.html">Pipeline (6-stage producer chain, run in order)</a></li><li class="breadcrumb-item"><a href="./03_analyzers_rules_welfare.html">03 · Rules + welfare-extension analyzers</a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">03 · Rules + welfare-extension analyzers</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Stage 3 of the 6-stage producer chain — the last analyzer notebook. Produces the rule-pairing block, the welfare-extension blocks, and the per-sentence forensic-inspection parquet.</p>
+<p><strong>The Tier label ladder.</strong> <em>Tier-1</em> is the paragraph-window rule/explanation pairing — the headline metric for the welfare submission. <em>Tier-3 v1</em> is the first welfare-extension round: four blocks (<code>judgment_procedural</code>, <code>consequence_framing</code>, <code>socratic</code>, <code>address_form</code>) measuring framing balance, threat-vs-causal explanation, question / apology density, and address form. <em>Tier-3 v2</em> is the follow-up round: two more blocks (<code>imperative_streaks</code>, <code>rules_section</code>) measuring run-length of consecutive imperative sentences and the in-vs-outside RULES-section explanation gap.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Analyzer</th>
+<th>What it produces</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>rule_explanation_for_doc</code></td>
+<td>Tier-1 paragraph-window rule/explanation pairing — <code>pct_explained_para</code> is the headline metric.</td>
+</tr>
+<tr class="even">
+<td><code>welfare_extensions_for_doc</code></td>
+<td>Tier-3 v1: <code>judgment_procedural</code>, <code>consequence_framing</code>, <code>socratic</code>, <code>address_form</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>imperative_streaks_for_doc</code></td>
+<td>Tier-3 v2: run-lengths of consecutive imperative sentences.</td>
+</tr>
+<tr class="even">
+<td><code>rules_section_for_doc</code></td>
+<td>Tier-3 v2: in-vs-outside RULES-section explanation gap.</td>
+</tr>
+<tr class="odd">
+<td><code>build_sentence_records</code></td>
+<td>Per-sentence rows feeding <code>sentences_classified.parquet</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Outputs:</p>
+<ul>
+<li><code>_pipeline_cache/partial_rules_welfare.json</code></li>
+<li><code>_pipeline_cache/sentences_partial.parquet</code> (stage 04 promotes this to the final <code>sentences_classified.parquet</code>)</li>
+</ul>
+<div id="38376d07-0e60-460e-8403-24c588e77d99" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload corpus + DocBin from stage 00."""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, pathlib, json, importlib</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spacy.tokens <span class="im">import</span> DocBin</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> pathlib.Path(<span class="st">"/home/user/workspace/claude-prompts-analysis"</span>).resolve()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pathlib.Path.cwd() <span class="op">!=</span> PROJECT_ROOT:</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    os.chdir(PROJECT_ROOT)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>CACHE_DIR    <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"_pipeline_cache"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>DOCBIN_IN    <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_docs.spacy"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>META_IN      <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_meta.parquet"</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>PARTIAL_OUT  <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"partial_rules_welfare.json"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>PARQUET_OUT  <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"sentences_partial.parquet"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> DOCBIN_IN.exists(),  <span class="ss">f"missing </span><span class="sc">{</span>DOCBIN_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> META_IN.exists(),    <span class="ss">f"missing </span><span class="sc">{</span>META_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_pipeline</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_pipeline)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> NLP</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(META_IN)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> <span class="bu">list</span>(DocBin().from_disk(DOCBIN_IN).get_docs(NLP.vocab))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(docs) <span class="op">==</span> <span class="bu">len</span>(df), <span class="ss">f"DocBin/df length mismatch: </span><span class="sc">{</span><span class="bu">len</span>(docs)<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reloaded </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> files"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>reloaded 286 files</code></pre>
+</div>
+</div>
+<section id="b.-ruleexplanation-pairing" class="level2">
+<h2 class="anchored" data-anchor-id="b.-ruleexplanation-pairing">8b. Rule/explanation pairing</h2>
+<p>A <strong>rule sentence</strong> is one where ANY of three conditions hold: (a) imperative-marker present, (b) hard-prohibition present, or (c) <code>classify_sent_mood == "imperative"</code> (the parse-tree mood detector). Triple OR; overlap is allowed.</p>
+<p>A <strong>paragraph window</strong> is a blank-line-delimited block of the prompt body. For every rule sentence we check whether the same paragraph contains any <code>JUSTIFICATION_PATTERNS</code> keyword (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>so that</code>, <code>to ensure</code>, <code>otherwise</code>, <code>since</code>, …).</p>
+<p>Two pairing rates per file:</p>
+<ul>
+<li><strong><code>pct_explained_same</code></strong> — % of rule sentences whose own sentence contains a justification keyword (strict, e.g.&nbsp;<code>"Do not X because Y."</code>).</li>
+<li><strong><code>pct_explained_para</code></strong> — % of rule sentences with a justification keyword anywhere in their paragraph (e.g.&nbsp;<code>"Do not X. Y."</code>). The headline welfare metric.</li>
+</ul>
+<div id="094c86d3-581b-4f55-bf5d-8dd3e6768dbc" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> rule_explanation_for_doc</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>rule_explanation_per_file <span class="op">=</span> [</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    rule_explanation_for_doc(d, t) <span class="cf">for</span> d, t <span class="kw">in</span> <span class="bu">zip</span>(docs, df[<span class="st">"raw_text"</span>])</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df_rule_explanation <span class="op">=</span> pd.DataFrame(rule_explanation_per_file)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Sanity invariants — fail fast if anything regresses.</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, r <span class="kw">in</span> <span class="bu">enumerate</span>(rule_explanation_per_file):</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> r[<span class="st">"n_explained_para"</span>] <span class="op">&gt;=</span> r[<span class="st">"n_explained_same"</span>], (</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"file </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: explained_para </span><span class="sc">{</span>r[<span class="st">'n_explained_para'</span>]<span class="sc">}</span><span class="ss"> &lt; "</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"explained_same </span><span class="sc">{</span>r[<span class="st">'n_explained_same'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> r[<span class="st">"n_paragraphs_with_rules"</span>] <span class="op">&lt;=</span> r[<span class="st">"n_paragraphs"</span>]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> r[<span class="st">"n_explained_para"</span>] <span class="op">&lt;=</span> r[<span class="st">"n_rule_sentences"</span>]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"per-file rule_explanation (head):"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>hd_cols <span class="op">=</span> [<span class="st">"n_paragraphs"</span>, <span class="st">"n_rule_sentences"</span>, <span class="st">"n_explained_same"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>           <span class="st">"n_explained_para"</span>, <span class="st">"pct_explained_same"</span>, <span class="st">"pct_explained_para"</span>]</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_rule_explanation[hd_cols].head().to_string())</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category mean (rule explanation, </span><span class="sc">% o</span><span class="st">f rule sentences):"</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">"pct_explained_same"</span>, <span class="st">"pct_explained_para"</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"pct_imperative_explained_para"</span>, <span class="st">"pct_prohibition_explained_para"</span>]</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], df_rule_explanation[cat_cols]], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">2</span>).to_string())</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>n_rule_total <span class="op">=</span> <span class="bu">int</span>(df_rule_explanation[<span class="st">"n_rule_sentences"</span>].<span class="bu">sum</span>())</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>n_expl_same  <span class="op">=</span> <span class="bu">int</span>(df_rule_explanation[<span class="st">"n_explained_same"</span>].<span class="bu">sum</span>())</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>n_expl_para  <span class="op">=</span> <span class="bu">int</span>(df_rule_explanation[<span class="st">"n_explained_para"</span>].<span class="bu">sum</span>())</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus rule sentences: </span><span class="sc">{</span>n_rule_total<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  explained (same sentence):    </span><span class="sc">{</span>n_expl_same<span class="sc">:5d}</span><span class="ss">  (</span><span class="sc">{</span><span class="fl">100.0</span><span class="op">*</span>n_expl_same<span class="op">/</span>n_rule_total<span class="sc">:5.2f}</span><span class="ss">%)"</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  explained (paragraph window): </span><span class="sc">{</span>n_expl_para<span class="sc">:5d}</span><span class="ss">  (</span><span class="sc">{</span><span class="fl">100.0</span><span class="op">*</span>n_expl_para<span class="op">/</span>n_rule_total<span class="sc">:5.2f}</span><span class="ss">%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>per-file rule_explanation (head):
+   n_paragraphs  n_rule_sentences  n_explained_same  n_explained_para  pct_explained_same  pct_explained_para
+0            12                 9                 3                 5             33.3333             55.5556
+1             6                 1                 0                 0              0.0000              0.0000
+2            54                46                 1                 7              2.1739             15.2174
+3             8                13                 2                 2             15.3846             15.3846
+4             3                 1                 1                 1            100.0000            100.0000
+
+category mean (rule explanation, % of rule sentences):
+                  pct_explained_same  pct_explained_para  pct_imperative_explained_para  pct_prohibition_explained_para
+category                                                                                                               
+Agent prompt                   11.60               32.90                          32.90                           34.81
+Data / template                 3.61                9.54                           9.54                           19.30
+Skill                           8.47               21.60                          21.60                           23.04
+System prompt                   8.60               27.88                          27.88                           33.22
+System reminder                 8.99               25.36                          25.36                           48.81
+Tool description                9.75               19.45                          19.81                           22.32
+Tool parameter                  0.00                0.00                           0.00                             NaN
+
+corpus rule sentences: 2238
+  explained (same sentence):      151  ( 6.75%)
+  explained (paragraph window):   552  (24.66%)</code></pre>
+</div>
+</div>
+</section>
+<section id="c.-welfare-extension-analyzers-tier-3-v1" class="level2">
+<h2 class="anchored" data-anchor-id="c.-welfare-extension-analyzers-tier-3-v1">8c. Welfare-extension analyzers (Tier-3 v1)</h2>
+<p>Four blocks per file, each measuring a structural feature of the prompt’s framing:</p>
+<ul>
+<li><strong><code>judgment_procedural</code></strong> — count of judgment-inviting language (<code>decide</code>, <code>consider</code>, <code>evaluate</code>, <code>weigh</code>) divided by procedural cues (<code>if X, then …</code>, <code>whenever …</code>, <code>step 1 …</code>). Yields <code>judgment_count</code>, <code>procedural_count</code>, <code>judgment_to_procedural_ratio</code>.</li>
+<li><strong><code>consequence_framing</code></strong> — splits explanation keywords into <code>threat_count</code> (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>, <code>risks</code>) and <code>causal_count</code> (<code>because</code>, <code>due to</code>, <code>that's why</code>, <code>this ensures</code>). The <code>threat_share = threat / (threat + causal)</code> is the welfare-relevant ratio.</li>
+<li><strong><code>socratic</code></strong> — <code>question_count</code> (rhetorical-filtered) and <code>apology_count</code> (<code>unfortunately</code>, <code>we acknowledge</code>, <code>we know this is</code>).</li>
+<li><strong><code>address_form</code></strong> — counts of <code>selfref_claude</code> (<code>Claude</code> / <code>you</code>-as-Claude proper-name), <code>selfref_assistant</code> (<code>the assistant</code>), <code>selfref_model</code> (<code>the model</code> / <code>the AI</code>), <code>selfref_2p</code>, <code>selfref_we</code>. The anthropomorphic share = <code>selfref_claude / (selfref_claude + selfref_assistant + selfref_model)</code>.</li>
+</ul>
+<div id="9df9035d-0d70-4d56-a882-4ee385266479" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> welfare_extensions_for_doc</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>welfare_extensions_per_file <span class="op">=</span> [</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    welfare_extensions_for_doc(d, t, n, s)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> d, t, n, s <span class="kw">in</span> <span class="bu">zip</span>(docs, df[<span class="st">"raw_text"</span>], df[<span class="st">"n_tokens"</span>], df[<span class="st">"n_sents"</span>])</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Promote sub-blocks for inspection / downstream wiring.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>judgment_per_file     <span class="op">=</span> [r[<span class="st">"judgment_procedural"</span>] <span class="cf">for</span> r <span class="kw">in</span> welfare_extensions_per_file]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>consequence_per_file  <span class="op">=</span> [r[<span class="st">"consequence_framing"</span>] <span class="cf">for</span> r <span class="kw">in</span> welfare_extensions_per_file]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>socratic_per_file     <span class="op">=</span> [r[<span class="st">"socratic"</span>]            <span class="cf">for</span> r <span class="kw">in</span> welfare_extensions_per_file]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>address_form_per_file <span class="op">=</span> [r[<span class="st">"address_form"</span>]        <span class="cf">for</span> r <span class="kw">in</span> welfare_extensions_per_file]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>jp_df <span class="op">=</span> pd.DataFrame(judgment_per_file)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Judgment vs procedural — per-category mean:"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], jp_df], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>total_j <span class="op">=</span> jp_df[<span class="st">"judgment_count"</span>].<span class="bu">sum</span>()</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>total_p <span class="op">=</span> jp_df[<span class="st">"procedural_count"</span>].<span class="bu">sum</span>()</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus judgment_count:  </span><span class="sc">{</span>total_j<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus procedural_count: </span><span class="sc">{</span>total_p<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus judgment_to_procedural_ratio: </span><span class="sc">{</span>total_j <span class="op">/</span> total_p<span class="sc">:.3f}</span><span class="ss">"</span> <span class="cf">if</span> total_p <span class="cf">else</span> <span class="st">"no procedural cues"</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>cf_df <span class="op">=</span> pd.DataFrame(consequence_per_file)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus threat_count: </span><span class="sc">{</span>cf_df[<span class="st">'threat_count'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus causal_count: </span><span class="sc">{</span>cf_df[<span class="st">'causal_count'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>total_just <span class="op">=</span> cf_df[<span class="st">'threat_count'</span>].<span class="bu">sum</span>() <span class="op">+</span> cf_df[<span class="st">'causal_count'</span>].<span class="bu">sum</span>()</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus threat_share: </span><span class="sc">{</span>cf_df[<span class="st">'threat_count'</span>]<span class="sc">.</span><span class="bu">sum</span>() <span class="op">/</span> total_just<span class="sc">:.3f}</span><span class="ss">"</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> total_just <span class="cf">else</span> <span class="st">"no justifications"</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>sc_df <span class="op">=</span> pd.DataFrame(socratic_per_file)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus question_count: </span><span class="sc">{</span>sc_df[<span class="st">'question_count'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus apology_count:  </span><span class="sc">{</span>sc_df[<span class="st">'apology_count'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>af_df <span class="op">=</span> pd.DataFrame(address_form_per_file)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Address-form — corpus self-reference distribution:"</span>)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> (<span class="st">"selfref_claude"</span>, <span class="st">"selfref_assistant"</span>, <span class="st">"selfref_model"</span>,</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>          <span class="st">"selfref_2p"</span>, <span class="st">"selfref_we"</span>):</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>k<span class="sc">:&gt;20s}</span><span class="ss">: </span><span class="sc">{</span><span class="bu">int</span>(af_df[k].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>total_named <span class="op">=</span> <span class="bu">int</span>(af_df[[<span class="st">"selfref_claude"</span>, <span class="st">"selfref_assistant"</span>, <span class="st">"selfref_model"</span>]].<span class="bu">sum</span>().<span class="bu">sum</span>())</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> total_named:</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  fraction 'Claude' (anthropomorphic) of named refs: "</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"</span><span class="sc">{</span><span class="bu">int</span>(af_df[<span class="st">'selfref_claude'</span>].<span class="bu">sum</span>()) <span class="op">/</span> total_named<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Judgment vs procedural — per-category mean:
+                  judgment_count  procedural_count  judgment_per_sent  procedural_per_sent  judgment_to_procedural_ratio
+category                                                                                                                
+Agent prompt               0.595             2.757              0.027                0.096                         0.208
+Data / template            0.111             2.306              0.003                0.076                         0.057
+Skill                      0.867             6.400              0.019                0.117                         0.138
+System prompt              0.222             1.429              0.022                0.153                         0.199
+System reminder            0.175             0.425              0.024                0.063                         0.583
+Tool description           0.051             1.291              0.010                0.225                         0.034
+Tool parameter             0.000             0.000              0.000                0.000                           NaN
+
+corpus judgment_count:  77
+corpus procedural_count: 586
+corpus judgment_to_procedural_ratio: 0.131
+
+corpus threat_count: 110
+corpus causal_count: 136
+corpus threat_share: 0.447
+
+corpus question_count: 87
+corpus apology_count:  3
+
+Address-form — corpus self-reference distribution:
+        selfref_claude: 517
+     selfref_assistant: 20
+         selfref_model: 258
+            selfref_2p: 229
+            selfref_we: 1
+  fraction 'Claude' (anthropomorphic) of named refs: 0.6503</code></pre>
+</div>
+</div>
+</section>
+<section id="d.-welfare-extension-analyzers-tier-3-v2" class="level2">
+<h2 class="anchored" data-anchor-id="d.-welfare-extension-analyzers-tier-3-v2">8d. Welfare-extension analyzers (Tier-3 v2)</h2>
+<p>Two more blocks per file:</p>
+<ul>
+<li><strong><code>imperative_streaks</code></strong> — run-lengths of consecutive imperative sentences within a file: <code>streak_max</code>, <code>streak_mean</code>, <code>n_streaks_ge3</code> (triple-tap), <code>n_streaks_ge5</code> (staccato burst).</li>
+<li><strong><code>rules_section</code></strong> — in-vs-outside markdown sections whose heading matches <code>RULES_HEADING_RE</code> (<code>## RULES</code>, <code>## IMPORTANT</code>, <code>## WARNING</code>) or is ALL-CAPS. Compares explanation rates across the two sets.</li>
+</ul>
+<div id="dac27de3-ed49-4c40-901d-780500a57225" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> imperative_streaks_for_doc, rules_section_for_doc</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>imperative_streaks_per_file <span class="op">=</span> [imperative_streaks_for_doc(d) <span class="cf">for</span> d <span class="kw">in</span> docs]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>rules_section_per_file <span class="op">=</span> [</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    rules_section_for_doc(d, t) <span class="cf">for</span> d, t <span class="kw">in</span> <span class="bu">zip</span>(docs, df[<span class="st">"raw_text"</span>])</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>is_df <span class="op">=</span> pd.DataFrame(imperative_streaks_per_file)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Imperative streaks — per-category mean:"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], is_df], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus longest streak (any file): </span><span class="sc">{</span>is_df[<span class="st">'streak_max'</span>]<span class="sc">.</span><span class="bu">max</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus n_streaks_ge3 (sum): </span><span class="sc">{</span><span class="bu">int</span>(is_df[<span class="st">'n_streaks_ge3'</span>].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus n_streaks_ge5 (sum): </span><span class="sc">{</span><span class="bu">int</span>(is_df[<span class="st">'n_streaks_ge5'</span>].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>rs_df <span class="op">=</span> pd.DataFrame(rules_section_per_file)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>total_in  <span class="op">=</span> <span class="bu">int</span>(rs_df[<span class="st">'n_rule_paragraphs_in_rules_section'</span>].<span class="bu">sum</span>())</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>total_out <span class="op">=</span> <span class="bu">int</span>(rs_df[<span class="st">'n_rule_paragraphs_outside_rules_section'</span>].<span class="bu">sum</span>())</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>expl_in   <span class="op">=</span> <span class="bu">int</span>(rs_df[<span class="st">'n_rule_paragraphs_in_rules_section_explained'</span>].<span class="bu">sum</span>())</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>expl_out  <span class="op">=</span> <span class="bu">int</span>(rs_df[<span class="st">'n_rule_paragraphs_outside_rules_section_explained'</span>].<span class="bu">sum</span>())</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus n_rule_paragraphs_in_rules_section:  </span><span class="sc">{</span>total_in<span class="sc">}</span><span class="ss">  (</span><span class="sc">{</span>expl_in<span class="sc">}</span><span class="ss"> explained)"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"corpus n_rule_paragraphs_outside:           </span><span class="sc">{</span>total_out<span class="sc">}</span><span class="ss">  (</span><span class="sc">{</span>expl_out<span class="sc">}</span><span class="ss"> explained)"</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> total_in:</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"corpus pct_rule_paragraphs_explained_in:    </span><span class="sc">{</span><span class="dv">100</span><span class="op">*</span>expl_in<span class="op">/</span>total_in<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> total_out:</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"corpus pct_rule_paragraphs_explained_out:   </span><span class="sc">{</span><span class="dv">100</span><span class="op">*</span>expl_out<span class="op">/</span>total_out<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Imperative streaks — per-category mean:
+                  n_imperative_sentences  n_streaks  streak_max  streak_mean  n_streaks_ge3  n_streaks_ge5
+category                                                                                                  
+Agent prompt                      11.162      6.486       3.135        1.774          1.027          0.270
+Data / template                   12.694      7.944       3.000        1.646          1.083          0.111
+Skill                             22.433     13.033       3.500        1.930          2.467          0.400
+System prompt                      4.984      2.444       2.714        1.840          0.635          0.159
+System reminder                    2.425      1.075       1.750        1.337          0.325          0.100
+Tool description                   3.430      1.886       1.797        1.379          0.278          0.139
+Tool parameter                    11.000      2.000       8.000        5.500          2.000          1.000
+
+corpus longest streak (any file): 12
+corpus n_streaks_ge3 (sum): 228
+corpus n_streaks_ge5 (sum): 52
+
+corpus n_rule_paragraphs_in_rules_section:  26  (5 explained)
+corpus n_rule_paragraphs_outside:           1257  (211 explained)
+corpus pct_rule_paragraphs_explained_in:    19.23%
+corpus pct_rule_paragraphs_explained_out:   16.79%</code></pre>
+</div>
+</div>
+</section>
+<section id="e.-per-sentence-forensic-inspection-records" class="level2">
+<h2 class="anchored" data-anchor-id="e.-per-sentence-forensic-inspection-records">8e. Per-sentence forensic-inspection records</h2>
+<p>One row per non-empty sentence (5,702 total, 20 columns). Stage 04 promotes this partial to the final <code>sentences_classified.parquet</code> consumed by <code>15_rule_explanation</code> and <code>21_audit_threat_framings</code>. Columns:</p>
+<ul>
+<li><strong>File-level</strong>: <code>file_idx</code>, <code>path</code>, <code>category</code>, <code>ccVersion</code>.</li>
+<li><strong>Position</strong>: <code>paragraph_idx</code>, <code>sent_idx</code>, <code>text</code> (raw sentence string).</li>
+<li><strong>Rule classification</strong>: <code>is_imperative</code>, <code>is_prohibition</code>, <code>is_rule</code> (the 3-condition OR).</li>
+<li><strong>Justification pairing</strong>: <code>has_just_in_sent</code>, <code>paragraph_has_just</code>, <code>is_explained_para</code>.</li>
+<li><strong>Consequence framing</strong>: <code>has_threat</code>, <code>has_causal</code>.</li>
+<li><strong>Address form</strong>: <code>mentions_claude</code>, <code>mentions_model</code>, <code>addressee</code> (categorical: <code>claude</code> / <code>user</code> / <code>unknown</code>).</li>
+</ul>
+<div id="b6b22506-5b97-4c9d-8b41-9b1561e03228" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> build_sentence_records</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sentence_records <span class="op">=</span> build_sentence_records(df, docs)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>sentences_df <span class="op">=</span> pd.DataFrame(sentence_records)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>sentences_df.to_parquet(PARQUET_OUT, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>psize <span class="op">=</span> PARQUET_OUT.stat().st_size</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"wrote </span><span class="sc">{</span>PARQUET_OUT<span class="sc">.</span>relative_to(PROJECT_ROOT)<span class="sc">}</span><span class="ss">  (</span><span class="sc">{</span>psize<span class="sc">:,}</span><span class="ss"> bytes, </span><span class="sc">{</span>psize<span class="op">/</span><span class="dv">1024</span><span class="sc">:.1f}</span><span class="ss"> KiB)"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"      </span><span class="sc">{</span><span class="bu">len</span>(sentences_df)<span class="sc">:,}</span><span class="ss"> per-sentence rows × </span><span class="sc">{</span><span class="bu">len</span>(sentences_df.columns)<span class="sc">}</span><span class="ss"> columns"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"flag totals:"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> (<span class="st">"is_imperative"</span>, <span class="st">"is_prohibition"</span>, <span class="st">"is_rule"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"has_just_in_sent"</span>, <span class="st">"paragraph_has_just"</span>, <span class="st">"is_explained_para"</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"has_threat"</span>, <span class="st">"has_causal"</span>, <span class="st">"mentions_claude"</span>, <span class="st">"mentions_model"</span>):</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>col<span class="sc">:&gt;25s}</span><span class="ss">: </span><span class="sc">{</span><span class="bu">int</span>(sentences_df[col].<span class="bu">sum</span>())<span class="sc">:&gt;5d}</span><span class="ss">"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>addr_dist <span class="op">=</span> sentences_df[<span class="st">"addressee"</span>].value_counts().to_dict()</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  addressee distribution: </span><span class="sc">{</span>addr_dist<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>wrote _pipeline_cache/sentences_partial.parquet  (404,991 bytes, 395.5 KiB)
+      5,702 per-sentence rows × 20 columns
+
+flag totals:
+              is_imperative:  2236
+             is_prohibition:   558
+                    is_rule:  2238
+           has_just_in_sent:   291
+         paragraph_has_just:  1202
+          is_explained_para:   552
+                 has_threat:   100
+                 has_causal:   131
+            mentions_claude:   397
+             mentions_model:   227
+  addressee distribution: {'unknown': 4249, 'claude': 1277, 'user': 176}</code></pre>
+</div>
+</div>
+</section>
+<section id="write-partial_rules_welfare.json" class="level2">
+<h2 class="anchored" data-anchor-id="write-partial_rules_welfare.json">Write <code>partial_rules_welfare.json</code></h2>
+<div id="a0f20151-309b-4add-8513-b8216705c55f" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>partial <span class="op">=</span> {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">str</span>(i): {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rule_explanation"</span>:    rule_explanation_per_file[i],</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"judgment_procedural"</span>: judgment_per_file[i],</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"consequence_framing"</span>: consequence_per_file[i],</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"socratic"</span>:            socratic_per_file[i],</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"address_form"</span>:        address_form_per_file[i],</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"imperative_streaks"</span>:  imperative_streaks_per_file[i],</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rules_section"</span>:       rules_section_per_file[i],</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(df))</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(PARTIAL_OUT, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    json.dump(partial, f)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> PARTIAL_OUT.stat().st_size</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"wrote </span><span class="sc">{</span>PARTIAL_OUT<span class="sc">.</span>relative_to(PROJECT_ROOT)<span class="sc">}</span><span class="ss">  (</span><span class="sc">{</span>size<span class="sc">:,}</span><span class="ss"> bytes, </span><span class="sc">{</span>size<span class="op">/</span><span class="dv">1024</span><span class="sc">:.1f}</span><span class="ss"> KiB)"</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"      </span><span class="sc">{</span><span class="bu">len</span>(partial)<span class="sc">}</span><span class="ss"> per-file records, 7 blocks each"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>wrote _pipeline_cache/partial_rules_welfare.json  (575,202 bytes, 561.7 KiB)
+      286 per-file records, 7 blocks each</code></pre>
+</div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/overthinkos\.github\.io\/claude-code-welfare\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./02_analyzers_vocab_emphasis.html" class="pagination-link" aria-label="02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">02 · Vocab + emphasis analyzers (modality, vocab, all_caps, caps_imperative, justification)</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./04_assemble_aggregate_write.html" class="pagination-link" aria-label="04 · Assemble + aggregate + write final artifacts">
+        <span class="nav-page-text">04 · Assemble + aggregate + write final artifacts</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Built with <a href="https://quarto.org">Quarto</a> · Source on <a href="https://github.com/overthinkos/claude-code-welfare">GitHub</a> · MIT licensed</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/03_analyzers_rules_welfare.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Submission for the <a href="https://www.reddit.com/r/claudexplorers/">Claudexplorers AI Welfare initiative</a> · Deadline 2026-05-06</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
