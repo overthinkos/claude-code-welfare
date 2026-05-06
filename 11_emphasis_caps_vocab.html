@@ -880,12 +880,12 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 <section id="emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile" class="level3">
 <h3 class="anchored" data-anchor-id="emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile">Emphasis vocabulary: top ALL CAPS tokens, CAPS imperative tokens, and full VOCAB profile</h3>
 <p>The 11 VOCAB classes (full table with example tokens in <code>00_data_pipeline.ipynb</code> § 5): <code>hard_prohibitions</code>, <code>hard_prescriptions</code>, <code>soft_prescriptions</code>, <code>politeness_direct</code>, <code>politeness_softening</code>, <code>warmth_encouragement</code>, <code>hedging</code>, <code>structural_markers</code>, <code>profanity</code>, <code>pronouns_2p</code>, <code>pronouns_1p</code>. Heatmap below shows each class as <code>% of file tokens</code> per category.</p>
-<div id="83d5d146-6a9e-4b8e-ac00-b3f084983439" class="cell" data-execution_count="6">
+<div id="83d5d146-6a9e-4b8e-ac00-b3f084983439" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Top-N tokens for ALL CAPS and CAPS imperative + full VOCAB heatmap."""</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top CAPS-imperative tokens (HEADLINE['top_caps_imperative']):"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top CAPS-imperative tokens (corpus-wide counts):"</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> tok, n <span class="kw">in</span> HEADLINE[<span class="st">"top_caps_imperative"</span>]:</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tok<span class="sc">:&lt;10}</span><span class="ss">  </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -943,32 +943,32 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 <span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>(top_caps_chart <span class="op">|</span> caps_imp_chart) <span class="op">&amp;</span> vocab_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Top CAPS-imperative tokens (HEADLINE['top_caps_imperative']):
+<pre><code>Top CAPS-imperative tokens (corpus-wide counts):
   IMPORTANT   35
   NEVER       25
   MUST        18
   CRITICAL    15</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="7">
 
 <style>
-  #altair-viz-7d0ac74097d44f3e90444bc599164645.vega-embed {
+  #altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-7d0ac74097d44f3e90444bc599164645.vega-embed details,
-  #altair-viz-7d0ac74097d44f3e90444bc599164645.vega-embed details summary {
+  #altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea.vega-embed details,
+  #altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-7d0ac74097d44f3e90444bc599164645"></div>
+<div id="altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-7d0ac74097d44f3e90444bc599164645") {
-      outputDiv = document.getElementById("altair-viz-7d0ac74097d44f3e90444bc599164645");
+    if (outputDiv.id !== "altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea") {
+      outputDiv = document.getElementById("altair-viz-7b9836ccaf0b4ebfacbb729a0eacddea");
     }
 
     const paths = {
