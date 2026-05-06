@@ -135,59 +135,50 @@ The `importlib.reload` line is intentional — it picks up edits to `prompt_anal
 
 ---
 
-## 4. ⚠️ TOOLING RULES — IMPORTANT (revised after the 2026-05-06 incident)
+## 4. TOOLING RULES — Jupyter MCP server (post-2026-05-06 cutover)
 
-### Background — what changed
+### Background — what was fixed
 
-The earlier rule was "all notebook edits MUST go through the Jupyter MCP server" with the rationale that the live CRDT room is the source of truth while a notebook is open. **That rule is no longer sufficient.** During a 2026-05-06 session, batched `mcp__jupyter__cell_update` calls silently corrupted `20_track_justification_rate.ipynb`: cells duplicated, two code cells (chart-rendering) were silently lost, and `mcp__jupyter__room_close` failed to actually destroy the dirty CRDT room — leaving it "sticky" so that subsequent direct disk writes were CRDT-merged with the stale room state, propagating corruption.
+The 2026-05-06 cutover rewrote the Jupyter MCP server to fix the silent-cell-corruption / sticky-room / canonicalization bugs documented in the original RCA at [`JUPYTER_MCP_RCA.md`](./JUPYTER_MCP_RCA.md). The cutover lives in `overthink` commit `5580983 feat(jupyter-mcp)!: …` (with submodule `7bc8dc5 docs(ov-jupyter)!: …`). What changed:
 
-The full RCA is at [`JUPYTER_MCP_RCA.md`](./JUPYTER_MCP_RCA.md). The summary that drives the rules below:
+- **`cell_update` is now atomic by `cell_id`.** The wrapper preserves the existing cell's id, and the adapter mutates the existing `Y.Map`'s `source` (Y.Text) / `metadata` / `outputs` fields **in place** inside one `ydoc.transaction`. No more delete-then-insert at the CRDT level. The phantom-cell residue is gone. Verified live on this notebook (14 cells, byte-identical content preserved through the update cycle).
+- **MCP works WITH the user, not against.** Every `notebook_*` and `cell_*` tool auto-attaches to whichever CRDT room is already open for the path (JupyterLab UI tab, another MCP session, this one), or creates a fresh room if none exists. There is no scenario where MCP and the UI work in parallel rooms.
+- **Single room per notebook is an INVARIANT.** Path canonicalization at the boundary maps `"foo.ipynb"`, `"./foo.ipynb"`, `"/home/user/workspace/foo.ipynb"` ALL to the same `file_id` → same `room_id`. Host paths (`/home/atrawog/...`) and `..`-escapes are rejected with a clear error. Verified live: opening `20_track_justification_rate.ipynb` via three different path forms converges on exactly one room.
+- **Server-side idle-room sweeper.** Replaces what client-side `room_close*` used to express. A background task flushes and closes rooms with no connected clients after `MCP_ROOM_IDLE_TIMEOUT_SEC` (default 600s).
+- **`file_id_manager.db` cleanup-on-init.** Prunes rows whose path is outside the workspace (host-path leaks) or whose underlying file no longer exists. Idempotent; runs on first MCP call after server start.
+- **Tool surface trimmed: 15 → 11 tools.** Client-side room management (`room_open`, `room_close`, `room_close_all`, `room_pick`) was deleted. `room_list_users` was renamed to `notebook_list_users(path)`. Read-only diagnostic `room_list` kept.
 
-- `cell_update` is **not atomic** under stale CRDT history — it appears to do delete-then-insert against the cell array, and can leave the original cell in place if the room's causal history has anything the MCP client doesn't know about. Symptom: cell count silently grows, and chart-rendering code cells silently disappear.
-- `room_close` does **not always destroy the room** — rooms with dirty / divergent CRDT state survive close calls and remain visible in `room_list`. The `file_id` persists across close/reopen cycles.
-- Direct disk writes against a notebook with a sticky room are **not safe** — `jupyter_server_ydoc`'s file-watcher detects the external modification and CRDT-merges it with the room's stale state, producing duplicates.
+### The current rule: edit notebooks via the Jupyter MCP server, end of story
 
-### Revised tooling rules
+After the cutover, the original principle is restored without caveats: **all `.ipynb` edits go through the Jupyter MCP server.** Bulk edits, batched `cell_update` calls, multi-cell surgery — all safe. The previous "graded hazard" framing is obsolete.
 
-#### Default rule: prefer **disk-edit on freshly-cloned working tree**, with all rooms first hard-cleared
+#### The post-cutover MCP tool surface (11 tools)
 
-For any non-trivial notebook edit (more than 1–2 cells), the safe procedure is:
+| Category | Tools |
+|---|---|
+| Notebook management | `mcp__jupyter__notebook_list`, `mcp__jupyter__notebook_create`, `mcp__jupyter__notebook_get`, `mcp__jupyter__notebook_watch`, `mcp__jupyter__notebook_list_users` |
+| Cell operations (in-place CRDT) | `mcp__jupyter__cell_get`, `mcp__jupyter__cell_update`, `mcp__jupyter__cell_insert`, `mcp__jupyter__cell_delete`, `mcp__jupyter__cell_execute` |
+| Read-only diagnostic | `mcp__jupyter__room_list` (verify the single-room invariant; never two rows for the same path) |
 
-1. **Clear all rooms first**: `mcp__jupyter__room_close_all`. Verify via `mcp__jupyter__room_list` that the rooms are gone. **If sticky rooms persist, ask the user to restart the Jupyter container** — that is the only certain way to clear them. Do not proceed.
-2. **Edit on disk** via a small Python script that reads the `.ipynb` JSON, mutates `cells[i]['source']`, and writes back. Validate `len(nb['cells'])` before-and-after — if the count diverges from your expected delta, abort and `git checkout` to recover.
-3. **Do not reopen rooms afterward.** Let the user reopen notebooks fresh in JupyterLab.
-
-For single-cell edits during active live collaboration with the user (the user has JupyterLab open and is watching), `mcp__jupyter__cell_update` is acceptable, but verify after every call:
-
-```
-cell_update(path, index, source) → cell_get(path, index) and confirm source matches.
-```
-
-If they don't match, you've hit the corruption bug — `git checkout` immediately and switch to disk-edit.
+`mcp__jupyter__room_open` / `room_close` / `room_close_all` / `room_pick` no longer exist — calling them raises "tool not found." If you see those mentioned in older docs/scripts, ignore them: the server now manages rooms invisibly.
 
 #### Concrete rules
 
-- **`Write` / `sed` / `jq` on a `.ipynb` is now a graded hazard**, not a flat ban:
-  - Safe IF: `room_list` shows no room for the target notebook AND no JupyterLab UI tab is open against it.
-  - Unsafe IF: a CRDT room exists for the file (the room may CRDT-merge your write with its stale state).
-  - In doubt: `room_close_all` + verify, then proceed.
-- **`mcp__jupyter__cell_update` is now a graded hazard**, not the default:
-  - Safe IF: room was just freshly opened (no prior mutations, no stale history).
-  - Unsafe IF: room has been open for a while OR has had mutations since last verified.
-  - Always verify after each call. Stop on first mismatch.
-- **`mcp__jupyter__room_close_all` is the recommended pre-flight before any disk edit**, but does NOT guarantee rooms are destroyed. Always confirm via `room_list`.
-- **For bulk surgery (>5 cells, multi-notebook batches)**: skip MCP entirely. Use a Python script. Tell the user to restart JupyterLab when you're done.
-- For `.py` / `.md` / `.yaml` / `.json`: regular `Write` / `Edit` tools are fine. No CRDT layer.
+- **`cell_update`, `cell_insert`, `cell_delete`, `cell_execute`, `cell_get`, `notebook_get`, `notebook_watch`** are all safe to use freely. Each call auto-attaches to the existing room (UI tab or MCP session) or creates one. Cell mutations preserve the cell's `id`. No phantom cells.
+- **Path canonicalization is at the boundary.** `"./20_track_justification_rate.ipynb"`, `"20_track_justification_rate.ipynb"`, and `/home/user/workspace/claude-prompts-analysis/20_track_justification_rate.ipynb` all hit the same room. Pass whichever form you find natural.
+- **Bulk multi-cell surgery via MCP is now safe.** No need to fall back to disk-edit Python scripts. Stack `cell_update` / `cell_insert` calls; the cells stay correctly numbered with stable ids.
+- **`Write` / `sed` / `jq` direct-disk edits to a `.ipynb`: avoid.** They bypass the CRDT and confuse any open UI tab. The upstream `jupyter_server_ydoc` file-watcher will CRDT-merge external writes against the in-memory state — same hybrid-cell failure mode the cutover was meant to retire on the MCP side. Use MCP cell_* tools instead. (This is the original principle; it's safe to re-adopt now that MCP itself is reliable.)
+- **`mcp__jupyter__room_list` for verification.** After bulk edits, run it once: should show exactly one row per notebook you touched. If any path appears twice, that's a regression — open a bug.
+- **For `.py` / `.md` / `.yaml` / `.json`:** regular `Write` / `Edit` tools are fine. No CRDT layer.
 - After editing `prompt_analysis.py`, the kernel still has the *old* module cached. The setup cell calls `importlib.reload(prompt_analysis)` to force a re-import. If you add new exports, run the setup cell again.
 
-#### Recovery checklist (when corruption is suspected)
+#### Defensive verification (still cheap insurance)
 
-1. `mcp__jupyter__room_close_all` — best effort cleanup.
-2. `git checkout HEAD -- <notebook>.ipynb` — restore disk.
-3. `jq '.cells | length' <notebook>.ipynb` — confirm expected cell count.
-4. **Inspect `mcp__jupyter__room_list`** — if the room reappears, do not proceed. Ask the user to restart the Jupyter container.
-5. Once `room_list` is clean for that notebook, run the disk-edit script.
-6. **Verify cell count matches expected delta**. If it doesn't, repeat from step 1.
+Even with the cutover, after a batch of cell mutations:
+1. `mcp__jupyter__notebook_get` once → check `len(cells)` matches expected.
+2. If it doesn't match, `git diff -- <notebook>.ipynb` to inspect; `git checkout` if the surgery went wrong.
+
+The cutover means corruption is no longer expected from the MCP path — but cheap verification still catches authoring mistakes (e.g., off-by-one in your insert/delete sequence).
 
 ### `.mcp.json` (do not change without reason)
 
@@ -353,13 +344,14 @@ The data here are an empirical baseline against which Anthropic could measure in
 |---|---|
 | Consumer notebook fails with `ImportError: cannot import name X from prompt_analysis` | The kernel cached the old module. The setup cell's `importlib.reload(prompt_analysis)` should handle this. If it persists, restart the kernel. |
 | Consumer fails with `KeyError: 'Column not found:...'` from `alt_df` | Producer hasn't been re-run since a schema change. Run `00_data_pipeline.ipynb` end-to-end first. |
-| `mcp__jupyter__execute_cell` returns "Index out of range" | The CRDT room is out of sync with disk. Close + reopen the session. If the same call keeps failing, the room is sticky — see the next two rows. |
-| `mcp__jupyter__cell_update` reports success but the cell didn't change / a duplicate appeared / a code cell silently vanished | **Known corruption bug** (see [`JUPYTER_MCP_RCA.md`](./JUPYTER_MCP_RCA.md)). `git checkout HEAD -- <notebook>` to restore disk. Switch to disk-edit-script approach for the rest of the work. |
-| `mcp__jupyter__room_close` returns success but `room_list` still shows the room | **Sticky room**. `room_close_all` may not fix it. The only certain remedy is restarting the Jupyter container. Until then, do not edit that notebook via direct disk write — the sticky room will CRDT-merge your edit with its stale state. |
-| Notebook on disk has more cells than expected after a disk-edit script | The room CRDT-merged your write. Restore from `git`, restart the Jupyter container, then re-run the disk edit. |
-| Edits to `.ipynb` via direct `Write` don't show up in JupyterLab | Expected — direct edits don't propagate into the live CRDT room. JupyterLab's tab will show stale content until you close + reopen the file in the UI. |
+| `mcp__jupyter__cell_execute` returns "Index out of range" | Stale tool registration in your Claude Code session — the kernel has just executed and the cell index shifted. Run `mcp__jupyter__notebook_get` to refresh your view of the cell list, then retry with the correct index. |
+| `mcp__jupyter__cell_update` reports success but the cell didn't change | Pre-cutover corruption bug (silent UUID-mint + delete-then-insert). Fixed in `5580983 feat(jupyter-mcp)!: …`. If you're seeing this on a current container, `podman exec ov-jupyter sha256sum /home/user/.pixi/envs/default/lib/python3.13/site-packages/jupyter_mcp/rtc_adapter.py` and confirm it matches `697f4c038013968fdad2e65687329a7fd74805e1391094dfb78407059b1b973e`. If not, the container is on a stale image — run `ov update jupyter` to pull the post-cutover build. |
+| Calling `mcp__jupyter__room_open` / `room_close` / `room_close_all` / `room_pick` returns "tool not found" | Expected post-cutover. These client-side room-management tools were deleted in `5580983`. The server now manages rooms invisibly via auto-attach + idle-room sweeper. Just call `notebook_*` / `cell_*` tools directly. |
+| `room_list` shows two rows for the same notebook path | **Regression** — single-room invariant violated. File a bug. Should not happen post-cutover (verified live: 3 path forms → 1 room on `20_track_justification_rate.ipynb`). |
+| Notebook on disk has more cells than expected after MCP cell-update batches | Pre-cutover phantom-cell residue. Should not occur post-cutover (in-place Y.Map mutation). If reproduced on a current container, check the deployed code SHA per row above; otherwise file a bug. |
+| Edits to `.ipynb` via direct `Write` don't show up in JupyterLab | Expected — direct disk edits bypass the CRDT room. The upstream file-watcher will CRDT-merge them against in-memory state, producing duplicates. Don't direct-write `.ipynb` files; use the MCP `cell_*` tools. |
 | Producer's `generated_at` timestamp is the only thing that differs between two YAML runs | Expected. Everything else is deterministic. |
 
 ---
 
-*This file lives at the repo root and applies to any Claude instance editing the project. Be terse, name files precisely, and never edit `.ipynb` files outside the Jupyter MCP server.*
+*This file lives at the repo root and applies to any Claude instance editing the project. Be terse, name files precisely, and edit `.ipynb` files only through the Jupyter MCP server's `cell_*` / `notebook_*` tools — direct-disk edits bypass the CRDT room and confuse open UI tabs. Post-2026-05-06 cutover, the MCP server is reliable; the previous "graded hazard" framing has been retired.*
