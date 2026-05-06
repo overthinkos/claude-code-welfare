@@ -332,6 +332,65 @@ def welfare_evidence_table(
             .reset_index(drop=True))
 
 
+def headline_numbers(data: dict) -> dict:
+    """Return the canonical corpus-wide headline numbers dict.
+
+    Computed from the YAML cache. Consumer notebooks should call this rather
+    than hardcoding corpus-wide counts, so number drift across notebooks is
+    impossible by construction.
+
+    Keys are the contract — names are stable; values come from the live YAML.
+    """
+    corpus = data["corpus"]
+    m = corpus["metrics"]
+    pos_q = m["stance"]["positive_evaluative_quality_count"]
+    pos_e = m["stance"]["positive_evaluative_emphasis_count"]
+    pos_u = m["stance"]["positive_evaluative_count"]
+    neg = m["stance"]["negative_evaluative_count"]
+    return {
+        "n_files":                       len(data["files"]),
+        "n_sentences":                   corpus["n_sents"],
+        "n_word_tokens":                 corpus["n_tokens"],
+        "n_versions":                    len({f["ccVersion"] for f in data["files"]
+                                              if f.get("ccVersion")}),
+        "n_rule_sentences":              m["rule_explanation"]["n_rule_sentences"],
+        "pct_explained_same":            m["rule_explanation"]["pct_explained_same"],
+        "pct_explained_para":            m["rule_explanation"]["pct_explained_para"],
+        "judgment_count":                m["judgment_procedural"]["judgment_count"],
+        "procedural_count":              m["judgment_procedural"]["procedural_count"],
+        "judgment_to_procedural_ratio":  m["judgment_procedural"]["judgment_to_procedural_ratio"],
+        "threat_count":                  m["consequence_framing"]["threat_count"],
+        "causal_count":                  m["consequence_framing"]["causal_count"],
+        "threat_share":                  m["consequence_framing"]["threat_share"],
+        "question_count":                m["socratic"]["question_count"],
+        "apology_count":                 m["socratic"]["apology_count"],
+        "selfref_claude":                m["address_form"]["selfref_claude"],
+        "selfref_assistant":             m["address_form"]["selfref_assistant"],
+        "selfref_model":                 m["address_form"]["selfref_model"],
+        "pct_anthropomorphic":           m["address_form"]["pct_anthropomorphic"],
+        "positive_evaluative_quality":   pos_q,
+        "positive_evaluative_emphasis":  pos_e,
+        "positive_evaluative_union":     pos_u,
+        "negative_evaluative":           neg,
+        "ratio_quality_to_negative":     pos_q / max(1, neg),
+        "ratio_union_to_negative":       pos_u / max(1, neg),
+        "appreciative_sent":             m["sentence_register"]["appreciative_sent_count"],
+        "collaborative_sent":            m["sentence_register"]["collaborative_sent_count"],
+        "streak_max":                    m["imperative_streaks"]["streak_max"],
+        "n_streaks_ge3":                 m["imperative_streaks"]["n_streaks_ge3"],
+        "n_streaks_ge5":                 m["imperative_streaks"]["n_streaks_ge5"],
+        "vocab_hard_prohibitions":       m["vocab"]["hard_prohibitions"]["count"],
+        "vocab_hard_prescriptions":      m["vocab"]["hard_prescriptions"]["count"],
+        "vocab_pronouns_2p":             m["vocab"]["pronouns_2p"]["count"],
+        "vocab_pronouns_1p":             m["vocab"]["pronouns_1p"]["count"],
+        "vocab_profanity":               m["vocab"]["profanity"]["count"],
+        "modality_deontic":              m["modality"]["deontic_count"],
+        "modality_epistemic":            m["modality"]["epistemic_count"],
+        "modality_dynamic":              m["modality"]["dynamic_count"],
+        "mood_marker_pct":               m["mood"]["marker_pct"],
+    }
+
+
 def positive_exemplar_table(
     alt_df: pd.DataFrame,
     top_n: int = 25,
