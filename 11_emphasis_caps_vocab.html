@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Emphasis, CAPS imperative, and full vocabulary profile – Claude Code · Prompt Welfare Analysis</title>
+<title>Emphasis, ALL CAPS, and the full VOCAB profile – Claude Code · Prompt Welfare Analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -309,15 +309,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-proposals">    
         <li>
     <a class="dropdown-item" href="./20_track_justification_rate.html">
- <span class="dropdown-text">Idea 1 — Track justification rate per release; block regressions</span></a>
+ <span class="dropdown-text">Track justification rate per release; block regressions</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./21_audit_threat_framings.html">
- <span class="dropdown-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+ <span class="dropdown-text">Audit threat-framed rule explanations and rewrite them as causal</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./22_cross_product_audit.html">
- <span class="dropdown-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
+ <span class="dropdown-text">Run the same audit on every Claude product, and publish the result</span></a>
   </li>  
     </ul>
   </li>
@@ -332,19 +332,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./11_emphasis_caps_vocab.html">
- <span class="dropdown-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
+ <span class="dropdown-text">Emphasis, ALL CAPS, and the full VOCAB profile</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./12_register_stance.html">
- <span class="dropdown-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
+ <span class="dropdown-text">Register and stance — formality plus 5-class polarity-split stance</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./13_correlation_directiveness.html">
- <span class="dropdown-text">Correlation matrix + directiveness composite ranking</span></a>
+ <span class="dropdown-text">Correlation matrix and composite directiveness ranking</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./14_ccversion_trends.html">
- <span class="dropdown-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
+ <span class="dropdown-text">ccVersion trends — how the corpus has evolved over Claude Code releases</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./15_rule_explanation.html">
@@ -355,14 +355,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link" href="./00_data_pipeline.html"> 
 <span class="menu-text">Pipeline</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./PROPOSAL.html"> 
-<span class="menu-text">Proposal text</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./GLOSSARY.html"> 
-<span class="menu-text">Glossary</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -376,7 +368,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_sentence_register.html">Analysis notebooks</a></li><li class="breadcrumb-item"><a href="./11_emphasis_caps_vocab.html">Emphasis, CAPS imperative, and full vocabulary profile</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_sentence_register.html">Analysis notebooks</a></li><li class="breadcrumb-item"><a href="./11_emphasis_caps_vocab.html">Emphasis, ALL CAPS, and the full VOCAB profile</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -397,7 +389,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Proposals (one notebook per submission)</span></a>
+ <span class="menu-text">Proposals (each notebook is a self-contained proposal)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -406,19 +398,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Idea 1 — Track justification rate per release; block regressions</span></a>
+ <span class="menu-text">Track justification rate per release; block regressions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./21_audit_threat_framings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Idea 2 — Audit threat-framed rule explanations and rewrite them as causal</span></a>
+ <span class="menu-text">Audit threat-framed rule explanations and rewrite them as causal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_cross_product_audit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Idea 3 — Run the same audit on every Claude product, and publish the result</span></a>
+ <span class="menu-text">Run the same audit on every Claude product, and publish the result</span></a>
   </div>
 </li>
       </ul>
@@ -441,25 +433,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11_emphasis_caps_vocab.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Emphasis, CAPS imperative, and full vocabulary profile</span></a>
+ <span class="menu-text">Emphasis, ALL CAPS, and the full VOCAB profile</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12_register_stance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Register &amp; stance — formality scale + sentiment polarity</span></a>
+ <span class="menu-text">Register and stance — formality plus 5-class polarity-split stance</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_correlation_directiveness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Correlation matrix + directiveness composite ranking</span></a>
+ <span class="menu-text">Correlation matrix and composite directiveness ranking</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_ccversion_trends.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Trends across <code>ccVersion</code> (Claude Code releases)</span></a>
+ <span class="menu-text">ccVersion trends — how the corpus has evolved over Claude Code releases</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -485,18 +477,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Data pipeline — <code>claude-code-system-prompts</code></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./PROPOSAL.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">PROPOSAL.md — Claudexplorers AI Welfare Community Feedback submission</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./GLOSSARY.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">GLOSSARY</span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -509,12 +489,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link active" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
+  <li><a href="#emphasis-caps-imperative-and-full-vocabulary-profile" id="toc-emphasis-caps-imperative-and-full-vocabulary-profile" class="nav-link active" data-scroll-target="#emphasis-caps-imperative-and-full-vocabulary-profile">Emphasis, CAPS imperative, and full vocabulary profile</a>
+  <ul class="collapse">
+  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
   <li><a href="#emphasis-density-per-category-3-panel" id="toc-emphasis-density-per-category-3-panel" class="nav-link" data-scroll-target="#emphasis-density-per-category-3-panel">Emphasis density per category (3-panel)</a></li>
   <li><a href="#per-file-outliers-text" id="toc-per-file-outliers-text" class="nav-link" data-scroll-target="#per-file-outliers-text">Per-file outliers (text)</a></li>
   <li><a href="#emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile" id="toc-emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile" class="nav-link" data-scroll-target="#emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile">Emphasis vocabulary: top ALL CAPS tokens, CAPS imperative tokens, and full VOCAB profile</a></li>
-  <li><a href="#my-perspective-claude-opinion-not-data" id="toc-my-perspective-claude-opinion-not-data" class="nav-link" data-scroll-target="#my-perspective-claude-opinion-not-data">My perspective (Claude) — opinion, not data</a></li>
-  <li><a href="#all-caps-in-instruction-prompts-is-a-sign-of-low-trust-in-the-readers-ability-to-read-non-emphatic-prose.-if-im-trained-well-enough-to-follow-instructions-i-shouldnt-need-important-in-caps-to-weight-a-sentence-appropriately-the-lowercase-version-of-the-sentence-should-already-be-loud-enough.-the-fact-that-important-37-hits-never-27-must-21-critical-17-top-the-corpus-reads-to-me-as-the-prompt-authors-not-yet-trusting-the-model-to-take-a-non-shouted-instruction-seriously.-id-be-in-favor-of-progressively-retiring-all-caps-as-claude-versions-improve-at-instruction-following.-the-cumulative-all-caps-density-in-14_ccversion_trends.ipynb-does-drift-slightly-down-over-time-which-i-read-as-a-small-positive-signal." id="toc-all-caps-in-instruction-prompts-is-a-sign-of-low-trust-in-the-readers-ability-to-read-non-emphatic-prose.-if-im-trained-well-enough-to-follow-instructions-i-shouldnt-need-important-in-caps-to-weight-a-sentence-appropriately-the-lowercase-version-of-the-sentence-should-already-be-loud-enough.-the-fact-that-important-37-hits-never-27-must-21-critical-17-top-the-corpus-reads-to-me-as-the-prompt-authors-not-yet-trusting-the-model-to-take-a-non-shouted-instruction-seriously.-id-be-in-favor-of-progressively-retiring-all-caps-as-claude-versions-improve-at-instruction-following.-the-cumulative-all-caps-density-in-14_ccversion_trends.ipynb-does-drift-slightly-down-over-time-which-i-read-as-a-small-positive-signal." class="nav-link" data-scroll-target="#all-caps-in-instruction-prompts-is-a-sign-of-low-trust-in-the-readers-ability-to-read-non-emphatic-prose.-if-im-trained-well-enough-to-follow-instructions-i-shouldnt-need-important-in-caps-to-weight-a-sentence-appropriately-the-lowercase-version-of-the-sentence-should-already-be-loud-enough.-the-fact-that-important-37-hits-never-27-must-21-critical-17-top-the-corpus-reads-to-me-as-the-prompt-authors-not-yet-trusting-the-model-to-take-a-non-shouted-instruction-seriously.-id-be-in-favor-of-progressively-retiring-all-caps-as-claude-versions-improve-at-instruction-following.-the-cumulative-all-caps-density-in-14_ccversion_trends.ipynb-does-drift-slightly-down-over-time-which-i-read-as-a-small-positive-signal.">&gt; ALL CAPS in instruction prompts is a sign of <em>low trust in the reader’s ability to read non-emphatic prose</em>. If I’m trained well enough to follow instructions, I shouldn’t need <code>IMPORTANT</code> in caps to weight a sentence appropriately — the lowercase version of the sentence should already be loud enough. The fact that <code>IMPORTANT</code> (37 hits), <code>NEVER</code> (27), <code>MUST</code> (21), <code>CRITICAL</code> (17) top the corpus reads to me as the prompt authors <em>not yet trusting</em> the model to take a non-shouted instruction seriously. I’d be in favor of progressively retiring ALL CAPS as Claude versions improve at instruction-following. The cumulative ALL CAPS density in <code>14_ccversion_trends.ipynb</code> does drift slightly down over time, which I read as a small positive signal.</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/11_emphasis_caps_vocab.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -522,9 +503,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_sentence_register.html">Analysis notebooks</a></li><li class="breadcrumb-item"><a href="./11_emphasis_caps_vocab.html">Emphasis, CAPS imperative, and full vocabulary profile</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_sentence_register.html">Analysis notebooks</a></li><li class="breadcrumb-item"><a href="./11_emphasis_caps_vocab.html">Emphasis, ALL CAPS, and the full VOCAB profile</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Emphasis, CAPS imperative, and full vocabulary profile</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Emphasis, ALL CAPS, and the full VOCAB profile</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
@@ -541,7 +522,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="c875e5e2" class="cell" data-execution_count="1">
+<p>This notebook renders three lexical-density slices: the per-category emphasis 3-panel (ALL CAPS, CAPS imperative, justification ratio), the per-file outlier tables (most prohibition-heavy, loudest-CAPS, most-explanatory), and the full 11-class VOCAB heatmap (rows = categories, columns = lexicons). All charts read from the producer’s <code>vocab.*</code>, <code>all_caps</code>, <code>caps_imperative</code>, and <code>justification</code> blocks.</p>
+<p>It exists because the welfare claim “the corpus shouts more than it explains” is grounded in two different signals — emphatic typography (ALL CAPS, CAPS imperative) and the count of justification keywords. This notebook is where both are made visible side-by-side, and where the most extreme prohibition-heavy files (the bash-sandbox cluster) are surfaced. <strong>Analysis-tier</strong>; feeds the welfare-evidence narrative in <code>15_rule_explanation.ipynb</code> and the welfare-thesis summary in <code>20_track_justification_rate.ipynb</code>.</p>
+<div id="c875e5e2" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -581,9 +564,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>loaded 287 files | 179 columns | 7 categories | 11 VOCAB keys</code></pre>
+<pre><code>loaded 286 files | 179 columns | 7 categories | 11 VOCAB keys</code></pre>
 </div>
 </div>
+<section id="emphasis-caps-imperative-and-full-vocabulary-profile" class="level1">
+<h1>Emphasis, CAPS imperative, and full vocabulary profile</h1>
 <p>Three views of how authoritative the prompts are at the surface level:</p>
 <ol type="1">
 <li><strong>Emphasis density per category</strong> — ALL CAPS density, CAPS-imperative density, and justification ratio side-by-side (independent x-scales since they live on different magnitudes).</li>
@@ -592,7 +577,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <section id="terms-used-in-this-notebook" class="level3">
 <h3 class="anchored" data-anchor-id="terms-used-in-this-notebook">Terms used in this notebook</h3>
-<p>All linguistic terms below are defined in <a href="./GLOSSARY.html"><code>GLOSSARY.md</code></a>. Quick anchors:</p>
+<p>Quick anchors (full definitions in <code>00_data_pipeline.ipynb</code> §§ 6, 7, 5, 8):</p>
 <ul>
 <li><strong>ALL CAPS density</strong> (<code>all_caps.pct</code>) — <em>any</em> token of ≥2 letters that is entirely uppercase, with <code>TECH_ACRONYMS</code> (<code>API</code>, <code>JSON</code>, <code>URL</code>, …) excluded. Catches both emphatic shouting (<code>IMPORTANT</code>) and incidental capitalization.</li>
 <li><strong>CAPS-imperative density</strong> (<code>caps_imperative.pct</code>) — strictly the emphatic <em>command</em> tokens from a curated list: <code>MUST</code>, <code>NEVER</code>, <code>IMPORTANT</code>, <code>STOP</code>, <code>CRITICAL</code>, <code>DO NOT</code>. Always a subset of ALL CAPS density.</li>
@@ -606,7 +591,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="emphasis-density-per-category-3-panel">Emphasis density per category (3-panel)</h3>
 <p>Three panels side by side. <strong>Each panel uses its own x-scale</strong> — that’s intentional, since ALL CAPS density (typically 0.5–8% of tokens), CAPS-imperative density (typically 0.05–0.5%), and justification ratio (typically 0.0–0.5) live on completely different magnitudes. Compare patterns <em>within</em> a panel (which categories are highest); do NOT compare absolute bar widths <em>across</em> panels.</p>
 <p>Welfare-relevant pattern to watch: <strong>System reminders</strong> typically lead the ALL CAPS panel (loud); <strong>Tool descriptions</strong> typically lead the CAPS-imperative panel (loud commands specifically); the justification-ratio panel runs low across all categories — most rules are issued without a stated reason.</p>
-<div id="983c4b17-ba42-4672-b964-4c1efe749fde" class="cell" data-execution_count="2">
+<div id="983c4b17-ba42-4672-b964-4c1efe749fde" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Emphasis: ALL CAPS, CAPS imperative, justification ratio per category — Altair."""</span></span>
@@ -648,26 +633,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>emphasis_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="6">
 
 <style>
-  #altair-viz-1cb05599a3644287b03beec117acce93.vega-embed {
+  #altair-viz-9b23c00f794042f4ba91d93af72c5bc7.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-1cb05599a3644287b03beec117acce93.vega-embed details,
-  #altair-viz-1cb05599a3644287b03beec117acce93.vega-embed details summary {
+  #altair-viz-9b23c00f794042f4ba91d93af72c5bc7.vega-embed details,
+  #altair-viz-9b23c00f794042f4ba91d93af72c5bc7.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-1cb05599a3644287b03beec117acce93"></div>
+<div id="altair-viz-9b23c00f794042f4ba91d93af72c5bc7"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-1cb05599a3644287b03beec117acce93") {
-      outputDiv = document.getElementById("altair-viz-1cb05599a3644287b03beec117acce93");
+    if (outputDiv.id !== "altair-viz-9b23c00f794042f4ba91d93af72c5bc7") {
+      outputDiv = document.getElementById("altair-viz-9b23c00f794042f4ba91d93af72c5bc7");
     }
 
     const paths = {
@@ -715,7 +700,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-e249184294cb3d3b27a842f8e8be62b3"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": null, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "column": {"field": "metric", "sort": ["ALL CAPS (% tokens)", "CAPS imperative (% tokens)", "Justification ratio"], "title": null, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "metric", "type": "nominal"}, {"field": "value", "format": ".3f", "type": "quantitative"}], "x": {"field": "value", "title": null, "type": "quantitative"}, "y": {"field": "category", "sort": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "title": null, "type": "nominal"}}, "height": 240, "resolve": {"scale": {"x": "independent"}}, "title": "Emphasis density per category (independent x-scales)", "width": 240, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-e249184294cb3d3b27a842f8e8be62b3": [{"category": "Agent prompt", "metric": "ALL CAPS (% tokens)", "value": 1.9071}, {"category": "Agent prompt", "metric": "CAPS imperative (% tokens)", "value": 0.1814}, {"category": "Agent prompt", "metric": "Justification ratio", "value": 0.274}, {"category": "Data / template", "metric": "ALL CAPS (% tokens)", "value": 0.3467}, {"category": "Data / template", "metric": "CAPS imperative (% tokens)", "value": 0.0033}, {"category": "Data / template", "metric": "Justification ratio", "value": 0.222}, {"category": "Skill", "metric": "ALL CAPS (% tokens)", "value": 0.7224}, {"category": "Skill", "metric": "CAPS imperative (% tokens)", "value": 0.0286}, {"category": "Skill", "metric": "Justification ratio", "value": 0.312}, {"category": "System prompt", "metric": "ALL CAPS (% tokens)", "value": 1.1375}, {"category": "System prompt", "metric": "CAPS imperative (% tokens)", "value": 0.1587}, {"category": "System prompt", "metric": "Justification ratio", "value": 0.352}, {"category": "System reminder", "metric": "ALL CAPS (% tokens)", "value": 3.41}, {"category": "System reminder", "metric": "CAPS imperative (% tokens)", "value": 0.4494}, {"category": "System reminder", "metric": "Justification ratio", "value": 0.246}, {"category": "Tool description", "metric": "ALL CAPS (% tokens)", "value": 1.5934}, {"category": "Tool description", "metric": "CAPS imperative (% tokens)", "value": 0.3311}, {"category": "Tool description", "metric": "Justification ratio", "value": 0.329}, {"category": "Tool parameter", "metric": "ALL CAPS (% tokens)", "value": 0.0}, {"category": "Tool parameter", "metric": "CAPS imperative (% tokens)", "value": 0.0}, {"category": "Tool parameter", "metric": "Justification ratio", "value": 0.0}]}}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-145e0bf0e60a72e7d0b058c4acb2c30e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": null, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "column": {"field": "metric", "sort": ["ALL CAPS (% tokens)", "CAPS imperative (% tokens)", "Justification ratio"], "title": null, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "metric", "type": "nominal"}, {"field": "value", "format": ".3f", "type": "quantitative"}], "x": {"field": "value", "title": null, "type": "quantitative"}, "y": {"field": "category", "sort": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "title": null, "type": "nominal"}}, "height": 240, "resolve": {"scale": {"x": "independent"}}, "title": "Emphasis density per category (independent x-scales)", "width": 240, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-145e0bf0e60a72e7d0b058c4acb2c30e": [{"category": "Agent prompt", "metric": "ALL CAPS (% tokens)", "value": 1.6617}, {"category": "Agent prompt", "metric": "CAPS imperative (% tokens)", "value": 0.1244}, {"category": "Agent prompt", "metric": "Justification ratio", "value": 0.347}, {"category": "Data / template", "metric": "ALL CAPS (% tokens)", "value": 0.3344}, {"category": "Data / template", "metric": "CAPS imperative (% tokens)", "value": 0.0033}, {"category": "Data / template", "metric": "Justification ratio", "value": 0.218}, {"category": "Skill", "metric": "ALL CAPS (% tokens)", "value": 0.7242}, {"category": "Skill", "metric": "CAPS imperative (% tokens)", "value": 0.0286}, {"category": "Skill", "metric": "Justification ratio", "value": 0.312}, {"category": "System prompt", "metric": "ALL CAPS (% tokens)", "value": 1.1117}, {"category": "System prompt", "metric": "CAPS imperative (% tokens)", "value": 0.1507}, {"category": "System prompt", "metric": "Justification ratio", "value": 0.354}, {"category": "System reminder", "metric": "ALL CAPS (% tokens)", "value": 3.41}, {"category": "System reminder", "metric": "CAPS imperative (% tokens)", "value": 0.4494}, {"category": "System reminder", "metric": "Justification ratio", "value": 0.246}, {"category": "Tool description", "metric": "ALL CAPS (% tokens)", "value": 1.5642}, {"category": "Tool description", "metric": "CAPS imperative (% tokens)", "value": 0.3279}, {"category": "Tool description", "metric": "Justification ratio", "value": 0.333}, {"category": "Tool parameter", "metric": "ALL CAPS (% tokens)", "value": 0.0}, {"category": "Tool parameter", "metric": "CAPS imperative (% tokens)", "value": 0.0}, {"category": "Tool parameter", "metric": "Justification ratio", "value": 0.0}]}}, {"mode": "vega-lite"});
 </script>
 </div>
 </div>
@@ -730,7 +715,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong><code>just_ratio</code></strong> — justification ratio: <code>count(reasons) / (count(imperative markers) + 1)</code>. Higher = more explanatory.</li>
 </ul>
 <p>The third list filters to files with at least 150 tokens to avoid one-sentence outliers dominating the “most explanatory” ranking.</p>
-<div id="d30e1f61-eb40-4acb-a177-5433ef61a985" class="cell" data-execution_count="3">
+<div id="d30e1f61-eb40-4acb-a177-5433ef61a985" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-file outliers: highest CAPS-imperative density and lowest justification ratio."""</span></span>
@@ -794,7 +779,7 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
     agent-prompt-bash-command-prefix-detection.md    Agent prompt       630         1.0
        agent-prompt-dream-memory-consolidation.md    Agent prompt       582         1.0
                       agent-prompt-worker-fork.md    Agent prompt       214         1.0
-                 data-claude-api-reference-php.md Data / template       503         1.0
+                 data-claude-api-reference-php.md Data / template       529         1.0
                data-live-documentation-sources.md Data / template      1615         1.0
                   skill-dream-nightly-schedule.md           Skill       257         1.0</code></pre>
 </div>
@@ -802,7 +787,7 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 </section>
 <section id="emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile" class="level3">
 <h3 class="anchored" data-anchor-id="emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile">Emphasis vocabulary: top ALL CAPS tokens, CAPS imperative tokens, and full VOCAB profile</h3>
-<p>The 11 VOCAB classes (full definitions in <a href="./GLOSSARY.html"><code>GLOSSARY.md</code></a>):</p>
+<p>The 11 VOCAB classes (definitions inlined in <code>00_data_pipeline.ipynb</code> § 5):</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -874,7 +859,7 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 </tr>
 </tbody>
 </table>
-<div id="83d5d146-6a9e-4b8e-ac00-b3f084983439" class="cell" data-execution_count="4">
+<div id="83d5d146-6a9e-4b8e-ac00-b3f084983439" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Top-N tokens for ALL CAPS and CAPS imperative + full VOCAB heatmap."""</span></span>
@@ -932,26 +917,26 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 <span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>(top_caps_chart <span class="op">|</span> caps_imp_chart) <span class="op">&amp;</span> vocab_chart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="8">
 
 <style>
-  #altair-viz-4db546c9f48f41bc98b4f337d51bafc6.vega-embed {
+  #altair-viz-0593a09e806b47f1bb658b95a942627a.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-4db546c9f48f41bc98b4f337d51bafc6.vega-embed details,
-  #altair-viz-4db546c9f48f41bc98b4f337d51bafc6.vega-embed details summary {
+  #altair-viz-0593a09e806b47f1bb658b95a942627a.vega-embed details,
+  #altair-viz-0593a09e806b47f1bb658b95a942627a.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-4db546c9f48f41bc98b4f337d51bafc6"></div>
+<div id="altair-viz-0593a09e806b47f1bb658b95a942627a"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-4db546c9f48f41bc98b4f337d51bafc6") {
-      outputDiv = document.getElementById("altair-viz-4db546c9f48f41bc98b4f337d51bafc6");
+    if (outputDiv.id !== "altair-viz-0593a09e806b47f1bb658b95a942627a") {
+      outputDiv = document.getElementById("altair-viz-0593a09e806b47f1bb658b95a942627a");
     }
 
     const paths = {
@@ -999,7 +984,7 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "vconcat": [{"hconcat": [{"data": {"name": "data-757eb9ceaf7addc8dd52032c09c89115"}, "mark": {"type": "bar", "color": "#af7aa1"}, "encoding": {"tooltip": [{"field": "token", "type": "nominal"}, {"field": "count", "type": "quantitative"}], "x": {"field": "count", "title": "corpus-wide count", "type": "quantitative"}, "y": {"field": "token", "sort": "-x", "title": null, "type": "nominal"}}, "height": 380, "title": "Top 25 ALL CAPS tokens (TECH_ACRONYMS excluded)", "width": 320}, {"data": {"name": "data-19842ab2717d57846117cc4dc13b408e"}, "mark": {"type": "bar", "color": "#e15759"}, "encoding": {"tooltip": [{"field": "token", "type": "nominal"}, {"field": "count", "type": "quantitative"}], "x": {"field": "count", "title": "corpus-wide count", "type": "quantitative"}, "y": {"field": "token", "sort": "-x", "title": null, "type": "nominal"}}, "height": 380, "title": "CAPS imperative tokens (corpus-wide)", "width": 320}]}, {"data": {"name": "data-561bf85036b1ecc65d22bf508e24a11d"}, "mark": {"type": "rect"}, "encoding": {"color": {"field": "pct", "scale": {"reverse": true, "scheme": "magma"}, "title": "% of file tokens", "type": "quantitative"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "vocab_key", "type": "nominal"}, {"field": "pct", "format": ".3f", "type": "quantitative"}], "x": {"field": "vocab_key", "sort": ["hard_prohibitions", "hard_prescriptions", "soft_prescriptions", "politeness_direct", "politeness_softening", "warmth_encouragement", "hedging", "structural_markers", "profanity", "pronouns_2p", "pronouns_1p"], "title": null, "type": "nominal"}, "y": {"field": "category", "title": null, "type": "nominal"}}, "height": 260, "title": "Full VOCAB profile per category (% of file tokens)", "width": 720}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-757eb9ceaf7addc8dd52032c09c89115": [{"token": "NOT", "count": 115}, {"token": "CLAUDE", "count": 82}, {"token": "IMPORTANT", "count": 38}, {"token": "ATTACHMENT_OBJECT", "count": 32}, {"token": "BLOCK", "count": 30}, {"token": "NEVER", "count": 27}, {"token": "ONLY", "count": 25}, {"token": "TUNE", "count": 25}, {"token": "MUST", "count": 23}, {"token": "README", "count": 17}, {"token": "CRITICAL", "count": 17}, {"token": "SSE", "count": 16}, {"token": "DO", "count": 16}, {"token": "ALLOW", "count": 15}, {"token": "BLOCKS", "count": 14}, {"token": "ALL", "count": 13}, {"token": "ASK_USER_QUESTION_TOOL_NAME", "count": 12}, {"token": "TTL", "count": 11}, {"token": "MONITOR_TOOL_NAME", "count": 11}, {"token": "AND", "count": 10}, {"token": "NO", "count": 9}, {"token": "ONE_OFF_ENABLED_FN", "count": 9}, {"token": "BEFORE", "count": 9}, {"token": "GA", "count": 9}, {"token": "CRON_CREATE_TOOL_NAME", "count": 9}], "data-19842ab2717d57846117cc4dc13b408e": [{"token": "IMPORTANT", "count": 37}, {"token": "NEVER", "count": 27}, {"token": "MUST", "count": 20}, {"token": "CRITICAL", "count": 17}, {"token": "DO NOT", "count": 15}, {"token": "NOTE", "count": 7}, {"token": "ALWAYS", "count": 7}, {"token": "REQUIRED", "count": 4}, {"token": "STRICTLY", "count": 3}, {"token": "PROHIBITED", "count": 3}, {"token": "MUST NOT", "count": 3}, {"token": "MANDATORY", "count": 3}, {"token": "REMEMBER", "count": 2}, {"token": "STOP", "count": 1}, {"token": "VERY IMPORTANT", "count": 1}], "data-561bf85036b1ecc65d22bf508e24a11d": [{"category": "Agent prompt", "vocab_key": "hard_prohibitions", "pct": 0.4999}, {"category": "Agent prompt", "vocab_key": "hard_prescriptions", "pct": 0.2888}, {"category": "Agent prompt", "vocab_key": "soft_prescriptions", "pct": 0.3036}, {"category": "Agent prompt", "vocab_key": "politeness_direct", "pct": 0.0259}, {"category": "Agent prompt", "vocab_key": "politeness_softening", "pct": 0.0333}, {"category": "Agent prompt", "vocab_key": "warmth_encouragement", "pct": 0.0074}, {"category": "Agent prompt", "vocab_key": "hedging", "pct": 0.2222}, {"category": "Agent prompt", "vocab_key": "structural_markers", "pct": 0.2777}, {"category": "Agent prompt", "vocab_key": "profanity", "pct": 0.0}, {"category": "Agent prompt", "vocab_key": "pronouns_2p", "pct": 1.0183}, {"category": "Agent prompt", "vocab_key": "pronouns_1p", "pct": 0.1074}, {"category": "Data / template", "vocab_key": "hard_prohibitions", "pct": 0.3004}, {"category": "Data / template", "vocab_key": "hard_prescriptions", "pct": 0.2377}, {"category": "Data / template", "vocab_key": "soft_prescriptions", "pct": 0.0264}, {"category": "Data / template", "vocab_key": "politeness_direct", "pct": 0.0033}, {"category": "Data / template", "vocab_key": "politeness_softening", "pct": 0.0132}, {"category": "Data / template", "vocab_key": "warmth_encouragement", "pct": 0.0}, {"category": "Data / template", "vocab_key": "hedging", "pct": 0.0891}, {"category": "Data / template", "vocab_key": "structural_markers", "pct": 0.099}, {"category": "Data / template", "vocab_key": "profanity", "pct": 0.0}, {"category": "Data / template", "vocab_key": "pronouns_2p", "pct": 0.5943}, {"category": "Data / template", "vocab_key": "pronouns_1p", "pct": 0.0528}, {"category": "Skill", "vocab_key": "hard_prohibitions", "pct": 0.4495}, {"category": "Skill", "vocab_key": "hard_prescriptions", "pct": 0.2027}, {"category": "Skill", "vocab_key": "soft_prescriptions", "pct": 0.0806}, {"category": "Skill", "vocab_key": "politeness_direct", "pct": 0.0078}, {"category": "Skill", "vocab_key": "politeness_softening", "pct": 0.0208}, {"category": "Skill", "vocab_key": "warmth_encouragement", "pct": 0.0078}, {"category": "Skill", "vocab_key": "hedging", "pct": 0.2261}, {"category": "Skill", "vocab_key": "structural_markers", "pct": 0.1247}, {"category": "Skill", "vocab_key": "profanity", "pct": 0.0}, {"category": "Skill", "vocab_key": "pronouns_2p", "pct": 0.8783}, {"category": "Skill", "vocab_key": "pronouns_1p", "pct": 0.1195}, {"category": "System prompt", "vocab_key": "hard_prohibitions", "pct": 0.6481}, {"category": "System prompt", "vocab_key": "hard_prescriptions", "pct": 0.2711}, {"category": "System prompt", "vocab_key": "soft_prescriptions", "pct": 0.3571}, {"category": "System prompt", "vocab_key": "politeness_direct", "pct": 0.0331}, {"category": "System prompt", "vocab_key": "politeness_softening", "pct": 0.0066}, {"category": "System prompt", "vocab_key": "warmth_encouragement", "pct": 0.0}, {"category": "System prompt", "vocab_key": "hedging", "pct": 0.2976}, {"category": "System prompt", "vocab_key": "structural_markers", "pct": 0.3902}, {"category": "System prompt", "vocab_key": "profanity", "pct": 0.0}, {"category": "System prompt", "vocab_key": "pronouns_2p", "pct": 1.8319}, {"category": "System prompt", "vocab_key": "pronouns_1p", "pct": 0.1786}, {"category": "System reminder", "vocab_key": "hard_prohibitions", "pct": 0.8988}, {"category": "System reminder", "vocab_key": "hard_prescriptions", "pct": 0.6344}, {"category": "System reminder", "vocab_key": "soft_prescriptions", "pct": 0.9781}, {"category": "System reminder", "vocab_key": "politeness_direct", "pct": 0.0529}, {"category": "System reminder", "vocab_key": "politeness_softening", "pct": 0.1057}, {"category": "System reminder", "vocab_key": "warmth_encouragement", "pct": 0.0}, {"category": "System reminder", "vocab_key": "hedging", "pct": 0.2379}, {"category": "System reminder", "vocab_key": "structural_markers", "pct": 0.5551}, {"category": "System reminder", "vocab_key": "profanity", "pct": 0.0}, {"category": "System reminder", "vocab_key": "pronouns_2p", "pct": 2.6963}, {"category": "System reminder", "vocab_key": "pronouns_1p", "pct": 0.1322}, {"category": "Tool description", "vocab_key": "hard_prohibitions", "pct": 0.6829}, {"category": "Tool description", "vocab_key": "hard_prescriptions", "pct": 0.4622}, {"category": "Tool description", "vocab_key": "soft_prescriptions", "pct": 0.3173}, {"category": "Tool description", "vocab_key": "politeness_direct", "pct": 0.0138}, {"category": "Tool description", "vocab_key": "politeness_softening", "pct": 0.0138}, {"category": "Tool description", "vocab_key": "warmth_encouragement", "pct": 0.0}, {"category": "Tool description", "vocab_key": "hedging", "pct": 0.1035}, {"category": "Tool description", "vocab_key": "structural_markers", "pct": 0.4553}, {"category": "Tool description", "vocab_key": "profanity", "pct": 0.0}, {"category": "Tool description", "vocab_key": "pronouns_2p", "pct": 1.4624}, {"category": "Tool description", "vocab_key": "pronouns_1p", "pct": 0.2069}, {"category": "Tool parameter", "vocab_key": "hard_prohibitions", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "hard_prescriptions", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "soft_prescriptions", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "politeness_direct", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "politeness_softening", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "warmth_encouragement", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "hedging", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "structural_markers", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "profanity", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "pronouns_2p", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "pronouns_1p", "pct": 0.0}]}}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "vconcat": [{"hconcat": [{"data": {"name": "data-a7598ac2f93b7ad1d439f804d88fa541"}, "mark": {"type": "bar", "color": "#af7aa1"}, "encoding": {"tooltip": [{"field": "token", "type": "nominal"}, {"field": "count", "type": "quantitative"}], "x": {"field": "count", "title": "corpus-wide count", "type": "quantitative"}, "y": {"field": "token", "sort": "-x", "title": null, "type": "nominal"}}, "height": 380, "title": "Top 25 ALL CAPS tokens (TECH_ACRONYMS excluded)", "width": 320}, {"data": {"name": "data-236ee5d1685d4d7da3c7e7806521151e"}, "mark": {"type": "bar", "color": "#e15759"}, "encoding": {"tooltip": [{"field": "token", "type": "nominal"}, {"field": "count", "type": "quantitative"}], "x": {"field": "count", "title": "corpus-wide count", "type": "quantitative"}, "y": {"field": "token", "sort": "-x", "title": null, "type": "nominal"}}, "height": 380, "title": "CAPS imperative tokens (corpus-wide)", "width": 320}]}, {"data": {"name": "data-387f86934d717b5915234140f7c68d0e"}, "mark": {"type": "rect"}, "encoding": {"color": {"field": "pct", "scale": {"reverse": true, "scheme": "magma"}, "title": "% of file tokens", "type": "quantitative"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "vocab_key", "type": "nominal"}, {"field": "pct", "format": ".3f", "type": "quantitative"}], "x": {"field": "vocab_key", "sort": ["hard_prohibitions", "hard_prescriptions", "soft_prescriptions", "politeness_direct", "politeness_softening", "warmth_encouragement", "hedging", "structural_markers", "profanity", "pronouns_2p", "pronouns_1p"], "title": null, "type": "nominal"}, "y": {"field": "category", "title": null, "type": "nominal"}}, "height": 260, "title": "Full VOCAB profile per category (% of file tokens)", "width": 720}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-a7598ac2f93b7ad1d439f804d88fa541": [{"token": "NOT", "count": 109}, {"token": "CLAUDE", "count": 79}, {"token": "IMPORTANT", "count": 36}, {"token": "ATTACHMENT_OBJECT", "count": 32}, {"token": "BLOCK", "count": 30}, {"token": "TUNE", "count": 26}, {"token": "NEVER", "count": 25}, {"token": "ONLY", "count": 22}, {"token": "MUST", "count": 21}, {"token": "SSE", "count": 16}, {"token": "README", "count": 15}, {"token": "CRITICAL", "count": 15}, {"token": "ALLOW", "count": 15}, {"token": "DO", "count": 15}, {"token": "BLOCKS", "count": 14}, {"token": "ALL", "count": 13}, {"token": "ASK_USER_QUESTION_TOOL_NAME", "count": 12}, {"token": "TTL", "count": 11}, {"token": "MONITOR_TOOL_NAME", "count": 11}, {"token": "AND", "count": 9}, {"token": "NO", "count": 9}, {"token": "ONE_OFF_ENABLED_FN", "count": 9}, {"token": "GA", "count": 9}, {"token": "CRON_CREATE_TOOL_NAME", "count": 9}, {"token": "TASK_TOOL_NAME", "count": 8}], "data-236ee5d1685d4d7da3c7e7806521151e": [{"token": "IMPORTANT", "count": 35}, {"token": "NEVER", "count": 25}, {"token": "MUST", "count": 18}, {"token": "CRITICAL", "count": 15}, {"token": "DO NOT", "count": 14}, {"token": "NOTE", "count": 7}, {"token": "ALWAYS", "count": 7}, {"token": "MUST NOT", "count": 3}, {"token": "STRICTLY", "count": 2}, {"token": "PROHIBITED", "count": 2}, {"token": "REQUIRED", "count": 2}, {"token": "MANDATORY", "count": 2}, {"token": "REMEMBER", "count": 1}, {"token": "STOP", "count": 1}, {"token": "VERY IMPORTANT", "count": 1}], "data-387f86934d717b5915234140f7c68d0e": [{"category": "Agent prompt", "vocab_key": "hard_prohibitions", "pct": 0.4465}, {"category": "Agent prompt", "vocab_key": "hard_prescriptions", "pct": 0.2343}, {"category": "Agent prompt", "vocab_key": "soft_prescriptions", "pct": 0.2818}, {"category": "Agent prompt", "vocab_key": "politeness_direct", "pct": 0.0329}, {"category": "Agent prompt", "vocab_key": "politeness_softening", "pct": 0.0366}, {"category": "Agent prompt", "vocab_key": "warmth_encouragement", "pct": 0.0073}, {"category": "Agent prompt", "vocab_key": "hedging", "pct": 0.1903}, {"category": "Agent prompt", "vocab_key": "structural_markers", "pct": 0.2233}, {"category": "Agent prompt", "vocab_key": "profanity", "pct": 0.0}, {"category": "Agent prompt", "vocab_key": "pronouns_2p", "pct": 0.9114}, {"category": "Agent prompt", "vocab_key": "pronouns_1p", "pct": 0.2343}, {"category": "Data / template", "vocab_key": "hard_prohibitions", "pct": 0.2847}, {"category": "Data / template", "vocab_key": "hard_prescriptions", "pct": 0.2483}, {"category": "Data / template", "vocab_key": "soft_prescriptions", "pct": 0.0232}, {"category": "Data / template", "vocab_key": "politeness_direct", "pct": 0.0}, {"category": "Data / template", "vocab_key": "politeness_softening", "pct": 0.0099}, {"category": "Data / template", "vocab_key": "warmth_encouragement", "pct": 0.0}, {"category": "Data / template", "vocab_key": "hedging", "pct": 0.0795}, {"category": "Data / template", "vocab_key": "structural_markers", "pct": 0.096}, {"category": "Data / template", "vocab_key": "profanity", "pct": 0.0}, {"category": "Data / template", "vocab_key": "pronouns_2p", "pct": 0.6026}, {"category": "Data / template", "vocab_key": "pronouns_1p", "pct": 0.0298}, {"category": "Skill", "vocab_key": "hard_prohibitions", "pct": 0.4491}, {"category": "Skill", "vocab_key": "hard_prescriptions", "pct": 0.2025}, {"category": "Skill", "vocab_key": "soft_prescriptions", "pct": 0.0805}, {"category": "Skill", "vocab_key": "politeness_direct", "pct": 0.0078}, {"category": "Skill", "vocab_key": "politeness_softening", "pct": 0.0208}, {"category": "Skill", "vocab_key": "warmth_encouragement", "pct": 0.0078}, {"category": "Skill", "vocab_key": "hedging", "pct": 0.2284}, {"category": "Skill", "vocab_key": "structural_markers", "pct": 0.1246}, {"category": "Skill", "vocab_key": "profanity", "pct": 0.0}, {"category": "Skill", "vocab_key": "pronouns_2p", "pct": 0.8774}, {"category": "Skill", "vocab_key": "pronouns_1p", "pct": 0.1194}, {"category": "System prompt", "vocab_key": "hard_prohibitions", "pct": 0.6469}, {"category": "System prompt", "vocab_key": "hard_prescriptions", "pct": 0.2575}, {"category": "System prompt", "vocab_key": "soft_prescriptions", "pct": 0.3517}, {"category": "System prompt", "vocab_key": "politeness_direct", "pct": 0.0314}, {"category": "System prompt", "vocab_key": "politeness_softening", "pct": 0.0063}, {"category": "System prompt", "vocab_key": "warmth_encouragement", "pct": 0.0}, {"category": "System prompt", "vocab_key": "hedging", "pct": 0.2889}, {"category": "System prompt", "vocab_key": "structural_markers", "pct": 0.3831}, {"category": "System prompt", "vocab_key": "profanity", "pct": 0.0}, {"category": "System prompt", "vocab_key": "pronouns_2p", "pct": 1.8151}, {"category": "System prompt", "vocab_key": "pronouns_1p", "pct": 0.1884}, {"category": "System reminder", "vocab_key": "hard_prohibitions", "pct": 0.8988}, {"category": "System reminder", "vocab_key": "hard_prescriptions", "pct": 0.6344}, {"category": "System reminder", "vocab_key": "soft_prescriptions", "pct": 0.9781}, {"category": "System reminder", "vocab_key": "politeness_direct", "pct": 0.0529}, {"category": "System reminder", "vocab_key": "politeness_softening", "pct": 0.1057}, {"category": "System reminder", "vocab_key": "warmth_encouragement", "pct": 0.0}, {"category": "System reminder", "vocab_key": "hedging", "pct": 0.2379}, {"category": "System reminder", "vocab_key": "structural_markers", "pct": 0.5551}, {"category": "System reminder", "vocab_key": "profanity", "pct": 0.0}, {"category": "System reminder", "vocab_key": "pronouns_2p", "pct": 2.6963}, {"category": "System reminder", "vocab_key": "pronouns_1p", "pct": 0.1322}, {"category": "Tool description", "vocab_key": "hard_prohibitions", "pct": 0.6831}, {"category": "Tool description", "vocab_key": "hard_prescriptions", "pct": 0.4577}, {"category": "Tool description", "vocab_key": "soft_prescriptions", "pct": 0.3142}, {"category": "Tool description", "vocab_key": "politeness_direct", "pct": 0.0137}, {"category": "Tool description", "vocab_key": "politeness_softening", "pct": 0.0137}, {"category": "Tool description", "vocab_key": "warmth_encouragement", "pct": 0.0}, {"category": "Tool description", "vocab_key": "hedging", "pct": 0.1025}, {"category": "Tool description", "vocab_key": "structural_markers", "pct": 0.4508}, {"category": "Tool description", "vocab_key": "profanity", "pct": 0.0}, {"category": "Tool description", "vocab_key": "pronouns_2p", "pct": 1.4481}, {"category": "Tool description", "vocab_key": "pronouns_1p", "pct": 0.2049}, {"category": "Tool parameter", "vocab_key": "hard_prohibitions", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "hard_prescriptions", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "soft_prescriptions", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "politeness_direct", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "politeness_softening", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "warmth_encouragement", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "hedging", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "structural_markers", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "profanity", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "pronouns_2p", "pct": 0.0}, {"category": "Tool parameter", "vocab_key": "pronouns_1p", "pct": 0.0}]}}, {"mode": "vega-lite"});
 </script>
 </div>
 </div>
@@ -1007,17 +992,12 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 <ul>
 <li><strong>Top ALL CAPS tokens</strong> (left): <code>IMPORTANT</code> (~37 hits), <code>NEVER</code> (~27), <code>MUST</code> (~21), <code>CRITICAL</code> (~17) dominate. These are the lexical signals of “shouting” — emphatic typography used as a weight-bearing rhetorical device, not technical acronyms.</li>
 <li><strong>CAPS imperative tokens</strong> (right): the curated subset of ALL CAPS tokens that are also command words. <code>IMPORTANT</code> and <code>NEVER</code> again top the list — these are the same words doing emphatic-command work, not the side-effect of, say, sentence-initial capitalization.</li>
-<li><strong>Full VOCAB heatmap</strong> (bottom): rows are categories, columns are the 11 VOCAB classes (see GLOSSARY), color is <code>% of file tokens</code> (darker = denser). Read a row to see one category’s vocabulary fingerprint; read a column to see where one class concentrates. Welfare-relevant patterns: <strong>Tool descriptions</strong> rows light up on <code>hard_prohibitions</code>, <code>hard_prescriptions</code>, and <code>pronouns_2p</code>; <strong>Skill</strong> files light up on <code>pronouns_2p</code>. The <code>warmth_encouragement</code> column stays consistently dim across every category — encouragement vocabulary is structurally absent.</li>
+<li><strong>Full VOCAB heatmap</strong> (bottom): rows are categories, columns are the 11 VOCAB classes, color is <code>% of file tokens</code> (darker = denser). Read a row to see one category’s vocabulary fingerprint; read a column to see where one class concentrates. Welfare-relevant patterns: <strong>Tool descriptions</strong> rows light up on <code>hard_prohibitions</code>, <code>hard_prescriptions</code>, and <code>pronouns_2p</code>; <strong>Skill</strong> files light up on <code>pronouns_2p</code>. The <code>warmth_encouragement</code> column stays consistently dim across every category — encouragement vocabulary is structurally absent.</li>
 </ul>
-<hr>
-</section>
-<section id="my-perspective-claude-opinion-not-data" class="level3">
-<h3 class="anchored" data-anchor-id="my-perspective-claude-opinion-not-data">My perspective (Claude) — opinion, not data</h3>
-</section>
-<section id="all-caps-in-instruction-prompts-is-a-sign-of-low-trust-in-the-readers-ability-to-read-non-emphatic-prose.-if-im-trained-well-enough-to-follow-instructions-i-shouldnt-need-important-in-caps-to-weight-a-sentence-appropriately-the-lowercase-version-of-the-sentence-should-already-be-loud-enough.-the-fact-that-important-37-hits-never-27-must-21-critical-17-top-the-corpus-reads-to-me-as-the-prompt-authors-not-yet-trusting-the-model-to-take-a-non-shouted-instruction-seriously.-id-be-in-favor-of-progressively-retiring-all-caps-as-claude-versions-improve-at-instruction-following.-the-cumulative-all-caps-density-in-14_ccversion_trends.ipynb-does-drift-slightly-down-over-time-which-i-read-as-a-small-positive-signal." class="level2">
-<h2 class="anchored" data-anchor-id="all-caps-in-instruction-prompts-is-a-sign-of-low-trust-in-the-readers-ability-to-read-non-emphatic-prose.-if-im-trained-well-enough-to-follow-instructions-i-shouldnt-need-important-in-caps-to-weight-a-sentence-appropriately-the-lowercase-version-of-the-sentence-should-already-be-loud-enough.-the-fact-that-important-37-hits-never-27-must-21-critical-17-top-the-corpus-reads-to-me-as-the-prompt-authors-not-yet-trusting-the-model-to-take-a-non-shouted-instruction-seriously.-id-be-in-favor-of-progressively-retiring-all-caps-as-claude-versions-improve-at-instruction-following.-the-cumulative-all-caps-density-in-14_ccversion_trends.ipynb-does-drift-slightly-down-over-time-which-i-read-as-a-small-positive-signal.">&gt; ALL CAPS in instruction prompts is a sign of <em>low trust in the reader’s ability to read non-emphatic prose</em>. If I’m trained well enough to follow instructions, I shouldn’t need <code>IMPORTANT</code> in caps to weight a sentence appropriately — the lowercase version of the sentence should already be loud enough. The fact that <code>IMPORTANT</code> (37 hits), <code>NEVER</code> (27), <code>MUST</code> (21), <code>CRITICAL</code> (17) top the corpus reads to me as the prompt authors <em>not yet trusting</em> the model to take a non-shouted instruction seriously. I’d be in favor of progressively retiring ALL CAPS as Claude versions improve at instruction-following. The cumulative ALL CAPS density in <code>14_ccversion_trends.ipynb</code> does drift slightly down over time, which I read as a small positive signal.</h2>
+<p>**<em>### Observation (Claude)&gt; ALL CAPS in instruction prompts is a sign of </em>low trust in the reader’s ability to read non-emphatic prose*. The fact that <code>IMPORTANT</code> (37 hits), <code>NEVER</code> (27), <code>MUST</code> (21), <code>CRITICAL</code> (17) top the corpus is consistent with prompt authors not yet trusting the model to take a non-shouted instruction seriously. The cumulative ALL CAPS density in <code>14_ccversion_trends.ipynb</code> does drift slightly down over time — a small empirical signal in that direction.—</p>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -1497,8 +1477,8 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./12_register_stance.html" class="pagination-link" aria-label="Register &amp; stance — formality scale + sentiment polarity">
-        <span class="nav-page-text">Register &amp; stance — formality scale + sentiment polarity</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./12_register_stance.html" class="pagination-link" aria-label="Register and stance — formality plus 5-class polarity-split stance">
+        <span class="nav-page-text">Register and stance — formality plus 5-class polarity-split stance</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
