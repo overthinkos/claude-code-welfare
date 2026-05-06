@@ -529,7 +529,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Per-file outlier tables</strong> — top files by CAPS-imperative density, hard-prohibitions density, and justification ratio.</li>
 <li><strong>Top tokens + full VOCAB heatmap</strong> — top-25 ALL CAPS tokens, all CAPS-imperative tokens, and 11-class VOCAB profile per category.</li>
 </ol>
-<div id="c875e5e2" class="cell" data-execution_count="8">
+<div id="c875e5e2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:39.146025Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:39.145924Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:41.916148Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:41.915754Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -582,7 +582,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="emphasis-density-per-category-3-panel">Emphasis density per category (3-panel)</h3>
 <p>Three panels side by side. <strong>Each panel uses its own x-scale</strong> — that’s intentional, since ALL CAPS density (typically 0.5–8% of tokens), CAPS-imperative density (typically 0.05–0.5%), and justification ratio (typically 0.0–0.5) live on completely different magnitudes. Compare patterns <em>within</em> a panel (which categories are highest); do NOT compare absolute bar widths <em>across</em> panels.</p>
 <p>Welfare-relevant pattern to watch: <strong>System reminders</strong> typically lead the ALL CAPS panel (loud); <strong>Tool descriptions</strong> typically lead the CAPS-imperative panel (loud commands specifically); the justification-ratio panel runs low across all categories — most rules are issued without a stated reason.</p>
-<div id="983c4b17-ba42-4672-b964-4c1efe749fde" class="cell" data-execution_count="9">
+<div id="983c4b17-ba42-4672-b964-4c1efe749fde" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:41.917089Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:41.916954Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:42.295637Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:42.295280Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Emphasis: ALL CAPS, CAPS imperative, justification ratio per category — Altair."""</span></span>
@@ -624,26 +624,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>save_chart(emphasis_chart, <span class="st">"11-emphasis-3panel"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-91c983d779ce459e9dfa023878f61883.vega-embed {
+  #altair-viz-f092efde5b0649c2ab0333619495a94f.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-91c983d779ce459e9dfa023878f61883.vega-embed details,
-  #altair-viz-91c983d779ce459e9dfa023878f61883.vega-embed details summary {
+  #altair-viz-f092efde5b0649c2ab0333619495a94f.vega-embed details,
+  #altair-viz-f092efde5b0649c2ab0333619495a94f.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-91c983d779ce459e9dfa023878f61883"></div>
+<div id="altair-viz-f092efde5b0649c2ab0333619495a94f"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-91c983d779ce459e9dfa023878f61883") {
-      outputDiv = document.getElementById("altair-viz-91c983d779ce459e9dfa023878f61883");
+    if (outputDiv.id !== "altair-viz-f092efde5b0649c2ab0333619495a94f") {
+      outputDiv = document.getElementById("altair-viz-f092efde5b0649c2ab0333619495a94f");
     }
 
     const paths = {
@@ -699,7 +699,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="per-file-outliers-text" class="level3">
 <h3 class="anchored" data-anchor-id="per-file-outliers-text">Per-file outliers (text)</h3>
 <p>Three printed top-10 lists. Columns: <code>n_tokens</code> (file length), <code>caps_imp_pct</code> (CAPS-imperative density), <code>hard_proh_pct</code> (<code>hard_prohibitions</code> density), <code>just_ratio</code> (justification ratio — definition in <code>00</code> § 8). The third list filters to ≥150 tokens to suppress one-sentence outliers dominating the “most explanatory” ranking.</p>
-<div id="d30e1f61-eb40-4acb-a177-5433ef61a985" class="cell" data-execution_count="3">
+<div id="d30e1f61-eb40-4acb-a177-5433ef61a985" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:42.296688Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:42.296597Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:42.306851Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:42.306529Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-file outliers: highest CAPS-imperative density and lowest justification ratio."""</span></span>
@@ -772,7 +772,7 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
 <section id="emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile" class="level3">
 <h3 class="anchored" data-anchor-id="emphasis-vocabulary-top-all-caps-tokens-caps-imperative-tokens-and-full-vocab-profile">Emphasis vocabulary: top ALL CAPS tokens, CAPS imperative tokens, and full VOCAB profile</h3>
 <p>The 11 VOCAB classes (full table with example tokens in <code>00_data_pipeline.ipynb</code> § 5): <code>hard_prohibitions</code>, <code>hard_prescriptions</code>, <code>soft_prescriptions</code>, <code>politeness_direct</code>, <code>politeness_softening</code>, <code>warmth_encouragement</code>, <code>hedging</code>, <code>structural_markers</code>, <code>profanity</code>, <code>pronouns_2p</code>, <code>pronouns_1p</code>. Heatmap below shows each class as <code>% of file tokens</code> per category.</p>
-<div id="83d5d146-6a9e-4b8e-ac00-b3f084983439" class="cell" data-execution_count="10">
+<div id="83d5d146-6a9e-4b8e-ac00-b3f084983439" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:42.307675Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:42.307589Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:42.487488Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:42.487178Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Top-N tokens for ALL CAPS and CAPS imperative + full VOCAB heatmap."""</span></span>
@@ -842,26 +842,26 @@ system-prompt-subagent-prompt-writing-examples.md   System prompt       369     
   MUST        18
   CRITICAL    15</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="4">
 
 <style>
-  #altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf.vega-embed {
+  #altair-viz-c1e34c45fba849419e3362acef46ef35.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf.vega-embed details,
-  #altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf.vega-embed details summary {
+  #altair-viz-c1e34c45fba849419e3362acef46ef35.vega-embed details,
+  #altair-viz-c1e34c45fba849419e3362acef46ef35.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf"></div>
+<div id="altair-viz-c1e34c45fba849419e3362acef46ef35"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf") {
-      outputDiv = document.getElementById("altair-viz-a42c7c5e7c48408ea7aaa7e9042c69bf");
+    if (outputDiv.id !== "altair-viz-c1e34c45fba849419e3362acef46ef35") {
+      outputDiv = document.getElementById("altair-viz-c1e34c45fba849419e3362acef46ef35");
     }
 
     const paths = {

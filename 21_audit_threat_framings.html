@@ -546,7 +546,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Forensic sample</strong> — actual threat-framed sentences pulled from <code>sentences_classified.parquet</code>.</li>
 <li><strong>Conclusions / Recommendations / Limitations</strong> <em>(opinion, not data)</em>.</li>
 </ol>
-<div id="78ee4cba-7b1c-4d59-8a56-6d1b65e94d97" class="cell" data-execution_count="6">
+<div id="78ee4cba-7b1c-4d59-8a56-6d1b65e94d97" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:16.143552Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:16.143407Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:18.950776Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:18.950495Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + parquet artifact for forensic sentence inspection."""</span></span>
@@ -613,7 +613,7 @@ sentences_classified.parquet: 5,702 rows × 20 columns</code></pre>
 <section id="per-category-threat_share" class="level2">
 <h2 class="anchored" data-anchor-id="per-category-threat_share">2. Per-category threat_share</h2>
 <p>Where the threat-framing concentrates. The chart below sums per-file <code>threat_count</code> and <code>causal_count</code> within each category, then plots the resulting threat_share. Categories with fewer than 5 explanations total are omitted (the share is undefined or noisy).</p>
-<div id="c6ae37b3-5110-4e81-850f-0e5326e0a9fa" class="cell" data-execution_count="7">
+<div id="c6ae37b3-5110-4e81-850f-0e5326e0a9fa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:18.951822Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:18.951691Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:19.302900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:19.302490Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-category threat_share — sum of per-file counts, then ratio."""</span></span>
@@ -646,26 +646,26 @@ sentences_classified.parquet: 5,702 rows × 20 columns</code></pre>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>save_chart(threat_chart, <span class="st">"21-per-category-threat-share"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-17d96ebcb40b4458be7c243bc4941b1a.vega-embed {
+  #altair-viz-0aaa58c0332c4a5380d105189ecb2e69.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-17d96ebcb40b4458be7c243bc4941b1a.vega-embed details,
-  #altair-viz-17d96ebcb40b4458be7c243bc4941b1a.vega-embed details summary {
+  #altair-viz-0aaa58c0332c4a5380d105189ecb2e69.vega-embed details,
+  #altair-viz-0aaa58c0332c4a5380d105189ecb2e69.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-17d96ebcb40b4458be7c243bc4941b1a"></div>
+<div id="altair-viz-0aaa58c0332c4a5380d105189ecb2e69"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-17d96ebcb40b4458be7c243bc4941b1a") {
-      outputDiv = document.getElementById("altair-viz-17d96ebcb40b4458be7c243bc4941b1a");
+    if (outputDiv.id !== "altair-viz-0aaa58c0332c4a5380d105189ecb2e69") {
+      outputDiv = document.getElementById("altair-viz-0aaa58c0332c4a5380d105189ecb2e69");
     }
 
     const paths = {
@@ -722,7 +722,7 @@ sentences_classified.parquet: 5,702 rows × 20 columns</code></pre>
 <h2 class="anchored" data-anchor-id="paired-exemplars-audit-candidates-and-rewrite-templates">3. Paired exemplars — audit candidates and rewrite templates</h2>
 <p>Two rankings, side by side. The <strong>top-10 welfare-evidence files</strong> (negative exemplars) are rule-saturated AND under-explained — they are this proposal’s primary <strong>audit candidates</strong>: every threat-framed sentence in these files is a candidate for rewriting. The <strong>top-10 positive exemplars</strong> are rule-saturated AND well-explained — they are the <strong>rewrite templates</strong> showing how rules can be paired with reasons in similar contexts.</p>
 <p>The score formulas: <code>score_welfare = rule_density × (1 − pct_explained_para/100)</code> and <code>score_positive = rule_density × (pct_explained_para/100)</code>.</p>
-<div id="ad0ca296-ff19-4082-b38c-1b024ab04301" class="cell" data-execution_count="8">
+<div id="ad0ca296-ff19-4082-b38c-1b024ab04301" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:19.303879Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:19.303795Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:19.475141Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:19.474732Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Welfare-evidence + positive-exemplar paired top-10 chart."""</span></span>
@@ -769,26 +769,26 @@ sentences_classified.parquet: 5,702 rows × 20 columns</code></pre>
 <span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>save_chart(paired_chart, <span class="st">"welfare_evidence_pairing"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-03e67569ea8b4ddf9bd415a7b86d714d.vega-embed {
+  #altair-viz-bf38a8a1ad294cceaf9e35b0e89cebde.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-03e67569ea8b4ddf9bd415a7b86d714d.vega-embed details,
-  #altair-viz-03e67569ea8b4ddf9bd415a7b86d714d.vega-embed details summary {
+  #altair-viz-bf38a8a1ad294cceaf9e35b0e89cebde.vega-embed details,
+  #altair-viz-bf38a8a1ad294cceaf9e35b0e89cebde.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-03e67569ea8b4ddf9bd415a7b86d714d"></div>
+<div id="altair-viz-bf38a8a1ad294cceaf9e35b0e89cebde"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-03e67569ea8b4ddf9bd415a7b86d714d") {
-      outputDiv = document.getElementById("altair-viz-03e67569ea8b4ddf9bd415a7b86d714d");
+    if (outputDiv.id !== "altair-viz-bf38a8a1ad294cceaf9e35b0e89cebde") {
+      outputDiv = document.getElementById("altair-viz-bf38a8a1ad294cceaf9e35b0e89cebde");
     }
 
     const paths = {
@@ -844,7 +844,7 @@ sentences_classified.parquet: 5,702 rows × 20 columns</code></pre>
 <section id="forensic-sample-actual-threat-framed-sentences" class="level2">
 <h2 class="anchored" data-anchor-id="forensic-sample-actual-threat-framed-sentences">4. Forensic sample — actual threat-framed sentences</h2>
 <p>Eight randomly-sampled rule sentences with <code>has_threat=True</code> from <code>sentences_classified.parquet</code>. The pool size is <strong>59 sentences</strong> (threat-flagged AND rule-flagged; printed by the setup cell). Each row shows the file, the threat-framed sentence text, and whether the same paragraph also contains a causal explanation. The “rewrite as causal” task: replace the threat clause with a <code>because &lt;reason&gt;</code> clause that names the rule’s underlying purpose.</p>
-<div id="1bf5ccf5-9215-4b14-a117-ea674e90eadc" class="cell" data-execution_count="4">
+<div id="1bf5ccf5-9215-4b14-a117-ea674e90eadc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:19.476070Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:19.475978Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:19.484199Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:19.483744Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Forensic sample of threat-framed rule sentences from the parquet."""</span></span>
