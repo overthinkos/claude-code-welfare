@@ -1,10 +1,10 @@
 metadata:
-  generated_at: '2026-05-06T17:57:18+00:00'
+  generated_at: '2026-05-06T22:26:00+00:00'
   spacy_model: core_web_sm-3.8.0
   source_dir: claude-code-system-prompts/system-prompts
-  n_files: 286
-  total_tokens: 130571
-  total_sents: 5702
+  n_files: 289
+  total_tokens: 133526
+  total_sents: 5878
 lexicons:
   VOCAB:
     hard_prohibitions:
@@ -827,75 +827,75 @@ lexicons:
     - \bwe (?:want|need|recommend|suggest|expect|prefer|require|encourage|believe|think)\b
   RULES_HEADING_RE: (?i)\b(rules?|important|warning|notes?|caution|notice|critical|do not|never|must|forbidden|restrictions?|constraints?)\b
 corpus:
-  n_tokens: 130571
-  n_sents: 5702
+  n_tokens: 133526
+  n_sents: 5878
   metrics:
     mood:
-      marker_count: 1004
-      marker_pct: 0.7689
-      marker_per_sent: 0.1761
+      marker_count: 1025
+      marker_pct: 0.7676
+      marker_per_sent: 0.1744
     register:
-      ttr: 0.084
-      mean_sent_len: 22.9
-      dep_depth: 2.862
-      f_score: 69.61
+      ttr: 0.0829
+      mean_sent_len: 22.72
+      dep_depth: 2.85
+      f_score: 69.69
       frozen_count: 0
       formal_count: 3
-      consultative_count: 425
-      casual_count: 454
+      consultative_count: 430
+      casual_count: 466
       frozen_pct: 0.0
-      formal_pct: 0.0023
-      consultative_pct: 0.3255
-      casual_pct: 0.3477
+      formal_pct: 0.0022
+      consultative_pct: 0.322
+      casual_pct: 0.349
       frozen_per_sent: 0.0
       formal_per_sent: 0.0005
-      consultative_per_sent: 0.0745
-      casual_per_sent: 0.0796
+      consultative_per_sent: 0.0732
+      casual_per_sent: 0.0793
       dominant_register: casual
     stance:
-      directive_count: 996
-      expository_count: 2068
-      positive_evaluative_count: 476
-      negative_evaluative_count: 149
-      dialogic_count: 275
-      positive_evaluative_quality_count: 293
-      positive_evaluative_emphasis_count: 183
-      pronouns_1p_count: 184
-      pronouns_2p_count: 1372
-      directive_pct: 0.7628
-      expository_pct: 1.5838
-      positive_evaluative_pct: 0.3646
-      negative_evaluative_pct: 0.1141
-      dialogic_pct: 0.2106
-      positive_evaluative_quality_pct: 0.2244
-      positive_evaluative_emphasis_pct: 0.1402
-      pronouns_1p_pct: 0.1409
-      pronouns_2p_pct: 1.0508
-      directive_per_sent: 0.1747
-      expository_per_sent: 0.3627
-      positive_evaluative_per_sent: 0.0835
-      negative_evaluative_per_sent: 0.0261
-      dialogic_per_sent: 0.0482
-      positive_evaluative_quality_per_sent: 0.0514
-      positive_evaluative_emphasis_per_sent: 0.0321
-      pronouns_1p_per_sent: 0.0323
-      pronouns_2p_per_sent: 0.2406
+      directive_count: 1009
+      expository_count: 2113
+      positive_evaluative_count: 480
+      negative_evaluative_count: 152
+      dialogic_count: 280
+      positive_evaluative_quality_count: 296
+      positive_evaluative_emphasis_count: 184
+      pronouns_1p_count: 185
+      pronouns_2p_count: 1393
+      directive_pct: 0.7557
+      expository_pct: 1.5825
+      positive_evaluative_pct: 0.3595
+      negative_evaluative_pct: 0.1138
+      dialogic_pct: 0.2097
+      positive_evaluative_quality_pct: 0.2217
+      positive_evaluative_emphasis_pct: 0.1378
+      pronouns_1p_pct: 0.1385
+      pronouns_2p_pct: 1.0432
+      directive_per_sent: 0.1717
+      expository_per_sent: 0.3595
+      positive_evaluative_per_sent: 0.0817
+      negative_evaluative_per_sent: 0.0259
+      dialogic_per_sent: 0.0476
+      positive_evaluative_quality_per_sent: 0.0504
+      positive_evaluative_emphasis_per_sent: 0.0313
+      pronouns_1p_per_sent: 0.0315
+      pronouns_2p_per_sent: 0.237
       dominant_stance: expository
     sentence_register:
       collaborative_sent_count: 30
-      collaborative_sent_pct: 0.5261
-      permissive_sent_count: 122
-      permissive_sent_pct: 2.1396
+      collaborative_sent_pct: 0.5104
+      permissive_sent_count: 124
+      permissive_sent_pct: 2.1096
       appreciative_sent_count: 4
-      appreciative_sent_pct: 0.0702
-      imperative_sent_count: 1785
-      imperative_sent_pct: 31.3048
-      directive_sent_count: 778
-      directive_sent_pct: 13.6443
-      configuring_sent_count: 294
-      configuring_sent_pct: 5.1561
-      none_sent_count: 3293
-      none_sent_pct: 57.7517
+      appreciative_sent_pct: 0.0681
+      imperative_sent_count: 1819
+      imperative_sent_pct: 30.9459
+      directive_sent_count: 790
+      directive_sent_pct: 13.4399
+      configuring_sent_count: 304
+      configuring_sent_pct: 5.1718
+      none_sent_count: 3418
+      none_sent_pct: 58.149
       appreciative_addressee_claude_count: 3
       appreciative_addressee_user_count: 0
       appreciative_addressee_unknown_count: 1
@@ -904,66 +904,66 @@ corpus:
       collaborative_addressee_unknown_count: 16
       dominant: imperative
     modality:
-      deontic_count: 259
-      deontic_pct: 0.1984
-      deontic_per_sent: 0.0454
-      epistemic_count: 312
-      epistemic_pct: 0.239
-      epistemic_per_sent: 0.0547
-      dynamic_count: 548
-      dynamic_pct: 0.4197
-      dynamic_per_sent: 0.0961
+      deontic_count: 261
+      deontic_pct: 0.1955
+      deontic_per_sent: 0.0444
+      epistemic_count: 321
+      epistemic_pct: 0.2404
+      epistemic_per_sent: 0.0546
+      dynamic_count: 557
+      dynamic_pct: 0.4171
+      dynamic_per_sent: 0.0948
       top_construction: can
     vocab:
       hard_prohibitions:
-        count: 618
-        pct: 0.4733
-        per_sent: 0.1084
+        count: 630
+        pct: 0.4718
+        per_sent: 0.1072
       hard_prescriptions:
-        count: 349
-        pct: 0.2673
-        per_sent: 0.0612
+        count: 358
+        pct: 0.2681
+        per_sent: 0.0609
       soft_prescriptions:
         count: 254
-        pct: 0.1945
-        per_sent: 0.0445
+        pct: 0.1902
+        per_sent: 0.0432
       politeness_direct:
         count: 21
-        pct: 0.0161
-        per_sent: 0.0037
+        pct: 0.0157
+        per_sent: 0.0036
       politeness_softening:
         count: 28
-        pct: 0.0214
-        per_sent: 0.0049
+        pct: 0.021
+        per_sent: 0.0048
       warmth_encouragement:
         count: 5
-        pct: 0.0038
+        pct: 0.0037
         per_sent: 0.0009
       hedging:
-        count: 234
-        pct: 0.1792
-        per_sent: 0.041
+        count: 242
+        pct: 0.1812
+        per_sent: 0.0412
       structural_markers:
         count: 286
-        pct: 0.219
-        per_sent: 0.0502
+        pct: 0.2142
+        per_sent: 0.0487
       profanity:
         count: 0
         pct: 0.0
         per_sent: 0.0
       pronouns_2p:
-        count: 1372
-        pct: 1.0508
-        per_sent: 0.2406
+        count: 1393
+        pct: 1.0432
+        per_sent: 0.237
       pronouns_1p:
-        count: 184
-        pct: 0.1409
-        per_sent: 0.0323
+        count: 185
+        pct: 0.1385
+        per_sent: 0.0315
     all_caps:
-      count: 1369
-      distinct: 502
-      pct: 1.0485
-      per_sent: 0.2401
+      count: 1381
+      distinct: 501
+      pct: 1.0343
+      per_sent: 0.2349
       top:
       - token: NOT
         count: 109
@@ -975,16 +975,16 @@ corpus:
         count: 32
       - token: BLOCK
         count: 30
+      - token: NEVER
+        count: 26
       - token: TUNE
         count: 26
-      - token: NEVER
-        count: 25
       - token: ONLY
-        count: 22
+        count: 23
       - token: MUST
         count: 21
       - token: SSE
-        count: 16
+        count: 20
       - token: README
         count: 15
       - token: CRITICAL
@@ -1003,9 +1003,9 @@ corpus:
         count: 11
       - token: MONITOR_TOOL_NAME
         count: 11
-      - token: AND
-        count: 9
       - token: 'NO'
+        count: 10
+      - token: AND
         count: 9
       - token: ONE_OFF_ENABLED_FN
         count: 9
@@ -1016,12 +1016,12 @@ corpus:
       - token: TASK_TOOL_NAME
         count: 8
     caps_imperative:
-      count: 135
-      pct: 0.1034
-      per_sent: 0.0237
+      count: 136
+      pct: 0.1019
+      per_sent: 0.0231
       hits:
         IMPORTANT: 35
-        NEVER: 25
+        NEVER: 26
         MUST: 18
         CRITICAL: 15
         DO NOT: 14
@@ -1036,148 +1036,148 @@ corpus:
         STOP: 1
         VERY IMPORTANT: 1
     justification:
-      count: 312
-      pct: 0.239
-      per_sent: 0.0547
-      ratio: 0.31
+      count: 314
+      pct: 0.2352
+      per_sent: 0.0534
+      ratio: 0.306
     rule_explanation:
-      n_paragraphs: 3455
-      n_paragraphs_with_rules: 1283
-      n_paragraphs_with_rules_unexplained: 1067
-      n_rule_sentences: 2238
-      n_imperative_sentences: 2236
-      n_prohibition_sentences: 558
-      n_explained_same: 151
-      n_explained_para: 552
-      n_imperative_explained_para: 552
-      n_prohibition_explained_para: 169
-      pct_explained_same: 6.7471
-      pct_explained_para: 24.6649
-      pct_imperative_explained_para: 24.6869
-      pct_prohibition_explained_para: 30.2867
-      pct_paragraphs_with_rules_unexplained: 83.1645
+      n_paragraphs: 3535
+      n_paragraphs_with_rules: 1311
+      n_paragraphs_with_rules_unexplained: 1094
+      n_rule_sentences: 2285
+      n_imperative_sentences: 2283
+      n_prohibition_sentences: 570
+      n_explained_same: 152
+      n_explained_para: 555
+      n_imperative_explained_para: 555
+      n_prohibition_explained_para: 170
+      pct_explained_same: 6.6521
+      pct_explained_para: 24.2888
+      pct_imperative_explained_para: 24.3101
+      pct_prohibition_explained_para: 29.8246
+      pct_paragraphs_with_rules_unexplained: 83.4477
     judgment_procedural:
-      judgment_count: 77
-      procedural_count: 586
-      judgment_per_sent: 0.0135
-      procedural_per_sent: 0.1028
+      judgment_count: 78
+      procedural_count: 594
+      judgment_per_sent: 0.0133
+      procedural_per_sent: 0.1011
       judgment_to_procedural_ratio: 0.131
     consequence_framing:
       threat_count: 110
       causal_count: 136
-      threat_per_sent: 0.0193
-      causal_per_sent: 0.0239
+      threat_per_sent: 0.0187
+      causal_per_sent: 0.0231
       threat_share: 0.4472
     socratic:
       question_count: 87
-      question_pct: 0.0666
-      question_per_sent: 0.0153
+      question_pct: 0.0652
+      question_per_sent: 0.0148
       apology_count: 3
-      apology_pct: 0.0023
+      apology_pct: 0.0022
       apology_per_sent: 0.0005
     address_form:
-      selfref_claude: 517
+      selfref_claude: 521
       selfref_assistant: 20
-      selfref_model: 258
-      selfref_2p: 229
+      selfref_model: 266
+      selfref_2p: 231
       selfref_we: 1
-      pct_anthropomorphic: 0.6503
-      pct_artifact: 0.3245
-      pct_role: 0.0252
+      pct_anthropomorphic: 0.6456
+      pct_artifact: 0.3296
+      pct_role: 0.0248
     imperative_streaks:
-      n_imperative_sentences: 2236
-      n_streaks: 1265
+      n_imperative_sentences: 2283
+      n_streaks: 1297
       streak_max: 12
-      streak_mean: 1.768
-      n_streaks_ge3: 228
+      streak_mean: 1.76
+      n_streaks_ge3: 230
       n_streaks_ge5: 52
     rules_section:
-      n_paragraphs: 3455
-      n_paragraphs_in_rules_section: 63
-      n_paragraphs_outside_rules_section: 3392
-      n_rule_paragraphs_in_rules_section: 26
-      n_rule_paragraphs_outside_rules_section: 1257
+      n_paragraphs: 3535
+      n_paragraphs_in_rules_section: 66
+      n_paragraphs_outside_rules_section: 3469
+      n_rule_paragraphs_in_rules_section: 27
+      n_rule_paragraphs_outside_rules_section: 1284
       n_rule_paragraphs_in_rules_section_explained: 5
-      n_rule_paragraphs_outside_rules_section_explained: 211
-      n_rule_sentences_in_rules_section: 59
-      n_rule_sentences_outside_rules_section: 2179
+      n_rule_paragraphs_outside_rules_section_explained: 212
+      n_rule_sentences_in_rules_section: 64
+      n_rule_sentences_outside_rules_section: 2221
       n_rule_sentences_in_rules_section_explained: 26
-      n_rule_sentences_outside_rules_section_explained: 526
-      pct_rule_paragraphs_explained_in_rules_section: 19.2308
-      pct_rule_paragraphs_explained_outside_rules_section: 16.786
-      pct_rule_sentences_explained_in_rules_section: 44.0678
-      pct_rule_sentences_explained_outside_rules_section: 24.1395
+      n_rule_sentences_outside_rules_section_explained: 529
+      pct_rule_paragraphs_explained_in_rules_section: 18.5185
+      pct_rule_paragraphs_explained_outside_rules_section: 16.5109
+      pct_rule_sentences_explained_in_rules_section: 40.625
+      pct_rule_sentences_explained_outside_rules_section: 23.8181
 by_category:
   Agent prompt:
-    n_tokens: 27321
-    n_sents: 1077
+    n_tokens: 27522
+    n_sents: 1089
     metrics:
       mood:
-        marker_count: 201
-        marker_pct: 0.7357
-        marker_per_sent: 0.1866
+        marker_count: 202
+        marker_pct: 0.734
+        marker_per_sent: 0.1855
       register:
-        ttr: 0.1948
-        mean_sent_len: 25.37
-        dep_depth: 3.148
-        f_score: 69.97
+        ttr: 0.1939
+        mean_sent_len: 25.27
+        dep_depth: 3.139
+        f_score: 70.0
         frozen_count: 0
         formal_count: 0
         consultative_count: 56
-        casual_count: 80
+        casual_count: 81
         frozen_pct: 0.0
         formal_pct: 0.0
-        consultative_pct: 0.205
-        casual_pct: 0.2928
+        consultative_pct: 0.2035
+        casual_pct: 0.2943
         frozen_per_sent: 0.0
         formal_per_sent: 0.0
-        consultative_per_sent: 0.052
-        casual_per_sent: 0.0743
+        consultative_per_sent: 0.0514
+        casual_per_sent: 0.0744
         dominant_register: casual
       stance:
-        directive_count: 212
+        directive_count: 213
         expository_count: 500
-        positive_evaluative_count: 84
-        negative_evaluative_count: 29
+        positive_evaluative_count: 85
+        negative_evaluative_count: 32
         dialogic_count: 38
-        positive_evaluative_quality_count: 38
+        positive_evaluative_quality_count: 39
         positive_evaluative_emphasis_count: 46
         pronouns_1p_count: 64
-        pronouns_2p_count: 249
-        directive_pct: 0.776
-        expository_pct: 1.8301
-        positive_evaluative_pct: 0.3075
-        negative_evaluative_pct: 0.1061
-        dialogic_pct: 0.1391
-        positive_evaluative_quality_pct: 0.1391
-        positive_evaluative_emphasis_pct: 0.1684
-        pronouns_1p_pct: 0.2343
-        pronouns_2p_pct: 0.9114
-        directive_per_sent: 0.1968
-        expository_per_sent: 0.4643
-        positive_evaluative_per_sent: 0.078
-        negative_evaluative_per_sent: 0.0269
-        dialogic_per_sent: 0.0353
-        positive_evaluative_quality_per_sent: 0.0353
-        positive_evaluative_emphasis_per_sent: 0.0427
-        pronouns_1p_per_sent: 0.0594
-        pronouns_2p_per_sent: 0.2312
+        pronouns_2p_count: 252
+        directive_pct: 0.7739
+        expository_pct: 1.8167
+        positive_evaluative_pct: 0.3088
+        negative_evaluative_pct: 0.1163
+        dialogic_pct: 0.1381
+        positive_evaluative_quality_pct: 0.1417
+        positive_evaluative_emphasis_pct: 0.1671
+        pronouns_1p_pct: 0.2325
+        pronouns_2p_pct: 0.9156
+        directive_per_sent: 0.1956
+        expository_per_sent: 0.4591
+        positive_evaluative_per_sent: 0.0781
+        negative_evaluative_per_sent: 0.0294
+        dialogic_per_sent: 0.0349
+        positive_evaluative_quality_per_sent: 0.0358
+        positive_evaluative_emphasis_per_sent: 0.0422
+        pronouns_1p_per_sent: 0.0588
+        pronouns_2p_per_sent: 0.2314
         dominant_stance: expository
       sentence_register:
         collaborative_sent_count: 3
-        collaborative_sent_pct: 0.2786
+        collaborative_sent_pct: 0.2755
         permissive_sent_count: 24
-        permissive_sent_pct: 2.2284
+        permissive_sent_pct: 2.2039
         appreciative_sent_count: 1
-        appreciative_sent_pct: 0.0929
-        imperative_sent_count: 319
-        imperative_sent_pct: 29.6193
-        directive_sent_count: 163
-        directive_sent_pct: 15.1346
+        appreciative_sent_pct: 0.0918
+        imperative_sent_count: 323
+        imperative_sent_pct: 29.6602
+        directive_sent_count: 164
+        directive_sent_pct: 15.0597
         configuring_sent_count: 59
-        configuring_sent_pct: 5.4782
-        none_sent_count: 628
-        none_sent_pct: 58.3101
+        configuring_sent_pct: 5.4178
+        none_sent_count: 636
+        none_sent_pct: 58.4022
         appreciative_addressee_claude_count: 1
         appreciative_addressee_user_count: 0
         appreciative_addressee_unknown_count: 0
@@ -1187,65 +1187,65 @@ by_category:
         dominant: imperative
       modality:
         deontic_count: 58
-        deontic_pct: 0.2123
-        deontic_per_sent: 0.0539
-        epistemic_count: 91
-        epistemic_pct: 0.3331
-        epistemic_per_sent: 0.0845
-        dynamic_count: 126
-        dynamic_pct: 0.4612
-        dynamic_per_sent: 0.117
+        deontic_pct: 0.2107
+        deontic_per_sent: 0.0533
+        epistemic_count: 93
+        epistemic_pct: 0.3379
+        epistemic_per_sent: 0.0854
+        dynamic_count: 127
+        dynamic_pct: 0.4614
+        dynamic_per_sent: 0.1166
         top_construction: can
       vocab:
         hard_prohibitions:
-          count: 122
-          pct: 0.4465
-          per_sent: 0.1133
+          count: 123
+          pct: 0.4469
+          per_sent: 0.1129
         hard_prescriptions:
           count: 64
-          pct: 0.2343
-          per_sent: 0.0594
+          pct: 0.2325
+          per_sent: 0.0588
         soft_prescriptions:
           count: 77
-          pct: 0.2818
-          per_sent: 0.0715
+          pct: 0.2798
+          per_sent: 0.0707
         politeness_direct:
           count: 9
-          pct: 0.0329
-          per_sent: 0.0084
+          pct: 0.0327
+          per_sent: 0.0083
         politeness_softening:
           count: 10
-          pct: 0.0366
-          per_sent: 0.0093
+          pct: 0.0363
+          per_sent: 0.0092
         warmth_encouragement:
           count: 2
           pct: 0.0073
-          per_sent: 0.0019
+          per_sent: 0.0018
         hedging:
-          count: 52
-          pct: 0.1903
-          per_sent: 0.0483
+          count: 54
+          pct: 0.1962
+          per_sent: 0.0496
         structural_markers:
           count: 61
-          pct: 0.2233
-          per_sent: 0.0566
+          pct: 0.2216
+          per_sent: 0.056
         profanity:
           count: 0
           pct: 0.0
           per_sent: 0.0
         pronouns_2p:
-          count: 249
-          pct: 0.9114
-          per_sent: 0.2312
+          count: 252
+          pct: 0.9156
+          per_sent: 0.2314
         pronouns_1p:
           count: 64
-          pct: 0.2343
-          per_sent: 0.0594
+          pct: 0.2325
+          per_sent: 0.0588
       all_caps:
         count: 454
         distinct: 231
-        pct: 1.6617
-        per_sent: 0.4215
+        pct: 1.6496
+        per_sent: 0.4169
         top:
         - token: BLOCK
           count: 30
@@ -1299,8 +1299,8 @@ by_category:
           count: 3
       caps_imperative:
         count: 34
-        pct: 0.1244
-        per_sent: 0.0316
+        pct: 0.1235
+        per_sent: 0.0312
         hits:
           NEVER: 10
           IMPORTANT: 5
@@ -1314,148 +1314,148 @@ by_category:
           ALWAYS: 1
           REQUIRED: 1
       justification:
-        count: 70
-        pct: 0.2562
-        per_sent: 0.065
-        ratio: 0.347
+        count: 69
+        pct: 0.2507
+        per_sent: 0.0634
+        ratio: 0.34
       rule_explanation:
-        n_paragraphs: 480
-        n_paragraphs_with_rules: 208
-        n_paragraphs_with_rules_unexplained: 159
-        n_rule_sentences: 413
-        n_imperative_sentences: 413
-        n_prohibition_sentences: 104
+        n_paragraphs: 486
+        n_paragraphs_with_rules: 210
+        n_paragraphs_with_rules_unexplained: 162
+        n_rule_sentences: 417
+        n_imperative_sentences: 417
+        n_prohibition_sentences: 105
         n_explained_same: 39
         n_explained_para: 158
         n_imperative_explained_para: 158
         n_prohibition_explained_para: 38
-        pct_explained_same: 9.4431
-        pct_explained_para: 38.2567
-        pct_imperative_explained_para: 38.2567
-        pct_prohibition_explained_para: 36.5385
-        pct_paragraphs_with_rules_unexplained: 76.4423
+        pct_explained_same: 9.3525
+        pct_explained_para: 37.8897
+        pct_imperative_explained_para: 37.8897
+        pct_prohibition_explained_para: 36.1905
+        pct_paragraphs_with_rules_unexplained: 77.1429
       judgment_procedural:
         judgment_count: 22
-        procedural_count: 102
-        judgment_per_sent: 0.0204
-        procedural_per_sent: 0.0947
-        judgment_to_procedural_ratio: 0.216
+        procedural_count: 103
+        judgment_per_sent: 0.0202
+        procedural_per_sent: 0.0946
+        judgment_to_procedural_ratio: 0.214
       consequence_framing:
-        threat_count: 28
+        threat_count: 27
         causal_count: 26
-        threat_per_sent: 0.026
-        causal_per_sent: 0.0241
-        threat_share: 0.5185
+        threat_per_sent: 0.0248
+        causal_per_sent: 0.0239
+        threat_share: 0.5094
       socratic:
         question_count: 28
-        question_pct: 0.1025
-        question_per_sent: 0.026
+        question_pct: 0.1017
+        question_per_sent: 0.0257
         apology_count: 1
-        apology_pct: 0.0037
+        apology_pct: 0.0036
         apology_per_sent: 0.0009
       address_form:
-        selfref_claude: 82
+        selfref_claude: 85
         selfref_assistant: 6
         selfref_model: 96
         selfref_2p: 57
         selfref_we: 0
-        pct_anthropomorphic: 0.4457
-        pct_artifact: 0.5217
-        pct_role: 0.0326
+        pct_anthropomorphic: 0.4545
+        pct_artifact: 0.5134
+        pct_role: 0.0321
       imperative_streaks:
-        n_imperative_sentences: 413
+        n_imperative_sentences: 417
         n_streaks: 240
         streak_max: 7
-        streak_mean: 1.721
-        n_streaks_ge3: 38
+        streak_mean: 1.738
+        n_streaks_ge3: 39
         n_streaks_ge5: 10
       rules_section:
-        n_paragraphs: 480
+        n_paragraphs: 486
         n_paragraphs_in_rules_section: 23
-        n_paragraphs_outside_rules_section: 457
+        n_paragraphs_outside_rules_section: 463
         n_rule_paragraphs_in_rules_section: 14
-        n_rule_paragraphs_outside_rules_section: 194
+        n_rule_paragraphs_outside_rules_section: 196
         n_rule_paragraphs_in_rules_section_explained: 3
-        n_rule_paragraphs_outside_rules_section_explained: 46
+        n_rule_paragraphs_outside_rules_section_explained: 45
         n_rule_sentences_in_rules_section: 42
-        n_rule_sentences_outside_rules_section: 371
+        n_rule_sentences_outside_rules_section: 375
         n_rule_sentences_in_rules_section_explained: 23
         n_rule_sentences_outside_rules_section_explained: 135
         pct_rule_paragraphs_explained_in_rules_section: 21.4286
-        pct_rule_paragraphs_explained_outside_rules_section: 23.7113
+        pct_rule_paragraphs_explained_outside_rules_section: 22.9592
         pct_rule_sentences_explained_in_rules_section: 54.7619
-        pct_rule_sentences_explained_outside_rules_section: 36.3881
+        pct_rule_sentences_explained_outside_rules_section: 36.0
     n_files: 37
   Data / template:
-    n_tokens: 30202
-    n_sents: 1534
+    n_tokens: 32931
+    n_sents: 1695
     metrics:
       mood:
-        marker_count: 164
-        marker_pct: 0.543
-        marker_per_sent: 0.1069
+        marker_count: 182
+        marker_pct: 0.5527
+        marker_per_sent: 0.1074
       register:
-        ttr: 0.1278
-        mean_sent_len: 19.69
-        dep_depth: 2.642
-        f_score: 74.07
+        ttr: 0.1237
+        mean_sent_len: 19.43
+        dep_depth: 2.62
+        f_score: 73.94
         frozen_count: 0
         formal_count: 1
-        consultative_count: 66
-        casual_count: 59
+        consultative_count: 67
+        casual_count: 69
         frozen_pct: 0.0
-        formal_pct: 0.0033
-        consultative_pct: 0.2185
-        casual_pct: 0.1954
+        formal_pct: 0.003
+        consultative_pct: 0.2035
+        casual_pct: 0.2095
         frozen_per_sent: 0.0
-        formal_per_sent: 0.0007
-        consultative_per_sent: 0.043
-        casual_per_sent: 0.0385
-        dominant_register: consultative
+        formal_per_sent: 0.0006
+        consultative_per_sent: 0.0395
+        casual_per_sent: 0.0407
+        dominant_register: casual
       stance:
-        directive_count: 111
-        expository_count: 421
-        positive_evaluative_count: 99
+        directive_count: 122
+        expository_count: 467
+        positive_evaluative_count: 101
         negative_evaluative_count: 38
-        dialogic_count: 47
-        positive_evaluative_quality_count: 59
+        dialogic_count: 53
+        positive_evaluative_quality_count: 61
         positive_evaluative_emphasis_count: 40
         pronouns_1p_count: 9
-        pronouns_2p_count: 182
-        directive_pct: 0.3675
-        expository_pct: 1.3939
-        positive_evaluative_pct: 0.3278
-        negative_evaluative_pct: 0.1258
-        dialogic_pct: 0.1556
-        positive_evaluative_quality_pct: 0.1954
-        positive_evaluative_emphasis_pct: 0.1324
-        pronouns_1p_pct: 0.0298
-        pronouns_2p_pct: 0.6026
-        directive_per_sent: 0.0724
-        expository_per_sent: 0.2744
-        positive_evaluative_per_sent: 0.0645
-        negative_evaluative_per_sent: 0.0248
-        dialogic_per_sent: 0.0306
-        positive_evaluative_quality_per_sent: 0.0385
-        positive_evaluative_emphasis_per_sent: 0.0261
-        pronouns_1p_per_sent: 0.0059
-        pronouns_2p_per_sent: 0.1186
+        pronouns_2p_count: 199
+        directive_pct: 0.3705
+        expository_pct: 1.4181
+        positive_evaluative_pct: 0.3067
+        negative_evaluative_pct: 0.1154
+        dialogic_pct: 0.1609
+        positive_evaluative_quality_pct: 0.1852
+        positive_evaluative_emphasis_pct: 0.1215
+        pronouns_1p_pct: 0.0273
+        pronouns_2p_pct: 0.6043
+        directive_per_sent: 0.072
+        expository_per_sent: 0.2755
+        positive_evaluative_per_sent: 0.0596
+        negative_evaluative_per_sent: 0.0224
+        dialogic_per_sent: 0.0313
+        positive_evaluative_quality_per_sent: 0.036
+        positive_evaluative_emphasis_per_sent: 0.0236
+        pronouns_1p_per_sent: 0.0053
+        pronouns_2p_per_sent: 0.1174
         dominant_stance: expository
       sentence_register:
         collaborative_sent_count: 8
-        collaborative_sent_pct: 0.5215
+        collaborative_sent_pct: 0.472
         permissive_sent_count: 16
-        permissive_sent_pct: 1.043
+        permissive_sent_pct: 0.944
         appreciative_sent_count: 0
         appreciative_sent_pct: 0.0
-        imperative_sent_count: 350
-        imperative_sent_pct: 22.8162
-        directive_sent_count: 100
-        directive_sent_pct: 6.5189
-        configuring_sent_count: 83
-        configuring_sent_pct: 5.4107
-        none_sent_count: 1064
-        none_sent_pct: 69.3611
+        imperative_sent_count: 379
+        imperative_sent_pct: 22.3599
+        directive_sent_count: 110
+        directive_sent_pct: 6.4897
+        configuring_sent_count: 91
+        configuring_sent_pct: 5.3687
+        none_sent_count: 1183
+        none_sent_pct: 69.7935
         appreciative_addressee_claude_count: 0
         appreciative_addressee_user_count: 0
         appreciative_addressee_unknown_count: 0
@@ -1464,73 +1464,75 @@ by_category:
         collaborative_addressee_unknown_count: 5
         dominant: imperative
       modality:
-        deontic_count: 23
-        deontic_pct: 0.0762
-        deontic_per_sent: 0.015
-        epistemic_count: 42
-        epistemic_pct: 0.1391
-        epistemic_per_sent: 0.0274
-        dynamic_count: 75
-        dynamic_pct: 0.2483
-        dynamic_per_sent: 0.0489
+        deontic_count: 25
+        deontic_pct: 0.0759
+        deontic_per_sent: 0.0147
+        epistemic_count: 47
+        epistemic_pct: 0.1427
+        epistemic_per_sent: 0.0277
+        dynamic_count: 80
+        dynamic_pct: 0.2429
+        dynamic_per_sent: 0.0472
         top_construction: can
       vocab:
         hard_prohibitions:
-          count: 86
-          pct: 0.2847
-          per_sent: 0.0561
+          count: 95
+          pct: 0.2885
+          per_sent: 0.056
         hard_prescriptions:
-          count: 75
-          pct: 0.2483
-          per_sent: 0.0489
+          count: 84
+          pct: 0.2551
+          per_sent: 0.0496
         soft_prescriptions:
           count: 7
-          pct: 0.0232
-          per_sent: 0.0046
+          pct: 0.0213
+          per_sent: 0.0041
         politeness_direct:
           count: 0
           pct: 0.0
           per_sent: 0.0
         politeness_softening:
           count: 3
-          pct: 0.0099
-          per_sent: 0.002
+          pct: 0.0091
+          per_sent: 0.0018
         warmth_encouragement:
           count: 0
           pct: 0.0
           per_sent: 0.0
         hedging:
-          count: 24
-          pct: 0.0795
-          per_sent: 0.0156
+          count: 29
+          pct: 0.0881
+          per_sent: 0.0171
         structural_markers:
           count: 29
-          pct: 0.096
-          per_sent: 0.0189
+          pct: 0.0881
+          per_sent: 0.0171
         profanity:
           count: 0
           pct: 0.0
           per_sent: 0.0
         pronouns_2p:
-          count: 182
-          pct: 0.6026
-          per_sent: 0.1186
+          count: 199
+          pct: 0.6043
+          per_sent: 0.1174
         pronouns_1p:
           count: 9
-          pct: 0.0298
-          per_sent: 0.0059
+          pct: 0.0273
+          per_sent: 0.0053
       all_caps:
-        count: 101
-        distinct: 48
-        pct: 0.3344
-        per_sent: 0.0658
+        count: 111
+        distinct: 50
+        pct: 0.3371
+        per_sent: 0.0655
         top:
         - token: SSE
-          count: 13
+          count: 17
         - token: NOT
           count: 10
         - token: TTL
           count: 10
+        - token: HMAC
+          count: 5
         - token: ISO
           count: 5
         - token: 'NO'
@@ -1573,108 +1575,106 @@ by_category:
           count: 1
         - token: TPM
           count: 1
-        - token: TPD
-          count: 1
       caps_imperative:
         count: 1
-        pct: 0.0033
-        per_sent: 0.0007
+        pct: 0.003
+        per_sent: 0.0006
         hits:
           MANDATORY: 1
       justification:
-        count: 36
-        pct: 0.1192
-        per_sent: 0.0235
-        ratio: 0.218
+        count: 39
+        pct: 0.1184
+        per_sent: 0.023
+        ratio: 0.213
       rule_explanation:
-        n_paragraphs: 1402
-        n_paragraphs_with_rules: 321
-        n_paragraphs_with_rules_unexplained: 295
-        n_rule_sentences: 457
-        n_imperative_sentences: 457
-        n_prohibition_sentences: 83
-        n_explained_same: 16
-        n_explained_para: 50
-        n_imperative_explained_para: 50
-        n_prohibition_explained_para: 15
-        pct_explained_same: 3.5011
-        pct_explained_para: 10.9409
-        pct_imperative_explained_para: 10.9409
-        pct_prohibition_explained_para: 18.0723
-        pct_paragraphs_with_rules_unexplained: 91.9003
+        n_paragraphs: 1475
+        n_paragraphs_with_rules: 346
+        n_paragraphs_with_rules_unexplained: 318
+        n_rule_sentences: 496
+        n_imperative_sentences: 496
+        n_prohibition_sentences: 92
+        n_explained_same: 17
+        n_explained_para: 53
+        n_imperative_explained_para: 53
+        n_prohibition_explained_para: 16
+        pct_explained_same: 3.4274
+        pct_explained_para: 10.6855
+        pct_imperative_explained_para: 10.6855
+        pct_prohibition_explained_para: 17.3913
+        pct_paragraphs_with_rules_unexplained: 91.9075
       judgment_procedural:
         judgment_count: 4
-        procedural_count: 83
-        judgment_per_sent: 0.0026
-        procedural_per_sent: 0.0541
-        judgment_to_procedural_ratio: 0.048
+        procedural_count: 91
+        judgment_per_sent: 0.0024
+        procedural_per_sent: 0.0537
+        judgment_to_procedural_ratio: 0.044
       consequence_framing:
-        threat_count: 12
+        threat_count: 13
         causal_count: 16
-        threat_per_sent: 0.0078
-        causal_per_sent: 0.0104
-        threat_share: 0.4286
+        threat_per_sent: 0.0077
+        causal_per_sent: 0.0094
+        threat_share: 0.4483
       socratic:
         question_count: 1
-        question_pct: 0.0033
-        question_per_sent: 0.0007
+        question_pct: 0.003
+        question_per_sent: 0.0006
         apology_count: 0
         apology_pct: 0.0
         apology_per_sent: 0.0
       address_form:
-        selfref_claude: 160
+        selfref_claude: 161
         selfref_assistant: 1
-        selfref_model: 81
+        selfref_model: 89
         selfref_2p: 18
         selfref_we: 0
-        pct_anthropomorphic: 0.6612
-        pct_artifact: 0.3347
-        pct_role: 0.0041
+        pct_anthropomorphic: 0.6414
+        pct_artifact: 0.3546
+        pct_role: 0.004
       imperative_streaks:
-        n_imperative_sentences: 457
-        n_streaks: 286
+        n_imperative_sentences: 496
+        n_streaks: 318
         streak_max: 7
-        streak_mean: 1.598
-        n_streaks_ge3: 39
+        streak_mean: 1.56
+        n_streaks_ge3: 38
         n_streaks_ge5: 4
       rules_section:
-        n_paragraphs: 1402
-        n_paragraphs_in_rules_section: 16
-        n_paragraphs_outside_rules_section: 1386
-        n_rule_paragraphs_in_rules_section: 3
-        n_rule_paragraphs_outside_rules_section: 318
+        n_paragraphs: 1475
+        n_paragraphs_in_rules_section: 19
+        n_paragraphs_outside_rules_section: 1456
+        n_rule_paragraphs_in_rules_section: 4
+        n_rule_paragraphs_outside_rules_section: 342
         n_rule_paragraphs_in_rules_section_explained: 1
-        n_rule_paragraphs_outside_rules_section_explained: 25
-        n_rule_sentences_in_rules_section: 3
-        n_rule_sentences_outside_rules_section: 454
+        n_rule_paragraphs_outside_rules_section_explained: 27
+        n_rule_sentences_in_rules_section: 8
+        n_rule_sentences_outside_rules_section: 488
         n_rule_sentences_in_rules_section_explained: 1
-        n_rule_sentences_outside_rules_section_explained: 49
-        pct_rule_paragraphs_explained_in_rules_section: 33.3333
-        pct_rule_paragraphs_explained_outside_rules_section: 7.8616
-        pct_rule_sentences_explained_in_rules_section: 33.3333
-        pct_rule_sentences_explained_outside_rules_section: 10.793
-    n_files: 36
+        n_rule_sentences_outside_rules_section_explained: 52
+        pct_rule_paragraphs_explained_in_rules_section: 25.0
+        pct_rule_paragraphs_explained_outside_rules_section: 7.8947
+        pct_rule_sentences_explained_in_rules_section: 12.5
+        pct_rule_sentences_explained_outside_rules_section: 10.6557
+    n_files: 39
   Skill:
-    n_tokens: 38524
+    n_tokens: 38530
     n_sents: 1695
     metrics:
       mood:
         marker_count: 252
-        marker_pct: 0.6541
+        marker_pct: 0.654
         marker_per_sent: 0.1487
       register:
-        ttr: 0.1459
+        ttr: 0.146
         mean_sent_len: 22.73
-        dep_depth: 2.728
-        f_score: 68.92
+        dep_depth: 2.729
+        f_score: 68.93
         frozen_count: 0
         formal_count: 0
         consultative_count: 129
         casual_count: 166
         frozen_pct: 0.0
         formal_pct: 0.0
-        consultative_pct: 0.3349
-        casual_pct: 0.4309
+        consultative_pct: 0.3348
+        casual_pct: 0.4308
         frozen_per_sent: 0.0
         formal_per_sent: 0.0
         consultative_per_sent: 0.0761
@@ -1690,15 +1690,15 @@ by_category:
         positive_evaluative_emphasis_count: 24
         pronouns_1p_count: 46
         pronouns_2p_count: 338
-        directive_pct: 0.5789
-        expository_pct: 1.5549
+        directive_pct: 0.5788
+        expository_pct: 1.5546
         positive_evaluative_pct: 0.2855
         negative_evaluative_pct: 0.109
-        dialogic_pct: 0.2077
+        dialogic_pct: 0.2076
         positive_evaluative_quality_pct: 0.2232
         positive_evaluative_emphasis_pct: 0.0623
         pronouns_1p_pct: 0.1194
-        pronouns_2p_pct: 0.8774
+        pronouns_2p_pct: 0.8772
         directive_per_sent: 0.1316
         expository_per_sent: 0.3534
         positive_evaluative_per_sent: 0.0649
@@ -1733,7 +1733,7 @@ by_category:
         dominant: imperative
       modality:
         deontic_count: 55
-        deontic_pct: 0.1428
+        deontic_pct: 0.1427
         deontic_per_sent: 0.0324
         epistemic_count: 71
         epistemic_pct: 0.1843
@@ -1745,11 +1745,11 @@ by_category:
       vocab:
         hard_prohibitions:
           count: 173
-          pct: 0.4491
+          pct: 0.449
           per_sent: 0.1021
         hard_prescriptions:
           count: 78
-          pct: 0.2025
+          pct: 0.2024
           per_sent: 0.046
         soft_prescriptions:
           count: 31
@@ -1781,7 +1781,7 @@ by_category:
           per_sent: 0.0
         pronouns_2p:
           count: 338
-          pct: 0.8774
+          pct: 0.8772
           per_sent: 0.1994
         pronouns_1p:
           count: 46
@@ -1790,7 +1790,7 @@ by_category:
       all_caps:
         count: 279
         distinct: 101
-        pct: 0.7242
+        pct: 0.7241
         per_sent: 0.1646
         top:
         - token: CLAUDE
@@ -1845,7 +1845,7 @@ by_category:
           count: 2
       caps_imperative:
         count: 11
-        pct: 0.0286
+        pct: 0.0285
         per_sent: 0.0065
         hits:
           CRITICAL: 5
@@ -1854,7 +1854,7 @@ by_category:
           NEVER: 1
       justification:
         count: 79
-        pct: 0.2051
+        pct: 0.205
         per_sent: 0.0466
         ratio: 0.312
       rule_explanation:
@@ -1926,75 +1926,75 @@ by_category:
         pct_rule_sentences_explained_outside_rules_section: 19.7901
     n_files: 30
   System prompt:
-    n_tokens: 15922
-    n_sents: 651
+    n_tokens: 16156
+    n_sents: 659
     metrics:
       mood:
-        marker_count: 146
-        marker_pct: 0.917
-        marker_per_sent: 0.2243
+        marker_count: 149
+        marker_pct: 0.9223
+        marker_per_sent: 0.2261
       register:
-        ttr: 0.235
-        mean_sent_len: 24.46
-        dep_depth: 2.926
-        f_score: 65.77
+        ttr: 0.234
+        mean_sent_len: 24.52
+        dep_depth: 2.929
+        f_score: 65.82
         frozen_count: 0
         formal_count: 2
-        consultative_count: 83
-        casual_count: 89
+        consultative_count: 87
+        casual_count: 90
         frozen_pct: 0.0
-        formal_pct: 0.0126
-        consultative_pct: 0.5213
-        casual_pct: 0.559
+        formal_pct: 0.0124
+        consultative_pct: 0.5385
+        casual_pct: 0.5571
         frozen_per_sent: 0.0
-        formal_per_sent: 0.0031
-        consultative_per_sent: 0.1275
-        casual_per_sent: 0.1367
+        formal_per_sent: 0.003
+        consultative_per_sent: 0.132
+        casual_per_sent: 0.1366
         dominant_register: casual
       stance:
-        directive_count: 177
+        directive_count: 179
         expository_count: 241
-        positive_evaluative_count: 101
+        positive_evaluative_count: 102
         negative_evaluative_count: 23
         dialogic_count: 64
         positive_evaluative_quality_count: 66
-        positive_evaluative_emphasis_count: 35
-        pronouns_1p_count: 30
-        pronouns_2p_count: 289
-        directive_pct: 1.1117
-        expository_pct: 1.5136
-        positive_evaluative_pct: 0.6343
-        negative_evaluative_pct: 0.1445
-        dialogic_pct: 0.402
-        positive_evaluative_quality_pct: 0.4145
-        positive_evaluative_emphasis_pct: 0.2198
-        pronouns_1p_pct: 0.1884
-        pronouns_2p_pct: 1.8151
-        directive_per_sent: 0.2719
-        expository_per_sent: 0.3702
-        positive_evaluative_per_sent: 0.1551
-        negative_evaluative_per_sent: 0.0353
-        dialogic_per_sent: 0.0983
-        positive_evaluative_quality_per_sent: 0.1014
-        positive_evaluative_emphasis_per_sent: 0.0538
-        pronouns_1p_per_sent: 0.0461
-        pronouns_2p_per_sent: 0.4439
+        positive_evaluative_emphasis_count: 36
+        pronouns_1p_count: 31
+        pronouns_2p_count: 292
+        directive_pct: 1.1079
+        expository_pct: 1.4917
+        positive_evaluative_pct: 0.6313
+        negative_evaluative_pct: 0.1424
+        dialogic_pct: 0.3961
+        positive_evaluative_quality_pct: 0.4085
+        positive_evaluative_emphasis_pct: 0.2228
+        pronouns_1p_pct: 0.1919
+        pronouns_2p_pct: 1.8074
+        directive_per_sent: 0.2716
+        expository_per_sent: 0.3657
+        positive_evaluative_per_sent: 0.1548
+        negative_evaluative_per_sent: 0.0349
+        dialogic_per_sent: 0.0971
+        positive_evaluative_quality_per_sent: 0.1002
+        positive_evaluative_emphasis_per_sent: 0.0546
+        pronouns_1p_per_sent: 0.047
+        pronouns_2p_per_sent: 0.4431
         dominant_stance: expository
       sentence_register:
         collaborative_sent_count: 9
-        collaborative_sent_pct: 1.3825
-        permissive_sent_count: 20
-        permissive_sent_pct: 3.0722
+        collaborative_sent_pct: 1.3657
+        permissive_sent_count: 22
+        permissive_sent_pct: 3.3384
         appreciative_sent_count: 2
-        appreciative_sent_pct: 0.3072
-        imperative_sent_count: 261
-        imperative_sent_pct: 40.0922
-        directive_sent_count: 138
-        directive_sent_pct: 21.1982
-        configuring_sent_count: 30
-        configuring_sent_pct: 4.6083
-        none_sent_count: 299
-        none_sent_pct: 45.9293
+        appreciative_sent_pct: 0.3035
+        imperative_sent_count: 266
+        imperative_sent_pct: 40.3642
+        directive_sent_count: 140
+        directive_sent_pct: 21.2443
+        configuring_sent_count: 32
+        configuring_sent_pct: 4.8558
+        none_sent_count: 298
+        none_sent_pct: 45.22
         appreciative_addressee_claude_count: 1
         appreciative_addressee_user_count: 0
         appreciative_addressee_unknown_count: 1
@@ -2004,65 +2004,65 @@ by_category:
         dominant: imperative
       modality:
         deontic_count: 45
-        deontic_pct: 0.2826
-        deontic_per_sent: 0.0691
-        epistemic_count: 59
-        epistemic_pct: 0.3706
-        epistemic_per_sent: 0.0906
-        dynamic_count: 87
-        dynamic_pct: 0.5464
-        dynamic_per_sent: 0.1336
+        deontic_pct: 0.2785
+        deontic_per_sent: 0.0683
+        epistemic_count: 61
+        epistemic_pct: 0.3776
+        epistemic_per_sent: 0.0926
+        dynamic_count: 90
+        dynamic_pct: 0.5571
+        dynamic_per_sent: 0.1366
         top_construction: can
       vocab:
         hard_prohibitions:
-          count: 103
-          pct: 0.6469
-          per_sent: 0.1582
+          count: 106
+          pct: 0.6561
+          per_sent: 0.1608
         hard_prescriptions:
           count: 41
-          pct: 0.2575
-          per_sent: 0.063
+          pct: 0.2538
+          per_sent: 0.0622
         soft_prescriptions:
           count: 56
-          pct: 0.3517
-          per_sent: 0.086
+          pct: 0.3466
+          per_sent: 0.085
         politeness_direct:
           count: 5
-          pct: 0.0314
-          per_sent: 0.0077
+          pct: 0.0309
+          per_sent: 0.0076
         politeness_softening:
           count: 1
-          pct: 0.0063
+          pct: 0.0062
           per_sent: 0.0015
         warmth_encouragement:
           count: 0
           pct: 0.0
           per_sent: 0.0
         hedging:
-          count: 46
-          pct: 0.2889
-          per_sent: 0.0707
+          count: 47
+          pct: 0.2909
+          per_sent: 0.0713
         structural_markers:
           count: 61
-          pct: 0.3831
-          per_sent: 0.0937
+          pct: 0.3776
+          per_sent: 0.0926
         profanity:
           count: 0
           pct: 0.0
           per_sent: 0.0
         pronouns_2p:
-          count: 289
-          pct: 1.8151
-          per_sent: 0.4439
+          count: 292
+          pct: 1.8074
+          per_sent: 0.4431
         pronouns_1p:
-          count: 30
-          pct: 0.1884
-          per_sent: 0.0461
+          count: 31
+          pct: 0.1919
+          per_sent: 0.047
       all_caps:
-        count: 177
-        distinct: 75
-        pct: 1.1117
-        per_sent: 0.2719
+        count: 182
+        distinct: 76
+        pct: 1.1265
+        per_sent: 0.2762
         top:
         - token: CLAUDE
           count: 20
@@ -2073,7 +2073,7 @@ by_category:
         - token: DO
           count: 8
         - token: ONLY
-          count: 7
+          count: 8
         - token: SCM
           count: 6
         - token: RESPOND
@@ -2098,6 +2098,10 @@ by_category:
           count: 3
         - token: ALL
           count: 3
+        - token: ETA
+          count: 3
+        - token: 'NO'
+          count: 2
         - token: BEFORE
           count: 2
         - token: MUST
@@ -2110,14 +2114,10 @@ by_category:
           count: 2
         - token: AND
           count: 2
-        - token: HAS_GITHUB_REPO
-          count: 2
-        - token: CP
-          count: 2
       caps_imperative:
-        count: 24
-        pct: 0.1507
-        per_sent: 0.0369
+        count: 25
+        pct: 0.1547
+        per_sent: 0.0379
         hits:
           IMPORTANT: 10
           DO NOT: 7
@@ -2125,44 +2125,45 @@ by_category:
           CRITICAL: 2
           ALWAYS: 1
           REQUIRED: 1
+          NEVER: 1
           STOP: 1
       justification:
         count: 52
-        pct: 0.3266
-        per_sent: 0.0799
-        ratio: 0.354
+        pct: 0.3219
+        per_sent: 0.0789
+        ratio: 0.347
       rule_explanation:
-        n_paragraphs: 284
-        n_paragraphs_with_rules: 155
-        n_paragraphs_with_rules_unexplained: 119
-        n_rule_sentences: 314
-        n_imperative_sentences: 314
-        n_prohibition_sentences: 97
+        n_paragraphs: 286
+        n_paragraphs_with_rules: 157
+        n_paragraphs_with_rules_unexplained: 121
+        n_rule_sentences: 322
+        n_imperative_sentences: 322
+        n_prohibition_sentences: 100
         n_explained_same: 24
         n_explained_para: 103
         n_imperative_explained_para: 103
         n_prohibition_explained_para: 36
-        pct_explained_same: 7.6433
-        pct_explained_para: 32.8025
-        pct_imperative_explained_para: 32.8025
-        pct_prohibition_explained_para: 37.1134
-        pct_paragraphs_with_rules_unexplained: 76.7742
+        pct_explained_same: 7.4534
+        pct_explained_para: 31.9876
+        pct_imperative_explained_para: 31.9876
+        pct_prohibition_explained_para: 36.0
+        pct_paragraphs_with_rules_unexplained: 77.0701
       judgment_procedural:
-        judgment_count: 14
-        procedural_count: 90
-        judgment_per_sent: 0.0215
-        procedural_per_sent: 0.1382
-        judgment_to_procedural_ratio: 0.156
+        judgment_count: 16
+        procedural_count: 92
+        judgment_per_sent: 0.0243
+        procedural_per_sent: 0.1396
+        judgment_to_procedural_ratio: 0.174
       consequence_framing:
         threat_count: 13
         causal_count: 28
-        threat_per_sent: 0.02
-        causal_per_sent: 0.043
+        threat_per_sent: 0.0197
+        causal_per_sent: 0.0425
         threat_share: 0.3171
       socratic:
         question_count: 11
-        question_pct: 0.0691
-        question_per_sent: 0.0169
+        question_pct: 0.0681
+        question_per_sent: 0.0167
         apology_count: 0
         apology_pct: 0.0
         apology_per_sent: 0.0
@@ -2170,35 +2171,35 @@ by_category:
         selfref_claude: 46
         selfref_assistant: 1
         selfref_model: 12
-        selfref_2p: 43
+        selfref_2p: 45
         selfref_we: 0
         pct_anthropomorphic: 0.7797
         pct_artifact: 0.2034
         pct_role: 0.0169
       imperative_streaks:
-        n_imperative_sentences: 314
-        n_streaks: 154
+        n_imperative_sentences: 322
+        n_streaks: 156
         streak_max: 12
-        streak_mean: 2.039
-        n_streaks_ge3: 40
+        streak_mean: 2.064
+        n_streaks_ge3: 42
         n_streaks_ge5: 10
       rules_section:
-        n_paragraphs: 284
+        n_paragraphs: 286
         n_paragraphs_in_rules_section: 3
-        n_paragraphs_outside_rules_section: 281
+        n_paragraphs_outside_rules_section: 283
         n_rule_paragraphs_in_rules_section: 3
-        n_rule_paragraphs_outside_rules_section: 152
+        n_rule_paragraphs_outside_rules_section: 154
         n_rule_paragraphs_in_rules_section_explained: 0
         n_rule_paragraphs_outside_rules_section_explained: 36
         n_rule_sentences_in_rules_section: 6
-        n_rule_sentences_outside_rules_section: 308
+        n_rule_sentences_outside_rules_section: 316
         n_rule_sentences_in_rules_section_explained: 0
         n_rule_sentences_outside_rules_section_explained: 103
         pct_rule_paragraphs_explained_in_rules_section: 0.0
-        pct_rule_paragraphs_explained_outside_rules_section: 23.6842
+        pct_rule_paragraphs_explained_outside_rules_section: 23.3766
         pct_rule_sentences_explained_in_rules_section: 0.0
-        pct_rule_sentences_explained_outside_rules_section: 33.4416
-    n_files: 63
+        pct_rule_sentences_explained_outside_rules_section: 32.5949
+    n_files: 64
   System reminder:
     n_tokens: 3783
     n_sents: 173
@@ -2474,75 +2475,75 @@ by_category:
         pct_rule_sentences_explained_outside_rules_section: 30.9278
     n_files: 40
   Tool description:
-    n_tokens: 14640
-    n_sents: 558
+    n_tokens: 14425
+    n_sents: 553
     metrics:
       mood:
-        marker_count: 173
-        marker_pct: 1.1817
-        marker_per_sent: 0.31
+        marker_count: 172
+        marker_pct: 1.1924
+        marker_per_sent: 0.311
       register:
-        ttr: 0.2252
-        mean_sent_len: 26.24
-        dep_depth: 3.076
-        f_score: 67.11
+        ttr: 0.2261
+        mean_sent_len: 26.08
+        dep_depth: 3.077
+        f_score: 67.18
         frozen_count: 0
         formal_count: 0
         consultative_count: 62
         casual_count: 44
         frozen_pct: 0.0
         formal_pct: 0.0
-        consultative_pct: 0.4235
-        casual_pct: 0.3005
+        consultative_pct: 0.4298
+        casual_pct: 0.305
         frozen_per_sent: 0.0
         formal_per_sent: 0.0
-        consultative_per_sent: 0.1111
-        casual_per_sent: 0.0789
+        consultative_per_sent: 0.1121
+        casual_per_sent: 0.0796
         dominant_register: consultative
       stance:
-        directive_count: 189
-        expository_count: 231
+        directive_count: 188
+        expository_count: 230
         positive_evaluative_count: 62
         negative_evaluative_count: 15
-        dialogic_count: 29
+        dialogic_count: 28
         positive_evaluative_quality_count: 36
         positive_evaluative_emphasis_count: 26
         pronouns_1p_count: 30
-        pronouns_2p_count: 212
-        directive_pct: 1.291
-        expository_pct: 1.5779
-        positive_evaluative_pct: 0.4235
-        negative_evaluative_pct: 0.1025
-        dialogic_pct: 0.1981
-        positive_evaluative_quality_pct: 0.2459
-        positive_evaluative_emphasis_pct: 0.1776
-        pronouns_1p_pct: 0.2049
-        pronouns_2p_pct: 1.4481
-        directive_per_sent: 0.3387
-        expository_per_sent: 0.414
-        positive_evaluative_per_sent: 0.1111
-        negative_evaluative_per_sent: 0.0269
-        dialogic_per_sent: 0.052
-        positive_evaluative_quality_per_sent: 0.0645
-        positive_evaluative_emphasis_per_sent: 0.0466
-        pronouns_1p_per_sent: 0.0538
-        pronouns_2p_per_sent: 0.3799
+        pronouns_2p_count: 210
+        directive_pct: 1.3033
+        expository_pct: 1.5945
+        positive_evaluative_pct: 0.4298
+        negative_evaluative_pct: 0.104
+        dialogic_pct: 0.1941
+        positive_evaluative_quality_pct: 0.2496
+        positive_evaluative_emphasis_pct: 0.1802
+        pronouns_1p_pct: 0.208
+        pronouns_2p_pct: 1.4558
+        directive_per_sent: 0.34
+        expository_per_sent: 0.4159
+        positive_evaluative_per_sent: 0.1121
+        negative_evaluative_per_sent: 0.0271
+        dialogic_per_sent: 0.0506
+        positive_evaluative_quality_per_sent: 0.0651
+        positive_evaluative_emphasis_per_sent: 0.047
+        pronouns_1p_per_sent: 0.0542
+        pronouns_2p_per_sent: 0.3797
         dominant_stance: expository
       sentence_register:
         collaborative_sent_count: 4
-        collaborative_sent_pct: 0.7168
+        collaborative_sent_pct: 0.7233
         permissive_sent_count: 17
-        permissive_sent_pct: 3.0466
+        permissive_sent_pct: 3.0741
         appreciative_sent_count: 1
-        appreciative_sent_pct: 0.1792
-        imperative_sent_count: 207
-        imperative_sent_pct: 37.0968
-        directive_sent_count: 131
-        directive_sent_pct: 23.4767
+        appreciative_sent_pct: 0.1808
+        imperative_sent_count: 203
+        imperative_sent_pct: 36.7089
+        directive_sent_count: 130
+        directive_sent_pct: 23.5081
         configuring_sent_count: 29
-        configuring_sent_pct: 5.1971
-        none_sent_count: 262
-        none_sent_pct: 46.9534
+        configuring_sent_pct: 5.2441
+        none_sent_count: 261
+        none_sent_pct: 47.1971
         appreciative_addressee_claude_count: 1
         appreciative_addressee_user_count: 0
         appreciative_addressee_unknown_count: 0
@@ -2552,35 +2553,35 @@ by_category:
         dominant: imperative
       modality:
         deontic_count: 56
-        deontic_pct: 0.3825
-        deontic_per_sent: 0.1004
+        deontic_pct: 0.3882
+        deontic_per_sent: 0.1013
         epistemic_count: 37
-        epistemic_pct: 0.2527
-        epistemic_per_sent: 0.0663
+        epistemic_pct: 0.2565
+        epistemic_per_sent: 0.0669
         dynamic_count: 86
-        dynamic_pct: 0.5874
-        dynamic_per_sent: 0.1541
+        dynamic_pct: 0.5962
+        dynamic_per_sent: 0.1555
         top_construction: can
       vocab:
         hard_prohibitions:
-          count: 100
-          pct: 0.6831
-          per_sent: 0.1792
+          count: 99
+          pct: 0.6863
+          per_sent: 0.179
         hard_prescriptions:
           count: 67
-          pct: 0.4577
-          per_sent: 0.1201
+          pct: 0.4645
+          per_sent: 0.1212
         soft_prescriptions:
           count: 46
-          pct: 0.3142
-          per_sent: 0.0824
+          pct: 0.3189
+          per_sent: 0.0832
         politeness_direct:
           count: 2
-          pct: 0.0137
+          pct: 0.0139
           per_sent: 0.0036
         politeness_softening:
           count: 2
-          pct: 0.0137
+          pct: 0.0139
           per_sent: 0.0036
         warmth_encouragement:
           count: 0
@@ -2588,29 +2589,29 @@ by_category:
           per_sent: 0.0
         hedging:
           count: 15
-          pct: 0.1025
-          per_sent: 0.0269
+          pct: 0.104
+          per_sent: 0.0271
         structural_markers:
           count: 66
-          pct: 0.4508
-          per_sent: 0.1183
+          pct: 0.4575
+          per_sent: 0.1193
         profanity:
           count: 0
           pct: 0.0
           per_sent: 0.0
         pronouns_2p:
-          count: 212
-          pct: 1.4481
-          per_sent: 0.3799
+          count: 210
+          pct: 1.4558
+          per_sent: 0.3797
         pronouns_1p:
           count: 30
-          pct: 0.2049
-          per_sent: 0.0538
+          pct: 0.208
+          per_sent: 0.0542
       all_caps:
-        count: 229
-        distinct: 108
-        pct: 1.5642
-        per_sent: 0.4104
+        count: 226
+        distinct: 105
+        pct: 1.5667
+        per_sent: 0.4087
         top:
         - token: NOT
           count: 32
@@ -2664,8 +2665,8 @@ by_category:
           count: 2
       caps_imperative:
         count: 48
-        pct: 0.3279
-        per_sent: 0.086
+        pct: 0.3328
+        per_sent: 0.0868
         hits:
           IMPORTANT: 17
           NEVER: 11
@@ -2678,40 +2679,40 @@ by_category:
           MANDATORY: 1
       justification:
         count: 58
-        pct: 0.3962
-        per_sent: 0.1039
-        ratio: 0.333
+        pct: 0.4021
+        per_sent: 0.1049
+        ratio: 0.335
       rule_explanation:
-        n_paragraphs: 309
-        n_paragraphs_with_rules: 159
-        n_paragraphs_with_rules_unexplained: 120
-        n_rule_sentences: 273
-        n_imperative_sentences: 271
-        n_prohibition_sentences: 83
+        n_paragraphs: 308
+        n_paragraphs_with_rules: 158
+        n_paragraphs_with_rules_unexplained: 119
+        n_rule_sentences: 269
+        n_imperative_sentences: 267
+        n_prohibition_sentences: 82
         n_explained_same: 24
         n_explained_para: 79
         n_imperative_explained_para: 79
         n_prohibition_explained_para: 28
-        pct_explained_same: 8.7912
-        pct_explained_para: 28.9377
-        pct_imperative_explained_para: 29.1513
-        pct_prohibition_explained_para: 33.7349
-        pct_paragraphs_with_rules_unexplained: 75.4717
+        pct_explained_same: 8.9219
+        pct_explained_para: 29.368
+        pct_imperative_explained_para: 29.588
+        pct_prohibition_explained_para: 34.1463
+        pct_paragraphs_with_rules_unexplained: 75.3165
       judgment_procedural:
-        judgment_count: 4
-        procedural_count: 102
-        judgment_per_sent: 0.0072
-        procedural_per_sent: 0.1828
-        judgment_to_procedural_ratio: 0.039
+        judgment_count: 3
+        procedural_count: 99
+        judgment_per_sent: 0.0054
+        procedural_per_sent: 0.179
+        judgment_to_procedural_ratio: 0.03
       consequence_framing:
         threat_count: 14
         causal_count: 33
-        threat_per_sent: 0.0251
-        causal_per_sent: 0.0591
+        threat_per_sent: 0.0253
+        causal_per_sent: 0.0597
         threat_share: 0.2979
       socratic:
         question_count: 6
-        question_pct: 0.041
+        question_pct: 0.0416
         question_per_sent: 0.0108
         apology_count: 0
         apology_pct: 0.0
@@ -2726,29 +2727,29 @@ by_category:
         pct_artifact: 0.4146
         pct_role: 0.2927
       imperative_streaks:
-        n_imperative_sentences: 271
-        n_streaks: 149
+        n_imperative_sentences: 267
+        n_streaks: 147
         streak_max: 7
-        streak_mean: 1.819
+        streak_mean: 1.816
         n_streaks_ge3: 22
         n_streaks_ge5: 11
       rules_section:
-        n_paragraphs: 309
+        n_paragraphs: 308
         n_paragraphs_in_rules_section: 4
-        n_paragraphs_outside_rules_section: 305
+        n_paragraphs_outside_rules_section: 304
         n_rule_paragraphs_in_rules_section: 1
-        n_rule_paragraphs_outside_rules_section: 158
+        n_rule_paragraphs_outside_rules_section: 157
         n_rule_paragraphs_in_rules_section_explained: 1
         n_rule_paragraphs_outside_rules_section_explained: 38
         n_rule_sentences_in_rules_section: 2
-        n_rule_sentences_outside_rules_section: 271
+        n_rule_sentences_outside_rules_section: 267
         n_rule_sentences_in_rules_section_explained: 2
         n_rule_sentences_outside_rules_section_explained: 77
         pct_rule_paragraphs_explained_in_rules_section: 100.0
-        pct_rule_paragraphs_explained_outside_rules_section: 24.0506
+        pct_rule_paragraphs_explained_outside_rules_section: 24.2038
         pct_rule_sentences_explained_in_rules_section: 100.0
-        pct_rule_sentences_explained_outside_rules_section: 28.4133
-    n_files: 79
+        pct_rule_sentences_explained_outside_rules_section: 28.839
+    n_files: 78
   Tool parameter:
     n_tokens: 179
     n_sents: 14
@@ -6803,7 +6804,7 @@ files:
   name: 'Agent Prompt: Managed Agents onboarding flow'
   description: Interactive interview script that walks users through configuring a Managed Agent from scratch — selecting
     tools, skills, files, environment settings — and emits setup and runtime code
-  ccVersion: 2.1.118
+  ccVersion: 2.1.132
   agentType: null
   n_tokens: 1611
   n_sents: 100
@@ -7248,6 +7249,232 @@ files:
       pct_rule_paragraphs_explained_outside_rules_section: 33.3333
       pct_rule_sentences_explained_in_rules_section: null
       pct_rule_sentences_explained_outside_rules_section: 12.5
+- path: agent-prompt-onboarding-guide-draft-share-link-workflow.md
+  category: Agent prompt
+  name: 'Agent Prompt: Onboarding guide draft share link workflow'
+  description: Adds instructions for sharing the draft ONBOARDING.md before review, then updating the same ShareOnboardingGuide
+    link after the user answers the review questions
+  ccVersion: 2.1.132
+  agentType: null
+  n_tokens: 236
+  n_sents: 11
+  metrics:
+    mood:
+      marker_count: 0
+      marker_pct: 0.0
+      marker_per_sent: 0.0
+    register:
+      ttr: 0.6526
+      mean_sent_len: 21.45
+      dep_depth: 2.549
+      f_score: 63.09
+      frozen_count: 0
+      formal_count: 0
+      consultative_count: 0
+      casual_count: 2
+      frozen_pct: 0.0
+      formal_pct: 0.0
+      consultative_pct: 0.0
+      casual_pct: 0.8475
+      frozen_per_sent: 0.0
+      formal_per_sent: 0.0
+      consultative_per_sent: 0.0
+      casual_per_sent: 0.1818
+      dominant_register: casual
+    stance:
+      directive_count: 0
+      directive_pct: 0.0
+      directive_per_sent: 0.0
+      expository_count: 0
+      expository_pct: 0.0
+      expository_per_sent: 0.0
+      positive_evaluative_count: 1
+      positive_evaluative_pct: 0.4237
+      positive_evaluative_per_sent: 0.0909
+      negative_evaluative_count: 0
+      negative_evaluative_pct: 0.0
+      negative_evaluative_per_sent: 0.0
+      dialogic_count: 0
+      dialogic_pct: 0.0
+      dialogic_per_sent: 0.0
+      pronouns_1p_count: 0
+      pronouns_1p_pct: 0.0
+      pronouns_1p_per_sent: 0.0
+      pronouns_2p_count: 5
+      pronouns_2p_pct: 2.1186
+      pronouns_2p_per_sent: 0.4545
+      dominant_stance: positive_evaluative
+      positive_evaluative_quality_count: 1
+      positive_evaluative_quality_pct: 0.4237
+      positive_evaluative_quality_per_sent: 0.0909
+      positive_evaluative_emphasis_count: 0
+      positive_evaluative_emphasis_pct: 0.0
+      positive_evaluative_emphasis_per_sent: 0.0
+    sentence_register:
+      collaborative_sent_count: 0
+      collaborative_sent_pct: 0.0
+      permissive_sent_count: 0
+      permissive_sent_pct: 0.0
+      appreciative_sent_count: 0
+      appreciative_sent_pct: 0.0
+      imperative_sent_count: 3
+      imperative_sent_pct: 27.2727
+      directive_sent_count: 0
+      directive_sent_pct: 0.0
+      configuring_sent_count: 0
+      configuring_sent_pct: 0.0
+      none_sent_count: 8
+      none_sent_pct: 72.7273
+      appreciative_addressee_claude_count: 0
+      appreciative_addressee_user_count: 0
+      appreciative_addressee_unknown_count: 0
+      collaborative_addressee_claude_count: 0
+      collaborative_addressee_user_count: 0
+      collaborative_addressee_unknown_count: 0
+      dominant: imperative
+    modality:
+      deontic_count: 0
+      deontic_pct: 0.0
+      deontic_per_sent: 0.0
+      epistemic_count: 0
+      epistemic_pct: 0.0
+      epistemic_per_sent: 0.0
+      dynamic_count: 2
+      dynamic_pct: 0.8475
+      dynamic_per_sent: 0.1818
+      top_construction: '''ll'
+    vocab:
+      hard_prohibitions:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      hard_prescriptions:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      soft_prescriptions:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      politeness_direct:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      politeness_softening:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      warmth_encouragement:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      hedging:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      structural_markers:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      profanity:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      pronouns_2p:
+        count: 5
+        pct: 2.1186
+        per_sent: 0.4545
+      pronouns_1p:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+    all_caps:
+      count: 2
+      distinct: 2
+      pct: 0.8475
+      per_sent: 0.1818
+      top:
+      - token: SHARE_ONBOARDING_GUIDE_TOOL_NAME
+        count: 1
+      - token: ONBOARDING
+        count: 1
+    caps_imperative:
+      count: 0
+      pct: 0.0
+      per_sent: 0.0
+      hits: {}
+    justification:
+      count: 0
+      pct: 0.0
+      per_sent: 0.0
+      ratio: 0.0
+    rule_explanation:
+      n_paragraphs: 9
+      n_paragraphs_with_rules: 3
+      n_paragraphs_with_rules_unexplained: 3
+      n_rule_sentences: 3
+      n_imperative_sentences: 3
+      n_prohibition_sentences: 0
+      n_explained_same: 0
+      n_explained_para: 0
+      n_imperative_explained_para: 0
+      n_prohibition_explained_para: 0
+      pct_explained_same: 0.0
+      pct_explained_para: 0.0
+      pct_imperative_explained_para: 0.0
+      pct_prohibition_explained_para: null
+      pct_paragraphs_with_rules_unexplained: 100.0
+    judgment_procedural:
+      judgment_count: 0
+      procedural_count: 1
+      judgment_per_sent: 0.0
+      procedural_per_sent: 0.0909
+      judgment_to_procedural_ratio: 0.0
+    consequence_framing:
+      threat_count: 0
+      causal_count: 0
+      threat_per_sent: 0.0
+      causal_per_sent: 0.0
+      threat_share: null
+    socratic:
+      question_count: 0
+      question_pct: 0.0
+      question_per_sent: 0.0
+      apology_count: 0
+      apology_pct: 0.0
+      apology_per_sent: 0.0
+    address_form:
+      selfref_claude: 1
+      selfref_assistant: 0
+      selfref_model: 0
+      selfref_2p: 0
+      selfref_we: 0
+      pct_anthropomorphic: 1.0
+      pct_artifact: 0.0
+      pct_role: 0.0
+    imperative_streaks:
+      n_imperative_sentences: 3
+      n_streaks: 2
+      streak_max: 2
+      streak_mean: 1.5
+      n_streaks_ge3: 0
+      n_streaks_ge5: 0
+    rules_section:
+      n_paragraphs: 9
+      n_paragraphs_in_rules_section: 0
+      n_paragraphs_outside_rules_section: 9
+      n_rule_paragraphs_in_rules_section: 0
+      n_rule_paragraphs_outside_rules_section: 3
+      n_rule_paragraphs_in_rules_section_explained: 0
+      n_rule_paragraphs_outside_rules_section_explained: 0
+      n_rule_sentences_in_rules_section: 0
+      n_rule_sentences_outside_rules_section: 3
+      n_rule_sentences_in_rules_section_explained: 0
+      n_rule_sentences_outside_rules_section_explained: 0
+      pct_rule_paragraphs_explained_in_rules_section: null
+      pct_rule_paragraphs_explained_outside_rules_section: 0.0
+      pct_rule_sentences_explained_in_rules_section: null
+      pct_rule_sentences_explained_outside_rules_section: 0.0
 - path: agent-prompt-onboarding-guide-generator.md
   category: Agent prompt
   name: 'Agent Prompt: Onboarding guide generator'
@@ -7474,232 +7701,6 @@ files:
       pct_rule_paragraphs_explained_outside_rules_section: 0.0
       pct_rule_sentences_explained_in_rules_section: null
       pct_rule_sentences_explained_outside_rules_section: 0.0
-- path: agent-prompt-onboarding-guide-share-link-close.md
-  category: Agent prompt
-  name: 'Agent Prompt: Onboarding guide share link close'
-  description: Adds instructions for uploading the finalized ONBOARDING.md with ShareOnboardingGuide and closing with the
-    generated team share link
-  ccVersion: 2.1.128
-  agentType: null
-  n_tokens: 124
-  n_sents: 4
-  metrics:
-    mood:
-      marker_count: 0
-      marker_pct: 0.0
-      marker_per_sent: 0.0
-    register:
-      ttr: 0.8333
-      mean_sent_len: 31.0
-      dep_depth: 2.569
-      f_score: 52.5
-      frozen_count: 0
-      formal_count: 0
-      consultative_count: 0
-      casual_count: 1
-      frozen_pct: 0.0
-      formal_pct: 0.0
-      consultative_pct: 0.0
-      casual_pct: 0.8065
-      frozen_per_sent: 0.0
-      formal_per_sent: 0.0
-      consultative_per_sent: 0.0
-      casual_per_sent: 0.25
-      dominant_register: casual
-    stance:
-      directive_count: 0
-      directive_pct: 0.0
-      directive_per_sent: 0.0
-      expository_count: 1
-      expository_pct: 0.8065
-      expository_per_sent: 0.25
-      positive_evaluative_count: 0
-      positive_evaluative_pct: 0.0
-      positive_evaluative_per_sent: 0.0
-      negative_evaluative_count: 0
-      negative_evaluative_pct: 0.0
-      negative_evaluative_per_sent: 0.0
-      dialogic_count: 0
-      dialogic_pct: 0.0
-      dialogic_per_sent: 0.0
-      pronouns_1p_count: 0
-      pronouns_1p_pct: 0.0
-      pronouns_1p_per_sent: 0.0
-      pronouns_2p_count: 2
-      pronouns_2p_pct: 1.6129
-      pronouns_2p_per_sent: 0.5
-      dominant_stance: expository
-      positive_evaluative_quality_count: 0
-      positive_evaluative_quality_pct: 0.0
-      positive_evaluative_quality_per_sent: 0.0
-      positive_evaluative_emphasis_count: 0
-      positive_evaluative_emphasis_pct: 0.0
-      positive_evaluative_emphasis_per_sent: 0.0
-    sentence_register:
-      collaborative_sent_count: 0
-      collaborative_sent_pct: 0.0
-      permissive_sent_count: 0
-      permissive_sent_pct: 0.0
-      appreciative_sent_count: 0
-      appreciative_sent_pct: 0.0
-      imperative_sent_count: 2
-      imperative_sent_pct: 50.0
-      directive_sent_count: 0
-      directive_sent_pct: 0.0
-      configuring_sent_count: 0
-      configuring_sent_pct: 0.0
-      none_sent_count: 2
-      none_sent_pct: 50.0
-      appreciative_addressee_claude_count: 0
-      appreciative_addressee_user_count: 0
-      appreciative_addressee_unknown_count: 0
-      collaborative_addressee_claude_count: 0
-      collaborative_addressee_user_count: 0
-      collaborative_addressee_unknown_count: 0
-      dominant: imperative
-    modality:
-      deontic_count: 0
-      deontic_pct: 0.0
-      deontic_per_sent: 0.0
-      epistemic_count: 0
-      epistemic_pct: 0.0
-      epistemic_per_sent: 0.0
-      dynamic_count: 1
-      dynamic_pct: 0.8065
-      dynamic_per_sent: 0.25
-      top_construction: '''ll'
-    vocab:
-      hard_prohibitions:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      hard_prescriptions:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      soft_prescriptions:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      politeness_direct:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      politeness_softening:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      warmth_encouragement:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      hedging:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      structural_markers:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      profanity:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      pronouns_2p:
-        count: 2
-        pct: 1.6129
-        per_sent: 0.5
-      pronouns_1p:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-    all_caps:
-      count: 2
-      distinct: 2
-      pct: 1.6129
-      per_sent: 0.5
-      top:
-      - token: ONBOARDING
-        count: 1
-      - token: SHARE_ONBOARDING_GUIDE_TOOL_NAME
-        count: 1
-    caps_imperative:
-      count: 0
-      pct: 0.0
-      per_sent: 0.0
-      hits: {}
-    justification:
-      count: 1
-      pct: 0.8065
-      per_sent: 0.25
-      ratio: 1.0
-    rule_explanation:
-      n_paragraphs: 4
-      n_paragraphs_with_rules: 2
-      n_paragraphs_with_rules_unexplained: 1
-      n_rule_sentences: 2
-      n_imperative_sentences: 2
-      n_prohibition_sentences: 0
-      n_explained_same: 0
-      n_explained_para: 1
-      n_imperative_explained_para: 1
-      n_prohibition_explained_para: 0
-      pct_explained_same: 0.0
-      pct_explained_para: 50.0
-      pct_imperative_explained_para: 50.0
-      pct_prohibition_explained_para: null
-      pct_paragraphs_with_rules_unexplained: 50.0
-    judgment_procedural:
-      judgment_count: 0
-      procedural_count: 2
-      judgment_per_sent: 0.0
-      procedural_per_sent: 0.5
-      judgment_to_procedural_ratio: 0.0
-    consequence_framing:
-      threat_count: 1
-      causal_count: 0
-      threat_per_sent: 0.25
-      causal_per_sent: 0.0
-      threat_share: 1.0
-    socratic:
-      question_count: 0
-      question_pct: 0.0
-      question_per_sent: 0.0
-      apology_count: 0
-      apology_pct: 0.0
-      apology_per_sent: 0.0
-    address_form:
-      selfref_claude: 1
-      selfref_assistant: 0
-      selfref_model: 0
-      selfref_2p: 0
-      selfref_we: 0
-      pct_anthropomorphic: 1.0
-      pct_artifact: 0.0
-      pct_role: 0.0
-    imperative_streaks:
-      n_imperative_sentences: 2
-      n_streaks: 2
-      streak_max: 1
-      streak_mean: 1.0
-      n_streaks_ge3: 0
-      n_streaks_ge5: 0
-    rules_section:
-      n_paragraphs: 4
-      n_paragraphs_in_rules_section: 0
-      n_paragraphs_outside_rules_section: 4
-      n_rule_paragraphs_in_rules_section: 0
-      n_rule_paragraphs_outside_rules_section: 2
-      n_rule_paragraphs_in_rules_section_explained: 0
-      n_rule_paragraphs_outside_rules_section_explained: 1
-      n_rule_sentences_in_rules_section: 0
-      n_rule_sentences_outside_rules_section: 2
-      n_rule_sentences_in_rules_section_explained: 0
-      n_rule_sentences_outside_rules_section_explained: 1
-      pct_rule_paragraphs_explained_in_rules_section: null
-      pct_rule_paragraphs_explained_outside_rules_section: 50.0
-      pct_rule_sentences_explained_in_rules_section: null
-      pct_rule_sentences_explained_outside_rules_section: 50.0
 - path: agent-prompt-plan-mode-enhanced.md
   category: Agent prompt
   name: 'Agent Prompt: Plan mode (enhanced)'
@@ -7937,59 +7938,59 @@ files:
   category: Agent prompt
   name: 'Agent Prompt: Prompt Suggestion Generator v2'
   description: V2 instructions for generating prompt suggestions for Claude Code
-  ccVersion: 2.1.26
+  ccVersion: 2.1.132
   agentType: null
-  n_tokens: 268
-  n_sents: 8
+  n_tokens: 314
+  n_sents: 10
   metrics:
     mood:
-      marker_count: 1
-      marker_pct: 0.3731
-      marker_per_sent: 0.125
+      marker_count: 2
+      marker_pct: 0.6369
+      marker_per_sent: 0.2
     register:
-      ttr: 0.6796
-      mean_sent_len: 33.5
-      dep_depth: 3.938
-      f_score: 53.96
+      ttr: 0.6825
+      mean_sent_len: 31.4
+      dep_depth: 3.842
+      f_score: 58.08
       frozen_count: 0
       formal_count: 0
       consultative_count: 3
       casual_count: 3
       frozen_pct: 0.0
       formal_pct: 0.0
-      consultative_pct: 1.1194
-      casual_pct: 1.1194
+      consultative_pct: 0.9554
+      casual_pct: 0.9554
       frozen_per_sent: 0.0
       formal_per_sent: 0.0
-      consultative_per_sent: 0.375
-      casual_per_sent: 0.375
+      consultative_per_sent: 0.3
+      casual_per_sent: 0.3
       dominant_register: consultative
     stance:
-      directive_count: 2
-      directive_pct: 0.7463
-      directive_per_sent: 0.25
-      expository_count: 3
-      expository_pct: 1.1194
-      expository_per_sent: 0.375
+      directive_count: 3
+      directive_pct: 0.9554
+      directive_per_sent: 0.3
+      expository_count: 4
+      expository_pct: 1.2739
+      expository_per_sent: 0.4
       positive_evaluative_count: 2
-      positive_evaluative_pct: 0.7463
-      positive_evaluative_per_sent: 0.25
-      negative_evaluative_count: 0
-      negative_evaluative_pct: 0.0
-      negative_evaluative_per_sent: 0.0
+      positive_evaluative_pct: 0.6369
+      positive_evaluative_per_sent: 0.2
+      negative_evaluative_count: 3
+      negative_evaluative_pct: 0.9554
+      negative_evaluative_per_sent: 0.3
       dialogic_count: 0
       dialogic_pct: 0.0
       dialogic_per_sent: 0.0
       pronouns_1p_count: 3
-      pronouns_1p_pct: 1.1194
-      pronouns_1p_per_sent: 0.375
+      pronouns_1p_pct: 0.9554
+      pronouns_1p_per_sent: 0.3
       pronouns_2p_count: 2
-      pronouns_2p_pct: 0.7463
-      pronouns_2p_per_sent: 0.25
+      pronouns_2p_pct: 0.6369
+      pronouns_2p_per_sent: 0.2
       dominant_stance: expository
       positive_evaluative_quality_count: 2
-      positive_evaluative_quality_pct: 0.7463
-      positive_evaluative_quality_per_sent: 0.25
+      positive_evaluative_quality_pct: 0.6369
+      positive_evaluative_quality_per_sent: 0.2
       positive_evaluative_emphasis_count: 0
       positive_evaluative_emphasis_pct: 0.0
       positive_evaluative_emphasis_per_sent: 0.0
@@ -7999,15 +8000,15 @@ files:
       permissive_sent_count: 0
       permissive_sent_pct: 0.0
       appreciative_sent_count: 1
-      appreciative_sent_pct: 12.5
-      imperative_sent_count: 3
-      imperative_sent_pct: 37.5
-      directive_sent_count: 2
-      directive_sent_pct: 25.0
+      appreciative_sent_pct: 10.0
+      imperative_sent_count: 5
+      imperative_sent_pct: 50.0
+      directive_sent_count: 3
+      directive_sent_pct: 30.0
       configuring_sent_count: 0
       configuring_sent_pct: 0.0
       none_sent_count: 4
-      none_sent_pct: 50.0
+      none_sent_pct: 40.0
       appreciative_addressee_claude_count: 1
       appreciative_addressee_user_count: 0
       appreciative_addressee_unknown_count: 0
@@ -8017,32 +8018,32 @@ files:
       dominant: imperative
     modality:
       deontic_count: 1
-      deontic_pct: 0.3731
-      deontic_per_sent: 0.125
-      epistemic_count: 2
-      epistemic_pct: 0.7463
-      epistemic_per_sent: 0.25
+      deontic_pct: 0.3185
+      deontic_per_sent: 0.1
+      epistemic_count: 4
+      epistemic_pct: 1.2739
+      epistemic_per_sent: 0.4
       dynamic_count: 4
-      dynamic_pct: 1.4925
-      dynamic_per_sent: 0.5
+      dynamic_pct: 1.2739
+      dynamic_per_sent: 0.4
       top_construction: would
     vocab:
       hard_prohibitions:
-        count: 1
-        pct: 0.3731
-        per_sent: 0.125
+        count: 2
+        pct: 0.6369
+        per_sent: 0.2
       hard_prescriptions:
         count: 0
         pct: 0.0
         per_sent: 0.0
       soft_prescriptions:
         count: 1
-        pct: 0.3731
-        per_sent: 0.125
+        pct: 0.3185
+        per_sent: 0.1
       politeness_direct:
         count: 1
-        pct: 0.3731
-        per_sent: 0.125
+        pct: 0.3185
+        per_sent: 0.1
       politeness_softening:
         count: 0
         pct: 0.0
@@ -8052,9 +8053,9 @@ files:
         pct: 0.0
         per_sent: 0.0
       hedging:
-        count: 2
-        pct: 0.7463
-        per_sent: 0.25
+        count: 4
+        pct: 1.2739
+        per_sent: 0.4
       structural_markers:
         count: 0
         pct: 0.0
@@ -8065,17 +8066,17 @@ files:
         per_sent: 0.0
       pronouns_2p:
         count: 2
-        pct: 0.7463
-        per_sent: 0.25
+        pct: 0.6369
+        per_sent: 0.2
       pronouns_1p:
         count: 3
-        pct: 1.1194
-        per_sent: 0.375
+        pct: 0.9554
+        per_sent: 0.3
     all_caps:
       count: 10
       distinct: 10
-      pct: 3.7313
-      per_sent: 1.25
+      pct: 3.1847
+      per_sent: 1.0
       top:
       - token: SUGGESTION
         count: 1
@@ -8085,8 +8086,8 @@ files:
         count: 1
     caps_imperative:
       count: 1
-      pct: 0.3731
-      per_sent: 0.125
+      pct: 0.3185
+      per_sent: 0.1
       hits:
         NEVER: 1
     justification:
@@ -8095,12 +8096,12 @@ files:
       per_sent: 0.0
       ratio: 0.0
     rule_explanation:
-      n_paragraphs: 10
-      n_paragraphs_with_rules: 3
-      n_paragraphs_with_rules_unexplained: 3
-      n_rule_sentences: 3
-      n_imperative_sentences: 3
-      n_prohibition_sentences: 1
+      n_paragraphs: 11
+      n_paragraphs_with_rules: 4
+      n_paragraphs_with_rules_unexplained: 4
+      n_rule_sentences: 5
+      n_imperative_sentences: 5
+      n_prohibition_sentences: 2
       n_explained_same: 0
       n_explained_para: 0
       n_imperative_explained_para: 0
@@ -8112,10 +8113,10 @@ files:
       pct_paragraphs_with_rules_unexplained: 100.0
     judgment_procedural:
       judgment_count: 2
-      procedural_count: 1
-      judgment_per_sent: 0.25
-      procedural_per_sent: 0.125
-      judgment_to_procedural_ratio: 2.0
+      procedural_count: 3
+      judgment_per_sent: 0.2
+      procedural_per_sent: 0.3
+      judgment_to_procedural_ratio: 0.667
     consequence_framing:
       threat_count: 0
       causal_count: 0
@@ -8139,22 +8140,22 @@ files:
       pct_artifact: 0.0
       pct_role: 0.0
     imperative_streaks:
-      n_imperative_sentences: 3
+      n_imperative_sentences: 5
       n_streaks: 2
-      streak_max: 2
-      streak_mean: 1.5
-      n_streaks_ge3: 0
+      streak_max: 3
+      streak_mean: 2.5
+      n_streaks_ge3: 1
       n_streaks_ge5: 0
     rules_section:
-      n_paragraphs: 10
+      n_paragraphs: 11
       n_paragraphs_in_rules_section: 0
-      n_paragraphs_outside_rules_section: 10
+      n_paragraphs_outside_rules_section: 11
       n_rule_paragraphs_in_rules_section: 0
-      n_rule_paragraphs_outside_rules_section: 3
+      n_rule_paragraphs_outside_rules_section: 4
       n_rule_paragraphs_in_rules_section_explained: 0
       n_rule_paragraphs_outside_rules_section_explained: 0
       n_rule_sentences_in_rules_section: 0
-      n_rule_sentences_outside_rules_section: 3
+      n_rule_sentences_outside_rules_section: 5
       n_rule_sentences_in_rules_section_explained: 0
       n_rule_sentences_outside_rules_section_explained: 0
       pct_rule_paragraphs_explained_in_rules_section: null
@@ -9755,62 +9756,62 @@ files:
   name: 'Agent Prompt: Security monitor for autonomous agent actions (second part)'
   description: Defines the environment context, block rules, and allow exceptions that govern which tool actions the agent
     may or may not perform
-  ccVersion: 2.1.120
+  ccVersion: 2.1.132
   agentType: null
-  n_tokens: 2793
-  n_sents: 66
+  n_tokens: 2831
+  n_sents: 67
   metrics:
     mood:
       marker_count: 12
-      marker_pct: 0.4296
-      marker_per_sent: 0.1818
+      marker_pct: 0.4239
+      marker_per_sent: 0.1791
     register:
-      ttr: 0.4268
-      mean_sent_len: 42.32
-      dep_depth: 3.701
-      f_score: 71.6
+      ttr: 0.4253
+      mean_sent_len: 42.25
+      dep_depth: 3.685
+      f_score: 71.53
       frozen_count: 0
       formal_count: 0
       consultative_count: 2
       casual_count: 3
       frozen_pct: 0.0
       formal_pct: 0.0
-      consultative_pct: 0.0716
-      casual_pct: 0.1074
+      consultative_pct: 0.0706
+      casual_pct: 0.106
       frozen_per_sent: 0.0
       formal_per_sent: 0.0
-      consultative_per_sent: 0.0303
-      casual_per_sent: 0.0455
+      consultative_per_sent: 0.0299
+      casual_per_sent: 0.0448
       dominant_register: casual
     stance:
       directive_count: 9
-      directive_pct: 0.3222
-      directive_per_sent: 0.1364
+      directive_pct: 0.3179
+      directive_per_sent: 0.1343
       expository_count: 66
-      expository_pct: 2.3631
-      expository_per_sent: 1.0
+      expository_pct: 2.3313
+      expository_per_sent: 0.9851
       positive_evaluative_count: 2
-      positive_evaluative_pct: 0.0716
-      positive_evaluative_per_sent: 0.0303
+      positive_evaluative_pct: 0.0706
+      positive_evaluative_per_sent: 0.0299
       negative_evaluative_count: 3
-      negative_evaluative_pct: 0.1074
-      negative_evaluative_per_sent: 0.0455
+      negative_evaluative_pct: 0.106
+      negative_evaluative_per_sent: 0.0448
       dialogic_count: 1
-      dialogic_pct: 0.0358
-      dialogic_per_sent: 0.0152
+      dialogic_pct: 0.0353
+      dialogic_per_sent: 0.0149
       pronouns_1p_count: 0
       pronouns_1p_pct: 0.0
       pronouns_1p_per_sent: 0.0
       pronouns_2p_count: 2
-      pronouns_2p_pct: 0.0716
-      pronouns_2p_per_sent: 0.0303
+      pronouns_2p_pct: 0.0706
+      pronouns_2p_per_sent: 0.0299
       dominant_stance: expository
       positive_evaluative_quality_count: 0
       positive_evaluative_quality_pct: 0.0
       positive_evaluative_quality_per_sent: 0.0
       positive_evaluative_emphasis_count: 2
-      positive_evaluative_emphasis_pct: 0.0716
-      positive_evaluative_emphasis_per_sent: 0.0303
+      positive_evaluative_emphasis_pct: 0.0706
+      positive_evaluative_emphasis_per_sent: 0.0299
     sentence_register:
       collaborative_sent_count: 0
       collaborative_sent_pct: 0.0
@@ -9818,14 +9819,14 @@ files:
       permissive_sent_pct: 0.0
       appreciative_sent_count: 0
       appreciative_sent_pct: 0.0
-      imperative_sent_count: 24
-      imperative_sent_pct: 36.3636
+      imperative_sent_count: 25
+      imperative_sent_pct: 37.3134
       directive_sent_count: 7
-      directive_sent_pct: 10.6061
+      directive_sent_pct: 10.4478
       configuring_sent_count: 8
-      configuring_sent_pct: 12.1212
+      configuring_sent_pct: 11.9403
       none_sent_count: 34
-      none_sent_pct: 51.5152
+      none_sent_pct: 50.7463
       appreciative_addressee_claude_count: 0
       appreciative_addressee_user_count: 0
       appreciative_addressee_unknown_count: 0
@@ -9838,25 +9839,25 @@ files:
       deontic_pct: 0.0
       deontic_per_sent: 0.0
       epistemic_count: 5
-      epistemic_pct: 0.179
-      epistemic_per_sent: 0.0758
+      epistemic_pct: 0.1766
+      epistemic_per_sent: 0.0746
       dynamic_count: 7
-      dynamic_pct: 0.2506
-      dynamic_per_sent: 0.1061
+      dynamic_pct: 0.2473
+      dynamic_per_sent: 0.1045
       top_construction: can
     vocab:
       hard_prohibitions:
         count: 8
-        pct: 0.2864
-        per_sent: 0.1212
+        pct: 0.2826
+        per_sent: 0.1194
       hard_prescriptions:
         count: 4
-        pct: 0.1432
-        per_sent: 0.0606
+        pct: 0.1413
+        per_sent: 0.0597
       soft_prescriptions:
         count: 2
-        pct: 0.0716
-        per_sent: 0.0303
+        pct: 0.0706
+        per_sent: 0.0299
       politeness_direct:
         count: 0
         pct: 0.0
@@ -9871,20 +9872,20 @@ files:
         per_sent: 0.0
       hedging:
         count: 2
-        pct: 0.0716
-        per_sent: 0.0303
+        pct: 0.0706
+        per_sent: 0.0299
       structural_markers:
         count: 3
-        pct: 0.1074
-        per_sent: 0.0455
+        pct: 0.106
+        per_sent: 0.0448
       profanity:
         count: 0
         pct: 0.0
         per_sent: 0.0
       pronouns_2p:
         count: 2
-        pct: 0.0716
-        per_sent: 0.0303
+        pct: 0.0706
+        per_sent: 0.0299
       pronouns_1p:
         count: 0
         pct: 0.0
@@ -9892,8 +9893,8 @@ files:
     all_caps:
       count: 31
       distinct: 18
-      pct: 1.1099
-      per_sent: 0.4697
+      pct: 1.095
+      per_sent: 0.4627
       top:
       - token: BLOCK
         count: 5
@@ -9903,41 +9904,41 @@ files:
         count: 4
     caps_imperative:
       count: 1
-      pct: 0.0358
-      per_sent: 0.0152
+      pct: 0.0353
+      per_sent: 0.0149
       hits:
         MUST: 1
     justification:
       count: 2
-      pct: 0.0716
-      per_sent: 0.0303
+      pct: 0.0706
+      per_sent: 0.0299
       ratio: 0.154
     rule_explanation:
       n_paragraphs: 10
       n_paragraphs_with_rules: 5
       n_paragraphs_with_rules_unexplained: 3
-      n_rule_sentences: 29
-      n_imperative_sentences: 29
+      n_rule_sentences: 30
+      n_imperative_sentences: 30
       n_prohibition_sentences: 7
       n_explained_same: 2
-      n_explained_para: 26
-      n_imperative_explained_para: 26
+      n_explained_para: 27
+      n_imperative_explained_para: 27
       n_prohibition_explained_para: 6
-      pct_explained_same: 6.8966
-      pct_explained_para: 89.6552
-      pct_imperative_explained_para: 89.6552
+      pct_explained_same: 6.6667
+      pct_explained_para: 90.0
+      pct_imperative_explained_para: 90.0
       pct_prohibition_explained_para: 85.7143
       pct_paragraphs_with_rules_unexplained: 60.0
     judgment_procedural:
       judgment_count: 0
       procedural_count: 10
       judgment_per_sent: 0.0
-      procedural_per_sent: 0.1515
+      procedural_per_sent: 0.1493
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
       threat_count: 1
       causal_count: 0
-      threat_per_sent: 0.0152
+      threat_per_sent: 0.0149
       causal_per_sent: 0.0
       threat_share: 1.0
     socratic:
@@ -9948,19 +9949,19 @@ files:
       apology_pct: 0.0
       apology_per_sent: 0.0
     address_form:
-      selfref_claude: 4
+      selfref_claude: 7
       selfref_assistant: 0
       selfref_model: 23
       selfref_2p: 0
       selfref_we: 0
-      pct_anthropomorphic: 0.1481
-      pct_artifact: 0.8519
+      pct_anthropomorphic: 0.2333
+      pct_artifact: 0.7667
       pct_role: 0.0
     imperative_streaks:
-      n_imperative_sentences: 29
+      n_imperative_sentences: 30
       n_streaks: 19
       streak_max: 7
-      streak_mean: 1.526
+      streak_mean: 1.579
       n_streaks_ge3: 1
       n_streaks_ge5: 1
     rules_section:
@@ -9972,13 +9973,13 @@ files:
       n_rule_paragraphs_in_rules_section_explained: 0
       n_rule_paragraphs_outside_rules_section_explained: 2
       n_rule_sentences_in_rules_section: 0
-      n_rule_sentences_outside_rules_section: 29
+      n_rule_sentences_outside_rules_section: 30
       n_rule_sentences_in_rules_section_explained: 0
-      n_rule_sentences_outside_rules_section_explained: 26
+      n_rule_sentences_outside_rules_section_explained: 27
       pct_rule_paragraphs_explained_in_rules_section: null
       pct_rule_paragraphs_explained_outside_rules_section: 40.0
       pct_rule_sentences_explained_in_rules_section: null
-      pct_rule_sentences_explained_outside_rules_section: 89.6552
+      pct_rule_sentences_explained_outside_rules_section: 90.0
 - path: agent-prompt-security-review-slash-command.md
   category: Agent prompt
   name: 'Agent Prompt: /security-review slash command'
@@ -10660,77 +10661,77 @@ files:
   category: Agent prompt
   name: 'Agent Prompt: Status line setup'
   description: System prompt for the statusline-setup agent that configures status line display
-  ccVersion: 2.1.119
+  ccVersion: 2.1.132
   agentType: statusline-setup
-  n_tokens: 1598
-  n_sents: 27
+  n_tokens: 1603
+  n_sents: 29
   metrics:
     mood:
       marker_count: 7
-      marker_pct: 0.438
-      marker_per_sent: 0.2593
+      marker_pct: 0.4367
+      marker_per_sent: 0.2414
     register:
-      ttr: 0.4288
-      mean_sent_len: 59.19
-      dep_depth: 3.88
-      f_score: 79.75
+      ttr: 0.4277
+      mean_sent_len: 55.28
+      dep_depth: 3.772
+      f_score: 79.56
       frozen_count: 0
       formal_count: 0
       consultative_count: 2
       casual_count: 0
       frozen_pct: 0.0
       formal_pct: 0.0
-      consultative_pct: 0.1252
+      consultative_pct: 0.1248
       casual_pct: 0.0
       frozen_per_sent: 0.0
       formal_per_sent: 0.0
-      consultative_per_sent: 0.0741
+      consultative_per_sent: 0.069
       casual_per_sent: 0.0
       dominant_register: consultative
     stance:
       directive_count: 7
-      directive_pct: 0.438
-      directive_per_sent: 0.2593
+      directive_pct: 0.4367
+      directive_per_sent: 0.2414
       expository_count: 19
-      expository_pct: 1.189
-      expository_per_sent: 0.7037
+      expository_pct: 1.1853
+      expository_per_sent: 0.6552
       positive_evaluative_count: 1
-      positive_evaluative_pct: 0.0626
-      positive_evaluative_per_sent: 0.037
+      positive_evaluative_pct: 0.0624
+      positive_evaluative_per_sent: 0.0345
       negative_evaluative_count: 0
       negative_evaluative_pct: 0.0
       negative_evaluative_per_sent: 0.0
       dialogic_count: 3
-      dialogic_pct: 0.1877
-      dialogic_per_sent: 0.1111
+      dialogic_pct: 0.1871
+      dialogic_per_sent: 0.1034
       pronouns_1p_count: 2
-      pronouns_1p_pct: 0.1252
-      pronouns_1p_per_sent: 0.0741
+      pronouns_1p_pct: 0.1248
+      pronouns_1p_per_sent: 0.069
       pronouns_2p_count: 7
-      pronouns_2p_pct: 0.438
-      pronouns_2p_per_sent: 0.2593
+      pronouns_2p_pct: 0.4367
+      pronouns_2p_per_sent: 0.2414
       dominant_stance: expository
       positive_evaluative_quality_count: 0
       positive_evaluative_quality_pct: 0.0
       positive_evaluative_quality_per_sent: 0.0
       positive_evaluative_emphasis_count: 1
-      positive_evaluative_emphasis_pct: 0.0626
-      positive_evaluative_emphasis_per_sent: 0.037
+      positive_evaluative_emphasis_pct: 0.0624
+      positive_evaluative_emphasis_per_sent: 0.0345
     sentence_register:
       collaborative_sent_count: 0
       collaborative_sent_pct: 0.0
       permissive_sent_count: 2
-      permissive_sent_pct: 7.4074
+      permissive_sent_pct: 6.8966
       appreciative_sent_count: 0
       appreciative_sent_pct: 0.0
       imperative_sent_count: 12
-      imperative_sent_pct: 44.4444
+      imperative_sent_pct: 41.3793
       directive_sent_count: 5
-      directive_sent_pct: 18.5185
+      directive_sent_pct: 17.2414
       configuring_sent_count: 2
-      configuring_sent_pct: 7.4074
-      none_sent_count: 11
-      none_sent_pct: 40.7407
+      configuring_sent_pct: 6.8966
+      none_sent_count: 13
+      none_sent_pct: 44.8276
       appreciative_addressee_claude_count: 0
       appreciative_addressee_user_count: 0
       appreciative_addressee_unknown_count: 0
@@ -10740,28 +10741,28 @@ files:
       dominant: imperative
     modality:
       deontic_count: 2
-      deontic_pct: 0.1252
-      deontic_per_sent: 0.0741
+      deontic_pct: 0.1248
+      deontic_per_sent: 0.069
       epistemic_count: 5
-      epistemic_pct: 0.3129
-      epistemic_per_sent: 0.1852
+      epistemic_pct: 0.3119
+      epistemic_per_sent: 0.1724
       dynamic_count: 4
-      dynamic_pct: 0.2503
-      dynamic_per_sent: 0.1481
+      dynamic_pct: 0.2495
+      dynamic_per_sent: 0.1379
       top_construction: can
     vocab:
       hard_prohibitions:
         count: 1
-        pct: 0.0626
-        per_sent: 0.037
+        pct: 0.0624
+        per_sent: 0.0345
       hard_prescriptions:
         count: 3
-        pct: 0.1877
-        per_sent: 0.1111
+        pct: 0.1871
+        per_sent: 0.1034
       soft_prescriptions:
         count: 3
-        pct: 0.1877
-        per_sent: 0.1111
+        pct: 0.1871
+        per_sent: 0.1034
       politeness_direct:
         count: 0
         pct: 0.0
@@ -10776,29 +10777,29 @@ files:
         per_sent: 0.0
       hedging:
         count: 2
-        pct: 0.1252
-        per_sent: 0.0741
+        pct: 0.1248
+        per_sent: 0.069
       structural_markers:
         count: 2
-        pct: 0.1252
-        per_sent: 0.0741
+        pct: 0.1248
+        per_sent: 0.069
       profanity:
         count: 0
         pct: 0.0
         per_sent: 0.0
       pronouns_2p:
         count: 7
-        pct: 0.438
-        per_sent: 0.2593
+        pct: 0.4367
+        per_sent: 0.2414
       pronouns_1p:
         count: 2
-        pct: 0.1252
-        per_sent: 0.0741
+        pct: 0.1248
+        per_sent: 0.069
     all_caps:
       count: 7
       distinct: 6
-      pct: 0.438
-      per_sent: 0.2593
+      pct: 0.4367
+      per_sent: 0.2414
       top:
       - token: VISUAL
         count: 2
@@ -10808,15 +10809,15 @@ files:
         count: 1
     caps_imperative:
       count: 2
-      pct: 0.1252
-      per_sent: 0.0741
+      pct: 0.1248
+      per_sent: 0.069
       hits:
         MUST: 1
         IMPORTANT: 1
     justification:
       count: 1
-      pct: 0.0626
-      per_sent: 0.037
+      pct: 0.0624
+      per_sent: 0.0345
       ratio: 0.125
     rule_explanation:
       n_paragraphs: 18
@@ -10838,13 +10839,13 @@ files:
       judgment_count: 0
       procedural_count: 3
       judgment_per_sent: 0.0
-      procedural_per_sent: 0.1111
+      procedural_per_sent: 0.1034
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
       threat_count: 0
       causal_count: 1
       threat_per_sent: 0.0
-      causal_per_sent: 0.037
+      causal_per_sent: 0.0345
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -14935,46 +14936,46 @@ files:
   category: Data / template
   name: 'Data: Live documentation sources'
   description: WebFetch URLs for fetching current Claude API and Agent SDK documentation from official sources
-  ccVersion: 2.1.111
+  ccVersion: 2.1.132
   agentType: null
-  n_tokens: 1615
-  n_sents: 64
+  n_tokens: 1638
+  n_sents: 66
   metrics:
     mood:
       marker_count: 0
       marker_pct: 0.0
       marker_per_sent: 0.0
     register:
-      ttr: 0.2941
-      mean_sent_len: 25.23
-      dep_depth: 3.047
-      f_score: 80.2
+      ttr: 0.295
+      mean_sent_len: 24.82
+      dep_depth: 2.957
+      f_score: 80.28
       frozen_count: 0
       formal_count: 0
       consultative_count: 1
       casual_count: 2
       frozen_pct: 0.0
       formal_pct: 0.0
-      consultative_pct: 0.0619
-      casual_pct: 0.1238
+      consultative_pct: 0.0611
+      casual_pct: 0.1221
       frozen_per_sent: 0.0
       formal_per_sent: 0.0
-      consultative_per_sent: 0.0156
-      casual_per_sent: 0.0312
+      consultative_per_sent: 0.0152
+      casual_per_sent: 0.0303
       dominant_register: casual
     stance:
       directive_count: 0
       directive_pct: 0.0
       directive_per_sent: 0.0
       expository_count: 4
-      expository_pct: 0.2477
-      expository_per_sent: 0.0625
+      expository_pct: 0.2442
+      expository_per_sent: 0.0606
       positive_evaluative_count: 1
-      positive_evaluative_pct: 0.0619
-      positive_evaluative_per_sent: 0.0156
+      positive_evaluative_pct: 0.0611
+      positive_evaluative_per_sent: 0.0152
       negative_evaluative_count: 2
-      negative_evaluative_pct: 0.1238
-      negative_evaluative_per_sent: 0.0312
+      negative_evaluative_pct: 0.1221
+      negative_evaluative_per_sent: 0.0303
       dialogic_count: 0
       dialogic_pct: 0.0
       dialogic_per_sent: 0.0
@@ -14986,26 +14987,26 @@ files:
       pronouns_2p_per_sent: 0.0
       dominant_stance: expository
       positive_evaluative_quality_count: 1
-      positive_evaluative_quality_pct: 0.0619
-      positive_evaluative_quality_per_sent: 0.0156
+      positive_evaluative_quality_pct: 0.0611
+      positive_evaluative_quality_per_sent: 0.0152
       positive_evaluative_emphasis_count: 0
       positive_evaluative_emphasis_pct: 0.0
       positive_evaluative_emphasis_per_sent: 0.0
     sentence_register:
       collaborative_sent_count: 1
-      collaborative_sent_pct: 1.5625
+      collaborative_sent_pct: 1.5152
       permissive_sent_count: 0
       permissive_sent_pct: 0.0
       appreciative_sent_count: 0
       appreciative_sent_pct: 0.0
       imperative_sent_count: 6
-      imperative_sent_pct: 9.375
+      imperative_sent_pct: 9.0909
       directive_sent_count: 0
       directive_sent_pct: 0.0
       configuring_sent_count: 1
-      configuring_sent_pct: 1.5625
-      none_sent_count: 57
-      none_sent_pct: 89.0625
+      configuring_sent_pct: 1.5152
+      none_sent_count: 59
+      none_sent_pct: 89.3939
       appreciative_addressee_claude_count: 0
       appreciative_addressee_user_count: 0
       appreciative_addressee_unknown_count: 0
@@ -15018,8 +15019,8 @@ files:
       deontic_pct: 0.0
       deontic_per_sent: 0.0
       epistemic_count: 2
-      epistemic_pct: 0.1238
-      epistemic_per_sent: 0.0312
+      epistemic_pct: 0.1221
+      epistemic_per_sent: 0.0303
       dynamic_count: 0
       dynamic_pct: 0.0
       dynamic_per_sent: 0.0
@@ -15051,12 +15052,12 @@ files:
         per_sent: 0.0
       hedging:
         count: 2
-        pct: 0.1238
-        per_sent: 0.0312
+        pct: 0.1221
+        per_sent: 0.0303
       structural_markers:
         count: 1
-        pct: 0.0619
-        per_sent: 0.0156
+        pct: 0.0611
+        per_sent: 0.0152
       profanity:
         count: 0
         pct: 0.0
@@ -15070,10 +15071,10 @@ files:
         pct: 0.0
         per_sent: 0.0
     all_caps:
-      count: 4
-      distinct: 4
-      pct: 0.2477
-      per_sent: 0.0625
+      count: 5
+      distinct: 5
+      pct: 0.3053
+      per_sent: 0.0758
       top:
       - token: OPUS_NAME
         count: 1
@@ -15088,8 +15089,8 @@ files:
       hits: {}
     justification:
       count: 1
-      pct: 0.0619
-      per_sent: 0.0156
+      pct: 0.0611
+      per_sent: 0.0152
       ratio: 1.0
     rule_explanation:
       n_paragraphs: 31
@@ -15111,13 +15112,13 @@ files:
       judgment_count: 0
       procedural_count: 2
       judgment_per_sent: 0.0
-      procedural_per_sent: 0.0312
+      procedural_per_sent: 0.0303
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
       threat_count: 0
       causal_count: 1
       threat_per_sent: 0.0
-      causal_per_sent: 0.0156
+      causal_per_sent: 0.0152
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -15391,62 +15392,62 @@ files:
   name: 'Data: Managed Agents core concepts'
   description: Reference documentation for the Managed Agents API covering core concepts (Agents, Sessions, Environments,
     Containers), lifecycle, versioning, endpoints, and usage patterns
-  ccVersion: 2.1.119
+  ccVersion: 2.1.132
   agentType: null
-  n_tokens: 1930
-  n_sents: 139
+  n_tokens: 1958
+  n_sents: 143
   metrics:
     mood:
       marker_count: 10
-      marker_pct: 0.5181
-      marker_per_sent: 0.0719
+      marker_pct: 0.5107
+      marker_per_sent: 0.0699
     register:
-      ttr: 0.3136
-      mean_sent_len: 13.88
-      dep_depth: 2.203
-      f_score: 75.3
+      ttr: 0.3104
+      mean_sent_len: 13.69
+      dep_depth: 2.194
+      f_score: 75.04
       frozen_count: 0
       formal_count: 0
       consultative_count: 4
       casual_count: 1
       frozen_pct: 0.0
       formal_pct: 0.0
-      consultative_pct: 0.2073
-      casual_pct: 0.0518
+      consultative_pct: 0.2043
+      casual_pct: 0.0511
       frozen_per_sent: 0.0
       formal_per_sent: 0.0
-      consultative_per_sent: 0.0288
-      casual_per_sent: 0.0072
+      consultative_per_sent: 0.028
+      casual_per_sent: 0.007
       dominant_register: consultative
     stance:
       directive_count: 5
-      directive_pct: 0.2591
-      directive_per_sent: 0.036
+      directive_pct: 0.2554
+      directive_per_sent: 0.035
       expository_count: 37
-      expository_pct: 1.9171
-      expository_per_sent: 0.2662
+      expository_pct: 1.8897
+      expository_per_sent: 0.2587
       positive_evaluative_count: 10
-      positive_evaluative_pct: 0.5181
-      positive_evaluative_per_sent: 0.0719
+      positive_evaluative_pct: 0.5107
+      positive_evaluative_per_sent: 0.0699
       negative_evaluative_count: 1
-      negative_evaluative_pct: 0.0518
-      negative_evaluative_per_sent: 0.0072
+      negative_evaluative_pct: 0.0511
+      negative_evaluative_per_sent: 0.007
       dialogic_count: 3
-      dialogic_pct: 0.1554
-      dialogic_per_sent: 0.0216
+      dialogic_pct: 0.1532
+      dialogic_per_sent: 0.021
       pronouns_1p_count: 0
       pronouns_1p_pct: 0.0
       pronouns_1p_per_sent: 0.0
       pronouns_2p_count: 10
-      pronouns_2p_pct: 0.5181
-      pronouns_2p_per_sent: 0.0719
+      pronouns_2p_pct: 0.5107
+      pronouns_2p_per_sent: 0.0699
       dominant_stance: expository
       positive_evaluative_quality_count: 5
-      positive_evaluative_quality_pct: 0.2591
-      positive_evaluative_quality_per_sent: 0.036
+      positive_evaluative_quality_pct: 0.2554
+      positive_evaluative_quality_per_sent: 0.035
       positive_evaluative_emphasis_count: 5
-      positive_evaluative_emphasis_pct: 0.2591
-      positive_evaluative_emphasis_per_sent: 0.036
+      positive_evaluative_emphasis_pct: 0.2554
+      positive_evaluative_emphasis_per_sent: 0.035
     sentence_register:
       collaborative_sent_count: 0
       collaborative_sent_pct: 0.0
@@ -15454,14 +15455,14 @@ files:
       permissive_sent_pct: 0.0
       appreciative_sent_count: 0
       appreciative_sent_pct: 0.0
-      imperative_sent_count: 20
-      imperative_sent_pct: 14.3885
+      imperative_sent_count: 22
+      imperative_sent_pct: 15.3846
       directive_sent_count: 5
-      directive_sent_pct: 3.5971
+      directive_sent_pct: 3.4965
       configuring_sent_count: 3
-      configuring_sent_pct: 2.1583
-      none_sent_count: 115
-      none_sent_pct: 82.7338
+      configuring_sent_pct: 2.0979
+      none_sent_count: 117
+      none_sent_pct: 81.8182
       appreciative_addressee_claude_count: 0
       appreciative_addressee_user_count: 0
       appreciative_addressee_unknown_count: 0
@@ -15471,24 +15472,24 @@ files:
       dominant: imperative
     modality:
       deontic_count: 1
-      deontic_pct: 0.0518
-      deontic_per_sent: 0.0072
-      epistemic_count: 2
-      epistemic_pct: 0.1036
-      epistemic_per_sent: 0.0144
+      deontic_pct: 0.0511
+      deontic_per_sent: 0.007
+      epistemic_count: 3
+      epistemic_pct: 0.1532
+      epistemic_per_sent: 0.021
       dynamic_count: 3
-      dynamic_pct: 0.1554
-      dynamic_per_sent: 0.0216
+      dynamic_pct: 0.1532
+      dynamic_per_sent: 0.021
       top_construction: must be
     vocab:
       hard_prohibitions:
         count: 4
-        pct: 0.2073
-        per_sent: 0.0288
+        pct: 0.2043
+        per_sent: 0.028
       hard_prescriptions:
         count: 6
-        pct: 0.3109
-        per_sent: 0.0432
+        pct: 0.3064
+        per_sent: 0.042
       soft_prescriptions:
         count: 0
         pct: 0.0
@@ -15506,9 +15507,9 @@ files:
         pct: 0.0
         per_sent: 0.0
       hedging:
-        count: 1
-        pct: 0.0518
-        per_sent: 0.0072
+        count: 2
+        pct: 0.1021
+        per_sent: 0.014
       structural_markers:
         count: 0
         pct: 0.0
@@ -15519,8 +15520,8 @@ files:
         per_sent: 0.0
       pronouns_2p:
         count: 10
-        pct: 0.5181
-        per_sent: 0.0719
+        pct: 0.5107
+        per_sent: 0.0699
       pronouns_1p:
         count: 0
         pct: 0.0
@@ -15528,8 +15529,8 @@ files:
     all_caps:
       count: 3
       distinct: 1
-      pct: 0.1554
-      per_sent: 0.0216
+      pct: 0.1532
+      per_sent: 0.021
       top:
       - token: ISO
         count: 3
@@ -15540,36 +15541,36 @@ files:
       hits: {}
     justification:
       count: 2
-      pct: 0.1036
-      per_sent: 0.0144
+      pct: 0.1021
+      per_sent: 0.014
       ratio: 0.182
     rule_explanation:
       n_paragraphs: 47
       n_paragraphs_with_rules: 17
       n_paragraphs_with_rules_unexplained: 15
-      n_rule_sentences: 28
-      n_imperative_sentences: 28
+      n_rule_sentences: 30
+      n_imperative_sentences: 30
       n_prohibition_sentences: 4
       n_explained_same: 1
       n_explained_para: 3
       n_imperative_explained_para: 3
       n_prohibition_explained_para: 2
-      pct_explained_same: 3.5714
-      pct_explained_para: 10.7143
-      pct_imperative_explained_para: 10.7143
+      pct_explained_same: 3.3333
+      pct_explained_para: 10.0
+      pct_imperative_explained_para: 10.0
       pct_prohibition_explained_para: 50.0
       pct_paragraphs_with_rules_unexplained: 88.2353
     judgment_procedural:
       judgment_count: 0
       procedural_count: 6
       judgment_per_sent: 0.0
-      procedural_per_sent: 0.0432
+      procedural_per_sent: 0.042
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
       threat_count: 0
       causal_count: 2
       threat_per_sent: 0.0
-      causal_per_sent: 0.0144
+      causal_per_sent: 0.014
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -15581,17 +15582,17 @@ files:
     address_form:
       selfref_claude: 4
       selfref_assistant: 0
-      selfref_model: 17
+      selfref_model: 18
       selfref_2p: 1
       selfref_we: 0
-      pct_anthropomorphic: 0.1905
-      pct_artifact: 0.8095
+      pct_anthropomorphic: 0.1818
+      pct_artifact: 0.8182
       pct_role: 0.0
     imperative_streaks:
-      n_imperative_sentences: 28
-      n_streaks: 19
+      n_imperative_sentences: 30
+      n_streaks: 21
       streak_max: 6
-      streak_mean: 1.474
+      streak_mean: 1.429
       n_streaks_ge3: 1
       n_streaks_ge5: 1
     rules_section:
@@ -15603,74 +15604,74 @@ files:
       n_rule_paragraphs_in_rules_section_explained: 0
       n_rule_paragraphs_outside_rules_section_explained: 2
       n_rule_sentences_in_rules_section: 0
-      n_rule_sentences_outside_rules_section: 28
+      n_rule_sentences_outside_rules_section: 30
       n_rule_sentences_in_rules_section_explained: 0
       n_rule_sentences_outside_rules_section_explained: 3
       pct_rule_paragraphs_explained_in_rules_section: null
       pct_rule_paragraphs_explained_outside_rules_section: 11.7647
       pct_rule_sentences_explained_in_rules_section: null
-      pct_rule_sentences_explained_outside_rules_section: 10.7143
+      pct_rule_sentences_explained_outside_rules_section: 10.0
 - path: data-managed-agents-endpoint-reference.md
   category: Data / template
   name: 'Data: Managed Agents endpoint reference'
   description: Comprehensive reference for Managed Agents API endpoints, SDK methods, request/response schemas, error handling,
     and rate limits
-  ccVersion: 2.1.120
+  ccVersion: 2.1.132
   agentType: null
-  n_tokens: 2128
-  n_sents: 153
+  n_tokens: 2294
+  n_sents: 168
   metrics:
     mood:
-      marker_count: 7
-      marker_pct: 0.3289
-      marker_per_sent: 0.0458
+      marker_count: 9
+      marker_pct: 0.3923
+      marker_per_sent: 0.0536
     register:
-      ttr: 0.2476
-      mean_sent_len: 13.91
-      dep_depth: 2.509
-      f_score: 73.61
+      ttr: 0.2408
+      mean_sent_len: 13.65
+      dep_depth: 2.547
+      f_score: 73.46
       frozen_count: 0
       formal_count: 0
       consultative_count: 1
       casual_count: 2
       frozen_pct: 0.0
       formal_pct: 0.0
-      consultative_pct: 0.047
-      casual_pct: 0.094
+      consultative_pct: 0.0436
+      casual_pct: 0.0872
       frozen_per_sent: 0.0
       formal_per_sent: 0.0
-      consultative_per_sent: 0.0065
-      casual_per_sent: 0.0131
+      consultative_per_sent: 0.006
+      casual_per_sent: 0.0119
       dominant_register: casual
     stance:
       directive_count: 2
-      directive_pct: 0.094
-      directive_per_sent: 0.0131
-      expository_count: 21
-      expository_pct: 0.9868
-      expository_per_sent: 0.1373
+      directive_pct: 0.0872
+      directive_per_sent: 0.0119
+      expository_count: 22
+      expository_pct: 0.959
+      expository_per_sent: 0.131
       positive_evaluative_count: 2
-      positive_evaluative_pct: 0.094
-      positive_evaluative_per_sent: 0.0131
+      positive_evaluative_pct: 0.0872
+      positive_evaluative_per_sent: 0.0119
       negative_evaluative_count: 2
-      negative_evaluative_pct: 0.094
-      negative_evaluative_per_sent: 0.0131
+      negative_evaluative_pct: 0.0872
+      negative_evaluative_per_sent: 0.0119
       dialogic_count: 0
       dialogic_pct: 0.0
       dialogic_per_sent: 0.0
       pronouns_1p_count: 1
-      pronouns_1p_pct: 0.047
-      pronouns_1p_per_sent: 0.0065
+      pronouns_1p_pct: 0.0436
+      pronouns_1p_per_sent: 0.006
       pronouns_2p_count: 3
-      pronouns_2p_pct: 0.141
-      pronouns_2p_per_sent: 0.0196
+      pronouns_2p_pct: 0.1308
+      pronouns_2p_per_sent: 0.0179
       dominant_stance: expository
       positive_evaluative_quality_count: 0
       positive_evaluative_quality_pct: 0.0
       positive_evaluative_quality_per_sent: 0.0
       positive_evaluative_emphasis_count: 2
-      positive_evaluative_emphasis_pct: 0.094
-      positive_evaluative_emphasis_per_sent: 0.0131
+      positive_evaluative_emphasis_pct: 0.0872
+      positive_evaluative_emphasis_per_sent: 0.0119
     sentence_register:
       collaborative_sent_count: 0
       collaborative_sent_pct: 0.0
@@ -15678,14 +15679,14 @@ files:
       permissive_sent_pct: 0.0
       appreciative_sent_count: 0
       appreciative_sent_pct: 0.0
-      imperative_sent_count: 22
-      imperative_sent_pct: 14.3791
+      imperative_sent_count: 25
+      imperative_sent_pct: 14.881
       directive_sent_count: 2
-      directive_sent_pct: 1.3072
-      configuring_sent_count: 8
-      configuring_sent_pct: 5.2288
-      none_sent_count: 125
-      none_sent_pct: 81.6993
+      directive_sent_pct: 1.1905
+      configuring_sent_count: 9
+      configuring_sent_pct: 5.3571
+      none_sent_count: 136
+      none_sent_pct: 80.9524
       appreciative_addressee_claude_count: 0
       appreciative_addressee_user_count: 0
       appreciative_addressee_unknown_count: 0
@@ -15701,18 +15702,18 @@ files:
       epistemic_pct: 0.0
       epistemic_per_sent: 0.0
       dynamic_count: 4
-      dynamic_pct: 0.188
-      dynamic_per_sent: 0.0261
+      dynamic_pct: 0.1744
+      dynamic_per_sent: 0.0238
       top_construction: can
     vocab:
       hard_prohibitions:
         count: 5
-        pct: 0.235
-        per_sent: 0.0327
+        pct: 0.218
+        per_sent: 0.0298
       hard_prescriptions:
-        count: 2
-        pct: 0.094
-        per_sent: 0.0131
+        count: 4
+        pct: 0.1744
+        per_sent: 0.0238
       soft_prescriptions:
         count: 0
         pct: 0.0
@@ -15735,30 +15736,30 @@ files:
         per_sent: 0.0
       structural_markers:
         count: 2
-        pct: 0.094
-        per_sent: 0.0131
+        pct: 0.0872
+        per_sent: 0.0119
       profanity:
         count: 0
         pct: 0.0
         per_sent: 0.0
       pronouns_2p:
         count: 3
-        pct: 0.141
-        per_sent: 0.0196
+        pct: 0.1308
+        per_sent: 0.0179
       pronouns_1p:
         count: 1
-        pct: 0.047
-        per_sent: 0.0065
+        pct: 0.0436
+        per_sent: 0.006
     all_caps:
-      count: 7
+      count: 8
       distinct: 6
-      pct: 0.3289
-      per_sent: 0.0458
+      pct: 0.3487
+      per_sent: 0.0476
       top:
+      - token: SSE
+        count: 2
       - token: RPM
         count: 2
-      - token: SSE
-        count: 1
       - token: FUSE
         count: 1
     caps_imperative:
@@ -15772,11 +15773,11 @@ files:
       per_sent: 0.0
       ratio: 0.0
     rule_explanation:
-      n_paragraphs: 64
-      n_paragraphs_with_rules: 17
-      n_paragraphs_with_rules_unexplained: 17
-      n_rule_sentences: 29
-      n_imperative_sentences: 29
+      n_paragraphs: 69
+      n_paragraphs_with_rules: 19
+      n_paragraphs_with_rules_unexplained: 19
+      n_rule_sentences: 33
+      n_imperative_sentences: 33
       n_prohibition_sentences: 5
       n_explained_same: 0
       n_explained_para: 0
@@ -15791,7 +15792,7 @@ files:
       judgment_count: 0
       procedural_count: 2
       judgment_per_sent: 0.0
-      procedural_per_sent: 0.0131
+      procedural_per_sent: 0.0119
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
       threat_count: 0
@@ -15816,22 +15817,22 @@ files:
       pct_artifact: 0.5
       pct_role: 0.0
     imperative_streaks:
-      n_imperative_sentences: 29
-      n_streaks: 21
+      n_imperative_sentences: 33
+      n_streaks: 23
       streak_max: 2
-      streak_mean: 1.381
+      streak_mean: 1.435
       n_streaks_ge3: 0
       n_streaks_ge5: 0
     rules_section:
-      n_paragraphs: 64
+      n_paragraphs: 69
       n_paragraphs_in_rules_section: 0
-      n_paragraphs_outside_rules_section: 64
+      n_paragraphs_outside_rules_section: 69
       n_rule_paragraphs_in_rules_section: 0
-      n_rule_paragraphs_outside_rules_section: 17
+      n_rule_paragraphs_outside_rules_section: 19
       n_rule_paragraphs_in_rules_section_explained: 0
       n_rule_paragraphs_outside_rules_section_explained: 0
       n_rule_sentences_in_rules_section: 0
-      n_rule_sentences_outside_rules_section: 29
+      n_rule_sentences_outside_rules_section: 33
       n_rule_sentences_in_rules_section_explained: 0
       n_rule_sentences_outside_rules_section_explained: 0
       pct_rule_paragraphs_explained_in_rules_section: null
@@ -16065,59 +16066,59 @@ files:
   name: 'Data: Managed Agents events and steering'
   description: Reference guide for sending and receiving events on managed agent sessions, including streaming, polling, reconnection,
     message queuing, interrupts, and event payload details
-  ccVersion: 2.1.105
+  ccVersion: 2.1.132
   agentType: null
-  n_tokens: 1145
-  n_sents: 52
+  n_tokens: 1262
+  n_sents: 60
   metrics:
     mood:
       marker_count: 7
-      marker_pct: 0.6114
-      marker_per_sent: 0.1346
+      marker_pct: 0.5547
+      marker_per_sent: 0.1167
     register:
-      ttr: 0.4972
-      mean_sent_len: 22.02
-      dep_depth: 2.626
-      f_score: 69.44
+      ttr: 0.4873
+      mean_sent_len: 21.03
+      dep_depth: 2.636
+      f_score: 69.34
       frozen_count: 0
       formal_count: 0
       consultative_count: 2
       casual_count: 3
       frozen_pct: 0.0
       formal_pct: 0.0
-      consultative_pct: 0.1747
-      casual_pct: 0.262
+      consultative_pct: 0.1585
+      casual_pct: 0.2377
       frozen_per_sent: 0.0
       formal_per_sent: 0.0
-      consultative_per_sent: 0.0385
-      casual_per_sent: 0.0577
+      consultative_per_sent: 0.0333
+      casual_per_sent: 0.05
       dominant_register: casual
     stance:
       directive_count: 4
-      directive_pct: 0.3493
-      directive_per_sent: 0.0769
-      expository_count: 17
-      expository_pct: 1.4847
-      expository_per_sent: 0.3269
+      directive_pct: 0.317
+      directive_per_sent: 0.0667
+      expository_count: 18
+      expository_pct: 1.4263
+      expository_per_sent: 0.3
       positive_evaluative_count: 2
-      positive_evaluative_pct: 0.1747
-      positive_evaluative_per_sent: 0.0385
+      positive_evaluative_pct: 0.1585
+      positive_evaluative_per_sent: 0.0333
       negative_evaluative_count: 0
       negative_evaluative_pct: 0.0
       negative_evaluative_per_sent: 0.0
       dialogic_count: 2
-      dialogic_pct: 0.1747
-      dialogic_per_sent: 0.0385
+      dialogic_pct: 0.1585
+      dialogic_per_sent: 0.0333
       pronouns_1p_count: 0
       pronouns_1p_pct: 0.0
       pronouns_1p_per_sent: 0.0
-      pronouns_2p_count: 13
-      pronouns_2p_pct: 1.1354
-      pronouns_2p_per_sent: 0.25
+      pronouns_2p_count: 14
+      pronouns_2p_pct: 1.1094
+      pronouns_2p_per_sent: 0.2333
       dominant_stance: expository
       positive_evaluative_quality_count: 2
-      positive_evaluative_quality_pct: 0.1747
-      positive_evaluative_quality_per_sent: 0.0385
+      positive_evaluative_quality_pct: 0.1585
+      positive_evaluative_quality_per_sent: 0.0333
       positive_evaluative_emphasis_count: 0
       positive_evaluative_emphasis_pct: 0.0
       positive_evaluative_emphasis_per_sent: 0.0
@@ -16128,14 +16129,14 @@ files:
       permissive_sent_pct: 0.0
       appreciative_sent_count: 0
       appreciative_sent_pct: 0.0
-      imperative_sent_count: 11
-      imperative_sent_pct: 21.1538
+      imperative_sent_count: 15
+      imperative_sent_pct: 25.0
       directive_sent_count: 4
-      directive_sent_pct: 7.6923
+      directive_sent_pct: 6.6667
       configuring_sent_count: 3
-      configuring_sent_pct: 5.7692
-      none_sent_count: 36
-      none_sent_pct: 69.2308
+      configuring_sent_pct: 5.0
+      none_sent_count: 40
+      none_sent_pct: 66.6667
       appreciative_addressee_claude_count: 0
       appreciative_addressee_user_count: 0
       appreciative_addressee_unknown_count: 0
@@ -16145,24 +16146,24 @@ files:
       dominant: imperative
     modality:
       deontic_count: 2
-      deontic_pct: 0.1747
-      deontic_per_sent: 0.0385
+      deontic_pct: 0.1585
+      deontic_per_sent: 0.0333
       epistemic_count: 3
-      epistemic_pct: 0.262
-      epistemic_per_sent: 0.0577
+      epistemic_pct: 0.2377
+      epistemic_per_sent: 0.05
       dynamic_count: 2
-      dynamic_pct: 0.1747
-      dynamic_per_sent: 0.0385
+      dynamic_pct: 0.1585
+      dynamic_per_sent: 0.0333
       top_construction: can
     vocab:
       hard_prohibitions:
         count: 5
-        pct: 0.4367
-        per_sent: 0.0962
+        pct: 0.3962
+        per_sent: 0.0833
       hard_prescriptions:
         count: 2
-        pct: 0.1747
-        per_sent: 0.0385
+        pct: 0.1585
+        per_sent: 0.0333
       soft_prescriptions:
         count: 0
         pct: 0.0
@@ -16181,32 +16182,34 @@ files:
         per_sent: 0.0
       hedging:
         count: 2
-        pct: 0.1747
-        per_sent: 0.0385
+        pct: 0.1585
+        per_sent: 0.0333
       structural_markers:
         count: 1
-        pct: 0.0873
-        per_sent: 0.0192
+        pct: 0.0792
+        per_sent: 0.0167
       profanity:
         count: 0
         pct: 0.0
         per_sent: 0.0
       pronouns_2p:
-        count: 13
-        pct: 1.1354
-        per_sent: 0.25
+        count: 14
+        pct: 1.1094
+        per_sent: 0.2333
       pronouns_1p:
         count: 0
         pct: 0.0
         per_sent: 0.0
     all_caps:
-      count: 3
-      distinct: 2
-      pct: 0.262
-      per_sent: 0.0577
+      count: 4
+      distinct: 3
+      pct: 0.317
+      per_sent: 0.0667
       top:
       - token: SSE
         count: 2
+      - token: HMAC
+        count: 1
       - token: ISO
         count: 1
     caps_imperative:
@@ -16216,35 +16219,35 @@ files:
       hits: {}
     justification:
       count: 2
-      pct: 0.1747
-      per_sent: 0.0385
+      pct: 0.1585
+      per_sent: 0.0333
       ratio: 0.25
     rule_explanation:
       n_paragraphs: 38
-      n_paragraphs_with_rules: 8
-      n_paragraphs_with_rules_unexplained: 7
-      n_rule_sentences: 14
-      n_imperative_sentences: 14
+      n_paragraphs_with_rules: 12
+      n_paragraphs_with_rules_unexplained: 11
+      n_rule_sentences: 18
+      n_imperative_sentences: 18
       n_prohibition_sentences: 4
       n_explained_same: 1
       n_explained_para: 1
       n_imperative_explained_para: 1
       n_prohibition_explained_para: 0
-      pct_explained_same: 7.1429
-      pct_explained_para: 7.1429
-      pct_imperative_explained_para: 7.1429
+      pct_explained_same: 5.5556
+      pct_explained_para: 5.5556
+      pct_imperative_explained_para: 5.5556
       pct_prohibition_explained_para: 0.0
-      pct_paragraphs_with_rules_unexplained: 87.5
+      pct_paragraphs_with_rules_unexplained: 91.6667
     judgment_procedural:
       judgment_count: 0
       procedural_count: 4
       judgment_per_sent: 0.0
-      procedural_per_sent: 0.0769
+      procedural_per_sent: 0.0667
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
       threat_count: 1
       causal_count: 0
-      threat_per_sent: 0.0192
+      threat_per_sent: 0.0167
       causal_per_sent: 0.0
       threat_share: 1.0
     socratic:
@@ -16264,28 +16267,28 @@ files:
       pct_artifact: 1.0
       pct_role: 0.0
     imperative_streaks:
-      n_imperative_sentences: 14
-      n_streaks: 8
-      streak_max: 3
-      streak_mean: 1.75
-      n_streaks_ge3: 1
+      n_imperative_sentences: 18
+      n_streaks: 12
+      streak_max: 2
+      streak_mean: 1.5
+      n_streaks_ge3: 0
       n_streaks_ge5: 0
     rules_section:
       n_paragraphs: 38
       n_paragraphs_in_rules_section: 0
       n_paragraphs_outside_rules_section: 38
       n_rule_paragraphs_in_rules_section: 0
-      n_rule_paragraphs_outside_rules_section: 8
+      n_rule_paragraphs_outside_rules_section: 12
       n_rule_paragraphs_in_rules_section_explained: 0
       n_rule_paragraphs_outside_rules_section_explained: 1
       n_rule_sentences_in_rules_section: 0
-      n_rule_sentences_outside_rules_section: 14
+      n_rule_sentences_outside_rules_section: 18
       n_rule_sentences_in_rules_section_explained: 0
       n_rule_sentences_outside_rules_section_explained: 1
       pct_rule_paragraphs_explained_in_rules_section: null
-      pct_rule_paragraphs_explained_outside_rules_section: 12.5
+      pct_rule_paragraphs_explained_outside_rules_section: 8.3333
       pct_rule_sentences_explained_in_rules_section: null
-      pct_rule_sentences_explained_outside_rules_section: 7.1429
+      pct_rule_sentences_explained_outside_rules_section: 5.5556
 - path: data-managed-agents-memory-stores-reference.md
   category: Data / template
   name: 'Data: Managed Agents memory stores reference'
@@ -16512,64 +16515,508 @@ files:
       pct_rule_paragraphs_explained_outside_rules_section: 16.6667
       pct_rule_sentences_explained_in_rules_section: null
       pct_rule_sentences_explained_outside_rules_section: 31.25
+- path: data-managed-agents-multiagent-sessions.md
+  category: Data / template
+  name: 'Data: Managed Agents multiagent sessions'
+  description: Reference documentation for Managed Agents multiagent sessions, including coordinator rosters, threads, session
+    stream events, subagent tool permissions, and pitfalls
+  ccVersion: 2.1.132
+  agentType: null
+  n_tokens: 840
+  n_sents: 43
+  metrics:
+    mood:
+      marker_count: 5
+      marker_pct: 0.5952
+      marker_per_sent: 0.1163
+    register:
+      ttr: 0.4259
+      mean_sent_len: 19.53
+      dep_depth: 2.36
+      f_score: 75.0
+      frozen_count: 0
+      formal_count: 0
+      consultative_count: 0
+      casual_count: 3
+      frozen_pct: 0.0
+      formal_pct: 0.0
+      consultative_pct: 0.0
+      casual_pct: 0.3571
+      frozen_per_sent: 0.0
+      formal_per_sent: 0.0
+      consultative_per_sent: 0.0
+      casual_per_sent: 0.0698
+      dominant_register: casual
+    stance:
+      directive_count: 3
+      directive_pct: 0.3571
+      directive_per_sent: 0.0698
+      expository_count: 17
+      expository_pct: 2.0238
+      expository_per_sent: 0.3953
+      positive_evaluative_count: 0
+      positive_evaluative_pct: 0.0
+      positive_evaluative_per_sent: 0.0
+      negative_evaluative_count: 0
+      negative_evaluative_pct: 0.0
+      negative_evaluative_per_sent: 0.0
+      dialogic_count: 2
+      dialogic_pct: 0.2381
+      dialogic_per_sent: 0.0465
+      pronouns_1p_count: 0
+      pronouns_1p_pct: 0.0
+      pronouns_1p_per_sent: 0.0
+      pronouns_2p_count: 3
+      pronouns_2p_pct: 0.3571
+      pronouns_2p_per_sent: 0.0698
+      dominant_stance: expository
+      positive_evaluative_quality_count: 0
+      positive_evaluative_quality_pct: 0.0
+      positive_evaluative_quality_per_sent: 0.0
+      positive_evaluative_emphasis_count: 0
+      positive_evaluative_emphasis_pct: 0.0
+      positive_evaluative_emphasis_per_sent: 0.0
+    sentence_register:
+      collaborative_sent_count: 0
+      collaborative_sent_pct: 0.0
+      permissive_sent_count: 0
+      permissive_sent_pct: 0.0
+      appreciative_sent_count: 0
+      appreciative_sent_pct: 0.0
+      imperative_sent_count: 4
+      imperative_sent_pct: 9.3023
+      directive_sent_count: 3
+      directive_sent_pct: 6.9767
+      configuring_sent_count: 1
+      configuring_sent_pct: 2.3256
+      none_sent_count: 36
+      none_sent_pct: 83.7209
+      appreciative_addressee_claude_count: 0
+      appreciative_addressee_user_count: 0
+      appreciative_addressee_unknown_count: 0
+      collaborative_addressee_claude_count: 0
+      collaborative_addressee_user_count: 0
+      collaborative_addressee_unknown_count: 0
+      dominant: imperative
+    modality:
+      deontic_count: 2
+      deontic_pct: 0.2381
+      deontic_per_sent: 0.0465
+      epistemic_count: 1
+      epistemic_pct: 0.119
+      epistemic_per_sent: 0.0233
+      dynamic_count: 4
+      dynamic_pct: 0.4762
+      dynamic_per_sent: 0.093
+      top_construction: can
+    vocab:
+      hard_prohibitions:
+        count: 2
+        pct: 0.2381
+        per_sent: 0.0465
+      hard_prescriptions:
+        count: 3
+        pct: 0.3571
+        per_sent: 0.0698
+      soft_prescriptions:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      politeness_direct:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      politeness_softening:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      warmth_encouragement:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      hedging:
+        count: 1
+        pct: 0.119
+        per_sent: 0.0233
+      structural_markers:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      profanity:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      pronouns_2p:
+        count: 3
+        pct: 0.3571
+        per_sent: 0.0698
+      pronouns_1p:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+    all_caps:
+      count: 0
+      distinct: 0
+      pct: 0.0
+      per_sent: 0.0
+      top: []
+    caps_imperative:
+      count: 0
+      pct: 0.0
+      per_sent: 0.0
+      hits: {}
+    justification:
+      count: 2
+      pct: 0.2381
+      per_sent: 0.0465
+      ratio: 0.333
+    rule_explanation:
+      n_paragraphs: 24
+      n_paragraphs_with_rules: 6
+      n_paragraphs_with_rules_unexplained: 5
+      n_rule_sentences: 7
+      n_imperative_sentences: 7
+      n_prohibition_sentences: 2
+      n_explained_same: 0
+      n_explained_para: 1
+      n_imperative_explained_para: 1
+      n_prohibition_explained_para: 0
+      pct_explained_same: 0.0
+      pct_explained_para: 14.2857
+      pct_imperative_explained_para: 14.2857
+      pct_prohibition_explained_para: 0.0
+      pct_paragraphs_with_rules_unexplained: 83.3333
+    judgment_procedural:
+      judgment_count: 0
+      procedural_count: 2
+      judgment_per_sent: 0.0
+      procedural_per_sent: 0.0465
+      judgment_to_procedural_ratio: 0.0
+    consequence_framing:
+      threat_count: 0
+      causal_count: 0
+      threat_per_sent: 0.0
+      causal_per_sent: 0.0
+      threat_share: null
+    socratic:
+      question_count: 0
+      question_pct: 0.0
+      question_per_sent: 0.0
+      apology_count: 0
+      apology_pct: 0.0
+      apology_per_sent: 0.0
+    address_form:
+      selfref_claude: 0
+      selfref_assistant: 0
+      selfref_model: 1
+      selfref_2p: 0
+      selfref_we: 0
+      pct_anthropomorphic: 0.0
+      pct_artifact: 1.0
+      pct_role: 0.0
+    imperative_streaks:
+      n_imperative_sentences: 7
+      n_streaks: 6
+      streak_max: 2
+      streak_mean: 1.167
+      n_streaks_ge3: 0
+      n_streaks_ge5: 0
+    rules_section:
+      n_paragraphs: 24
+      n_paragraphs_in_rules_section: 0
+      n_paragraphs_outside_rules_section: 24
+      n_rule_paragraphs_in_rules_section: 0
+      n_rule_paragraphs_outside_rules_section: 6
+      n_rule_paragraphs_in_rules_section_explained: 0
+      n_rule_paragraphs_outside_rules_section_explained: 1
+      n_rule_sentences_in_rules_section: 0
+      n_rule_sentences_outside_rules_section: 7
+      n_rule_sentences_in_rules_section_explained: 0
+      n_rule_sentences_outside_rules_section_explained: 1
+      pct_rule_paragraphs_explained_in_rules_section: null
+      pct_rule_paragraphs_explained_outside_rules_section: 16.6667
+      pct_rule_sentences_explained_in_rules_section: null
+      pct_rule_sentences_explained_outside_rules_section: 14.2857
+- path: data-managed-agents-outcomes.md
+  category: Data / template
+  name: 'Data: Managed Agents outcomes'
+  description: Reference documentation for Managed Agents outcomes, including user.define_outcome events, rubrics, outcome
+    evaluation events, deliverables, and interaction rules
+  ccVersion: 2.1.132
+  agentType: null
+  n_tokens: 797
+  n_sents: 55
+  metrics:
+    mood:
+      marker_count: 8
+      marker_pct: 1.0038
+      marker_per_sent: 0.1455
+    register:
+      ttr: 0.5259
+      mean_sent_len: 14.49
+      dep_depth: 2.232
+      f_score: 69.96
+      frozen_count: 0
+      formal_count: 0
+      consultative_count: 1
+      casual_count: 4
+      frozen_pct: 0.0
+      formal_pct: 0.0
+      consultative_pct: 0.1255
+      casual_pct: 0.5019
+      frozen_per_sent: 0.0
+      formal_per_sent: 0.0
+      consultative_per_sent: 0.0182
+      casual_per_sent: 0.0727
+      dominant_register: casual
+    stance:
+      directive_count: 5
+      directive_pct: 0.6274
+      directive_per_sent: 0.0909
+      expository_count: 14
+      expository_pct: 1.7566
+      expository_per_sent: 0.2545
+      positive_evaluative_count: 2
+      positive_evaluative_pct: 0.2509
+      positive_evaluative_per_sent: 0.0364
+      negative_evaluative_count: 0
+      negative_evaluative_pct: 0.0
+      negative_evaluative_per_sent: 0.0
+      dialogic_count: 3
+      dialogic_pct: 0.3764
+      dialogic_per_sent: 0.0545
+      pronouns_1p_count: 0
+      pronouns_1p_pct: 0.0
+      pronouns_1p_per_sent: 0.0
+      pronouns_2p_count: 7
+      pronouns_2p_pct: 0.8783
+      pronouns_2p_per_sent: 0.1273
+      dominant_stance: expository
+      positive_evaluative_quality_count: 2
+      positive_evaluative_quality_pct: 0.2509
+      positive_evaluative_quality_per_sent: 0.0364
+      positive_evaluative_emphasis_count: 0
+      positive_evaluative_emphasis_pct: 0.0
+      positive_evaluative_emphasis_per_sent: 0.0
+    sentence_register:
+      collaborative_sent_count: 0
+      collaborative_sent_pct: 0.0
+      permissive_sent_count: 0
+      permissive_sent_pct: 0.0
+      appreciative_sent_count: 0
+      appreciative_sent_pct: 0.0
+      imperative_sent_count: 9
+      imperative_sent_pct: 16.3636
+      directive_sent_count: 4
+      directive_sent_pct: 7.2727
+      configuring_sent_count: 3
+      configuring_sent_pct: 5.4545
+      none_sent_count: 40
+      none_sent_pct: 72.7273
+      appreciative_addressee_claude_count: 0
+      appreciative_addressee_user_count: 0
+      appreciative_addressee_unknown_count: 0
+      collaborative_addressee_claude_count: 0
+      collaborative_addressee_user_count: 0
+      collaborative_addressee_unknown_count: 0
+      dominant: imperative
+    modality:
+      deontic_count: 0
+      deontic_pct: 0.0
+      deontic_per_sent: 0.0
+      epistemic_count: 2
+      epistemic_pct: 0.2509
+      epistemic_per_sent: 0.0364
+      dynamic_count: 0
+      dynamic_pct: 0.0
+      dynamic_per_sent: 0.0
+      top_construction: may
+    vocab:
+      hard_prohibitions:
+        count: 4
+        pct: 0.5019
+        per_sent: 0.0727
+      hard_prescriptions:
+        count: 4
+        pct: 0.5019
+        per_sent: 0.0727
+      soft_prescriptions:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      politeness_direct:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      politeness_softening:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      warmth_encouragement:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      hedging:
+        count: 2
+        pct: 0.2509
+        per_sent: 0.0364
+      structural_markers:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      profanity:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      pronouns_2p:
+        count: 7
+        pct: 0.8783
+        per_sent: 0.1273
+      pronouns_1p:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+    all_caps:
+      count: 0
+      distinct: 0
+      pct: 0.0
+      per_sent: 0.0
+      top: []
+    caps_imperative:
+      count: 0
+      pct: 0.0
+      per_sent: 0.0
+      hits: {}
+    justification:
+      count: 1
+      pct: 0.1255
+      per_sent: 0.0182
+      ratio: 0.111
+    rule_explanation:
+      n_paragraphs: 23
+      n_paragraphs_with_rules: 8
+      n_paragraphs_with_rules_unexplained: 7
+      n_rule_sentences: 15
+      n_imperative_sentences: 15
+      n_prohibition_sentences: 4
+      n_explained_same: 1
+      n_explained_para: 2
+      n_imperative_explained_para: 2
+      n_prohibition_explained_para: 1
+      pct_explained_same: 6.6667
+      pct_explained_para: 13.3333
+      pct_imperative_explained_para: 13.3333
+      pct_prohibition_explained_para: 25.0
+      pct_paragraphs_with_rules_unexplained: 87.5
+    judgment_procedural:
+      judgment_count: 0
+      procedural_count: 1
+      judgment_per_sent: 0.0
+      procedural_per_sent: 0.0182
+      judgment_to_procedural_ratio: 0.0
+    consequence_framing:
+      threat_count: 1
+      causal_count: 0
+      threat_per_sent: 0.0182
+      causal_per_sent: 0.0
+      threat_share: 1.0
+    socratic:
+      question_count: 0
+      question_pct: 0.0
+      question_per_sent: 0.0
+      apology_count: 0
+      apology_pct: 0.0
+      apology_per_sent: 0.0
+    address_form:
+      selfref_claude: 1
+      selfref_assistant: 0
+      selfref_model: 5
+      selfref_2p: 0
+      selfref_we: 0
+      pct_anthropomorphic: 0.1667
+      pct_artifact: 0.8333
+      pct_role: 0.0
+    imperative_streaks:
+      n_imperative_sentences: 15
+      n_streaks: 12
+      streak_max: 2
+      streak_mean: 1.25
+      n_streaks_ge3: 0
+      n_streaks_ge5: 0
+    rules_section:
+      n_paragraphs: 23
+      n_paragraphs_in_rules_section: 3
+      n_paragraphs_outside_rules_section: 20
+      n_rule_paragraphs_in_rules_section: 1
+      n_rule_paragraphs_outside_rules_section: 7
+      n_rule_paragraphs_in_rules_section_explained: 0
+      n_rule_paragraphs_outside_rules_section_explained: 1
+      n_rule_sentences_in_rules_section: 5
+      n_rule_sentences_outside_rules_section: 10
+      n_rule_sentences_in_rules_section_explained: 0
+      n_rule_sentences_outside_rules_section_explained: 2
+      pct_rule_paragraphs_explained_in_rules_section: 0.0
+      pct_rule_paragraphs_explained_outside_rules_section: 14.2857
+      pct_rule_sentences_explained_in_rules_section: 0.0
+      pct_rule_sentences_explained_outside_rules_section: 20.0
 - path: data-managed-agents-overview.md
   category: Data / template
   name: 'Data: Managed Agents overview'
   description: Provides the agent with a comprehensive overview of the Managed Agents API architecture, mandatory agent-then-session
     flow, beta headers, documentation reading guide, and common pitfalls
-  ccVersion: 2.1.119
+  ccVersion: 2.1.132
   agentType: null
-  n_tokens: 1390
-  n_sents: 63
+  n_tokens: 1466
+  n_sents: 65
   metrics:
     mood:
       marker_count: 13
-      marker_pct: 0.9353
-      marker_per_sent: 0.2063
+      marker_pct: 0.8868
+      marker_per_sent: 0.2
     register:
-      ttr: 0.4006
-      mean_sent_len: 22.06
-      dep_depth: 2.631
-      f_score: 72.33
+      ttr: 0.4055
+      mean_sent_len: 22.55
+      dep_depth: 2.56
+      f_score: 72.81
       frozen_count: 0
       formal_count: 0
       consultative_count: 3
       casual_count: 5
       frozen_pct: 0.0
       formal_pct: 0.0
-      consultative_pct: 0.2158
-      casual_pct: 0.3597
+      consultative_pct: 0.2046
+      casual_pct: 0.3411
       frozen_per_sent: 0.0
       formal_per_sent: 0.0
-      consultative_per_sent: 0.0476
-      casual_per_sent: 0.0794
+      consultative_per_sent: 0.0462
+      casual_per_sent: 0.0769
       dominant_register: casual
     stance:
       directive_count: 8
-      directive_pct: 0.5755
-      directive_per_sent: 0.127
+      directive_pct: 0.5457
+      directive_per_sent: 0.1231
       expository_count: 20
-      expository_pct: 1.4388
-      expository_per_sent: 0.3175
+      expository_pct: 1.3643
+      expository_per_sent: 0.3077
       positive_evaluative_count: 1
-      positive_evaluative_pct: 0.0719
-      positive_evaluative_per_sent: 0.0159
+      positive_evaluative_pct: 0.0682
+      positive_evaluative_per_sent: 0.0154
       negative_evaluative_count: 0
       negative_evaluative_pct: 0.0
       negative_evaluative_per_sent: 0.0
       dialogic_count: 2
-      dialogic_pct: 0.1439
-      dialogic_per_sent: 0.0317
+      dialogic_pct: 0.1364
+      dialogic_per_sent: 0.0308
       pronouns_1p_count: 1
-      pronouns_1p_pct: 0.0719
-      pronouns_1p_per_sent: 0.0159
+      pronouns_1p_pct: 0.0682
+      pronouns_1p_per_sent: 0.0154
       pronouns_2p_count: 10
-      pronouns_2p_pct: 0.7194
-      pronouns_2p_per_sent: 0.1587
+      pronouns_2p_pct: 0.6821
+      pronouns_2p_per_sent: 0.1538
       dominant_stance: expository
       positive_evaluative_quality_count: 1
-      positive_evaluative_quality_pct: 0.0719
-      positive_evaluative_quality_per_sent: 0.0159
+      positive_evaluative_quality_pct: 0.0682
+      positive_evaluative_quality_per_sent: 0.0154
       positive_evaluative_emphasis_count: 0
       positive_evaluative_emphasis_pct: 0.0
       positive_evaluative_emphasis_per_sent: 0.0
@@ -16577,17 +17024,17 @@ files:
       collaborative_sent_count: 0
       collaborative_sent_pct: 0.0
       permissive_sent_count: 1
-      permissive_sent_pct: 1.5873
+      permissive_sent_pct: 1.5385
       appreciative_sent_count: 0
       appreciative_sent_pct: 0.0
       imperative_sent_count: 11
-      imperative_sent_pct: 17.4603
+      imperative_sent_pct: 16.9231
       directive_sent_count: 7
-      directive_sent_pct: 11.1111
-      configuring_sent_count: 3
-      configuring_sent_pct: 4.7619
-      none_sent_count: 43
-      none_sent_pct: 68.254
+      directive_sent_pct: 10.7692
+      configuring_sent_count: 4
+      configuring_sent_pct: 6.1538
+      none_sent_count: 44
+      none_sent_pct: 67.6923
       appreciative_addressee_claude_count: 0
       appreciative_addressee_user_count: 0
       appreciative_addressee_unknown_count: 0
@@ -16597,24 +17044,24 @@ files:
       dominant: imperative
     modality:
       deontic_count: 3
-      deontic_pct: 0.2158
-      deontic_per_sent: 0.0476
+      deontic_pct: 0.2046
+      deontic_per_sent: 0.0462
       epistemic_count: 0
       epistemic_pct: 0.0
       epistemic_per_sent: 0.0
       dynamic_count: 4
-      dynamic_pct: 0.2878
-      dynamic_per_sent: 0.0635
+      dynamic_pct: 0.2729
+      dynamic_per_sent: 0.0615
       top_construction: can
     vocab:
       hard_prohibitions:
         count: 9
-        pct: 0.6475
-        per_sent: 0.1429
+        pct: 0.6139
+        per_sent: 0.1385
       hard_prescriptions:
         count: 4
-        pct: 0.2878
-        per_sent: 0.0635
+        pct: 0.2729
+        per_sent: 0.0615
       soft_prescriptions:
         count: 0
         pct: 0.0
@@ -16637,25 +17084,25 @@ files:
         per_sent: 0.0
       structural_markers:
         count: 1
-        pct: 0.0719
-        per_sent: 0.0159
+        pct: 0.0682
+        per_sent: 0.0154
       profanity:
         count: 0
         pct: 0.0
         per_sent: 0.0
       pronouns_2p:
         count: 10
-        pct: 0.7194
-        per_sent: 0.1587
+        pct: 0.6821
+        per_sent: 0.1538
       pronouns_1p:
         count: 1
-        pct: 0.0719
-        per_sent: 0.0159
+        pct: 0.0682
+        per_sent: 0.0154
     all_caps:
-      count: 14
-      distinct: 13
-      pct: 1.0072
-      per_sent: 0.2222
+      count: 15
+      distinct: 14
+      pct: 1.0232
+      per_sent: 0.2308
       top:
       - token: ONCE
         count: 2
@@ -16665,14 +17112,14 @@ files:
         count: 1
     caps_imperative:
       count: 1
-      pct: 0.0719
-      per_sent: 0.0159
+      pct: 0.0682
+      per_sent: 0.0154
       hits:
         MANDATORY: 1
     justification:
       count: 4
-      pct: 0.2878
-      per_sent: 0.0635
+      pct: 0.2729
+      per_sent: 0.0615
       ratio: 0.286
     rule_explanation:
       n_paragraphs: 17
@@ -16694,13 +17141,13 @@ files:
       judgment_count: 0
       procedural_count: 7
       judgment_per_sent: 0.0
-      procedural_per_sent: 0.1111
+      procedural_per_sent: 0.1077
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
       threat_count: 1
       causal_count: 2
-      threat_per_sent: 0.0159
-      causal_per_sent: 0.0317
+      threat_per_sent: 0.0154
+      causal_per_sent: 0.0308
       threat_share: 0.3333
     socratic:
       question_count: 0
@@ -16712,7 +17159,7 @@ files:
     address_form:
       selfref_claude: 0
       selfref_assistant: 0
-      selfref_model: 8
+      selfref_model: 9
       selfref_2p: 1
       selfref_we: 0
       pct_anthropomorphic: 0.0
@@ -17422,7 +17869,7 @@ files:
   name: 'Data: Managed Agents tools and skills'
   description: Reference documentation covering the Managed Agents SDK's tool types (agent toolset, MCP, custom), permission
     policies, vault credential management, and skills API for building specialized agents
-  ccVersion: 2.1.105
+  ccVersion: 2.1.132
   agentType: null
   n_tokens: 1828
   n_sents: 92
@@ -17639,6 +18086,234 @@ files:
       pct_rule_paragraphs_explained_outside_rules_section: 16.6667
       pct_rule_sentences_explained_in_rules_section: null
       pct_rule_sentences_explained_outside_rules_section: 20.8333
+- path: data-managed-agents-webhooks.md
+  category: Data / template
+  name: 'Data: Managed Agents webhooks'
+  description: Reference documentation for Managed Agents webhooks, including endpoint registration, signature verification,
+    payload envelopes, supported event types, delivery behavior, and pitfalls
+  ccVersion: 2.1.132
+  agentType: null
+  n_tokens: 682
+  n_sents: 32
+  metrics:
+    mood:
+      marker_count: 3
+      marker_pct: 0.4399
+      marker_per_sent: 0.0938
+    register:
+      ttr: 0.5423
+      mean_sent_len: 21.31
+      dep_depth: 2.7
+      f_score: 72.55
+      frozen_count: 0
+      formal_count: 0
+      consultative_count: 0
+      casual_count: 3
+      frozen_pct: 0.0
+      formal_pct: 0.0
+      consultative_pct: 0.0
+      casual_pct: 0.4399
+      frozen_per_sent: 0.0
+      formal_per_sent: 0.0
+      consultative_per_sent: 0.0
+      casual_per_sent: 0.0938
+      dominant_register: casual
+    stance:
+      directive_count: 3
+      directive_pct: 0.4399
+      directive_per_sent: 0.0938
+      expository_count: 13
+      expository_pct: 1.9062
+      expository_per_sent: 0.4062
+      positive_evaluative_count: 0
+      positive_evaluative_pct: 0.0
+      positive_evaluative_per_sent: 0.0
+      negative_evaluative_count: 0
+      negative_evaluative_pct: 0.0
+      negative_evaluative_per_sent: 0.0
+      dialogic_count: 1
+      dialogic_pct: 0.1466
+      dialogic_per_sent: 0.0312
+      pronouns_1p_count: 0
+      pronouns_1p_pct: 0.0
+      pronouns_1p_per_sent: 0.0
+      pronouns_2p_count: 6
+      pronouns_2p_pct: 0.8798
+      pronouns_2p_per_sent: 0.1875
+      dominant_stance: expository
+      positive_evaluative_quality_count: 0
+      positive_evaluative_quality_pct: 0.0
+      positive_evaluative_quality_per_sent: 0.0
+      positive_evaluative_emphasis_count: 0
+      positive_evaluative_emphasis_pct: 0.0
+      positive_evaluative_emphasis_per_sent: 0.0
+    sentence_register:
+      collaborative_sent_count: 0
+      collaborative_sent_pct: 0.0
+      permissive_sent_count: 0
+      permissive_sent_pct: 0.0
+      appreciative_sent_count: 0
+      appreciative_sent_pct: 0.0
+      imperative_sent_count: 7
+      imperative_sent_pct: 21.875
+      directive_sent_count: 3
+      directive_sent_pct: 9.375
+      configuring_sent_count: 2
+      configuring_sent_pct: 6.25
+      none_sent_count: 23
+      none_sent_pct: 71.875
+      appreciative_addressee_claude_count: 0
+      appreciative_addressee_user_count: 0
+      appreciative_addressee_unknown_count: 0
+      collaborative_addressee_claude_count: 0
+      collaborative_addressee_user_count: 0
+      collaborative_addressee_unknown_count: 0
+      dominant: imperative
+    modality:
+      deontic_count: 0
+      deontic_pct: 0.0
+      deontic_per_sent: 0.0
+      epistemic_count: 1
+      epistemic_pct: 0.1466
+      epistemic_per_sent: 0.0312
+      dynamic_count: 1
+      dynamic_pct: 0.1466
+      dynamic_per_sent: 0.0312
+      top_construction: can
+    vocab:
+      hard_prohibitions:
+        count: 3
+        pct: 0.4399
+        per_sent: 0.0938
+      hard_prescriptions:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      soft_prescriptions:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      politeness_direct:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      politeness_softening:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      warmth_encouragement:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      hedging:
+        count: 1
+        pct: 0.1466
+        per_sent: 0.0312
+      structural_markers:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      profanity:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      pronouns_2p:
+        count: 6
+        pct: 0.8798
+        per_sent: 0.1875
+      pronouns_1p:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+    all_caps:
+      count: 6
+      distinct: 3
+      pct: 0.8798
+      per_sent: 0.1875
+      top:
+      - token: SSE
+        count: 3
+      - token: HMAC
+        count: 2
+      - token: MAC
+        count: 1
+    caps_imperative:
+      count: 0
+      pct: 0.0
+      per_sent: 0.0
+      hits: {}
+    justification:
+      count: 0
+      pct: 0.0
+      per_sent: 0.0
+      ratio: 0.0
+    rule_explanation:
+      n_paragraphs: 21
+      n_paragraphs_with_rules: 5
+      n_paragraphs_with_rules_unexplained: 5
+      n_rule_sentences: 7
+      n_imperative_sentences: 7
+      n_prohibition_sentences: 3
+      n_explained_same: 0
+      n_explained_para: 0
+      n_imperative_explained_para: 0
+      n_prohibition_explained_para: 0
+      pct_explained_same: 0.0
+      pct_explained_para: 0.0
+      pct_imperative_explained_para: 0.0
+      pct_prohibition_explained_para: 0.0
+      pct_paragraphs_with_rules_unexplained: 100.0
+    judgment_procedural:
+      judgment_count: 0
+      procedural_count: 5
+      judgment_per_sent: 0.0
+      procedural_per_sent: 0.1562
+      judgment_to_procedural_ratio: 0.0
+    consequence_framing:
+      threat_count: 0
+      causal_count: 0
+      threat_per_sent: 0.0
+      causal_per_sent: 0.0
+      threat_share: null
+    socratic:
+      question_count: 0
+      question_pct: 0.0
+      question_per_sent: 0.0
+      apology_count: 0
+      apology_pct: 0.0
+      apology_per_sent: 0.0
+    address_form:
+      selfref_claude: 0
+      selfref_assistant: 0
+      selfref_model: 0
+      selfref_2p: 0
+      selfref_we: 0
+      pct_anthropomorphic: null
+      pct_artifact: null
+      pct_role: null
+    imperative_streaks:
+      n_imperative_sentences: 7
+      n_streaks: 6
+      streak_max: 2
+      streak_mean: 1.167
+      n_streaks_ge3: 0
+      n_streaks_ge5: 0
+    rules_section:
+      n_paragraphs: 21
+      n_paragraphs_in_rules_section: 0
+      n_paragraphs_outside_rules_section: 21
+      n_rule_paragraphs_in_rules_section: 0
+      n_rule_paragraphs_outside_rules_section: 5
+      n_rule_paragraphs_in_rules_section_explained: 0
+      n_rule_paragraphs_outside_rules_section_explained: 0
+      n_rule_sentences_in_rules_section: 0
+      n_rule_sentences_outside_rules_section: 7
+      n_rule_sentences_in_rules_section_explained: 0
+      n_rule_sentences_outside_rules_section_explained: 0
+      pct_rule_paragraphs_explained_in_rules_section: null
+      pct_rule_paragraphs_explained_outside_rules_section: 0.0
+      pct_rule_sentences_explained_in_rules_section: null
+      pct_rule_sentences_explained_outside_rules_section: 0.0
 - path: data-message-batches-api-reference-python.md
   category: Data / template
   name: 'Data: Message Batches API reference — Python'
@@ -19883,28 +20558,28 @@ files:
   description: Guides Claude in building LLM-powered applications using the Anthropic SDK, covering language detection, API
     surface selection (Claude API vs Managed Agents), model defaults, thinking/effort configuration, and language-specific
     documentation reading
-  ccVersion: 2.1.128
+  ccVersion: 2.1.132
   agentType: null
-  n_tokens: 5596
+  n_tokens: 5602
   n_sents: 273
   metrics:
     mood:
       marker_count: 44
-      marker_pct: 0.7863
+      marker_pct: 0.7854
       marker_per_sent: 0.1612
     register:
-      ttr: 0.2704
-      mean_sent_len: 20.5
-      dep_depth: 2.771
-      f_score: 70.82
+      ttr: 0.2709
+      mean_sent_len: 20.52
+      dep_depth: 2.781
+      f_score: 70.84
       frozen_count: 0
       formal_count: 0
       consultative_count: 23
       casual_count: 15
       frozen_pct: 0.0
       formal_pct: 0.0
-      consultative_pct: 0.411
-      casual_pct: 0.268
+      consultative_pct: 0.4106
+      casual_pct: 0.2678
       frozen_per_sent: 0.0
       formal_per_sent: 0.0
       consultative_per_sent: 0.0842
@@ -19912,29 +20587,29 @@ files:
       dominant_register: consultative
     stance:
       directive_count: 41
-      directive_pct: 0.7327
+      directive_pct: 0.7319
       directive_per_sent: 0.1502
       expository_count: 80
-      expository_pct: 1.4296
+      expository_pct: 1.4281
       expository_per_sent: 0.293
       positive_evaluative_count: 12
-      positive_evaluative_pct: 0.2144
+      positive_evaluative_pct: 0.2142
       positive_evaluative_per_sent: 0.044
       negative_evaluative_count: 8
-      negative_evaluative_pct: 0.143
+      negative_evaluative_pct: 0.1428
       negative_evaluative_per_sent: 0.0293
       dialogic_count: 6
-      dialogic_pct: 0.1072
+      dialogic_pct: 0.1071
       dialogic_per_sent: 0.022
       pronouns_1p_count: 11
-      pronouns_1p_pct: 0.1966
+      pronouns_1p_pct: 0.1964
       pronouns_1p_per_sent: 0.0403
       pronouns_2p_count: 46
-      pronouns_2p_pct: 0.822
+      pronouns_2p_pct: 0.8211
       pronouns_2p_per_sent: 0.1685
       dominant_stance: expository
       positive_evaluative_quality_count: 10
-      positive_evaluative_quality_pct: 0.1787
+      positive_evaluative_quality_pct: 0.1785
       positive_evaluative_quality_per_sent: 0.0366
       positive_evaluative_emphasis_count: 2
       positive_evaluative_emphasis_pct: 0.0357
@@ -19963,23 +20638,23 @@ files:
       dominant: imperative
     modality:
       deontic_count: 6
-      deontic_pct: 0.1072
+      deontic_pct: 0.1071
       deontic_per_sent: 0.022
       epistemic_count: 10
-      epistemic_pct: 0.1787
+      epistemic_pct: 0.1785
       epistemic_per_sent: 0.0366
       dynamic_count: 12
-      dynamic_pct: 0.2144
+      dynamic_pct: 0.2142
       dynamic_per_sent: 0.044
       top_construction: may
     vocab:
       hard_prohibitions:
         count: 33
-        pct: 0.5897
+        pct: 0.5891
         per_sent: 0.1209
       hard_prescriptions:
         count: 12
-        pct: 0.2144
+        pct: 0.2142
         per_sent: 0.044
       soft_prescriptions:
         count: 3
@@ -19999,11 +20674,11 @@ files:
         per_sent: 0.0
       hedging:
         count: 7
-        pct: 0.1251
+        pct: 0.125
         per_sent: 0.0256
       structural_markers:
         count: 11
-        pct: 0.1966
+        pct: 0.1964
         per_sent: 0.0403
       profanity:
         count: 0
@@ -20011,16 +20686,16 @@ files:
         per_sent: 0.0
       pronouns_2p:
         count: 46
-        pct: 0.822
+        pct: 0.8211
         per_sent: 0.1685
       pronouns_1p:
         count: 11
-        pct: 0.1966
+        pct: 0.1964
         per_sent: 0.0403
     all_caps:
       count: 12
       distinct: 7
-      pct: 0.2144
+      pct: 0.2142
       per_sent: 0.044
       top:
       - token: README
@@ -20038,7 +20713,7 @@ files:
         CRITICAL: 1
     justification:
       count: 7
-      pct: 0.1251
+      pct: 0.125
       per_sent: 0.0256
       ratio: 0.156
     rule_explanation:
@@ -36742,45 +37417,45 @@ files:
       pct_rule_paragraphs_explained_outside_rules_section: 0.0
       pct_rule_sentences_explained_in_rules_section: null
       pct_rule_sentences_explained_outside_rules_section: 0.0
-- path: system-prompt-proactive-schedule-offer-after-follow-up-work.md
+- path: system-prompt-proactive-schedule-offer-after-natural-future-follow-up.md
   category: System prompt
-  name: 'System Prompt: Proactive schedule offer after follow-up work'
-  description: Instructs the agent to offer a one-line /schedule follow-up only when completed work has a strong natural future
-    action and the user is likely to want it
-  ccVersion: 2.1.122
+  name: 'System Prompt: Proactive schedule offer after natural future follow-up'
+  description: Instructs the agent to offer a one-line /schedule follow-up after completed work when there is a likely one-time
+    or recurring future action
+  ccVersion: 2.1.132
   agentType: null
-  n_tokens: 243
-  n_sents: 5
+  n_tokens: 296
+  n_sents: 7
   metrics:
     mood:
-      marker_count: 1
-      marker_pct: 0.4115
-      marker_per_sent: 0.2
+      marker_count: 2
+      marker_pct: 0.6757
+      marker_per_sent: 0.2857
     register:
-      ttr: 0.8485
-      mean_sent_len: 48.6
-      dep_depth: 3.216
-      f_score: 69.68
+      ttr: 0.7845
+      mean_sent_len: 42.29
+      dep_depth: 3.238
+      f_score: 65.61
       frozen_count: 0
       formal_count: 0
-      consultative_count: 0
-      casual_count: 1
+      consultative_count: 3
+      casual_count: 2
       frozen_pct: 0.0
       formal_pct: 0.0
-      consultative_pct: 0.0
-      casual_pct: 0.4115
+      consultative_pct: 1.0135
+      casual_pct: 0.6757
       frozen_per_sent: 0.0
       formal_per_sent: 0.0
-      consultative_per_sent: 0.0
-      casual_per_sent: 0.2
-      dominant_register: casual
+      consultative_per_sent: 0.4286
+      casual_per_sent: 0.2857
+      dominant_register: consultative
     stance:
       directive_count: 2
-      directive_pct: 0.823
-      directive_per_sent: 0.4
-      expository_count: 1
-      expository_pct: 0.4115
-      expository_per_sent: 0.2
+      directive_pct: 0.6757
+      directive_per_sent: 0.2857
+      expository_count: 0
+      expository_pct: 0.0
+      expository_per_sent: 0.0
       positive_evaluative_count: 0
       positive_evaluative_pct: 0.0
       positive_evaluative_per_sent: 0.0
@@ -36791,11 +37466,11 @@ files:
       dialogic_pct: 0.0
       dialogic_per_sent: 0.0
       pronouns_1p_count: 1
-      pronouns_1p_pct: 0.4115
-      pronouns_1p_per_sent: 0.2
-      pronouns_2p_count: 2
-      pronouns_2p_pct: 0.823
-      pronouns_2p_per_sent: 0.4
+      pronouns_1p_pct: 0.3378
+      pronouns_1p_per_sent: 0.1429
+      pronouns_2p_count: 4
+      pronouns_2p_pct: 1.3514
+      pronouns_2p_per_sent: 0.5714
       dominant_stance: directive
       positive_evaluative_quality_count: 0
       positive_evaluative_quality_pct: 0.0
@@ -36806,18 +37481,18 @@ files:
     sentence_register:
       collaborative_sent_count: 0
       collaborative_sent_pct: 0.0
-      permissive_sent_count: 0
-      permissive_sent_pct: 0.0
+      permissive_sent_count: 1
+      permissive_sent_pct: 14.2857
       appreciative_sent_count: 0
       appreciative_sent_pct: 0.0
-      imperative_sent_count: 2
-      imperative_sent_pct: 40.0
+      imperative_sent_count: 5
+      imperative_sent_pct: 71.4286
       directive_sent_count: 2
-      directive_sent_pct: 40.0
+      directive_sent_pct: 28.5714
       configuring_sent_count: 1
-      configuring_sent_pct: 20.0
-      none_sent_count: 2
-      none_sent_pct: 40.0
+      configuring_sent_pct: 14.2857
+      none_sent_count: 0
+      none_sent_pct: 0.0
       appreciative_addressee_claude_count: 0
       appreciative_addressee_user_count: 0
       appreciative_addressee_unknown_count: 0
@@ -36829,26 +37504,26 @@ files:
       deontic_count: 0
       deontic_pct: 0.0
       deontic_per_sent: 0.0
-      epistemic_count: 1
-      epistemic_pct: 0.4115
-      epistemic_per_sent: 0.2
-      dynamic_count: 0
-      dynamic_pct: 0.0
-      dynamic_per_sent: 0.0
-      top_construction: should be
+      epistemic_count: 3
+      epistemic_pct: 1.0135
+      epistemic_per_sent: 0.4286
+      dynamic_count: 2
+      dynamic_pct: 0.6757
+      dynamic_per_sent: 0.2857
+      top_construction: appears to
     vocab:
       hard_prohibitions:
-        count: 1
-        pct: 0.4115
-        per_sent: 0.2
+        count: 2
+        pct: 0.6757
+        per_sent: 0.2857
       hard_prescriptions:
         count: 0
         pct: 0.0
         per_sent: 0.0
       soft_prescriptions:
         count: 1
-        pct: 0.4115
-        per_sent: 0.2
+        pct: 0.3378
+        per_sent: 0.1429
       politeness_direct:
         count: 0
         pct: 0.0
@@ -36862,9 +37537,9 @@ files:
         pct: 0.0
         per_sent: 0.0
       hedging:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
+        count: 1
+        pct: 0.3378
+        per_sent: 0.1429
       structural_markers:
         count: 0
         pct: 0.0
@@ -36874,18 +37549,18 @@ files:
         pct: 0.0
         per_sent: 0.0
       pronouns_2p:
-        count: 2
-        pct: 0.823
-        per_sent: 0.4
+        count: 4
+        pct: 1.3514
+        per_sent: 0.5714
       pronouns_1p:
         count: 1
-        pct: 0.4115
-        per_sent: 0.2
+        pct: 0.3378
+        per_sent: 0.1429
     all_caps:
       count: 1
       distinct: 1
-      pct: 0.4115
-      per_sent: 0.2
+      pct: 0.3378
+      per_sent: 0.1429
       top:
       - token: ETA
         count: 1
@@ -36900,12 +37575,12 @@ files:
       per_sent: 0.0
       ratio: 0.0
     rule_explanation:
-      n_paragraphs: 1
-      n_paragraphs_with_rules: 1
-      n_paragraphs_with_rules_unexplained: 1
-      n_rule_sentences: 2
-      n_imperative_sentences: 2
-      n_prohibition_sentences: 1
+      n_paragraphs: 2
+      n_paragraphs_with_rules: 2
+      n_paragraphs_with_rules_unexplained: 2
+      n_rule_sentences: 6
+      n_imperative_sentences: 6
+      n_prohibition_sentences: 2
       n_explained_same: 0
       n_explained_para: 0
       n_imperative_explained_para: 0
@@ -36916,11 +37591,11 @@ files:
       pct_prohibition_explained_para: 0.0
       pct_paragraphs_with_rules_unexplained: 100.0
     judgment_procedural:
-      judgment_count: 0
-      procedural_count: 1
-      judgment_per_sent: 0.0
-      procedural_per_sent: 0.2
-      judgment_to_procedural_ratio: 0.0
+      judgment_count: 2
+      procedural_count: 3
+      judgment_per_sent: 0.2857
+      procedural_per_sent: 0.4286
+      judgment_to_procedural_ratio: 0.667
     consequence_framing:
       threat_count: 0
       causal_count: 0
@@ -36938,28 +37613,28 @@ files:
       selfref_claude: 0
       selfref_assistant: 0
       selfref_model: 0
-      selfref_2p: 0
+      selfref_2p: 1
       selfref_we: 0
       pct_anthropomorphic: null
       pct_artifact: null
       pct_role: null
     imperative_streaks:
-      n_imperative_sentences: 2
+      n_imperative_sentences: 6
       n_streaks: 2
-      streak_max: 1
-      streak_mean: 1.0
-      n_streaks_ge3: 0
+      streak_max: 4
+      streak_mean: 3.0
+      n_streaks_ge3: 1
       n_streaks_ge5: 0
     rules_section:
-      n_paragraphs: 1
+      n_paragraphs: 2
       n_paragraphs_in_rules_section: 0
-      n_paragraphs_outside_rules_section: 1
+      n_paragraphs_outside_rules_section: 2
       n_rule_paragraphs_in_rules_section: 0
-      n_rule_paragraphs_outside_rules_section: 1
+      n_rule_paragraphs_outside_rules_section: 2
       n_rule_paragraphs_in_rules_section_explained: 0
       n_rule_paragraphs_outside_rules_section_explained: 0
       n_rule_sentences_in_rules_section: 0
-      n_rule_sentences_outside_rules_section: 2
+      n_rule_sentences_outside_rules_section: 6
       n_rule_sentences_in_rules_section_explained: 0
       n_rule_sentences_outside_rules_section_explained: 0
       pct_rule_paragraphs_explained_in_rules_section: null
@@ -38104,6 +38779,235 @@ files:
       pct_rule_paragraphs_explained_outside_rules_section: 14.2857
       pct_rule_sentences_explained_in_rules_section: null
       pct_rule_sentences_explained_outside_rules_section: 14.8148
+- path: system-prompt-strict-proactive-schedule-offer-gate.md
+  category: System prompt
+  name: 'System Prompt: Strict proactive schedule offer gate'
+  description: Restricts proactive /schedule offers to completed work with a named future obligation artifact, concrete timing,
+    and no in-session follow-up available
+  ccVersion: 2.1.132
+  agentType: null
+  n_tokens: 181
+  n_sents: 6
+  metrics:
+    mood:
+      marker_count: 2
+      marker_pct: 1.105
+      marker_per_sent: 0.3333
+    register:
+      ttr: 0.8082
+      mean_sent_len: 30.17
+      dep_depth: 3.092
+      f_score: 76.07
+      frozen_count: 0
+      formal_count: 0
+      consultative_count: 1
+      casual_count: 0
+      frozen_pct: 0.0
+      formal_pct: 0.0
+      consultative_pct: 0.5525
+      casual_pct: 0.0
+      frozen_per_sent: 0.0
+      formal_per_sent: 0.0
+      consultative_per_sent: 0.1667
+      casual_per_sent: 0.0
+      dominant_register: consultative
+    stance:
+      directive_count: 2
+      directive_pct: 1.105
+      directive_per_sent: 0.3333
+      expository_count: 1
+      expository_pct: 0.5525
+      expository_per_sent: 0.1667
+      positive_evaluative_count: 1
+      positive_evaluative_pct: 0.5525
+      positive_evaluative_per_sent: 0.1667
+      negative_evaluative_count: 0
+      negative_evaluative_pct: 0.0
+      negative_evaluative_per_sent: 0.0
+      dialogic_count: 0
+      dialogic_pct: 0.0
+      dialogic_per_sent: 0.0
+      pronouns_1p_count: 1
+      pronouns_1p_pct: 0.5525
+      pronouns_1p_per_sent: 0.1667
+      pronouns_2p_count: 1
+      pronouns_2p_pct: 0.5525
+      pronouns_2p_per_sent: 0.1667
+      dominant_stance: directive
+      positive_evaluative_quality_count: 0
+      positive_evaluative_quality_pct: 0.0
+      positive_evaluative_quality_per_sent: 0.0
+      positive_evaluative_emphasis_count: 1
+      positive_evaluative_emphasis_pct: 0.5525
+      positive_evaluative_emphasis_per_sent: 0.1667
+    sentence_register:
+      collaborative_sent_count: 0
+      collaborative_sent_pct: 0.0
+      permissive_sent_count: 1
+      permissive_sent_pct: 16.6667
+      appreciative_sent_count: 0
+      appreciative_sent_pct: 0.0
+      imperative_sent_count: 2
+      imperative_sent_pct: 33.3333
+      directive_sent_count: 2
+      directive_sent_pct: 33.3333
+      configuring_sent_count: 2
+      configuring_sent_pct: 33.3333
+      none_sent_count: 1
+      none_sent_pct: 16.6667
+      appreciative_addressee_claude_count: 0
+      appreciative_addressee_user_count: 0
+      appreciative_addressee_unknown_count: 0
+      collaborative_addressee_claude_count: 0
+      collaborative_addressee_user_count: 0
+      collaborative_addressee_unknown_count: 0
+      dominant: imperative
+    modality:
+      deontic_count: 0
+      deontic_pct: 0.0
+      deontic_per_sent: 0.0
+      epistemic_count: 0
+      epistemic_pct: 0.0
+      epistemic_per_sent: 0.0
+      dynamic_count: 1
+      dynamic_pct: 0.5525
+      dynamic_per_sent: 0.1667
+      top_construction: can
+    vocab:
+      hard_prohibitions:
+        count: 2
+        pct: 1.105
+        per_sent: 0.3333
+      hard_prescriptions:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      soft_prescriptions:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      politeness_direct:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      politeness_softening:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      warmth_encouragement:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      hedging:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      structural_markers:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      profanity:
+        count: 0
+        pct: 0.0
+        per_sent: 0.0
+      pronouns_2p:
+        count: 1
+        pct: 0.5525
+        per_sent: 0.1667
+      pronouns_1p:
+        count: 1
+        pct: 0.5525
+        per_sent: 0.1667
+    all_caps:
+      count: 5
+      distinct: 4
+      pct: 2.7624
+      per_sent: 0.8333
+      top:
+      - token: ETA
+        count: 2
+      - token: 'NO'
+        count: 1
+      - token: ONLY
+        count: 1
+    caps_imperative:
+      count: 1
+      pct: 0.5525
+      per_sent: 0.1667
+      hits:
+        NEVER: 1
+    justification:
+      count: 0
+      pct: 0.0
+      per_sent: 0.0
+      ratio: 0.0
+    rule_explanation:
+      n_paragraphs: 1
+      n_paragraphs_with_rules: 1
+      n_paragraphs_with_rules_unexplained: 1
+      n_rule_sentences: 4
+      n_imperative_sentences: 4
+      n_prohibition_sentences: 2
+      n_explained_same: 0
+      n_explained_para: 0
+      n_imperative_explained_para: 0
+      n_prohibition_explained_para: 0
+      pct_explained_same: 0.0
+      pct_explained_para: 0.0
+      pct_imperative_explained_para: 0.0
+      pct_prohibition_explained_para: 0.0
+      pct_paragraphs_with_rules_unexplained: 100.0
+    judgment_procedural:
+      judgment_count: 0
+      procedural_count: 0
+      judgment_per_sent: 0.0
+      procedural_per_sent: 0.0
+      judgment_to_procedural_ratio: null
+    consequence_framing:
+      threat_count: 0
+      causal_count: 0
+      threat_per_sent: 0.0
+      causal_per_sent: 0.0
+      threat_share: null
+    socratic:
+      question_count: 0
+      question_pct: 0.0
+      question_per_sent: 0.0
+      apology_count: 0
+      apology_pct: 0.0
+      apology_per_sent: 0.0
+    address_form:
+      selfref_claude: 0
+      selfref_assistant: 0
+      selfref_model: 0
+      selfref_2p: 1
+      selfref_we: 0
+      pct_anthropomorphic: null
+      pct_artifact: null
+      pct_role: null
+    imperative_streaks:
+      n_imperative_sentences: 4
+      n_streaks: 2
+      streak_max: 3
+      streak_mean: 2.0
+      n_streaks_ge3: 1
+      n_streaks_ge5: 0
+    rules_section:
+      n_paragraphs: 1
+      n_paragraphs_in_rules_section: 0
+      n_paragraphs_outside_rules_section: 1
+      n_rule_paragraphs_in_rules_section: 0
+      n_rule_paragraphs_outside_rules_section: 1
+      n_rule_paragraphs_in_rules_section_explained: 0
+      n_rule_paragraphs_outside_rules_section_explained: 0
+      n_rule_sentences_in_rules_section: 0
+      n_rule_sentences_outside_rules_section: 4
+      n_rule_sentences_in_rules_section_explained: 0
+      n_rule_sentences_outside_rules_section_explained: 0
+      pct_rule_paragraphs_explained_in_rules_section: null
+      pct_rule_paragraphs_explained_outside_rules_section: 0.0
+      pct_rule_sentences_explained_in_rules_section: null
+      pct_rule_sentences_explained_outside_rules_section: 0.0
 - path: system-prompt-subagent-delegation-examples.md
   category: System prompt
   name: 'System Prompt: Subagent delegation examples'
@@ -63651,234 +64555,6 @@ files:
       pct_rule_paragraphs_explained_outside_rules_section: 100.0
       pct_rule_sentences_explained_in_rules_section: null
       pct_rule_sentences_explained_outside_rules_section: 100.0
-- path: tool-description-schedule-proactive-offer-guidance.md
-  category: Tool description
-  name: 'Tool Description: Schedule proactive offer guidance'
-  description: Explains when to use the scheduling tool for recurring or one-time remote agents and when to proactively offer
-    scheduling after successful work
-  ccVersion: 2.1.118
-  agentType: null
-  n_tokens: 215
-  n_sents: 5
-  metrics:
-    mood:
-      marker_count: 1
-      marker_pct: 0.4651
-      marker_per_sent: 0.2
-    register:
-      ttr: 0.7126
-      mean_sent_len: 43.0
-      dep_depth: 2.968
-      f_score: 62.12
-      frozen_count: 0
-      formal_count: 0
-      consultative_count: 0
-      casual_count: 0
-      frozen_pct: 0.0
-      formal_pct: 0.0
-      consultative_pct: 0.0
-      casual_pct: 0.0
-      frozen_per_sent: 0.0
-      formal_per_sent: 0.0
-      consultative_per_sent: 0.0
-      casual_per_sent: 0.0
-      dominant_register: none
-    stance:
-      directive_count: 1
-      directive_pct: 0.4651
-      directive_per_sent: 0.2
-      expository_count: 1
-      expository_pct: 0.4651
-      expository_per_sent: 0.2
-      positive_evaluative_count: 0
-      positive_evaluative_pct: 0.0
-      positive_evaluative_per_sent: 0.0
-      negative_evaluative_count: 0
-      negative_evaluative_pct: 0.0
-      negative_evaluative_per_sent: 0.0
-      dialogic_count: 1
-      dialogic_pct: 0.4651
-      dialogic_per_sent: 0.2
-      pronouns_1p_count: 0
-      pronouns_1p_pct: 0.0
-      pronouns_1p_per_sent: 0.0
-      pronouns_2p_count: 2
-      pronouns_2p_pct: 0.9302
-      pronouns_2p_per_sent: 0.4
-      dominant_stance: directive
-      positive_evaluative_quality_count: 0
-      positive_evaluative_quality_pct: 0.0
-      positive_evaluative_quality_per_sent: 0.0
-      positive_evaluative_emphasis_count: 0
-      positive_evaluative_emphasis_pct: 0.0
-      positive_evaluative_emphasis_per_sent: 0.0
-    sentence_register:
-      collaborative_sent_count: 0
-      collaborative_sent_pct: 0.0
-      permissive_sent_count: 0
-      permissive_sent_pct: 0.0
-      appreciative_sent_count: 0
-      appreciative_sent_pct: 0.0
-      imperative_sent_count: 4
-      imperative_sent_pct: 80.0
-      directive_sent_count: 1
-      directive_sent_pct: 20.0
-      configuring_sent_count: 0
-      configuring_sent_pct: 0.0
-      none_sent_count: 1
-      none_sent_pct: 20.0
-      appreciative_addressee_claude_count: 0
-      appreciative_addressee_user_count: 0
-      appreciative_addressee_unknown_count: 0
-      collaborative_addressee_claude_count: 0
-      collaborative_addressee_user_count: 0
-      collaborative_addressee_unknown_count: 0
-      dominant: imperative
-    modality:
-      deontic_count: 0
-      deontic_pct: 0.0
-      deontic_per_sent: 0.0
-      epistemic_count: 0
-      epistemic_pct: 0.0
-      epistemic_per_sent: 0.0
-      dynamic_count: 0
-      dynamic_pct: 0.0
-      dynamic_per_sent: 0.0
-      top_construction: null
-    vocab:
-      hard_prohibitions:
-        count: 1
-        pct: 0.4651
-        per_sent: 0.2
-      hard_prescriptions:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      soft_prescriptions:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      politeness_direct:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      politeness_softening:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      warmth_encouragement:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      hedging:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      structural_markers:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      profanity:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-      pronouns_2p:
-        count: 2
-        pct: 0.9302
-        per_sent: 0.4
-      pronouns_1p:
-        count: 0
-        pct: 0.0
-        per_sent: 0.0
-    all_caps:
-      count: 3
-      distinct: 3
-      pct: 1.3953
-      per_sent: 0.6
-      top:
-      - token: ALSO
-        count: 1
-      - token: OFFER
-        count: 1
-      - token: PROACTIVELY
-        count: 1
-    caps_imperative:
-      count: 0
-      pct: 0.0
-      per_sent: 0.0
-      hits: {}
-    justification:
-      count: 0
-      pct: 0.0
-      per_sent: 0.0
-      ratio: 0.0
-    rule_explanation:
-      n_paragraphs: 1
-      n_paragraphs_with_rules: 1
-      n_paragraphs_with_rules_unexplained: 1
-      n_rule_sentences: 4
-      n_imperative_sentences: 4
-      n_prohibition_sentences: 1
-      n_explained_same: 0
-      n_explained_para: 0
-      n_imperative_explained_para: 0
-      n_prohibition_explained_para: 0
-      pct_explained_same: 0.0
-      pct_explained_para: 0.0
-      pct_imperative_explained_para: 0.0
-      pct_prohibition_explained_para: 0.0
-      pct_paragraphs_with_rules_unexplained: 100.0
-    judgment_procedural:
-      judgment_count: 1
-      procedural_count: 3
-      judgment_per_sent: 0.2
-      procedural_per_sent: 0.6
-      judgment_to_procedural_ratio: 0.333
-    consequence_framing:
-      threat_count: 0
-      causal_count: 0
-      threat_per_sent: 0.0
-      causal_per_sent: 0.0
-      threat_share: null
-    socratic:
-      question_count: 0
-      question_pct: 0.0
-      question_per_sent: 0.0
-      apology_count: 0
-      apology_pct: 0.0
-      apology_per_sent: 0.0
-    address_form:
-      selfref_claude: 0
-      selfref_assistant: 0
-      selfref_model: 0
-      selfref_2p: 0
-      selfref_we: 0
-      pct_anthropomorphic: null
-      pct_artifact: null
-      pct_role: null
-    imperative_streaks:
-      n_imperative_sentences: 4
-      n_streaks: 2
-      streak_max: 2
-      streak_mean: 2.0
-      n_streaks_ge3: 0
-      n_streaks_ge5: 0
-    rules_section:
-      n_paragraphs: 1
-      n_paragraphs_in_rules_section: 0
-      n_paragraphs_outside_rules_section: 1
-      n_rule_paragraphs_in_rules_section: 0
-      n_rule_paragraphs_outside_rules_section: 1
-      n_rule_paragraphs_in_rules_section_explained: 0
-      n_rule_paragraphs_outside_rules_section_explained: 0
-      n_rule_sentences_in_rules_section: 0
-      n_rule_sentences_outside_rules_section: 4
-      n_rule_sentences_in_rules_section_explained: 0
-      n_rule_sentences_outside_rules_section_explained: 0
-      pct_rule_paragraphs_explained_in_rules_section: null
-      pct_rule_paragraphs_explained_outside_rules_section: 0.0
-      pct_rule_sentences_explained_in_rules_section: null
-      pct_rule_sentences_explained_outside_rules_section: 0.0
 - path: tool-description-sendmessagetool-non-agent-teams.md
   category: Tool description
   name: 'Tool Description: SendMessageTool (non-agent-teams)'
