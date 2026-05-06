@@ -60,7 +60,7 @@ Hover any point for `ccVersion`, count-weighted ratio, running numerators, and t
 Three chapters: pipeline first, slice analyses on top, proposals on top of those.
 
 - **Pipeline** — `00_setup_and_corpus` through `05_headline_and_audit`. spaCy plus small hand-written classifiers turn 289 prompt files into one ~1.8 MiB YAML and one ~404 KiB per-sentence parquet. Stage 05 prints the canonical `HEADLINE` sheet that every downstream notebook reads. The chain also serves as the canonical home where every linguistic and statistical term is defined; analyzer code lives in `prompt_pipeline.py`.
-- **Analysis** — `10` through `15`. One slice each: per-sentence pragmatic register, ALL CAPS / vocabulary heatmap, formality + stance, cross-metric correlations + composite directiveness, ccVersion trends, rule-vs-justification pairing. Each ends with exactly one `Observation (Claude) — opinion, not data` cell so a reader can see at a glance what's data and what's interpretation.
+- **Analysis** — `10` through `15`. One slice each: per-sentence pragmatic register, ALL CAPS / vocabulary heatmap, formality + stance, cross-metric correlations + composite directiveness, ccVersion trends, rule-vs-justification pairing. Each opens with `Intro → Terms used → Observation (Claude) → setup → analysis` so a reader sees Claude's reading of the data before the charts.
 - **Proposal** — `20`, `21`, `22`. Each closes with a `Conclusions / Recommendations / Limitations` triplet of opinion-marked cells; the asks are framed as "I'd want X" rather than as imperatives.
 
 ## Cross-cutting limitations
