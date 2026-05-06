@@ -5,6 +5,11 @@ project:
     - figures/
   render:
     - index.qmd
+    - 00_setup_and_corpus.ipynb
+    - 01_analyzers_register.ipynb
+    - 02_analyzers_vocab_emphasis.ipynb
+    - 03_analyzers_rules_welfare.ipynb
+    - 04_assemble_aggregate_write.ipynb
     - 05_headline_and_audit.ipynb
     - 10_sentence_register.ipynb
     - 11_emphasis_caps_vocab.ipynb
@@ -33,8 +38,14 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: 05_headline_and_audit.ipynb
-        text: Pipeline
+      - text: Pipeline
+        menu:
+          - 00_setup_and_corpus.ipynb
+          - 01_analyzers_register.ipynb
+          - 02_analyzers_vocab_emphasis.ipynb
+          - 03_analyzers_rules_welfare.ipynb
+          - 04_assemble_aggregate_write.ipynb
+          - 05_headline_and_audit.ipynb
       - text: Analysis
         menu:
           - 10_sentence_register.ipynb
@@ -55,8 +66,13 @@ website:
     contents:
       - href: index.qmd
         text: "Home"
-      - section: "Pipeline"
+      - section: "Pipeline (6-stage producer chain, run in order)"
         contents:
+          - 00_setup_and_corpus.ipynb
+          - 01_analyzers_register.ipynb
+          - 02_analyzers_vocab_emphasis.ipynb
+          - 03_analyzers_rules_welfare.ipynb
+          - 04_assemble_aggregate_write.ipynb
           - 05_headline_and_audit.ipynb
       - section: "Analysis"
         contents:
