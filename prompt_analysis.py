@@ -332,14 +332,20 @@ def welfare_evidence_table(
             .reset_index(drop=True))
 
 
-def headline_numbers(data: dict) -> dict:
+def headline_numbers(
+    data: dict,
+    alt_df: pd.DataFrame | None = None,
+    parquet: pd.DataFrame | None = None,
+) -> dict:
     """Return the canonical corpus-wide headline numbers dict.
 
     Computed from the YAML cache. Consumer notebooks should call this rather
     than hardcoding corpus-wide counts, so number drift across notebooks is
     impossible by construction.
 
-    Keys are the contract — names are stable; values come from the live YAML.
+    Keys are the contract — names are stable; values come from the live YAML
+    (and optionally `alt_df` for composite-directiveness range / per-version
+    extremes, and `parquet` for per-sentence threat/causal/rule counts).
     """
     corpus = data["corpus"]
     m = corpus["metrics"]
@@ -347,7 +353,10 @@ def headline_numbers(data: dict) -> dict:
     pos_e = m["stance"]["positive_evaluative_emphasis_count"]
     pos_u = m["stance"]["positive_evaluative_count"]
     neg = m["stance"]["negative_evaluative_count"]
-    return {
+    rs = m["rules_section"]
+    caps_hits = m["caps_imperative"]["hits"]
+    top_caps = sorted(caps_hits.items(), key=lambda kv: -kv[1])[:4]
+    out = {
         "n_files":                       len(data["files"]),
         "n_sentences":                   corpus["n_sents"],
         "n_word_tokens":                 corpus["n_tokens"],
@@ -388,7 +397,41 @@ def headline_numbers(data: dict) -> dict:
         "modality_epistemic":            m["modality"]["epistemic_count"],
         "modality_dynamic":              m["modality"]["dynamic_count"],
         "mood_marker_pct":               m["mood"]["marker_pct"],
+        "top_caps_imperative":           top_caps,
+        "rules_section_in_paragraphs":              rs["n_rule_paragraphs_in_rules_section"],
+        "rules_section_out_paragraphs":             rs["n_rule_paragraphs_outside_rules_section"],
+        "rules_section_in_paragraphs_explained":    rs["n_rule_paragraphs_in_rules_section_explained"],
+        "rules_section_out_paragraphs_explained":   rs["n_rule_paragraphs_outside_rules_section_explained"],
+        "rules_section_in_pct_explained":           rs["pct_rule_paragraphs_explained_in_rules_section"],
+        "rules_section_out_pct_explained":          rs["pct_rule_paragraphs_explained_outside_rules_section"],
     }
+    if alt_df is not None:
+        d = directiveness(alt_df)
+        out["composite_directiveness_min"] = float(d.min())
+        out["composite_directiveness_max"] = float(d.max())
+        # mood_marker_pct first / latest version (token-weighted aggregate by ccVersion)
+        if "ccVersion" in alt_df.columns and "mood_marker_pct" in alt_df.columns:
+            vers = version_order(alt_df)
+            if vers:
+                first_v, latest_v = vers[0], vers[-1]
+                f_first = alt_df[alt_df["ccVersion"] == first_v]
+                f_latest = alt_df[alt_df["ccVersion"] == latest_v]
+                # token-weighted mean: sum(mood_marker_pct * n_tokens) / sum(n_tokens)
+                def _tw(df_):
+                    tok = df_["n_tokens"]
+                    return float((df_["mood_marker_pct"] * tok).sum() / max(1, tok.sum()))
+                out["mood_marker_pct_first_version"]    = _tw(f_first)
+                out["mood_marker_pct_latest_version"]   = _tw(f_latest)
+                out["mood_marker_pct_first_version_id"]  = first_v
+                out["mood_marker_pct_latest_version_id"] = latest_v
+    if parquet is not None:
+        out["parquet_threat_count"]            = int(parquet["has_threat"].sum())
+        out["parquet_causal_count"]            = int(parquet["has_causal"].sum())
+        threat_and_rule = parquet["has_threat"] & parquet["is_rule"]
+        out["parquet_threat_and_rule_count"]   = int(threat_and_rule.sum())
+        out["parquet_threat_and_rule_with_causal"] = int((threat_and_rule & parquet["has_causal"]).sum())
+        out["parquet_threat_and_rule_explained"]   = int((threat_and_rule & parquet["is_explained_para"]).sum())
+    return out
 
 
 def positive_exemplar_table(

@@ -39,7 +39,7 @@ Required Python deps (already in the project's JupyterLab kernel):
  │
  ▼
  ┌──────────────────────────────────────────────┐
- │ 00_data_pipeline.ipynb (producer, ~38 cells) │
+ │ 00_data_pipeline.ipynb (producer, ~48 cells) │
  │ spaCy + analyzers → assembly → aggregator │
  └──────────────────────────────────────────────┘
  │
@@ -99,11 +99,14 @@ directiveness(alt_df) -> pd.Series # extended composite z-score
 cumulative_by_version(alt_df, metrics, agg="mean") # running aggregate over files in versions ≤ V
 welfare_evidence_table(alt_df, top_n=25) # top-N "loudest, least-explained" files
 positive_exemplar_table(alt_df, top_n=25, min_n_sents=10, min_rule_n=5) # top-N "rules-with-reasons" exemplars (inverse welfare-evidence)
+headline_numbers(data, alt_df=None, parquet=None) -> dict # canonical corpus-wide HEADLINE sheet (see § 12 of producer); pass alt_df for composite-directiveness range and per-version mood_marker_pct extremes; pass parquet for parquet-level threat / causal / rule counts
 ```
 
 **Per-sentence forensic-inspection artifact**: `sentences_classified.parquet` is emitted alongside the YAML. Load with `pd.read_parquet("sentences_classified.parquet")` for individual-sentence inspection (raw text + classifier flags). Schema documented in the producer cell that writes it. ~5,702 rows × 20 columns. Used by `15_rule_explanation.ipynb` (forensic evidence from welfare-evidence files) and `21_audit_threat_framings.ipynb` (threat-framed sentence sample); other notebooks stay YAML-only.
 
-**Opinion cells convention**: notebooks 00–07 contain markdown cells visually marked `### My perspective (Claude) — opinion, not data` or `### My wish for future versions of this analysis — methodology, not data` (with horizontal-rule frames + blockquoted bodies). These are interpretation, not measurement, and can be skipped for a pure-data read.
+**Canonical numbers convention**: every corpus-wide figure cited in any notebook flows from `prompt_analysis.headline_numbers(data, alt_df=…, parquet=…)` — the canonical `HEADLINE` sheet. Producer `00_data_pipeline.ipynb` § 12 emits it; every consumer's setup cell calls it and binds the result to `HEADLINE`. Markdown prose stays *qualitative* ("near zero", "roughly a quarter", "at the top of the range"); the precise figures live in adjacent code-cell printouts that read straight from `HEADLINE[…]`. This is enforced by convention, not by tooling — adding a new hard-coded number to a markdown cell is the easiest way to reintroduce drift, so don't.
+
+**Opinion cells convention**: each analysis-tier notebook (`10`–`15`) ends with exactly one trailing `### Observation (Claude) — opinion, not data` markdown cell (horizontal-rule frame + blockquoted body). Each proposal notebook (`20`–`22`) closes with a three-cell `## Conclusions / ## Recommendations / ## Limitations` triplet, all marked `(Claude) — opinion, not data`. Producer (`00`) carries one trailing `### My wish for future versions of this analysis — methodology, not data` cell. These are interpretation, not measurement, and can be skipped for a pure-data read. Add new opinion cells only at the bottom; do not interleave them with charts.
 
 The Tier-3 (welfare-extension) columns added by `build_alt_df`:
 
@@ -202,7 +205,7 @@ claude-prompts-analysis/
 ├── CLAUDE.md ← you are here
 ├── README.md ← user-facing repo overview
 ├── prompt_analysis.py ← shared module (load YAML, palettes, helpers)
-├── 00_data_pipeline.ipynb ← PRODUCER (~34 cells; runs spaCy + writes YAML and parquet)
+├── 00_data_pipeline.ipynb ← PRODUCER (~48 cells; runs spaCy + writes YAML and parquet, emits canonical HEADLINE)
 ├── prompt_linguistic_analysis.yaml ← producer output (~1.8 MiB, the cache point)
 ├── sentences_classified.parquet ← producer output (~395 KiB; per-sentence forensic table)
 ├── 20_track_justification_rate.ipynb ← PROPOSAL: track justification rate per release; doubles as executive summary
