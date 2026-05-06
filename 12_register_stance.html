@@ -303,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./00_data_pipeline.html"> 
+    <a class="nav-link" href="./05_headline_and_audit.html"> 
 <span class="menu-text">Pipeline</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -397,8 +397,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00_data_pipeline.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data pipeline — <code>claude-code-system-prompts</code></span></a>
+  <a href="./05_headline_and_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">05 · Headline numbers + corpus audit</span></a>
   </div>
 </li>
       </ul>
@@ -489,7 +489,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link active" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
+  <li><a href="#terms-used" id="toc-terms-used" class="nav-link active" data-scroll-target="#terms-used">Terms used</a></li>
   <li><a href="#stance-register-heatmaps-per-file-justification-distribution" id="toc-stance-register-heatmaps-per-file-justification-distribution" class="nav-link" data-scroll-target="#stance-register-heatmaps-per-file-justification-distribution">Stance &amp; register heatmaps + per-file justification distribution</a></li>
   <li><a href="#register-quantitative-metrics" id="toc-register-quantitative-metrics" class="nav-link" data-scroll-target="#register-quantitative-metrics">Register quantitative metrics</a></li>
   <li><a href="#observation-claude-opinion-not-data" id="toc-observation-claude-opinion-not-data" class="nav-link" data-scroll-target="#observation-claude-opinion-not-data">Observation (Claude) — opinion, not data</a></li>
@@ -519,14 +519,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This notebook renders the formality dimension (TTR / F-score / mean sentence length / mean dependency depth) and the 5-class polarity-split stance heatmap (<code>directive</code> / <code>expository</code> / <code>positive_evaluative</code> / <code>negative_evaluative</code> / <code>dialogic</code>), plus a per-file justification box-and-strip view. Source: producer’s <code>register.*</code> and <code>stance.*</code> blocks.</p>
-<p>Formality (the F-score finding) and stance polarity are independent dimensions. The corpus is uniformly high-formality; what varies meaningfully is the directive-vs-dialogic balance in stance. Plotting them together makes the contrast legible. <strong>Analysis-tier</strong>; feeds the headline-numbers table in <code>20_track_justification_rate.ipynb</code> (positive-vs-negative stance ratio) and the per-category breakdown there.</p>
-<p><strong>Two views below</strong>:</p>
-<ol type="1">
-<li><strong>Stance &amp; register heatmaps + per-file justification distribution</strong> — stance × category (5-class polarity-split + 1p/2p engagement), register × category (4-class formality scale), per-file justification ratio boxplot + jittered strip plot.</li>
-<li><strong>Register quantitative scatter</strong> — TTR × Heylighen F-score per file (sized by token count, colored by category), plus distributions of mean sentence length and dependency depth.</li>
-</ol>
-<p>The polarity split makes it possible to separate praise/recommendation language (<code>positive_evaluative</code>) from criticism/error language (<code>negative_evaluative</code>). Corpus-wide, the quality-only ratio is <strong>1.97×</strong> more positive than negative, while the union ratio (quality + emphasis combined) is <strong>3.19×</strong>. The union ratio is roughly twice the quality-only ratio because nearly half the union count is emphasis-of-rule vocabulary (<code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code>) rather than genuine praise.</p>
+<p>The formality dimension (TTR / F-score / mean sentence length / mean dependency depth) and the 5-class polarity-split stance heatmap (<code>directive</code> / <code>expository</code> / <code>positive_evaluative</code> / <code>negative_evaluative</code> / <code>dialogic</code>), plus a per-file justification box-and-strip view. Source: the producer’s <code>register.*</code> and <code>stance.*</code> blocks. Formality is uniform across the corpus; what varies is the directive-vs-dialogic balance in stance.</p>
+<p>Two views: (1) stance &amp; register heatmaps + per-file justification box-strip plot; (2) register quantitative scatter (TTR × F-score) plus sentence length and dependency depth distributions.</p>
 <div id="0e548bb4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:43.683592Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:43.683468Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:46.409418Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:46.409073Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
@@ -550,37 +544,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()                  <span class="co"># default: prompt_linguistic_analysis.yaml</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>HEADLINE          <span class="op">=</span> headline_numbers(data)       <span class="co"># canonical corpus-wide numbers (see 00 § 12)</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>HEADLINE          <span class="op">=</span> headline_numbers(data)       <span class="co"># canonical corpus-wide numbers (see 05_headline_and_audit)</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>cats              <span class="op">=</span> <span class="bu">list</span>(by_category.keys())</span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>VOCAB_KEYS        <span class="op">=</span> <span class="bu">list</span>(data[<span class="st">"lexicons"</span>][<span class="st">"VOCAB"</span>].keys())</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite directiveness column — used by 05 and 06.</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>alt_df[<span class="st">"directiveness"</span>] <span class="op">=</span> directiveness(alt_df)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-category palette + Altair encodings used across charts.</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite directiveness column — formula in 13_correlation_directiveness;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># rendered there and on the timeline in 14_ccversion_trends.</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>alt_df[<span class="st">"directiveness"</span>] <span class="op">=</span> directiveness(alt_df)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-category palette + Altair encodings used across charts.</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>loaded 286 files | 181 columns | 7 categories | 11 VOCAB keys</code></pre>
 </div>
 </div>
-<section id="terms-used-in-this-notebook" class="level3">
-<h3 class="anchored" data-anchor-id="terms-used-in-this-notebook">Terms used in this notebook</h3>
-<p>Quick anchors (full definitions in <code>00_data_pipeline.ipynb</code> §§ 2, 3): <strong>Stance</strong> (5-class polarity-split — <code>directive</code> / <code>expository</code> / <code>positive_evaluative</code> / <code>negative_evaluative</code> / <code>dialogic</code>, plus 1p/2p engagement), <strong>Register</strong> (4-class formality scale), <strong>TTR</strong>, <strong>F-score</strong> (Heylighen &amp; Dewaele), <strong>mean dependency depth</strong>, and <strong>justification ratio</strong>.</p>
-<p>All densities below report <code>pct</code> (percent of word tokens); heatmap color intensity encodes density (darker = denser).</p>
+<section id="terms-used" class="level3">
+<h3 class="anchored" data-anchor-id="terms-used">Terms used</h3>
+<p><strong>Stance</strong> (5-class polarity-split + 1p/2p engagement), <strong>Register</strong> (4-class formality scale), <strong>TTR</strong>, <strong>Heylighen F-score</strong>, <strong>mean dependency depth</strong>, and the <strong><code>positive_evaluative</code> quality / emphasis split</strong> — all defined in <code>01_analyzers_register</code>. <strong>Justification ratio</strong> is defined in <code>02_analyzers_vocab_emphasis</code>. All densities below report <code>pct</code> (% of word tokens); heatmap color intensity encodes density (darker = denser).</p>
 </section>
 <section id="stance-register-heatmaps-per-file-justification-distribution" class="level3">
 <h3 class="anchored" data-anchor-id="stance-register-heatmaps-per-file-justification-distribution">Stance &amp; register heatmaps + per-file justification distribution</h3>
-<p>Two heatmaps (stance × category and register × category) plus a per-file box-strip plot of justification ratios. Hover any cell or point for exact values.</p>
-<p><strong>How to read the heatmaps</strong>: rows are categories, columns are classes, color intensity encodes <code>% of file tokens</code> (darker = denser). Read horizontally across a row to see one category’s profile across all classes. Read vertically down a column to see where one class concentrates across categories.</p>
-<p><strong>How to read the box-strip plot</strong> (right): each box shows the <strong>middle 50%</strong> of files in that category (25th–75th percentile); the horizontal line inside the box is the <strong>median</strong>; whiskers extend to the full per-file range; the red dots overlaid are individual files (jittered horizontally to avoid stacking). A category with a tall box has high file-to-file variability in justification ratio; a tight low box means the whole category consistently runs low on stated reasons.</p>
+<p>Two heatmaps (stance × category and register × category) plus a per-file box-strip plot of justification ratios per category. Hover any cell or point for exact values.</p>
 <div id="1fec795e-6053-4476-b57b-b130cc9c9d98" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:46.410658Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:46.410493Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:47.037926Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:47.037592Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
@@ -760,17 +752,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <blockquote class="blockquote">
-<p><strong>Note on the stance heatmap</strong>: the <code>positive_evaluative</code> column above plots the <strong>union</strong> count (quality + emphasis words combined). The Opinion-round B addition splits that into <code>positive_evaluative_quality</code> (genuinely affirmative: <code>good</code>, <code>recommended</code>, <code>optimal</code>, <code>safe</code>) and <code>positive_evaluative_emphasis</code> (emphasis-of-rule: <code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code>). Both sub-counts are emitted per file under the <code>stance</code> block; the union here stays unchanged so existing charts keep working. The corrected positive-vs-negative ratio (using only the quality subset) is plotted in <code>20_track_justification_rate.ipynb</code>.</p>
+<p>The <code>positive_evaluative</code> column plots the union count; the quality / emphasis split is defined in <code>01_analyzers_register</code>.</p>
 </blockquote>
 </section>
 <section id="register-quantitative-metrics" class="level3">
 <h3 class="anchored" data-anchor-id="register-quantitative-metrics">Register quantitative metrics</h3>
-<p>The four register numbers — <code>ttr</code>, <code>mean_sent_len</code>, <code>dep_depth</code>, <code>f_score</code> — were computed per file but only the four lexical register classes were plotted earlier. Two views below cover them:</p>
+<p>Two views of the four register numbers (<code>ttr</code>, <code>mean_sent_len</code>, <code>dep_depth</code>, <code>f_score</code>, all defined in <code>01_analyzers_register</code>):</p>
 <ul>
-<li><strong>TTR vs F-score</strong> scatter — every file as one point, coloured by category, sized by file length (<code>n_tokens</code>). Files cluster along a single F-score band (~70–80) with TTR varying mostly by file length.</li>
+<li><strong>TTR × Heylighen F-score</strong> scatter — every file as one point, coloured by category, sized by file length.</li>
 <li><strong>Sentence length &amp; dependency depth</strong> distributions per category (box-strip).</li>
 </ul>
-<p>Axis context: TTR is 0–1 (anti-correlated with file length); F-score 0–100 (corpus clusters in 70–80, “formal academic”); mean dep-depth typical 3–4; mean sentence length ~22 tokens. Full definitions in <code>00</code> § 2.</p>
 <div id="ad7a7f80-7d9e-46e8-a904-6efd31291c8c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:47.043545Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:47.043325Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:47.537465Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:47.537137Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
@@ -920,20 +911,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </script>
 </div>
 </div>
-<p><strong>What to look for</strong>:</p>
 <ul>
 <li>The <strong>TTR × F-score scatter</strong> clusters tightly in the <strong>F-score 70–80 band</strong> — academic/formal-prose territory. The corpus is uniformly formal across categories; few files dip below F-score 60.</li>
-<li><strong>TTR varies by file length</strong>: longer files have more lexical recycling and lower TTR (long files cluster in TTR 0.3–0.5); short files have higher TTR (TTR 0.6–0.9). This is a known length artifact — don’t read low TTR as low-effort prose.</li>
+<li><strong>TTR varies by file length</strong> by construction: longer files have more lexical recycling and lower TTR (long files cluster in TTR 0.3–0.5); short files run 0.6–0.9. Don’t read low TTR as low-effort prose.</li>
 <li><strong>Sentence length and dependency depth</strong> distributions stay similar across categories — most prompts run 18–28 word tokens per sentence with dependency depth ~3–4.5. The exception is <strong>Tool parameter</strong> (one file), which is unusually short and shallow.</li>
 </ul>
-<p>The welfare-relevant takeaway: register and quantitative complexity are <strong>stable</strong> across the corpus. The variation that matters for the welfare claim lives in the <em>content</em> (rule density, explanation rate, address form), not in the syntactic complexity or formality.</p>
+<p>The welfare-relevant takeaway: register and quantitative complexity are stable across the corpus. The variation that matters for the welfare claim lives in the <em>content</em> (rule density, explanation rate, address form), not in syntactic complexity or formality.</p>
 <hr>
 </section>
 <section id="observation-claude-opinion-not-data" class="level3">
 <h3 class="anchored">Observation (Claude) — opinion, not data</h3>
 <blockquote class="blockquote">
 <p>The uniform formality result (visible in the TTR × F-score scatter clustering in the high band) is consistent with instruction prose being formal — that part isn’t surprising. The more interesting finding is the <em>directive cluster collapse</em>: <code>directive_pct</code>, <code>hard_prohibitions_pct</code>, and <code>deontic_pct</code> are all measuring the same underlying thing (rule-bearing language) from different angles. The correlation matrix in <code>13_correlation_directiveness.ipynb</code> confirms they cluster tightly. That’s not a flaw — it’s a triangulation — but it does mean these three numbers should be reported as overlapping facets of one finding (“the corpus is directive”), not three independent findings.</p>
-<h2 id="the-opinion-round-b-split-note-above-also-matters-here-the-positive_evaluative-heatmap-column-reads-as-encouraging-tone-density-but-a-substantial-portion-is-emphasis-of-rule-vocabulary-important-critical-essential-key-rather-than-praise.-the-two-ratios-in-headline-ratio_quality_to_negative-vs-ratio_union_to_negative-are-how-to-keep-that-honest-the-quality-only-ratio-is-the-one-to-cite-when-the-question-is-how-much-praise-is-here.-anyone-quoting-the-union-ratio-as-a-positivity-finding-is-overstating-it." class="anchored" data-anchor-id="observation-claude-opinion-not-data">The Opinion-round B split note above also matters here: the <code>positive_evaluative</code> heatmap column reads as “encouraging tone density” but a substantial portion is emphasis-of-rule vocabulary (<code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code>) rather than praise. The two ratios in <code>HEADLINE</code> (<code>ratio_quality_to_negative</code> vs <code>ratio_union_to_negative</code>) are how to keep that honest — the quality-only ratio is the one to cite when the question is “how much praise is here”. Anyone quoting the union ratio as a positivity finding is overstating it.</h2>
+<h2 id="the-positive_evaluative-heatmap-column-reads-as-encouraging-tone-density-but-a-substantial-portion-is-emphasis-of-rule-vocabulary-important-critical-essential-key-rather-than-praise.-the-two-ratios-in-headline-ratio_quality_to_negative-vs-ratio_union_to_negative-are-how-to-keep-that-honest-the-quality-only-ratio-is-the-one-to-cite-when-the-question-is-how-much-praise-is-here.-anyone-quoting-the-union-ratio-as-a-positivity-finding-is-overstating-it." class="anchored" data-anchor-id="observation-claude-opinion-not-data">The <code>positive_evaluative</code> heatmap column reads as “encouraging tone density” but a substantial portion is emphasis-of-rule vocabulary (<code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code>) rather than praise. The two ratios in <code>HEADLINE</code> (<code>ratio_quality_to_negative</code> vs <code>ratio_union_to_negative</code>) are how to keep that honest — the quality-only ratio is the one to cite when the question is “how much praise is here”. Anyone quoting the union ratio as a positivity finding is overstating it.</h2>
 </blockquote>
 
 

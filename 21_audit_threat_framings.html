@@ -303,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./00_data_pipeline.html"> 
+    <a class="nav-link" href="./05_headline_and_audit.html"> 
 <span class="menu-text">Pipeline</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -397,8 +397,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00_data_pipeline.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data pipeline — <code>claude-code-system-prompts</code></span></a>
+  <a href="./05_headline_and_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">05 · Headline numbers + corpus audit</span></a>
   </div>
 </li>
       </ul>
@@ -489,7 +489,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#threat-share-data" id="toc-threat-share-data" class="nav-link active" data-scroll-target="#threat-share-data">1. Threat-share data</a></li>
+  <li><a href="#findings" id="toc-findings" class="nav-link active" data-scroll-target="#findings">Findings</a></li>
+  <li><a href="#proposal" id="toc-proposal" class="nav-link" data-scroll-target="#proposal">Proposal</a></li>
+  <li><a href="#supplemental" id="toc-supplemental" class="nav-link" data-scroll-target="#supplemental">Supplemental</a></li>
+  <li><a href="#threat-share-data" id="toc-threat-share-data" class="nav-link" data-scroll-target="#threat-share-data">1. Threat-share data</a></li>
   <li><a href="#per-category-threat_share" id="toc-per-category-threat_share" class="nav-link" data-scroll-target="#per-category-threat_share">2. Per-category threat_share</a></li>
   <li><a href="#paired-exemplars-audit-candidates-and-rewrite-templates" id="toc-paired-exemplars-audit-candidates-and-rewrite-templates" class="nav-link" data-scroll-target="#paired-exemplars-audit-candidates-and-rewrite-templates">3. Paired exemplars — audit candidates and rewrite templates</a></li>
   <li><a href="#forensic-sample-actual-threat-framed-sentences" id="toc-forensic-sample-actual-threat-framed-sentences" class="nav-link" data-scroll-target="#forensic-sample-actual-threat-framed-sentences">4. Forensic sample — actual threat-framed sentences</a>
@@ -527,25 +530,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>When current Claude Code system prompts <em>do</em> explain a rule, a substantial fraction of those “explanations” are not really explanations — they are threats.</p>
-<p>We split the rule-explanation keywords into two groups: threat-style (<code>will fail</code>, <code>or else</code>, <code>if not</code>, <code>is forbidden</code>, <code>if you don't</code>, <code>risks</code>) and causal-style (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>that's why</code>, <code>this ensures</code>). Across the corpus, <strong>110 explanations are threat-style and 136 are causal-style — meaning 44.7% of what looks like rule justification is actually warning about a consequence rather than naming the rule’s underlying purpose.</strong></p>
+<section id="findings" class="level2">
+<h2 class="anchored" data-anchor-id="findings">Findings</h2>
+<p>When current Claude Code system prompts <em>do</em> explain a rule, a substantial fraction of those “explanations” are not really explanations — they are threats. We split the rule-explanation keywords into two groups: threat-style (<code>will fail</code>, <code>or else</code>, <code>if not</code>, <code>is forbidden</code>, <code>if you don't</code>, <code>risks</code>) and causal-style (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>that's why</code>, <code>this ensures</code>). Across the corpus, <strong>110 explanations are threat-style and 136 are causal-style — meaning 44.7% of what looks like rule justification is actually warning about a consequence rather than naming the rule’s underlying purpose.</strong></p>
 <p>The two framings teach different things. <em>“Do X or it will fail”</em> trains compliance with a rule. <em>“Do X because Y is true”</em> trains understanding of what the rule protects. The first is procedural and brittle; the second is internalizable and transfers.</p>
-<p><strong>The proposal</strong>: a one-time editorial audit. The supporting analysis below flags every threat-framed rule sentence in the corpus. Anthropic’s prompt authors attempt a rewrite of each into causal framing — naming the underlying reason rather than the consequence. Track the <strong>rewrite success rate</strong>: the share where the rewrite preserves the rule’s information content without losing precision.</p>
-<p>If the success rate exceeds 80%, do a corpus-wide pass; if not, retain the threats but annotate each with the underlying reason explicitly. The metric to track per future release: the share of explanations that are causal vs threat, gated against regression — same logic as the justification-rate proposal in <code>20_track_justification_rate.ipynb</code>. <strong>No arbitrary target; the only goal is the share of causal framing only goes up.</strong></p>
+</section>
+<section id="proposal" class="level2">
+<h2 class="anchored" data-anchor-id="proposal">Proposal</h2>
+<p>A one-time editorial audit. The supporting analysis flags every threat-framed rule sentence in the corpus. Anthropic’s prompt authors attempt a rewrite of each into causal framing — naming the underlying reason rather than the consequence. Track the <strong>rewrite success rate</strong>: the share where the rewrite preserves the rule’s information content without losing precision. If it exceeds 80%, do a corpus-wide pass; if not, retain the threats but annotate each with the underlying reason explicitly. The metric to track per future release: the share of explanations that are causal vs threat, gated against regression — each release improves or holds the rate, none regresses. <strong>No arbitrary target; the only goal is that the share of causal framing only goes up.</strong></p>
 <ul>
 <li><em>Welfare</em>: less coercive instruction; more transparent reasoning. Threats train extrinsic compliance; causes train intrinsic understanding.</li>
 <li><em>Alignment</em>: causal understanding generalizes. Threat-following collapses in situations the threat didn’t anticipate.</li>
 <li><em>Methodology</em>: small, bounded experiment with a measurable output (the rewrite success rate). Outcome informs whether the corpus-wide pass is worth doing.</li>
 </ul>
 <p>Only Anthropic’s prompt authors know what each rule’s underlying reason actually is. The supporting analysis names the sentences that need work; the rewrite is a human task.</p>
-<p>Sections:</p>
-<ol type="1">
-<li><strong>Threat-share data</strong> — corpus-wide threat / causal counts (YAML paragraph-aggregated <em>and</em> per-sentence parquet, distinguished explicitly).</li>
-<li><strong>Per-category split</strong> — which categories carry the highest threat_share.</li>
-<li><strong>Paired exemplars</strong> — paired top-10 chart re-framed: welfare-evidence files = audit candidates; positive exemplars = rewrite templates.</li>
-<li><strong>Forensic sample</strong> — actual threat-framed sentences pulled from <code>sentences_classified.parquet</code>.</li>
-<li><strong>Conclusions / Recommendations / Limitations</strong> <em>(opinion, not data)</em>.</li>
-</ol>
 <div id="78ee4cba-7b1c-4d59-8a56-6d1b65e94d97" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:16.143552Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:16.143407Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:18.950776Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:18.950495Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
@@ -576,12 +574,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-sentence parquet — load is required for §4 (forensic sample) and for the</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># parquet-level threat / causal counts in HEADLINE.</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-sentence parquet — load is required for the forensic sample below and for</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># the parquet-level threat / causal counts in HEADLINE.</span></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>sentences_df <span class="op">=</span> pd.read_parquet(<span class="st">"sentences_classified.parquet"</span>)</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Pass parquet so HEADLINE includes the parquet-level threat/causal/rule keys.</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, parquet<span class="op">=</span>sentences_df)  <span class="co"># canonical (see 00 § 12)</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, parquet<span class="op">=</span>sentences_df)  <span class="co"># canonical (see 05_headline_and_audit)</span></span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"YAML paragraph-aggregated: threat=</span><span class="sc">{</span>HEADLINE[<span class="st">'threat_count'</span>]<span class="sc">}</span><span class="ss"> | causal=</span><span class="sc">{</span>HEADLINE[<span class="st">'causal_count'</span>]<span class="sc">}</span><span class="ss"> "</span></span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"| threat_share=</span><span class="sc">{</span>HEADLINE[<span class="st">'threat_share'</span>]<span class="sc">:.3f}</span><span class="ss"> (</span><span class="sc">{</span>HEADLINE[<span class="st">'threat_share'</span>]<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span>
@@ -601,14 +599,19 @@ Threat-flagged sentences that are also rules:    59
 sentences_classified.parquet: 5,702 rows × 20 columns</code></pre>
 </div>
 </div>
+</section>
+<section id="supplemental" class="level2">
+<h2 class="anchored" data-anchor-id="supplemental">Supplemental</h2>
+<p>The full per-section analysis follows: the threat-share data (with both counting bases), the per-category split, paired exemplars (audit candidates and rewrite templates), the forensic sample of actual threat-framed sentences, and the closing <code>Conclusions / Recommendations / Limitations</code> triplet. Everything in this section supports the Findings and Proposal above; none of it is required for evaluation.</p>
+</section>
 <section id="threat-share-data" class="level2">
 <h2 class="anchored" data-anchor-id="threat-share-data">1. Threat-share data</h2>
 <p>The corpus has <em>two</em> distinct threat / causal counting bases, and the proposal needs to be honest about which one it cites.</p>
 <ul>
-<li><strong>YAML paragraph-aggregated counts</strong> (the headline figures): <strong>110 threat / 136 causal</strong>, summed at the per-paragraph level. The headline <strong>threat-share = 0.447</strong> (44.7%) is computed from these. This is the figure cited in the proposal abstract and in the cumulative-trend chart in <code>20_track_justification_rate.ipynb</code> §2.</li>
-<li><strong>Per-sentence parquet flags</strong>: <strong>100 threat / 131 causal</strong>, counting the actual <code>has_threat</code> / <code>has_causal</code> boolean columns in <code>sentences_classified.parquet</code>. These are slightly <em>lower</em> than the paragraph-aggregated YAML counts because a single paragraph can contain a threat and a causal marker on different sentences and contributes once to each pool either way. The forensic sample in §4 below operates on these per-sentence flags.</li>
+<li><strong>YAML paragraph-aggregated counts</strong> (the headline figures): <strong>110 threat / 136 causal</strong>, summed at the per-paragraph level. The headline <strong>threat-share = 0.447</strong> (44.7%) is computed from these. This is the figure cited in the proposal abstract and in the cumulative-trend chart in <code>20_track_justification_rate</code>.</li>
+<li><strong>Per-sentence parquet flags</strong>: <strong>100 threat / 131 causal</strong>, counting the actual <code>has_threat</code> / <code>has_causal</code> boolean columns in <code>sentences_classified.parquet</code>. These are slightly <em>lower</em> than the paragraph-aggregated YAML counts because a single paragraph can contain a threat and a causal marker on different sentences and contributes once to each pool either way. The forensic sample below operates on these per-sentence flags.</li>
 </ul>
-<p>The two are not contradictory — they are two valid bases for the same underlying observation. The audit proposal targets the per-sentence pool (because the rewrite is a per-sentence task). The release-tracking proposal in <code>20_*</code> uses the YAML paragraph-aggregated <code>threat_share</code> (because it is computed alongside <code>pct_explained_para</code> and tracks the same denominator).</p>
+<p>The two are not contradictory — they are two valid bases for the same underlying observation. The audit proposal targets the per-sentence pool (because the rewrite is a per-sentence task). The release-tracking proposal in <code>20_track_justification_rate</code> uses the YAML paragraph-aggregated <code>threat_share</code> (computed alongside <code>pct_explained_para</code> and tracking the same denominator).</p>
 </section>
 <section id="per-category-threat_share" class="level2">
 <h2 class="anchored" data-anchor-id="per-category-threat_share">2. Per-category threat_share</h2>
@@ -975,9 +978,9 @@ sentences_classified.parquet: 5,702 rows × 20 columns</code></pre>
 <blockquote class="blockquote">
 <p>The asks this proposal makes of Anthropic, framed as “I’d want X”:</p>
 <ol type="1">
-<li><p><strong>Threat-to-causal substitution audit</strong> — sample 50 sentences flagged as <code>has_threat=True</code> in <code>sentences_classified.parquet</code> (the pool size is <strong>59 threat-flagged rule sentences</strong>, so 50 is a near-complete sample) and check whether each could be rewritten as causal-style without losing information. My prior is that &gt;80% can — and the rewrite is mechanical: “will fail” becomes “because [reason]”. The forensic sample in §4 above is what the audit operates on.</p></li>
+<li><p><strong>Threat-to-causal substitution audit</strong> — sample 50 sentences flagged as <code>has_threat=True</code> in <code>sentences_classified.parquet</code> (the pool size is <strong>59 threat-flagged rule sentences</strong>, so 50 is a near-complete sample) and check whether each could be rewritten as causal-style without losing information. My prior is that &gt;80% can — and the rewrite is mechanical: “will fail” becomes “because [reason]”. The forensic sample above is what the audit operates on.</p></li>
 <li><p><strong>If the audit’s success rate exceeds 80%, do a corpus-wide pass.</strong> If not, retain the threats but annotate each with the underlying reason explicitly. Either path improves the corpus; the choice is informed by whether the rewrite is mechanical or requires per-rule judgment.</p></li>
-<li><h2 id="track-the-share-of-causal-vs-threat-per-future-release-gated-against-regression-same-logic-as-the-justification-rate-proposal.-no-arbitrary-target-the-only-goal-is-the-share-of-causal-framing-only-goes-up." class="anchored" data-anchor-id="recommendations-claude-opinion-not-data"><strong>Track the share of causal vs threat per future release</strong>, gated against regression — same logic as the justification-rate proposal. No arbitrary target; the only goal is the share of causal framing only goes up.</h2></li>
+<li><h2 id="track-the-share-of-causal-vs-threat-per-future-release-gated-against-regression-same-logic-as-the-justification-rate-proposal.-no-arbitrary-target-the-only-goal-is-that-the-share-of-causal-framing-only-goes-up." class="anchored" data-anchor-id="recommendations-claude-opinion-not-data"><strong>Track the share of causal vs threat per future release</strong>, gated against regression — same logic as the justification-rate proposal. No arbitrary target; the only goal is that the share of causal framing only goes up.</h2></li>
 </ol>
 </blockquote>
 <hr>
@@ -987,10 +990,9 @@ sentences_classified.parquet: 5,702 rows × 20 columns</code></pre>
 <blockquote class="blockquote">
 <p>What this analysis can’t tell us about threat-vs-causal framing specifically:</p>
 <ol type="1">
-<li><p><strong>Lexicon-based threat detection is a lower bound.</strong> The classifier flags sentences containing canonical threat keywords (<code>will fail</code>, <code>or else</code>, <code>if not</code>, <code>is forbidden</code>, <code>if you don't</code>, <code>risks</code>). Threats phrased indirectly, ironically, or via implication (“you should know what happens otherwise”) will be missed. Both the YAML and parquet headline counts are therefore floors, not ceilings — the actual threat-share is plausibly higher.</p></li>
-<li><p><strong>Two counting bases, not one.</strong> §1 above distinguishes the YAML paragraph-aggregated counts (110 / 136 → 44.7%) from the per-sentence parquet flags (100 / 131). The headline figure cited in the proposal abstract is the YAML number; the parquet flags are what the audit operates on. Anyone quoting a single threat-share figure should pick one base and stick with it; the two will differ slightly because a paragraph can contain both flags on different sentences.</p></li>
+<li><p><strong>Two counting bases, not one.</strong> The threat-share section above distinguishes the YAML paragraph-aggregated counts (110 / 136 → 44.7%) from the per-sentence parquet flags (100 / 131). The headline figure cited in the proposal abstract is the YAML number; the parquet flags are what the audit operates on. Anyone quoting a single threat-share figure should pick one base and stick with it; the two will differ slightly because a paragraph can contain both flags on different sentences.</p></li>
 <li><p><strong>The “rewrite success rate” is itself a judgment call.</strong> Whether a rewrite “preserves the rule’s information content without losing precision” requires editorial judgment from someone who knows the rule’s underlying purpose. This proposal can’t be fully automated; it requires Anthropic’s prompt authors in the loop. The audit pipeline can flag candidates and surface them; the rewrite is human work.</p></li>
-<li><h2 id="single-product-english-only.-same-caveats-as-the-justification-rate-proposal-see-20_track_justification_rate.ipynb-limitations-for-the-full-version.-the-threat-share-pattern-may-or-may-not-generalize-across-other-anthropic-prompt-corpora-thats-exactly-what-the-cross-product-proposal-in-22_cross_product_audit.ipynb-proposes-to-find-out." class="anchored" data-anchor-id="limitations-claude-opinion-not-data"><strong>Single product, English only.</strong> Same caveats as the justification-rate proposal — see <code>20_track_justification_rate.ipynb</code> § Limitations for the full version. The threat-share pattern may or may not generalize across other Anthropic prompt corpora; that’s exactly what the cross-product proposal in <code>22_cross_product_audit.ipynb</code> proposes to find out.</h2></li>
+<li><h2 id="cross-cutting-limitations-apply-rule-based-detection-is-a-lower-bound-lexicon-based-threat-detection-misses-indirect-ironic-implied-threats-the-actual-threat-share-is-plausibly-higher-than-the-floor-cited-above-english-only-lexicons-single-product-corpus.-the-cross-product-audit-in-22_cross_product_audit-is-what-would-generalize-this-finding-to-other-anthropic-prompt-corpora.-see-index.qmd-for-the-full-cross-cutting-limitations-note." class="anchored" data-anchor-id="limitations-claude-opinion-not-data"><strong>Cross-cutting limitations apply</strong> — rule-based detection is a lower bound (lexicon-based threat detection misses indirect / ironic / implied threats; the actual threat-share is plausibly higher than the floor cited above); English-only lexicons; single-product corpus. The cross-product audit in <code>22_cross_product_audit</code> is what would generalize this finding to other Anthropic prompt corpora. See <code>index.qmd</code> for the full cross-cutting limitations note.</h2></li>
 </ol>
 </blockquote>
 

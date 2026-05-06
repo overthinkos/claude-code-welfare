@@ -303,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./00_data_pipeline.html"> 
+    <a class="nav-link" href="./05_headline_and_audit.html"> 
 <span class="menu-text">Pipeline</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -397,8 +397,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00_data_pipeline.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data pipeline — <code>claude-code-system-prompts</code></span></a>
+  <a href="./05_headline_and_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">05 · Headline numbers + corpus audit</span></a>
   </div>
 </li>
       </ul>
@@ -489,7 +489,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link active" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
+  <li><a href="#terms-used" id="toc-terms-used" class="nav-link active" data-scroll-target="#terms-used">Terms used</a></li>
   <li><a href="#cross-metric-correlation-matrix" id="toc-cross-metric-correlation-matrix" class="nav-link" data-scroll-target="#cross-metric-correlation-matrix">Cross-metric correlation matrix</a></li>
   <li><a href="#top-25-most-directive-prompts" id="toc-top-25-most-directive-prompts" class="nav-link" data-scroll-target="#top-25-most-directive-prompts">Top-25 most directive prompts</a></li>
   <li><a href="#per-word-vs-per-sentence-comparison" id="toc-per-word-vs-per-sentence-comparison" class="nav-link" data-scroll-target="#per-word-vs-per-sentence-comparison">Per-word vs per-sentence comparison</a></li>
@@ -521,13 +521,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This notebook visualizes how the producer’s metrics relate to one another (a 20-metric Pearson-correlation heatmap) and ranks every prompt file by a single <strong>composite directiveness z-score</strong> combining eight emphatic / softening features. The composite is the single number used elsewhere to identify the corpus’s most authoritative prose; this notebook is where it is defined and computed.</p>
-<p>It exists because individual metrics like <code>mood_marker_pct</code> or <code>directive_sent_pct</code> each capture only one facet of “how directive is this prompt?”. The composite z-score collapses those facets into one rank-able number — the basis for every downstream “loudest files” claim. This is the <strong>analysis-tier</strong> notebook for cross-metric structure; consumed by <code>15_rule_explanation.ipynb</code> (the welfare-evidence table) and the <code>20</code>–<code>22</code> proposal notebooks.</p>
-<p><strong>Three cross-cutting views below</strong>:</p>
+<p>Two cross-cutting views: a Pearson-correlation heatmap across ~30 per-file metrics, and a per-file ranking by a single <strong>composite directiveness z-score</strong> combining eight emphatic / softening features. The composite is the single number used downstream (<code>15_rule_explanation</code>, <code>20</code>–<code>22</code>) to identify the corpus’s most authoritative prose; this notebook is where it is defined and computed.</p>
+<p>Three views below:</p>
 <ol type="1">
-<li><strong>Cross-metric correlation matrix</strong> — Pearson r across ~30 per-file metrics. Positive correlations in red, negative in blue.</li>
-<li><strong>Top-25 most directive prompts</strong> — extended composite z-score (formula in cell §3). Higher = more directive.</li>
-<li><strong>Per-word vs per-sentence comparison</strong> — six representative metrics shown side-by-side in their two unit views (<code>% of words</code> vs <code>per-sentence rate</code>).</li>
+<li><strong>Cross-metric correlation matrix</strong> — Pearson r across ~30 per-file metrics.</li>
+<li><strong>Top-25 most directive prompts</strong> by composite directiveness z-score.</li>
+<li><strong>Per-word vs per-sentence comparison</strong> — six representative metrics in their two unit views (<code>pct</code> vs <code>per_sent</code>).</li>
 </ol>
 <div id="cf4f3366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:48.806609Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:48.806483Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:51.551572Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:51.551259Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
@@ -564,7 +563,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Pass alt_df so HEADLINE includes composite_directiveness_min / _max — this notebook</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># is the canonical home for the composite-directiveness range, so we want those keys</span></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># populated in the corpus-wide HEADLINE printout below.</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df)  <span class="co"># canonical corpus-wide numbers (see 00 § 12)</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df)  <span class="co"># canonical corpus-wide numbers (see 05_headline_and_audit)</span></span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-category palette + Altair encodings used across charts.</span></span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
@@ -580,20 +579,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 composite directiveness range: -18.91 to 19.22</code></pre>
 </div>
 </div>
-<section id="terms-used-in-this-notebook" class="level3">
-<h3 class="anchored" data-anchor-id="terms-used-in-this-notebook">Terms used in this notebook</h3>
-<p>This notebook is the <strong>first use point</strong> in the consumer chain for three statistical terms — defined here in full; subsequent notebooks reference them back.</p>
+<section id="terms-used" class="level3">
+<h3 class="anchored" data-anchor-id="terms-used">Terms used</h3>
 <ul>
-<li><p><strong>Term: Pearson correlation (r).</strong> Statistical strength of a linear relationship between two metrics, measured across every per-file row. Range: −1 to +1.</p>
-<ul>
-<li><strong>+1</strong> — perfect positive correlation; one metric rises exactly as the other rises.</li>
-<li><strong>0</strong> — no linear relationship.</li>
-<li><strong>−1</strong> — perfect negative correlation; one metric rises as the other falls.</li>
-<li><strong>|r| ≥ 0.7</strong> is conventionally “strong” correlation in social-science contexts.</li>
-</ul>
-<p>In the correlation-matrix heatmap below, color intensity encodes |r|; red is positive, blue is negative.</p></li>
-<li><p><strong>Term: z-score.</strong> How many standard deviations a value is from the mean of its column. A z-score of <code>+2</code> means “two standard deviations above the corpus average — clearly higher than typical”. A z-score of <code>−2</code> means “two standard deviations below — clearly lower than typical”. Used here as the building block for the <strong>composite directiveness</strong> metric. z-scores allow us to add metrics measured on different units (% of tokens vs % of sentences) on a common scale.</p></li>
-<li><p><strong>Term: Composite directiveness z-score.</strong> A single per-file authority score combining eight z-scored metrics:</p>
+<li><p><strong>Pearson correlation (r)</strong> — linear-relationship strength across per-file rows. Range −1 to +1; |r| ≥ 0.7 is conventionally strong. In the heatmap below, color encodes |r|; red is positive, blue is negative.</p></li>
+<li><p><strong>z-score</strong> — standard deviations from the column mean. Used as the building block for composite directiveness so metrics measured on different units (% of tokens vs % of sentences) add on a common scale.</p></li>
+<li><p><strong>Composite directiveness z-score</strong> — a single per-file authority score combining eight z-scored metrics:</p>
 <pre><code>directiveness =
   z(mood_marker_pct)
   + z(hard_prohibitions_pct)
@@ -603,16 +594,14 @@ composite directiveness range: -18.91 to 19.22</code></pre>
   − z(collaborative_sent_pct)
   − z(permissive_sent_pct)
   − z(appreciative_sent_pct)</code></pre>
-<p>Higher = more authoritative tone. The first five summands are emphatic features (added); the last three are softening features (subtracted). Observed range in the corpus runs from <strong>−18.91 to +19.22</strong> (printed exactly by the setup cell above and tracked across re-runs of the producer). The bash-sandbox tool descriptions cluster at the top end.</p>
-<p>A negative score isn’t “below zero in any literal sense” — it just means “less directive than the corpus average”.</p></li>
-<li><p><strong>Per-word vs per-sentence units</strong> — every density metric reports both <code>% of word tokens</code> (<code>pct</code>) and <code>rate per sentence</code> (<code>per_sent</code>). The bottom chart shows them side-by-side; see that section for when each is most informative. Full definition in <code>00_data_pipeline.ipynb</code> § Units.</p></li>
+<p>Higher = more authoritative tone. The first five summands are emphatic features (added); the last three are softening features (subtracted). Observed corpus range: <strong>−18.91 to +19.22</strong>; the bash-sandbox tool descriptions cluster at the top end. A negative score just means “less directive than the corpus average”.</p></li>
+<li><p><strong>Per-word vs per-sentence units</strong> — every density metric reports both <code>pct</code> (% of word tokens) and <code>per_sent</code> (rate per sentence); see <code>00_setup_and_corpus</code>.</p></li>
 </ul>
 </section>
 <section id="cross-metric-correlation-matrix" class="level3">
 <h3 class="anchored" data-anchor-id="cross-metric-correlation-matrix">Cross-metric correlation matrix</h3>
-<p>A 30-metric correlation grid. Each cell is the <strong>Pearson r</strong> between two metrics, computed across all 286 files.</p>
-<p><strong>How to read it</strong>: - <strong>Color intensity</strong> encodes the strength of the linear relationship. - <strong>Red</strong> = positive correlation: the two metrics rise together (when one is high, the other tends to be high). - <strong>Blue</strong> = negative correlation: the two metrics move opposite (when one is high, the other tends to be low). - <strong>Cells near zero</strong> (faint color) = the two metrics are unrelated. - The diagonal is always solid red (every metric correlates 1.0 with itself). - Conventional thresholds in social-science contexts: |r| ≥ 0.3 is “moderate”, |r| ≥ 0.7 is “strong”.</p>
-<p>What welfare-relevant patterns to watch for: the imperative-marker / hard-prohibition / deontic-modality cluster should be a tight red block (these dimensions all measure “rule-bearing language” from different angles). The justification ratio should sit isolated or correlate negatively with the directive cluster (more justification → less raw directive density).</p>
+<p>Each cell is the <strong>Pearson r</strong> between two metrics, computed across all 286 files. Red = positive correlation; blue = negative; intensity encodes |r|. Conventional thresholds: |r| ≥ 0.3 is “moderate”, |r| ≥ 0.7 is “strong”.</p>
+<p>Welfare-relevant pattern to watch: the imperative-marker / hard-prohibition / deontic-modality cluster should form a tight red block (these dimensions all measure rule-bearing language from different angles). The justification ratio should sit isolated or correlate negatively with the directive cluster — more justification → less raw directive density.</p>
 <div id="181f7558-6de9-4d0e-8ab8-d44a0f41eba2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:51.552806Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:51.552656Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:52.038746Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:52.038421Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
@@ -744,12 +733,12 @@ composite directiveness range: -18.91 to 19.22</code></pre>
 </div>
 </div>
 <blockquote class="blockquote">
-<p><strong>Note on <code>positive_evaluative_pct</code></strong> (above column / row in the correlation matrix): this is the <strong>union</strong> of quality and emphasis words combined — kept unchanged so the existing matrix layout doesn’t churn. The Opinion-round B split is reported separately in <code>20_track_justification_rate.ipynb</code>. If you’re inspecting whether <code>positive_evaluative_pct</code> correlates with <code>directive_pct</code> or <code>mood_marker_pct</code>, expect a positive correlation that is <em>partly</em> driven by the emphasis-of-rule subset (<code>important</code>, <code>critical</code>, <code>essential</code>) co-occurring with rule-bearing language. That correlation is not pure “encouraging tone tracks directiveness” — it’s partly “rule emphasis is rule emphasis”.</p>
+<p>The <code>positive_evaluative_pct</code> row/column plots the union of quality and emphasis words; the split is defined in <code>01_analyzers_register</code>. The positive correlation between <code>positive_evaluative_pct</code> and <code>directive_pct</code> / <code>mood_marker_pct</code> is partly driven by the emphasis-of-rule subset (<code>important</code>, <code>critical</code>, <code>essential</code>) co-occurring with rule-bearing language — not purely “encouraging tone tracks directiveness”.</p>
 </blockquote>
 </section>
 <section id="top-25-most-directive-prompts" class="level3">
 <h3 class="anchored" data-anchor-id="top-25-most-directive-prompts">Top-25 most directive prompts</h3>
-<p>The composite directiveness z-score is defined in cell <code>[2]</code> above (“Terms used in this notebook”). <strong>A negative score is not “below zero in any literal sense” — it just means “less directive than the corpus average”.</strong> The setup cell printed the observed corpus range; in the current corpus that range is <strong>−18.91 to +19.22</strong>, with the bash-sandbox tool descriptions clustering at the top end.</p>
+<p>Composite directiveness z-score (formula in the Terms used block above). A negative score just means “less directive than the corpus average”. The bash-sandbox tool descriptions cluster at the top end.</p>
 <div id="3728cf20-7d42-4ff8-8199-b9bae276a31b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:52.039867Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:52.039775Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:52.294011Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:52.293528Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1426,10 +1415,7 @@ composite directiveness range: -18.91 to 19.22</code></pre>
 </section>
 <section id="per-word-vs-per-sentence-comparison" class="level3">
 <h3 class="anchored" data-anchor-id="per-word-vs-per-sentence-comparison">Per-word vs per-sentence comparison</h3>
-<p>Every density metric is now reported in two units. The chart below puts them side-by-side for the most informative metrics, so you can see how the two views differ.</p>
-<p><strong>Why both units exist</strong>: - <code>% of words</code> (the <code>pct</code> column) is normalized by document length — answers “what fraction of this file’s prose is this feature?”. Best for comparing across files of different sizes. - <code>per sentence</code> (the <code>per_sent</code> column) is normalized by sentence count — answers “how often per sentence does this feature appear?”. Best for comparing across files where typical sentence length differs.</p>
-<p>A category with longer, denser sentences will have similar <code>pct</code> to a category with shorter sentences but a <strong>higher <code>per_sent</code></strong> — because each sentence packs in more matches. The chart below visualizes the actual per-category sentence-length distribution alongside both density views, so the divergence between <code>pct</code> and <code>per_sent</code> becomes legible without needing a hand-typed point estimate.</p>
-<p>Use the legend to toggle one unit on/off and compare the same metric under both normalizations.</p>
+<p>Six representative density metrics in their two unit views (<code>pct</code> vs <code>per_sent</code>). A category with longer, denser sentences has similar <code>pct</code> to a category with shorter sentences but a higher <code>per_sent</code>, because each sentence packs in more matches. The chart visualizes per-category sentence-length distribution alongside both density views, so the divergence between the units becomes legible. Use the legend to toggle one unit on/off and compare the same metric under both normalizations.</p>
 <div id="ea7906a0-f634-476e-98c5-ff726b6be0de" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:52.295099Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:52.294988Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:52.891697Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:52.891350Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>

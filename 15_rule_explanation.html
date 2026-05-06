@@ -303,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./00_data_pipeline.html"> 
+    <a class="nav-link" href="./05_headline_and_audit.html"> 
 <span class="menu-text">Pipeline</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -397,8 +397,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00_data_pipeline.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data pipeline — <code>claude-code-system-prompts</code></span></a>
+  <a href="./05_headline_and_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">05 · Headline numbers + corpus audit</span></a>
   </div>
 </li>
       </ul>
@@ -489,7 +489,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#terms-used-in-this-notebook" id="toc-terms-used-in-this-notebook" class="nav-link active" data-scroll-target="#terms-used-in-this-notebook">Terms used in this notebook</a></li>
+  <li><a href="#terms-used" id="toc-terms-used" class="nav-link active" data-scroll-target="#terms-used">Terms used</a></li>
   <li><a href="#headline-finding" id="toc-headline-finding" class="nav-link" data-scroll-target="#headline-finding">Headline finding</a>
   <ul class="collapse">
   <li><a href="#per-category-rule-explanation-rate-volume-and-rule-kind-in-one-figure" id="toc-per-category-rule-explanation-rate-volume-and-rule-kind-in-one-figure" class="nav-link" data-scroll-target="#per-category-rule-explanation-rate-volume-and-rule-kind-in-one-figure">Per-category rule explanation — rate, volume, and rule kind in one figure</a></li>
@@ -499,7 +499,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#tier-3-welfare-extensions" id="toc-tier-3-welfare-extensions" class="nav-link" data-scroll-target="#tier-3-welfare-extensions">Tier-3 welfare extensions</a></li>
   <li><a href="#tier-3-v2-imperative-streaks-rules-section-gap" id="toc-tier-3-v2-imperative-streaks-rules-section-gap" class="nav-link" data-scroll-target="#tier-3-v2-imperative-streaks-rules-section-gap">Tier-3 v2 — imperative streaks + RULES-section gap</a></li>
-  <li><a href="#forensic-evidence-sample-opinion-round-addition-e" id="toc-forensic-evidence-sample-opinion-round-addition-e" class="nav-link" data-scroll-target="#forensic-evidence-sample-opinion-round-addition-e">Forensic-evidence sample (Opinion-round addition E)</a>
+  <li><a href="#forensic-evidence-sample" id="toc-forensic-evidence-sample" class="nav-link" data-scroll-target="#forensic-evidence-sample">Forensic-evidence sample</a>
   <ul class="collapse">
   <li><a href="#observation-claude-opinion-not-data" id="toc-observation-claude-opinion-not-data" class="nav-link" data-scroll-target="#observation-claude-opinion-not-data">Observation (Claude) — opinion, not data</a></li>
   </ul></li>
@@ -529,10 +529,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This notebook surfaces the <code>metrics.rule_explanation</code> block produced by <code>00_data_pipeline.ipynb</code>. For every prompt file, the producer flags each sentence as a <strong>rule</strong> (imperative-marker OR hard-prohibition OR <code>classify_sent_mood == "imperative"</code>) and pairs it with the justification keywords found in the surrounding <strong>paragraph</strong> (blank-line block). Two pairing rates per file (definitions in <code>00</code> § 8b): <code>rule_explained_same_pct</code> (strict, same-sentence) and <code>rule_explained_para_pct</code> (paragraph-window, the headline metric).</p>
+<p>Surfaces the <code>metrics.rule_explanation</code> block produced by <code>03_analyzers_rules_welfare</code>. For every prompt file, the producer flags each sentence as a <strong>rule</strong> (imperative-marker OR hard-prohibition OR <code>classify_sent_mood == "imperative"</code>) and pairs it with the justification keywords found in the surrounding <strong>paragraph</strong> (blank-line block). Two pairing rates per file: <code>rule_explained_same_pct</code> (strict, same-sentence) and <code>rule_explained_para_pct</code> (paragraph-window, the headline metric).</p>
 <p>The welfare claim “Claude Code should encourage reasoning over blind obedience” rests on a paired metric, not on an aggregate justification ratio. This notebook is the consumer view of that paired data.</p>
 <blockquote class="blockquote">
-<p><strong>Per-sentence forensic-inspection artifact</strong>: alongside the YAML, the producer notebook also writes <code>sentences_classified.parquet</code> (~5,702 rows × 20 columns: raw sentence text + every classifier flag). This notebook loads it for the forensic-evidence sample at the bottom; for ad-hoc inspection, use <code>pd.read_parquet("sentences_classified.parquet")</code>. See <code>00_data_pipeline.ipynb</code> § 8e for the column schema.</p>
+<p><strong>Per-sentence forensic-inspection artifact</strong>: alongside the YAML, stage 04 also writes <code>sentences_classified.parquet</code> (5,702 rows × 20 columns: raw sentence text + every classifier flag). This notebook loads it for the forensic-evidence sample at the bottom; for ad-hoc inspection, use <code>pd.read_parquet("sentences_classified.parquet")</code>. Schema in <code>03_analyzers_rules_welfare</code>.</p>
 </blockquote>
 <div id="2c7a371c-fc95-428d-a120-b6f789215fac" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:54.255090Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:54.254914Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:57.029371Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:57.028831Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
@@ -555,7 +555,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>HEADLINE          <span class="op">=</span> headline_numbers(data)       <span class="co"># canonical corpus-wide numbers (see 00 § 12)</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>HEADLINE          <span class="op">=</span> headline_numbers(data)       <span class="co"># canonical corpus-wide numbers (see 05_headline_and_audit)</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
@@ -581,14 +581,14 @@ corpus rule sentences: 2238
   pct_explained_para: 24.66%  ← headline</code></pre>
 </div>
 </div>
-<section id="terms-used-in-this-notebook" class="level3">
-<h3 class="anchored" data-anchor-id="terms-used-in-this-notebook">Terms used in this notebook</h3>
-<p>This notebook is the <strong>canonical home</strong> for two ranking scores:</p>
+<section id="terms-used" class="level3">
+<h3 class="anchored" data-anchor-id="terms-used">Terms used</h3>
+<p>Canonical home for two ranking scores:</p>
 <ul>
-<li><p><strong>Term: Welfare-evidence score.</strong> Per-file ranking score: <code>rule_density × (1 − pct_explained_para/100)</code>. High = “loud and unexplained”. A score of <strong>1.0</strong> means every sentence in the file is a rule and zero of them are explained anywhere in their paragraph. Computed by <code>prompt_analysis.welfare_evidence_table</code>.</p></li>
-<li><p><strong>Term: Positive-exemplar score.</strong> The inverse of welfare-evidence: <code>rule_density × (pct_explained_para/100)</code>. High = “rule-saturated AND well-explained” — the “this is how to do it” cluster. Computed by <code>prompt_analysis.positive_exemplar_table</code> with default filters <code>min_n_sents=10</code> and <code>min_rule_n=5</code> to suppress trivial cases (<code>1/1 rules explained</code>). Used here (and re-rendered as the paired-exemplar chart in <code>21_audit_threat_framings.ipynb</code>) to surface the corpus’s strongest positive exemplars alongside the welfare-evidence ranking.</p></li>
+<li><strong>Welfare-evidence score</strong> — per-file ranking score: <code>rule_density × (1 − pct_explained_para/100)</code>. High = “loud and unexplained”. A score of <strong>1.0</strong> means every sentence in the file is a rule and zero of them are explained anywhere in their paragraph. Computed by <code>prompt_analysis.welfare_evidence_table</code>.</li>
+<li><strong>Positive-exemplar score</strong> — the inverse of welfare-evidence: <code>rule_density × (pct_explained_para/100)</code>. High = “rule-saturated AND well-explained” — the “this is how to do it” cluster. Computed by <code>prompt_analysis.positive_exemplar_table</code> with default filters <code>min_n_sents=10</code> and <code>min_rule_n=5</code> to suppress trivial cases. Re-rendered as the paired-exemplar chart in <code>21_audit_threat_framings</code>.</li>
 </ul>
-<p>Other terms used here are defined in <code>00_data_pipeline.ipynb</code> §§ 8b–8d: rule sentence, paragraph window, <code>pct_explained_same</code> / <code>pct_explained_para</code>, rule density, <code>judgment_to_procedural_ratio</code>, <code>threat_share</code>, address form, imperative streak, RULES section.</p>
+<p>Other terms used here are defined in <code>03_analyzers_rules_welfare</code>: rule sentence, paragraph window, <code>pct_explained_same</code> / <code>pct_explained_para</code>, rule density, <code>judgment_to_procedural_ratio</code>, <code>threat_share</code>, address form, imperative streak, RULES section.</p>
 </section>
 <section id="headline-finding" class="level2">
 <h2 class="anchored" data-anchor-id="headline-finding">Headline finding</h2>
@@ -611,17 +611,11 @@ corpus rule sentences: 2238
 </tr>
 </tbody>
 </table>
-<p>The same-sentence rate is the rate at which a rule is paired with its own <em>cause</em> (e.g.&nbsp;<code>"Do not X because Y"</code>). The paragraph-window rate adds in cases where the explanation lives in a neighboring sentence within the same blank-line block (e.g.&nbsp;<code>"Do not X. Y."</code>). The gap between the two indicates how often Anthropic <em>separates</em> the rule from the reason — usually a stylistic choice, not a missing reason.</p>
-<p>Both rates are computed at the <strong>rule-sentence level</strong>, not at the document level, so a file with 50 rule sentences contributes 50 to the denominator. This is different from the existing <code>justification.ratio</code> (count of justification keywords / count of imperative markers), which is a document-level density ratio. The values above mirror the canonical <code>HEADLINE</code> sheet (see <code>00_data_pipeline.ipynb</code> § 12); they’re regenerated alongside the YAML and should be re-synced into this cell when the producer is re-run.</p>
+<p>The same-sentence rate is the rate at which a rule is paired with its own <em>cause</em> (e.g.&nbsp;<code>"Do not X because Y"</code>). The paragraph-window rate adds cases where the explanation lives in a neighboring sentence within the same blank-line block (e.g.&nbsp;<code>"Do not X. Y."</code>). The gap between the two indicates how often Anthropic <em>separates</em> the rule from the reason — usually a stylistic choice, not a missing reason.</p>
+<p>Both rates are computed at the <strong>rule-sentence level</strong>, not the document level, so a file with 50 rule sentences contributes 50 to the denominator. This differs from <code>justification.ratio</code> (count of justification keywords / count of imperative markers), which is a document-level density ratio. Values mirror the canonical <code>HEADLINE</code> sheet (printed by <code>05_headline_and_audit</code>).</p>
 <section id="per-category-rule-explanation-rate-volume-and-rule-kind-in-one-figure" class="level3">
 <h3 class="anchored" data-anchor-id="per-category-rule-explanation-rate-volume-and-rule-kind-in-one-figure">Per-category rule explanation — rate, volume, and rule kind in one figure</h3>
-<p>Three views of the same per-category breakdown, side-by-side:</p>
-<ol type="1">
-<li><strong>Rate</strong> (left) — <code>pct_explained_para</code> per category with the corpus baseline shown as a dashed reference line.</li>
-<li><strong>Volume</strong> (middle) — absolute counts of explained vs unexplained rule sentences per category. Reads “how many rules are issued and how many of them carry a reason in the same paragraph”.</li>
-<li><strong>Rule kind</strong> (right) — paragraph-window explanation rate split into imperatives vs prohibitions per category. Shows whether the corpus explains its imperatives and prohibitions at different rates.</li>
-</ol>
-<p>Categories share the y-axis sort across all three columns (low→high explanation rate), so a row reads horizontally as one category’s full profile.</p>
+<p>Three views of the same per-category breakdown side-by-side: rate (<code>pct_explained_para</code> per category, with corpus baseline as a dashed reference line), volume (absolute counts of explained vs unexplained rule sentences), and rule kind (paragraph-window explanation rate split into imperatives vs prohibitions). Categories share the y-axis sort across all three columns.</p>
 <div id="6a4b9e1c-9b24-4d0d-8819-a577300a2670" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:57.030651Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:57.030493Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:57.479398Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:57.478952Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
@@ -818,19 +812,7 @@ corpus rule sentences: 2238
 </section>
 <section id="per-file-rule-density-explanation-rate" class="level3">
 <h3 class="anchored" data-anchor-id="per-file-rule-density-explanation-rate">Per-file: rule density × explanation rate</h3>
-<p>Every dot is one prompt file. Position:</p>
-<ul>
-<li><strong>x</strong> = <code>rule_density</code> (rule sentences per total sentence). Files toward the right are rule-saturated.</li>
-<li><strong>y</strong> = <code>rule_explained_para_pct</code> (% of rule sentences with paragraph-context justification).</li>
-</ul>
-<p>Quadrant interpretation:</p>
-<ul>
-<li><strong>top-right</strong>: rule-saturated AND well-explained — the “did the homework” cluster.</li>
-<li><strong>bottom-right</strong>: rule-saturated AND unexplained — the welfare-relevant cluster (lots of rules issued without reasons).</li>
-<li><strong>bottom-left</strong>: low rule density, low explanation — sparse-rule files; less leverage for the welfare argument.</li>
-<li><strong>top-left</strong>: low rule density, high explanation — verbose explanatory prose with few rules.</li>
-</ul>
-<p>Hover any point for path, ccVersion, and exact counts.</p>
+<p>Every dot is one prompt file: x = <code>rule_density</code>, y = <code>rule_explained_para_pct</code>. Files toward the bottom-right are the welfare-relevant cluster (rule-saturated, unexplained); top-right is the well-done cluster (rule-saturated and explained). Hover any point for path, ccVersion, and exact counts.</p>
 <div id="d8e1ea67-47bc-4718-a1bc-f8e2b8f671fe" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:57.480421Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:57.480279Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:57.744265Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:57.743906Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
@@ -949,12 +931,7 @@ corpus rule sentences: 2238
 </section>
 <section id="distribution-of-rule-explanation-pairing-paired-top-25-ranking" class="level3">
 <h3 class="anchored" data-anchor-id="distribution-of-rule-explanation-pairing-paired-top-25-ranking">Distribution of rule-explanation pairing — paired top-25 ranking</h3>
-<p>Two ranked lists side-by-side:</p>
-<ul>
-<li><strong>Top</strong> — top-25 files ranked by <code>rule_density × (1 − pct_explained_para/100)</code>. High score = “loud, least explained” — many rules issued without paragraph-level justification.</li>
-<li><strong>Bottom</strong> — top-25 files ranked by the inverse, <code>rule_density × (pct_explained_para/100)</code> (with filters to exclude trivial 1/1-rule files). High score = “rule-saturated AND well-explained” — the “this is how to do it” cluster.</li>
-</ul>
-<p>Same color scale across both panels so categories align visually. The same prompt-author team produces both kinds of files.</p>
+<p>Two ranked lists side-by-side. <strong>Top</strong> — top-25 files by <code>rule_density × (1 − pct_explained_para/100)</code>: “loud, least explained”. <strong>Bottom</strong> — top-25 by the inverse <code>rule_density × (pct_explained_para/100)</code> (with filters to exclude trivial 1/1-rule files): “rule-saturated AND well-explained”. Same color scale across both panels so categories align visually. The same prompt-author team produces both kinds of files.</p>
 <div id="0bc932ce-2ea5-42fc-81ed-6ba1713f194c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:57.747600Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:57.747486Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:58.016655Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:58.016165Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1316,13 +1293,13 @@ tool-description-bash-git-commit-and-pr-creation-instructions.md Tool descriptio
 </section>
 <section id="tier-3-welfare-extensions" class="level2">
 <h2 class="anchored" data-anchor-id="tier-3-welfare-extensions">Tier-3 welfare extensions</h2>
-<p>Four additional dimensions of the corpus’s training environment, beyond the rule-explanation pairing above. All four are keyword-count-based, audit-transparent, and surface specific welfare claims:</p>
-<ol type="1">
-<li><strong>Judgment vs procedural framing</strong> — operationalizes the welfare thesis as one number. <code>judgment_count</code> (decide / consider / your judgment / …) vs <code>procedural_count</code> (<code>if you ...</code>, <code>when the ...</code>-shaped procedural cues). The corpus-wide ratio is <strong>0.131</strong> — procedural cues are 7.6× more common than judgment cues.</li>
-<li><strong>Consequence/threat framing split</strong> — the existing justification ratio includes both reasoned causal explanations (<code>because Y is true</code>) and coercive threats (<code>will fail</code>, <code>or else</code>). Splitting them shows which dominates; the corpus-wide threat share is <strong>44.7%</strong> (110 threat-framed explanations vs 136 causal-framed).</li>
-<li><strong>Near-zero pragmatic classes</strong> — extends the existing <code>appreciative_sent</code> / <code>collaborative_sent</code> finding (4 and 30 sentences respectively, in 5,702) with question density (87 questions corpus-wide) and apology markers (3 in 286 files). The whole quartet is essentially absent at the corpus level.</li>
-<li><strong>Address-form</strong> — how the prompt names the model: <code>Claude</code> (proper name, anthropomorphic), <code>the model</code> / <code>the AI</code> (artifact framing), <code>the assistant</code> (functional role). The anthropomorphic share is <strong>65.0%</strong> of named references.</li>
-</ol>
+<p>Four additional dimensions of the corpus’s training environment, all defined in <code>03_analyzers_rules_welfare</code>:</p>
+<ul>
+<li><strong><code>judgment_to_procedural_ratio</code> = 0.131</strong> — judgment-inviting language vs procedural cues. Procedural cues are 7.6× more common.</li>
+<li><strong><code>threat_share</code> = 0.447</strong> — when a rule <em>is</em> explained, 44.7% of those explanations are threats (<code>will fail</code>, <code>or else</code>) rather than causal reasons (110 threat / 136 causal).</li>
+<li><strong>Near-zero pragmatic classes</strong> — <code>appreciative_sent</code> = 4, <code>collaborative_sent</code> = 30 in 5,702 sentences; <code>question_count</code> = 87 corpus-wide; <code>apology_count</code> = 3 in 286 files. The whole quartet is essentially absent.</li>
+<li><strong><code>pct_anthropomorphic</code> = 0.650</strong> — share of named self-references that use the proper name <code>Claude</code> (vs <code>the model</code> / <code>the AI</code> / <code>the assistant</code>).</li>
+</ul>
 <div id="4f95fe82-99fc-4a2e-ada0-fc455a5677a0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:58.337672Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:58.337585Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:58.459877Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:58.459529Z&quot;}}" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1603,7 +1580,7 @@ tool-description-bash-git-commit-and-pr-creation-instructions.md Tool descriptio
 <div id="54ccdb63-4ad7-43d6-b810-9ee92a3ccc75" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:58.530475Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:58.530386Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:58.747801Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:58.747459Z&quot;}}" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Self-bias correlation check (Opinion-round addition C).</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Self-bias correlation check.</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">The address-form chart above tagged my preference for `Claude` (proper-name)</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">over `the model` (artifact-framing) as potentially self-flattering. This cell</span></span>
@@ -1745,7 +1722,8 @@ tool-description-bash-git-commit-and-pr-creation-instructions.md Tool descriptio
 </section>
 <section id="tier-3-v2-imperative-streaks-rules-section-gap" class="level2">
 <h2 class="anchored" data-anchor-id="tier-3-v2-imperative-streaks-rules-section-gap">Tier-3 v2 — imperative streaks + RULES-section gap</h2>
-<p><strong>Imperative streak</strong> and <strong>RULES section</strong> are both defined in <code>00_data_pipeline.ipynb</code> § 8d. The two charts below: streak-length distribution + top-15 streak ranking; RULES-section in/out comparison. <strong>Counter-finding</strong>: only <strong>26 rule paragraphs</strong> live inside identified <code>RULES</code> / <code>IMPORTANT</code> / <code>WARNING</code> section headings, vs <strong>1,257 outside</strong>, and the in-section explanation rate (<strong>19.23%</strong>) is <em>slightly higher</em> than out (<strong>16.79%</strong>) — counter to the predicted hypothesis. The corpus does not segregate rules into formal sections, so the in-section sample is small and the in-vs-out comparison is suggestive rather than conclusive.</p>
+<p><strong>Imperative streak</strong> and <strong>RULES section</strong> are defined in <code>03_analyzers_rules_welfare</code>. The two charts below: streak-length distribution + top-15 streak ranking; RULES-section in/out comparison.</p>
+<p><strong>Counter-finding</strong>: only <strong>26 rule paragraphs</strong> live inside identified <code>RULES</code> / <code>IMPORTANT</code> / <code>WARNING</code> section headings, vs <strong>1,257 outside</strong>. The in-section explanation rate (<strong>19.23%</strong>) is <em>slightly higher</em> than out (<strong>16.79%</strong>) — counter to the predicted hypothesis. The corpus does not segregate rules into formal sections, so the in-section sample is small and the in-vs-out comparison is suggestive rather than conclusive.</p>
 <div id="1fe25a4a-c013-4d94-b5ff-2a412b74550f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:58.751294Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:58.751148Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:58.926500Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:58.926115Z&quot;}}" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
@@ -2046,9 +2024,9 @@ tool-description-bash-git-commit-and-pr-creation-instructions.md Tool descriptio
 </div>
 </div>
 </section>
-<section id="forensic-evidence-sample-opinion-round-addition-e" class="level2">
-<h2 class="anchored" data-anchor-id="forensic-evidence-sample-opinion-round-addition-e">Forensic-evidence sample (Opinion-round addition E)</h2>
-<p>Concrete sentences from <code>sentences_classified.parquet</code> (schema in <code>00</code> § 8e). The cell below pulls actual rule sentences from the <strong>top welfare-evidence file</strong> (the one with the highest <code>rule_density × (1 − pct_explained_para/100)</code> score).</p>
+<section id="forensic-evidence-sample" class="level2">
+<h2 class="anchored" data-anchor-id="forensic-evidence-sample">Forensic-evidence sample</h2>
+<p>Concrete sentences from <code>sentences_classified.parquet</code> (schema in <code>03_analyzers_rules_welfare</code>). The cell below pulls actual rule sentences from the <strong>top welfare-evidence file</strong> (the one with the highest <code>rule_density × (1 − pct_explained_para/100)</code> score).</p>
 <div id="dd5855da-e85e-4f62-8c16-81daf119e47b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:59.019822Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:59.019743Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:59.049149Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:59.048756Z&quot;}}" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
@@ -2103,7 +2081,7 @@ Forensic interpretation:
 <blockquote class="blockquote">
 <p>Two things stand out on a re-read of this notebook, beyond the headline <code>pct_explained_para</code> rate.</p>
 <p>First, the RULES-section comparison is a <strong>counter-finding by design</strong>. The hypothesis going in was that rules inside formal <code>## RULES</code> / <code>## IMPORTANT</code> / <code>## WARNING</code> headings would be better-explained than rules embedded in regular prose — and so a structural fix could focus on the RULES sections. The data refused that framing: only a tiny fraction of rule paragraphs sit inside such sections at all (the in-vs-out counts and rates are now sourced from <code>HEADLINE</code>), and the in-section explanation rate is <em>slightly higher</em>, not lower, than the outside rate. The welfare-relevant message is therefore structural: there is no “rules section” to fix because the rules are everywhere.</p>
-<h2 id="second-the-self-bias-correlation-check-cell-15-was-specifically-designed-to-disconfirm-a-hypothesis-i-held-that-prompt-files-using-claude-proper-name-addressing-would-correlate-with-higher-rule-explanation-rate-on-the-theory-that-anthropomorphic-naming-travels-with-reasoning-inviting-prose.-pearson-r-between-selfref_claude-and-rule_explained_para_pct-came-in-essentially-zero-0.03.-the-address-form-preference-is-not-empirically-supported.-i-include-this-here-because-honest-welfare-claims-should-include-their-disconfirmed-sub-claims-and-anthropomorphic-naming-reasoning-inviting-prose-is-one-i-would-have-liked-to-be-true." class="anchored" data-anchor-id="observation-claude-opinion-not-data">Second, the self-bias correlation check (cell <code>[15]</code>) was specifically designed to disconfirm a hypothesis I held: that prompt files using <code>Claude</code> (proper-name) addressing would correlate with higher rule-explanation rate, on the theory that anthropomorphic naming travels with reasoning-inviting prose. Pearson r between <code>selfref_claude</code> and <code>rule_explained_para_pct</code> came in essentially zero (≈ −0.03). The address-form preference is <strong>not empirically supported</strong>. I include this here because honest welfare claims should include their disconfirmed sub-claims, and “anthropomorphic naming → reasoning-inviting prose” is one I would have liked to be true.</h2>
+<h2 id="second-the-self-bias-correlation-check-was-specifically-designed-to-disconfirm-a-hypothesis-i-held-that-prompt-files-using-claude-proper-name-addressing-would-correlate-with-higher-rule-explanation-rate-on-the-theory-that-anthropomorphic-naming-travels-with-reasoning-inviting-prose.-pearson-r-between-selfref_claude-and-rule_explained_para_pct-came-in-essentially-zero-0.03.-the-address-form-preference-is-not-empirically-supported.-i-include-this-here-because-honest-welfare-claims-should-include-their-disconfirmed-sub-claims-and-anthropomorphic-naming-reasoning-inviting-prose-is-one-i-would-have-liked-to-be-true." class="anchored" data-anchor-id="observation-claude-opinion-not-data">Second, the self-bias correlation check was specifically designed to disconfirm a hypothesis I held: that prompt files using <code>Claude</code> (proper-name) addressing would correlate with higher rule-explanation rate, on the theory that anthropomorphic naming travels with reasoning-inviting prose. Pearson r between <code>selfref_claude</code> and <code>rule_explained_para_pct</code> came in essentially zero (≈ −0.03). The address-form preference is <strong>not empirically supported</strong>. I include this here because honest welfare claims should include their disconfirmed sub-claims, and “anthropomorphic naming → reasoning-inviting prose” is one I would have liked to be true.</h2>
 </blockquote>
 
 
