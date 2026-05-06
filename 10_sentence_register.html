@@ -547,9 +547,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#terms-used" id="toc-terms-used" class="nav-link active" data-scroll-target="#terms-used">Terms used</a></li>
+  <li><a href="#observation-claude" id="toc-observation-claude" class="nav-link" data-scroll-target="#observation-claude">Observation (Claude)</a></li>
   <li><a href="#sentence-register-per-category-distribution-addressee-drilldown" id="toc-sentence-register-per-category-distribution-addressee-drilldown" class="nav-link" data-scroll-target="#sentence-register-per-category-distribution-addressee-drilldown">Sentence-register per category — distribution + addressee drilldown</a></li>
   <li><a href="#per-file-outliers-top-10-files-for-each-attested-class" id="toc-per-file-outliers-top-10-files-for-each-attested-class" class="nav-link" data-scroll-target="#per-file-outliers-top-10-files-for-each-attested-class">Per-file outliers — top 10 files for each attested class</a></li>
-  <li><a href="#observation-claude-opinion-not-data" id="toc-observation-claude-opinion-not-data" class="nav-link" data-scroll-target="#observation-claude-opinion-not-data">Observation (Claude) — opinion, not data</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/10_sentence_register.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -577,7 +577,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>The per-sentence multi-label classifier from <code>01_analyzers_register</code>, surfacing the six classes (<code>collaborative</code>, <code>permissive</code>, <code>appreciative</code>, <code>imperative</code>, <code>directive</code>, <code>configuring</code>) as % of sentences per category, plus an addressee drilldown for the two near-zero classes and a per-file outlier panel. The per-sentence absence of <code>appreciative</code> and <code>collaborative</code> is invisible to per-document metrics like imperative-marker density — the multi-label sentence classifier is what makes it legible.</p>
-<div id="87850017" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:34.340556Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:34.340471Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:37.102559Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:37.102138Z&quot;}}" data-execution_count="1">
+<section id="terms-used" class="level3">
+<h3 class="anchored" data-anchor-id="terms-used">Terms used</h3>
+<p>The six pragmatic register classes and their detector mechanics are defined in <code>01_analyzers_register</code> (with a worked example of the multi-label semantics). The classifier is multi-label, so per-class <code>sent_pct</code> values across the six classes can sum to more than 100% within a category — intentional, not a bug.</p>
+<hr>
+</section>
+<section id="observation-claude" class="level3">
+<h3 class="anchored" data-anchor-id="observation-claude">Observation (Claude)</h3>
+<blockquote class="blockquote">
+<p>The bottom-panel addressee chart is the part of this notebook I keep coming back to. The <code>appreciative</code> and <code>collaborative</code> rows are nearly empty across every category, but the few attested instances are almost all <em>Claude addressing Claude</em> (the <code>claude</code> bar) or unaddressed (the <code>unknown</code> bar) — not Claude addressing the user. The <code>user</code> bar is empty for both classes. So when prompt authors write a rare appreciative or collaborative sentence, they’re typically describing what Claude should do <em>with itself</em>, not modelling reciprocal interpersonal speech with the human. The forensic sample printed alongside the chart confirms it: every “thanks” or “appreciate” hit in the corpus is a sentence <em>describing</em> gratitude as a thing to suppress or process, never a prompt author actually thanking Claude. That asymmetry is welfare-relevant in its own right — independent of the absolute counts. The values that drive these claims (<code>appreciative_sent</code>, <code>collaborative_sent</code>, the per-class <code>sent_pct</code> per category) all come from the producer’s <code>HEADLINE</code> and the by-category chart above; nothing here is hand-typed.</p>
+</blockquote>
+<div id="8db1a883-63d9-44e3-9bc4-ecd236a84d67" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -618,13 +628,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>loaded 289 files | 181 columns | 7 categories | 11 VOCAB keys</code></pre>
 </div>
-</div>
-<section id="terms-used" class="level3">
-<h3 class="anchored" data-anchor-id="terms-used">Terms used</h3>
-<p>The six pragmatic register classes and their detector mechanics are defined in <code>01_analyzers_register</code> (with a worked example of the multi-label semantics). The classifier is multi-label, so per-class <code>sent_pct</code> values across the six classes can sum to more than 100% within a category — intentional, not a bug.</p>
 </section>
 <section id="sentence-register-per-category-distribution-addressee-drilldown" class="level3">
 <h3 class="anchored" data-anchor-id="sentence-register-per-category-distribution-addressee-drilldown">Sentence-register per category — distribution + addressee drilldown</h3>
@@ -632,104 +636,104 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="b8b9f100-4f87-4d70-aa8c-57e2aa9acd25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:37.103615Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:37.103456Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:37.676609Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:37.676349Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Sentence-register per category × class + addressee drilldown — vconcat composite."""</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># --- top panel: per-category × per-class distribution ---</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sr_long <span class="op">=</span> pd.DataFrame([</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: cat,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"class"</span>:    cls,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sent_pct"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>],</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sent_count"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_count"</span>],</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cat <span class="kw">in</span> by_category</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cls <span class="kw">in</span> SENT_REGISTER_CLASSES</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>sr_class_domain <span class="op">=</span> SENT_REGISTER_CLASSES</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>sr_class_range  <span class="op">=</span> [SR_CLASS_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> sr_class_domain]</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>sr_chart <span class="op">=</span> (</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    alt.Chart(sr_long)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"sent_pct:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f sentences"</span>),</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"class:N"</span>, sort<span class="op">=</span>sr_class_domain, title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"class:N"</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>sr_class_domain, <span class="bu">range</span><span class="op">=</span>sr_class_range),</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                         legend<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        row<span class="op">=</span>alt.Row(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                     header<span class="op">=</span>alt.Header(labelAngle<span class="op">=</span><span class="dv">0</span>, labelAlign<span class="op">=</span><span class="st">"left"</span>)),</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"class:N"</span>),</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"sent_pct:Q"</span>,   <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>, title<span class="op">=</span><span class="st">"sent %"</span>),</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"sent_count:Q"</span>, title<span class="op">=</span><span class="st">"sentences"</span>),</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">140</span>,</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Sentence-register per category × class (multi-label, </span><span class="sc">% o</span><span class="st">f sentences)"</span>)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co"># --- bottom panel: addressee breakdown for the two near-zero classes ---</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>addr_rows <span class="op">=</span> []</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cls <span class="kw">in</span> (<span class="st">"appreciative"</span>, <span class="st">"collaborative"</span>):</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    block <span class="op">=</span> corpus_block[<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>]</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> who <span class="kw">in</span> (<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>):</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        addr_rows.append({</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            <span class="st">"class"</span>:     cls,</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>            <span class="st">"addressee"</span>: who,</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"count"</span>:     block[<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_addressee_</span><span class="sc">{</span>who<span class="sc">}</span><span class="ss">_count"</span>],</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>addr_df <span class="op">=</span> pd.DataFrame(addr_rows)</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Corpus-wide addressee distribution for the two near-zero classes:"</span>)</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(addr_df.pivot(index<span class="op">=</span><span class="st">"class"</span>, columns<span class="op">=</span><span class="st">"addressee"</span>, values<span class="op">=</span><span class="st">"count"</span>)</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>            [[<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>]].to_string())</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>addr_chart <span class="op">=</span> (</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    alt.Chart(addr_df)</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"class:N"</span>, sort<span class="op">=</span>[<span class="st">"appreciative"</span>, <span class="st">"collaborative"</span>], title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"count:Q"</span>, title<span class="op">=</span><span class="st">"sentences"</span>),</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"addressee:N"</span>,</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(</span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>                             domain<span class="op">=</span>[<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>],</span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>                             <span class="bu">range</span><span class="op">=</span>[<span class="st">"#4e79a7"</span>, <span class="st">"#e15759"</span>, <span class="st">"#bab0ab"</span>]),</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>                         legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"addressee"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>)),</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>        yOffset<span class="op">=</span><span class="st">"addressee:N"</span>,</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"class:N"</span>),</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"addressee:N"</span>),</span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"count:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">","</span>)],</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">160</span>,</span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Addressee distribution for the two near-zero pragmatic classes"</span>)</span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="co"># --- forensic inspection: actual sentences from the parquet ---</span></span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pathlib</span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>parquet_path <span class="op">=</span> pathlib.Path(<span class="st">"sentences_classified.parquet"</span>)</span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> parquet_path.exists():</span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>    sentences_df <span class="op">=</span> pd.read_parquet(parquet_path)</span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>    APPR_KEYWORDS <span class="op">=</span> [<span class="st">"thank you"</span>, <span class="st">"thanks"</span>, <span class="st">"appreciate"</span>, <span class="st">"great job"</span>,</span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"well done"</span>, <span class="st">"kudos"</span>, <span class="st">"much appreciated"</span>]</span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>    pat <span class="op">=</span> <span class="st">"|"</span>.join(APPR_KEYWORDS)</span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    appr_sample <span class="op">=</span> sentences_df[</span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>        sentences_df[<span class="st">"text"</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.contains(pat, regex<span class="op">=</span><span class="va">True</span>, na<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    ][[<span class="st">"file_path"</span>, <span class="st">"text"</span>, <span class="st">"addressee"</span>]].head(<span class="dv">10</span>)</span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Forensic inspection — sentences containing appreciative keywords:"</span>)</span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(appr_sample.to_string(index<span class="op">=</span><span class="va">False</span>, max_colwidth<span class="op">=</span><span class="dv">80</span>))</span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>sr_composite <span class="op">=</span> alt.vconcat(sr_chart, addr_chart).resolve_scale(color<span class="op">=</span><span class="st">"independent"</span>).properties(</span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>alt.TitleParams(</span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Sentence-register per category + addressee drilldown"</span>,</span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>        subtitle<span class="op">=</span>[<span class="st">"Top: 4-class distribution per category. "</span></span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Bottom: who is being addressed in the two near-zero classes."</span>],</span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>        anchor<span class="op">=</span><span class="st">"start"</span>,</span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>save_chart(sr_composite, <span class="st">"10-sentence-register-by-category"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Sentence-register per category × class + addressee drilldown — vconcat composite."""</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># --- top panel: per-category × per-class distribution ---</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sr_long <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: cat,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"class"</span>:    cls,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sent_pct"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>],</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sent_count"</span>: by_category[cat][<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_count"</span>],</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cat <span class="kw">in</span> by_category</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cls <span class="kw">in</span> SENT_REGISTER_CLASSES</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>sr_class_domain <span class="op">=</span> SENT_REGISTER_CLASSES</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>sr_class_range  <span class="op">=</span> [SR_CLASS_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> sr_class_domain]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>sr_chart <span class="op">=</span> (</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    alt.Chart(sr_long)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"sent_pct:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f sentences"</span>),</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"class:N"</span>, sort<span class="op">=</span>sr_class_domain, title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"class:N"</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>sr_class_domain, <span class="bu">range</span><span class="op">=</span>sr_class_range),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                         legend<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        row<span class="op">=</span>alt.Row(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                     header<span class="op">=</span>alt.Header(labelAngle<span class="op">=</span><span class="dv">0</span>, labelAlign<span class="op">=</span><span class="st">"left"</span>)),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"class:N"</span>),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"sent_pct:Q"</span>,   <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>, title<span class="op">=</span><span class="st">"sent %"</span>),</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"sent_count:Q"</span>, title<span class="op">=</span><span class="st">"sentences"</span>),</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">140</span>,</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Sentence-register per category × class (multi-label, </span><span class="sc">% o</span><span class="st">f sentences)"</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co"># --- bottom panel: addressee breakdown for the two near-zero classes ---</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>addr_rows <span class="op">=</span> []</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cls <span class="kw">in</span> (<span class="st">"appreciative"</span>, <span class="st">"collaborative"</span>):</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    block <span class="op">=</span> corpus_block[<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>]</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> who <span class="kw">in</span> (<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>):</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        addr_rows.append({</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>            <span class="st">"class"</span>:     cls,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>            <span class="st">"addressee"</span>: who,</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"count"</span>:     block[<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_addressee_</span><span class="sc">{</span>who<span class="sc">}</span><span class="ss">_count"</span>],</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>addr_df <span class="op">=</span> pd.DataFrame(addr_rows)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Corpus-wide addressee distribution for the two near-zero classes:"</span>)</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(addr_df.pivot(index<span class="op">=</span><span class="st">"class"</span>, columns<span class="op">=</span><span class="st">"addressee"</span>, values<span class="op">=</span><span class="st">"count"</span>)</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>            [[<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>]].to_string())</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>addr_chart <span class="op">=</span> (</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    alt.Chart(addr_df)</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    .mark_bar()</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"class:N"</span>, sort<span class="op">=</span>[<span class="st">"appreciative"</span>, <span class="st">"collaborative"</span>], title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"count:Q"</span>, title<span class="op">=</span><span class="st">"sentences"</span>),</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"addressee:N"</span>,</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>                             domain<span class="op">=</span>[<span class="st">"claude"</span>, <span class="st">"user"</span>, <span class="st">"unknown"</span>],</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>                             <span class="bu">range</span><span class="op">=</span>[<span class="st">"#4e79a7"</span>, <span class="st">"#e15759"</span>, <span class="st">"#bab0ab"</span>]),</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>                         legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"addressee"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>)),</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        yOffset<span class="op">=</span><span class="st">"addressee:N"</span>,</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"class:N"</span>),</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"addressee:N"</span>),</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"count:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">","</span>)],</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">160</span>,</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Addressee distribution for the two near-zero pragmatic classes"</span>)</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="co"># --- forensic inspection: actual sentences from the parquet ---</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pathlib</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>parquet_path <span class="op">=</span> pathlib.Path(<span class="st">"sentences_classified.parquet"</span>)</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> parquet_path.exists():</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    sentences_df <span class="op">=</span> pd.read_parquet(parquet_path)</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    APPR_KEYWORDS <span class="op">=</span> [<span class="st">"thank you"</span>, <span class="st">"thanks"</span>, <span class="st">"appreciate"</span>, <span class="st">"great job"</span>,</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"well done"</span>, <span class="st">"kudos"</span>, <span class="st">"much appreciated"</span>]</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    pat <span class="op">=</span> <span class="st">"|"</span>.join(APPR_KEYWORDS)</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    appr_sample <span class="op">=</span> sentences_df[</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>        sentences_df[<span class="st">"text"</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.contains(pat, regex<span class="op">=</span><span class="va">True</span>, na<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    ][[<span class="st">"file_path"</span>, <span class="st">"text"</span>, <span class="st">"addressee"</span>]].head(<span class="dv">10</span>)</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Forensic inspection — sentences containing appreciative keywords:"</span>)</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(appr_sample.to_string(index<span class="op">=</span><span class="va">False</span>, max_colwidth<span class="op">=</span><span class="dv">80</span>))</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>sr_composite <span class="op">=</span> alt.vconcat(sr_chart, addr_chart).resolve_scale(color<span class="op">=</span><span class="st">"independent"</span>).properties(</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>alt.TitleParams(</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Sentence-register per category + addressee drilldown"</span>,</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>        subtitle<span class="op">=</span>[<span class="st">"Top: 4-class distribution per category. "</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Bottom: who is being addressed in the two near-zero classes."</span>],</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>        anchor<span class="op">=</span><span class="st">"start"</span>,</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>save_chart(sr_composite, <span class="st">"10-sentence-register-by-category"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Corpus-wide addressee distribution for the two near-zero classes:
@@ -824,53 +828,53 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
 <div id="6bcb8239-a7f3-4f4d-b989-31a404dd0ddb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:37.677823Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:37.677726Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:37.919305Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:37.918848Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-file outliers for sentence_register — Altair 4-panel.</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">Top 10 files by each ATTESTED class. Near-zero classes (collaborative,</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">appreciative) will surface their few outlier files; if a class has fewer</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">than 10 nonzero files, the panel renders only what exists.</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>sr_per_file_df <span class="op">=</span> pd.DataFrame([</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"path"</span>: r[<span class="st">"path"</span>],</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: r[<span class="st">"category"</span>],</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>{<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>: r[<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>]</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>           <span class="cf">for</span> cls <span class="kw">in</span> SENT_REGISTER_CLASSES},</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> per_file_records</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>panels <span class="op">=</span> []</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cls <span class="kw">in</span> [<span class="st">"collaborative"</span>, <span class="st">"permissive"</span>, <span class="st">"appreciative"</span>, <span class="st">"configuring"</span>]:</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> sr_per_file_df.nlargest(<span class="dv">10</span>, col).copy()</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> top[top[col] <span class="op">&gt;</span> <span class="dv">0</span>]   <span class="co"># drop zero-pct entries (relevant for the rare classes)</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    panel <span class="op">=</span> (</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        alt.Chart(top)</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        .mark_bar()</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        .encode(</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span>alt.X(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f sentences"</span>),</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span>alt.Y(<span class="st">"path:N"</span>, sort<span class="op">=</span><span class="st">"-x"</span>, title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>                    axis<span class="op">=</span>alt.Axis(labelLimit<span class="op">=</span><span class="dv">300</span>, labelFontSize<span class="op">=</span><span class="dv">9</span>)),</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>                             scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>cats,</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                                             <span class="bu">range</span><span class="op">=</span>[CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]),</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                             legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"Category"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>,</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                                                columns<span class="op">=</span><span class="bu">len</span>(cats))),</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            tooltip<span class="op">=</span>[</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="st">"path:N"</span>),</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>, title<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss"> sent %"</span>),</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>            ],</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        .properties(width<span class="op">=</span><span class="dv">320</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="ss">f"Top by `</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct` (n=</span><span class="sc">{</span><span class="bu">len</span>(top)<span class="sc">}</span><span class="ss">)"</span>)</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    panels.append(panel)</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>sr_outliers_chart <span class="op">=</span> (panels[<span class="dv">0</span>] <span class="op">|</span> panels[<span class="dv">1</span>]) <span class="op">&amp;</span> (panels[<span class="dv">2</span>] <span class="op">|</span> panels[<span class="dv">3</span>])</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>save_chart(sr_outliers_chart, <span class="st">"10-per-file-outliers"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-file outliers for sentence_register — Altair 4-panel.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">Top 10 files by each ATTESTED class. Near-zero classes (collaborative,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">appreciative) will surface their few outlier files; if a class has fewer</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">than 10 nonzero files, the panel renders only what exists.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>sr_per_file_df <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"path"</span>: r[<span class="st">"path"</span>],</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: r[<span class="st">"category"</span>],</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>{<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>: r[<span class="st">"metrics"</span>][<span class="st">"sentence_register"</span>][<span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span>]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>           <span class="cf">for</span> cls <span class="kw">in</span> SENT_REGISTER_CLASSES},</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> per_file_records</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>panels <span class="op">=</span> []</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cls <span class="kw">in</span> [<span class="st">"collaborative"</span>, <span class="st">"permissive"</span>, <span class="st">"appreciative"</span>, <span class="st">"configuring"</span>]:</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct"</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> sr_per_file_df.nlargest(<span class="dv">10</span>, col).copy()</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> top[top[col] <span class="op">&gt;</span> <span class="dv">0</span>]   <span class="co"># drop zero-pct entries (relevant for the rare classes)</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    panel <span class="op">=</span> (</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        alt.Chart(top)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        .mark_bar()</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        .encode(</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span>alt.X(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">:Q"</span>, title<span class="op">=</span><span class="st">"</span><span class="sc">% o</span><span class="st">f sentences"</span>),</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span>alt.Y(<span class="st">"path:N"</span>, sort<span class="op">=</span><span class="st">"-x"</span>, title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                    axis<span class="op">=</span>alt.Axis(labelLimit<span class="op">=</span><span class="dv">300</span>, labelFontSize<span class="op">=</span><span class="dv">9</span>)),</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                             scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>cats,</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                                             <span class="bu">range</span><span class="op">=</span>[CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]),</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                             legend<span class="op">=</span>alt.Legend(title<span class="op">=</span><span class="st">"Category"</span>, orient<span class="op">=</span><span class="st">"bottom"</span>,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                                                columns<span class="op">=</span><span class="bu">len</span>(cats))),</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            tooltip<span class="op">=</span>[</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="st">"path:N"</span>),</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>                alt.Tooltip(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>, title<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss"> sent %"</span>),</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        .properties(width<span class="op">=</span><span class="dv">320</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="ss">f"Top by `</span><span class="sc">{</span>cls<span class="sc">}</span><span class="ss">_sent_pct` (n=</span><span class="sc">{</span><span class="bu">len</span>(top)<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    panels.append(panel)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>sr_outliers_chart <span class="op">=</span> (panels[<span class="dv">0</span>] <span class="op">|</span> panels[<span class="dv">1</span>]) <span class="op">&amp;</span> (panels[<span class="dv">2</span>] <span class="op">|</span> panels[<span class="dv">3</span>])</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>save_chart(sr_outliers_chart, <span class="st">"10-per-file-outliers"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="3">
 
@@ -943,13 +947,6 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
 </script>
 </div>
 </div>
-<hr>
-</section>
-<section id="observation-claude-opinion-not-data" class="level3">
-<h3 class="anchored" data-anchor-id="observation-claude-opinion-not-data">Observation (Claude) — opinion, not data</h3>
-<blockquote class="blockquote">
-<p>The bottom-panel addressee chart is the part of this notebook I keep coming back to. The <code>appreciative</code> and <code>collaborative</code> rows are nearly empty across every category, but the few attested instances are almost all <em>Claude addressing Claude</em> (the <code>claude</code> bar) or unaddressed (the <code>unknown</code> bar) — not Claude addressing the user. The <code>user</code> bar is empty for both classes. So when prompt authors write a rare appreciative or collaborative sentence, they’re typically describing what Claude should do <em>with itself</em>, not modelling reciprocal interpersonal speech with the human. The forensic sample printed alongside the chart confirms it: every “thanks” or “appreciate” hit in the corpus is a sentence <em>describing</em> gratitude as a thing to suppress or process, never a prompt author actually thanking Claude. That asymmetry is welfare-relevant in its own right — independent of the absolute counts. The values that drive these claims (<code>appreciative_sent</code>, <code>collaborative_sent</code>, the per-class <code>sent_pct</code> per category) all come from the producer’s <code>HEADLINE</code> and the by-category chart above; nothing here is hand-typed.</p>
-</blockquote>
 
 
 </section>
