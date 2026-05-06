@@ -100,6 +100,7 @@ cumulative_by_version(alt_df, metrics, agg="mean") # running aggregate over file
 welfare_evidence_table(alt_df, top_n=25) # top-N "loudest, least-explained" files
 positive_exemplar_table(alt_df, top_n=25, min_n_sents=10, min_rule_n=5) # top-N "rules-with-reasons" exemplars (inverse welfare-evidence)
 headline_numbers(data, alt_df=None, parquet=None) -> dict # canonical corpus-wide HEADLINE sheet (see § 12 of producer); pass alt_df for composite-directiveness range and per-version mood_marker_pct extremes; pass parquet for parquet-level threat / causal / rule counts
+save_chart(chart, name, *, ppi=200) # save Altair chart to figures/<name>.png and return it unchanged; use as the final expression of a chart cell (still renders inline + writes PNG for off-line use)
 ```
 
 **Per-sentence forensic-inspection artifact**: `sentences_classified.parquet` is emitted alongside the YAML. Load with `pd.read_parquet("sentences_classified.parquet")` for individual-sentence inspection (raw text + classifier flags). Schema documented in the producer cell that writes it. ~5,702 rows × 20 columns. Used by `15_rule_explanation.ipynb` (forensic evidence from welfare-evidence files) and `21_audit_threat_framings.ipynb` (threat-framed sentence sample); other notebooks stay YAML-only.

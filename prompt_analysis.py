@@ -379,6 +379,27 @@ def cumulative_count_by_version(
     return pd.DataFrame(rows)
 
 
+# --- Chart export helper ------------------------------------------------
+
+def save_chart(chart, name: str, *, ppi: int = 200):
+    """Save an Altair chart to ``figures/<name>.png`` and return it unchanged.
+
+    Designed as the final expression of a chart cell: the cell still displays
+    the chart inline (interactive Vega-Embed in Jupyter and in the Quarto
+    HTML site), and a PNG side-artifact lands in ``figures/<name>.png`` for
+    use in places that don't run JavaScript — Reddit posts, the Claudexplorers
+    Google form upload, GitHub README embeds, social-media open-graph
+    previews, slide decks, archival snapshots.
+
+    Creates the ``figures/`` directory if needed. Uses ``vl-convert-python``
+    under the hood via Altair's ``chart.save()``.
+    """
+    import pathlib
+    pathlib.Path("figures").mkdir(exist_ok=True)
+    chart.save(f"figures/{name}.png", ppi=ppi)
+    return chart
+
+
 # --- Welfare-submission evidence -----------------------------------------
 
 def welfare_evidence_table(
