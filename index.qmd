@@ -14,6 +14,10 @@ format:
 **New here?** Skip straight to [**`20_track_justification_rate.ipynb`**](20_track_justification_rate.ipynb) — it carries the executive summary (twelve corpus-wide numbers, the headline trend chart, a per-file dashboard) and is the first of the three proposals.
 :::
 
+::: {.callout-tip appearance="simple" icon=false}
+**Prefer to listen?** A NotebookLM-generated [audio overview](https://notebooklm.google.com/notebook/3440d02f-d554-491c-a881-a667ed66373d/artifact/471eaa1b-40e3-4bcc-a5e7-6f14c2927b0e?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_) walks through the headline findings, the three proposals, and the welfare framing — a companion to the notebooks below if you'd rather hear the case before reading it.
+:::
+
 ## What this is
 
 The data behind a submission to the **Claude Explorer AI Welfare community feedback initiative** (deadline 2026-05-06, addressed to Anthropic's Model Welfare Lead). The thesis:
