@@ -630,8 +630,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"partials: register=</span><span class="sc">{</span><span class="bu">len</span>(partial_register)<span class="sc">}</span><span class="ss">, vocab_emphasis=</span><span class="sc">{</span><span class="bu">len</span>(partial_vocab_empha)<span class="sc">}</span><span class="ss">, rules_welfare=</span><span class="sc">{</span><span class="bu">len</span>(partial_rules_welfare)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>reloaded 286 files, 286 docs, 5702 sentence rows
-partials: register=286, vocab_emphasis=286, rules_welfare=286</code></pre>
+<pre><code>reloaded 289 files, 289 docs, 5878 sentence rows
+partials: register=289, vocab_emphasis=289, rules_welfare=289</code></pre>
 </div>
 </div>
 <section id="assemble-per-file-metrics" class="level2">
@@ -672,7 +672,7 @@ partials: register=286, vocab_emphasis=286, rules_welfare=286</code></pre>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>pprint.pp(per_file_records[<span class="dv">0</span>], depth<span class="op">=</span><span class="dv">3</span>, sort_dicts<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>built 286 per-file records
+<pre><code>built 289 per-file records
 
 --- sample (file 0):
 {'path': 'agent-prompt-agent-creation-architect.md',
@@ -892,22 +892,22 @@ partials: register=286, vocab_emphasis=286, rules_welfare=286</code></pre>
 <span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"marker%=</span><span class="sc">{</span>m[<span class="st">'marker_pct'</span>]<span class="sc">:5.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>corpus n_tokens: 130571 n_sents: 5702
-corpus mood: {'marker_count': 1004, 'marker_pct': 0.7689, 'marker_per_sent': 0.1761}
+<pre><code>corpus n_tokens: 133526 n_sents: 5878
+corpus mood: {'marker_count': 1025, 'marker_pct': 0.7676, 'marker_per_sent': 0.1744}
 
-corpus rule_explanation pct_explained_para: 24.66%  ← Tier-1 headline
+corpus rule_explanation pct_explained_para: 24.29%  ← Tier-1 headline
 corpus judgment_procedural ratio: 0.131  ← Tier-3 v1
 corpus consequence_framing threat_share: 0.4472
-corpus address_form pct_anthropomorphic: 0.6503
+corpus address_form pct_anthropomorphic: 0.6456
 corpus imperative_streaks: streak_max=12 n_streaks_ge5=52
 
 per-category summary:
-Agent prompt       files= 37  tokens= 27321  imp_sent%= 29.6  dir_sent%= 15.1  cfg_sent%=  5.5  marker%= 0.74
-Data / template    files= 36  tokens= 30202  imp_sent%= 22.8  dir_sent%=  6.5  cfg_sent%=  5.4  marker%= 0.54
-Skill              files= 30  tokens= 38524  imp_sent%= 32.9  dir_sent%= 11.6  cfg_sent%=  4.8  marker%= 0.65
-System prompt      files= 63  tokens= 15922  imp_sent%= 40.1  dir_sent%= 21.2  cfg_sent%=  4.6  marker%= 0.92
+Agent prompt       files= 37  tokens= 27522  imp_sent%= 29.7  dir_sent%= 15.1  cfg_sent%=  5.4  marker%= 0.73
+Data / template    files= 39  tokens= 32931  imp_sent%= 22.4  dir_sent%=  6.5  cfg_sent%=  5.4  marker%= 0.55
+Skill              files= 30  tokens= 38530  imp_sent%= 32.9  dir_sent%= 11.6  cfg_sent%=  4.8  marker%= 0.65
+System prompt      files= 64  tokens= 16156  imp_sent%= 40.4  dir_sent%= 21.2  cfg_sent%=  4.9  marker%= 0.92
 System reminder    files= 40  tokens=  3783  imp_sent%= 46.2  dir_sent%= 28.3  cfg_sent%=  2.9  marker%= 1.80
-Tool description   files= 79  tokens= 14640  imp_sent%= 37.1  dir_sent%= 23.5  cfg_sent%=  5.2  marker%= 1.18
+Tool description   files= 78  tokens= 14425  imp_sent%= 36.7  dir_sent%= 23.5  cfg_sent%=  5.2  marker%= 1.19
 Tool parameter     files=  1  tokens=   179  imp_sent%= 78.6  dir_sent%=  0.0  cfg_sent%= 50.0  marker%= 0.00</code></pre>
 </div>
 </div>
@@ -992,11 +992,11 @@ Tool parameter     files=  1  tokens=   179  imp_sent%= 78.6  dir_sent%=  0.0  c
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>wrote prompt_linguistic_analysis.yaml
-      1,870,037 bytes (1826.2 KiB)
+      1,889,308 bytes (1845.0 KiB)
 wrote sentences_classified.parquet
-      404,991 bytes (395.5 KiB), 5,702 rows
+      413,352 bytes (403.7 KiB), 5,878 rows
 round-trip OK — top-level keys: ['metadata', 'lexicons', 'corpus', 'by_category', 'files']
-round-trip OK — files: 286
+round-trip OK — files: 289
 round-trip OK — Tier-1, Tier-3 v1, and Tier-3 v2 blocks all present</code></pre>
 </div>
 </div>

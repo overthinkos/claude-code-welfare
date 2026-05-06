@@ -636,7 +636,7 @@ You can now load the package via spacy.load('en_core_web_sm')
 </div>
 </div>
 </div>
-<div id="1c84a1e9-d125-4dcf-9f57-73d9eb2d6c5c" class="cell" data-execution_count="2">
+<div id="1c84a1e9-d125-4dcf-9f57-73d9eb2d6c5c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Path configuration. Notebook lives at the project root (claude-prompts-analysis/).</span></span>
@@ -665,7 +665,7 @@ You can now load the package via spacy.load('en_core_web_sm')
 <div class="cell-output cell-output-stdout">
 <pre><code>cwd:       /home/user/workspace/claude-prompts-analysis
 corpus:    /home/user/workspace/claude-prompts-analysis/claude-code-system-prompts/system-prompts
-           286 .md files
+           289 .md files
 cache dir: /home/user/workspace/claude-prompts-analysis/_pipeline_cache
 output:    corpus_docs.spacy, corpus_meta.parquet</code></pre>
 </div>
@@ -711,7 +711,7 @@ output:    corpus_docs.spacy, corpus_meta.parquet</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="a82db2ba-3ccf-4a9d-9b9b-ae9102b224c4" class="cell" data-execution_count="3">
+<div id="a82db2ba-3ccf-4a9d-9b9b-ae9102b224c4" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Load every .md file: parse HTML-comment frontmatter, strip code, categorize.</span></span>
@@ -774,28 +774,28 @@ output:    corpus_docs.spacy, corpus_meta.parquet</code></pre>
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"a0bc389fbc124debb63239e274d02b17","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"3a5b933e0d5f40438267c0d84305737b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>loaded 286 prompts (286 with frontmatter, 29 via line-by-line fallback)
+<pre><code>loaded 289 prompts (289 with frontmatter, 29 via line-by-line fallback)
 
 category distribution:
 category
-Tool description    79
-System prompt       63
+Tool description    78
+System prompt       64
 System reminder     40
+Data / template     39
 Agent prompt        37
-Data / template     36
 Skill               30
 Tool parameter       1
 
 unique ccVersions: 57
-top 5 ccVersions: {'2.1.53': 47, '2.1.18': 23, '2.1.128': 20, '2.1.118': 17, '2.1.119': 17}
+top 5 ccVersions: {'2.1.53': 47, '2.1.18': 23, '2.1.128': 18, '2.1.132': 17, '2.1.118': 15}
 files with non-empty agentType: 5</code></pre>
 </div>
 </div>
-<div id="be05dc8e-00d8-431e-9e1c-c0fc3abe7ee1" class="cell" data-execution_count="4">
+<div id="be05dc8e-00d8-431e-9e1c-c0fc3abe7ee1" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Run the spaCy pipeline once, then cache:</span></span>
@@ -834,16 +834,16 @@ files with non-empty agentType: 5</code></pre>
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"6e63492d9ce741098f364e3be501e14d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"46d7b8c4a7274539a6041daf80bd7bd3","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>total tokens: 130,571
-total sentences: 5,702
-mean tokens/file: 457
+<pre><code>total tokens: 133,526
+total sentences: 5,878
+mean tokens/file: 462
 
-wrote _pipeline_cache/corpus_docs.spacy  (1,468,712 bytes, 1434.3 KiB)
-wrote _pipeline_cache/corpus_meta.parquet  (718,481 bytes, 701.6 KiB)
+wrote _pipeline_cache/corpus_docs.spacy  (1,501,116 bytes, 1465.9 KiB)
+wrote _pipeline_cache/corpus_meta.parquet  (735,197 bytes, 718.0 KiB)
 
 --- sample rows ---
                                                 path      category ccVersion  n_tokens  n_sents

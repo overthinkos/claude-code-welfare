@@ -647,7 +647,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reloaded </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> files"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>reloaded 286 files</code></pre>
+<pre><code>reloaded 289 files</code></pre>
 </div>
 </div>
 <section id="b.-ruleexplanation-pairing" class="level2">
@@ -707,17 +707,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 category mean (rule explanation, % of rule sentences):
                   pct_explained_same  pct_explained_para  pct_imperative_explained_para  pct_prohibition_explained_para
 category                                                                                                               
-Agent prompt                   11.60               32.90                          32.90                           34.81
-Data / template                 3.61                9.54                           9.54                           19.30
+Agent prompt                   11.59               31.56                          31.56                           34.81
+Data / template                 3.46                9.45                           9.45                           18.13
 Skill                           8.47               21.60                          21.60                           23.04
-System prompt                   8.60               27.88                          27.88                           33.22
+System prompt                   8.46               27.41                          27.41                           32.46
 System reminder                 8.99               25.36                          25.36                           48.81
-Tool description                9.75               19.45                          19.81                           22.32
+Tool description                9.91               19.75                          20.13                           22.88
 Tool parameter                  0.00                0.00                           0.00                             NaN
 
-corpus rule sentences: 2238
-  explained (same sentence):      151  ( 6.75%)
-  explained (paragraph window):   552  (24.66%)</code></pre>
+corpus rule sentences: 2285
+  explained (same sentence):      152  ( 6.65%)
+  explained (paragraph window):   555  (24.29%)</code></pre>
 </div>
 </div>
 </section>
@@ -785,16 +785,16 @@ corpus rule sentences: 2238
 <pre><code>Judgment vs procedural — per-category mean:
                   judgment_count  procedural_count  judgment_per_sent  procedural_per_sent  judgment_to_procedural_ratio
 category                                                                                                                
-Agent prompt               0.595             2.757              0.027                0.096                         0.208
-Data / template            0.111             2.306              0.003                0.076                         0.057
+Agent prompt               0.595             2.784              0.026                0.090                         0.158
+Data / template            0.103             2.333              0.002                0.075                         0.052
 Skill                      0.867             6.400              0.019                0.117                         0.138
-System prompt              0.222             1.429              0.022                0.153                         0.199
+System prompt              0.250             1.438              0.026                0.154                         0.218
 System reminder            0.175             0.425              0.024                0.063                         0.583
-Tool description           0.051             1.291              0.010                0.225                         0.034
+Tool description           0.038             1.269              0.008                0.220                         0.026
 Tool parameter             0.000             0.000              0.000                0.000                           NaN
 
-corpus judgment_count:  77
-corpus procedural_count: 586
+corpus judgment_count:  78
+corpus procedural_count: 594
 corpus judgment_to_procedural_ratio: 0.131
 
 corpus threat_count: 110
@@ -805,12 +805,12 @@ corpus question_count: 87
 corpus apology_count:  3
 
 Address-form — corpus self-reference distribution:
-        selfref_claude: 517
+        selfref_claude: 521
      selfref_assistant: 20
-         selfref_model: 258
-            selfref_2p: 229
+         selfref_model: 266
+            selfref_2p: 231
             selfref_we: 1
-  fraction 'Claude' (anthropomorphic) of named refs: 0.6503</code></pre>
+  fraction 'Claude' (anthropomorphic) of named refs: 0.6456</code></pre>
 </div>
 </div>
 </section>
@@ -857,22 +857,22 @@ Address-form — corpus self-reference distribution:
 <pre><code>Imperative streaks — per-category mean:
                   n_imperative_sentences  n_streaks  streak_max  streak_mean  n_streaks_ge3  n_streaks_ge5
 category                                                                                                  
-Agent prompt                      11.162      6.486       3.135        1.774          1.027          0.270
-Data / template                   12.694      7.944       3.000        1.646          1.083          0.111
+Agent prompt                      11.270      6.486       3.189        1.816          1.054          0.270
+Data / template                   12.718      8.154       2.897        1.605          0.974          0.103
 Skill                             22.433     13.033       3.500        1.930          2.467          0.400
-System prompt                      4.984      2.444       2.714        1.840          0.635          0.159
+System prompt                      5.031      2.438       2.766        1.874          0.656          0.156
 System reminder                    2.425      1.075       1.750        1.337          0.325          0.100
-Tool description                   3.430      1.886       1.797        1.379          0.278          0.139
+Tool description                   3.423      1.885       1.795        1.371          0.282          0.141
 Tool parameter                    11.000      2.000       8.000        5.500          2.000          1.000
 
 corpus longest streak (any file): 12
-corpus n_streaks_ge3 (sum): 228
+corpus n_streaks_ge3 (sum): 230
 corpus n_streaks_ge5 (sum): 52
 
-corpus n_rule_paragraphs_in_rules_section:  26  (5 explained)
-corpus n_rule_paragraphs_outside:           1257  (211 explained)
-corpus pct_rule_paragraphs_explained_in:    19.23%
-corpus pct_rule_paragraphs_explained_out:   16.79%</code></pre>
+corpus n_rule_paragraphs_in_rules_section:  27  (5 explained)
+corpus n_rule_paragraphs_outside:           1284  (212 explained)
+corpus pct_rule_paragraphs_explained_in:    18.52%
+corpus pct_rule_paragraphs_explained_out:   16.51%</code></pre>
 </div>
 </div>
 </section>
@@ -908,21 +908,21 @@ corpus pct_rule_paragraphs_explained_out:   16.79%</code></pre>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  addressee distribution: </span><span class="sc">{</span>addr_dist<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>wrote _pipeline_cache/sentences_partial.parquet  (404,991 bytes, 395.5 KiB)
-      5,702 per-sentence rows × 20 columns
+<pre><code>wrote _pipeline_cache/sentences_partial.parquet  (413,352 bytes, 403.7 KiB)
+      5,878 per-sentence rows × 20 columns
 
 flag totals:
-              is_imperative:  2236
-             is_prohibition:   558
-                    is_rule:  2238
-           has_just_in_sent:   291
-         paragraph_has_just:  1202
-          is_explained_para:   552
+              is_imperative:  2283
+             is_prohibition:   570
+                    is_rule:  2285
+           has_just_in_sent:   293
+         paragraph_has_just:  1215
+          is_explained_para:   555
                  has_threat:   100
                  has_causal:   131
-            mentions_claude:   397
-             mentions_model:   227
-  addressee distribution: {'unknown': 4249, 'claude': 1277, 'user': 176}</code></pre>
+            mentions_claude:   400
+             mentions_model:   235
+  addressee distribution: {'unknown': 4404, 'claude': 1297, 'user': 177}</code></pre>
 </div>
 </div>
 </section>
@@ -950,8 +950,8 @@ flag totals:
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"      </span><span class="sc">{</span><span class="bu">len</span>(partial)<span class="sc">}</span><span class="ss"> per-file records, 7 blocks each"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>wrote _pipeline_cache/partial_rules_welfare.json  (575,202 bytes, 561.7 KiB)
-      286 per-file records, 7 blocks each</code></pre>
+<pre><code>wrote _pipeline_cache/partial_rules_welfare.json  (581,256 bytes, 567.6 KiB)
+      289 per-file records, 7 blocks each</code></pre>
 </div>
 </div>
 

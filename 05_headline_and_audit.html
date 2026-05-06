@@ -610,71 +610,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(_yaml.safe_dump(HEADLINE, sort_keys<span class="op">=</span><span class="va">False</span>, default_flow_style<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>n_files: 286
-n_sentences: 5702
-n_word_tokens: 130571
+<pre><code>n_files: 289
+n_sentences: 5878
+n_word_tokens: 133526
 n_versions: 57
-n_rule_sentences: 2238
-pct_explained_same: 6.7471
-pct_explained_para: 24.6649
-judgment_count: 77
-procedural_count: 586
+n_rule_sentences: 2285
+pct_explained_same: 6.6521
+pct_explained_para: 24.2888
+judgment_count: 78
+procedural_count: 594
 judgment_to_procedural_ratio: 0.131
 threat_count: 110
 causal_count: 136
 threat_share: 0.4472
 question_count: 87
 apology_count: 3
-selfref_claude: 517
+selfref_claude: 521
 selfref_assistant: 20
-selfref_model: 258
-pct_anthropomorphic: 0.6503
-positive_evaluative_quality: 293
-positive_evaluative_emphasis: 183
-positive_evaluative_union: 476
-negative_evaluative: 149
-ratio_quality_to_negative: 1.9664429530201342
-ratio_union_to_negative: 3.1946308724832213
+selfref_model: 266
+pct_anthropomorphic: 0.6456
+positive_evaluative_quality: 296
+positive_evaluative_emphasis: 184
+positive_evaluative_union: 480
+negative_evaluative: 152
+ratio_quality_to_negative: 1.9473684210526316
+ratio_union_to_negative: 3.1578947368421053
 appreciative_sent: 4
 collaborative_sent: 30
 streak_max: 12
-n_streaks_ge3: 228
+n_streaks_ge3: 230
 n_streaks_ge5: 52
-vocab_hard_prohibitions: 618
-vocab_hard_prescriptions: 349
-vocab_pronouns_2p: 1372
-vocab_pronouns_1p: 184
+vocab_hard_prohibitions: 630
+vocab_hard_prescriptions: 358
+vocab_pronouns_2p: 1393
+vocab_pronouns_1p: 185
 vocab_profanity: 0
-modality_deontic: 259
-modality_epistemic: 312
-modality_dynamic: 548
-mood_marker_pct: 0.7689
+modality_deontic: 261
+modality_epistemic: 321
+modality_dynamic: 557
+mood_marker_pct: 0.7676
 top_caps_imperative:
 - - IMPORTANT
   - 35
 - - NEVER
-  - 25
+  - 26
 - - MUST
   - 18
 - - CRITICAL
   - 15
-rules_section_in_paragraphs: 26
-rules_section_out_paragraphs: 1257
+rules_section_in_paragraphs: 27
+rules_section_out_paragraphs: 1284
 rules_section_in_paragraphs_explained: 5
-rules_section_out_paragraphs_explained: 211
-rules_section_in_pct_explained: 19.2308
-rules_section_out_pct_explained: 16.786
-composite_directiveness_min: -18.91301169333662
-composite_directiveness_max: 19.220947314687642
+rules_section_out_paragraphs_explained: 212
+rules_section_in_pct_explained: 18.5185
+rules_section_out_pct_explained: 16.5109
+composite_directiveness_min: -19.47631962004062
+composite_directiveness_max: 19.31230404590806
 mood_marker_pct_first_version: 1.596813473053892
-mood_marker_pct_latest_version: 0.47672041170097507
+mood_marker_pct_latest_version: 0.5542578285309957
 mood_marker_pct_first_version_id: 2.0.14
-mood_marker_pct_latest_version_id: 2.1.129
+mood_marker_pct_latest_version_id: 2.1.132
 parquet_threat_count: 100
 parquet_causal_count: 131
-parquet_threat_and_rule_count: 59
+parquet_threat_and_rule_count: 60
 parquet_threat_and_rule_with_causal: 1
-parquet_threat_and_rule_explained: 58
+parquet_threat_and_rule_explained: 59
 </code></pre>
 </div>
 </div>
@@ -696,35 +696,35 @@ parquet_threat_and_rule_explained: 58
 <tbody>
 <tr class="odd">
 <td>Files</td>
-<td style="text-align: right;"><strong>286</strong></td>
+<td style="text-align: right;"><strong>289</strong></td>
 </tr>
 <tr class="even">
 <td>Sentences</td>
-<td style="text-align: right;"><strong>5,702</strong></td>
+<td style="text-align: right;"><strong>5,878</strong></td>
 </tr>
 <tr class="odd">
 <td>Word tokens</td>
-<td style="text-align: right;"><strong>130,571</strong></td>
+<td style="text-align: right;"><strong>133,526</strong></td>
 </tr>
 <tr class="even">
 <td>ccVersions (distinct)</td>
-<td style="text-align: right;"><strong>57</strong> (oldest <code>2.0.14</code>, latest <code>2.1.129</code>, mode <code>2.1.53</code> with 47 files)</td>
+<td style="text-align: right;"><strong>57</strong> (oldest <code>2.0.14</code>, latest <code>2.1.132</code>, mode <code>2.1.53</code> with 47 files)</td>
 </tr>
 <tr class="odd">
 <td>Rule sentences</td>
-<td style="text-align: right;"><strong>2,238</strong></td>
+<td style="text-align: right;"><strong>2,285</strong></td>
 </tr>
 <tr class="even">
 <td><code>pct_explained_same</code></td>
-<td style="text-align: right;"><strong>6.75%</strong></td>
+<td style="text-align: right;"><strong>6.65%</strong></td>
 </tr>
 <tr class="odd">
 <td><code>pct_explained_para</code></td>
-<td style="text-align: right;"><strong>24.66%</strong> (round to 24.7% in narrative prose)</td>
+<td style="text-align: right;"><strong>24.29%</strong> (round to 24.3% in narrative prose)</td>
 </tr>
 <tr class="even">
 <td><code>judgment_count</code> / <code>procedural_count</code> / ratio</td>
-<td style="text-align: right;"><strong>77 / 586 / 0.131</strong></td>
+<td style="text-align: right;"><strong>78 / 594 / 0.131</strong></td>
 </tr>
 <tr class="odd">
 <td><code>threat_count</code> / <code>causal_count</code> / <code>threat_share</code></td>
@@ -736,39 +736,39 @@ parquet_threat_and_rule_explained: 58
 </tr>
 <tr class="odd">
 <td><code>selfref_claude</code> / <code>_assistant</code> / <code>_model</code></td>
-<td style="text-align: right;">517 / 20 / 258</td>
+<td style="text-align: right;">521 / 20 / 266</td>
 </tr>
 <tr class="even">
 <td><code>pct_anthropomorphic</code></td>
-<td style="text-align: right;"><strong>0.6503</strong> (65.0%)</td>
+<td style="text-align: right;"><strong>0.6456</strong> (64.6%)</td>
 </tr>
 <tr class="odd">
 <td>Imperative streaks: <code>streak_max</code> / <code>n_ge3</code> / <code>n_ge5</code></td>
-<td style="text-align: right;">12 / 228 / 52</td>
+<td style="text-align: right;">12 / 230 / 52</td>
 </tr>
 <tr class="even">
 <td>RULES-section paragraphs (in / out, % explained)</td>
-<td style="text-align: right;">26 (19.23%) / 1,257 (16.79%)</td>
+<td style="text-align: right;">27 (18.52%) / 1,284 (16.51%)</td>
 </tr>
 <tr class="odd">
 <td>Modality (deontic / epistemic / dynamic)</td>
-<td style="text-align: right;">259 / 312 / 548</td>
+<td style="text-align: right;">261 / 321 / 557</td>
 </tr>
 <tr class="even">
 <td><code>vocab.hard_prohibitions.count</code></td>
-<td style="text-align: right;"><strong>618</strong></td>
+<td style="text-align: right;"><strong>630</strong></td>
 </tr>
 <tr class="odd">
 <td><code>vocab.hard_prescriptions.count</code></td>
-<td style="text-align: right;">349</td>
+<td style="text-align: right;">358</td>
 </tr>
 <tr class="even">
 <td><code>vocab.pronouns_2p.count</code></td>
-<td style="text-align: right;"><strong>1,372</strong></td>
+<td style="text-align: right;"><strong>1,393</strong></td>
 </tr>
 <tr class="odd">
 <td><code>vocab.pronouns_1p.count</code></td>
-<td style="text-align: right;"><strong>184</strong></td>
+<td style="text-align: right;"><strong>185</strong></td>
 </tr>
 <tr class="even">
 <td><code>vocab.profanity.count</code></td>
@@ -776,15 +776,15 @@ parquet_threat_and_rule_explained: 58
 </tr>
 <tr class="odd">
 <td>Stance: positive_evaluative_quality / _emphasis / negative_evaluative</td>
-<td style="text-align: right;"><strong>293 / 183 / 149</strong></td>
+<td style="text-align: right;"><strong>296 / 184 / 152</strong></td>
 </tr>
 <tr class="even">
 <td>Quality-only positive-vs-negative ratio</td>
-<td style="text-align: right;"><strong>1.97×</strong> (293 / 149)</td>
+<td style="text-align: right;"><strong>1.95×</strong> (296 / 152)</td>
 </tr>
 <tr class="odd">
 <td>Union positive-vs-negative ratio</td>
-<td style="text-align: right;"><strong>3.19×</strong> (476 / 149)</td>
+<td style="text-align: right;"><strong>3.16×</strong> (480 / 152)</td>
 </tr>
 <tr class="even">
 <td><code>appreciative_sent_count</code></td>
