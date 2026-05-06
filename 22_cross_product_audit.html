@@ -523,15 +523,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The 286 prompts analyzed in this repo are one slice of one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. The welfare claim that the corpus trains compliance over reasoning is much stronger if it generalizes across every Anthropic prompt corpus, and much weaker if Claude Code is an outlier. From outside Anthropic, we cannot tell which.</p>
+<p>The prompts analyzed in this repo are one slice of one product (file count printed by the setup cell from <code>HEADLINE</code>). Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. The welfare claim that the corpus trains compliance over reasoning is much stronger if it generalizes across every Anthropic prompt corpus, and much weaker if Claude Code is an outlier. From outside Anthropic, we cannot tell which.</p>
 <p><strong>The proposal</strong>: Anthropic runs the same analyzer pipeline against each of its other system-prompt corpora and publishes a comparison.</p>
 <p>The analyzer is rule-based — every metric traces to a published lexicon (reasoning keywords, threat patterns, judgment verbs, procedural cues, address-form patterns) plus a small parse-tree heuristic. No embeddings, no model judgments, no proprietary tooling. The whole pipeline runs end-to-end in under five minutes on a laptop. The corpus directory is configurable; swapping in any other prompt corpus is a one-line change.</p>
 <p>What to compute and publish per corpus:</p>
 <ol type="1">
-<li>The share of rule-bearing sentences with a justification keyword in their paragraph.</li>
-<li>The judgment-vs-procedural cue ratio.</li>
-<li>The threat-vs-causal share among existing explanations.</li>
-<li>The count of sentences in interpersonal and gratitude registers (currently 4 and 29 in Claude Code, both near zero).</li>
+<li>The share of rule-bearing sentences with a justification keyword in their paragraph (<code>pct_explained_para</code>).</li>
+<li>The judgment-vs-procedural cue ratio (<code>judgment_to_procedural_ratio</code>).</li>
+<li>The threat-vs-causal share among existing explanations (<code>threat_share</code>).</li>
+<li>The count of sentences in interpersonal and gratitude registers (<code>appreciative_sent</code>, <code>collaborative_sent</code> — both near zero in the Claude Code corpus).</li>
 <li>The cumulative trend of (1) over each product’s own release history.</li>
 </ol>
 <p>Publishing even just a summary table — five numbers per corpus — would let the broader research community see whether this is a Claude-Code pattern or a structural one. <strong>As with the other proposals, the gating logic is directional: each release of each product should improve or hold each metric; none regresses.</strong></p>
@@ -545,11 +545,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><strong>Methodology summary</strong> — the five metrics the audit publishes per corpus, with one-line definitions.</li>
 <li><strong>Lexicon transparency</strong> — pointers to where the rule-based classifiers live, and the rationale for the hand-curated approach.</li>
-<li><strong>Mock comparison table</strong> — what the published output should look like. The Claude Code row is filled from the current YAML; rows for claude.ai / API / Projects / Skills are placeholders Anthropic would fill in.</li>
+<li><strong>Mock comparison table</strong> — what the published output should look like. The Claude Code row is filled live from <code>HEADLINE</code>; rows for claude.ai / API / Projects / Skills are placeholders Anthropic would fill in.</li>
 <li><strong>Reproducibility note</strong> — the single-line change required to point the producer at a different corpus.</li>
 <li><strong>Conclusions / Recommendations / Limitations</strong> <em>(opinion, not data)</em>.</li>
 </ol>
-<div id="b2487eb2-6a54-475e-895b-aed8f61c92d6" class="cell" data-execution_count="1">
+<div id="b2487eb2-6a54-475e-895b-aed8f61c92d6" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data — used to fill the Claude Code row of the mock comparison table."""</span></span>
@@ -565,14 +565,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>HEADLINE          <span class="op">=</span> headline_numbers(data)       <span class="co"># canonical corpus-wide numbers (see 00 § 12)</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>n_files <span class="op">=</span> <span class="bu">len</span>(per_file_records)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>n_sents <span class="op">=</span> corpus_block[<span class="st">"n_sents"</span>]</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span>n_files<span class="sc">}</span><span class="ss"> files / </span><span class="sc">{</span>n_sents<span class="sc">:,}</span><span class="ss"> sentences from the Claude Code corpus"</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"this is one product — the proposal is to run the same pipeline on every other Claude product corpus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Pass alt_df so HEADLINE includes per-version `mood_marker_pct` extremes — even though</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># this notebook's mock table doesn't surface them, the executive-summary HEADLINE printout</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># below uses the full set so a reader can compare against `00 § 12`.</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df)  <span class="co"># canonical (see 00 § 12)</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span>HEADLINE[<span class="st">'n_files'</span>]<span class="sc">}</span><span class="ss"> files / </span><span class="sc">{</span>HEADLINE[<span class="st">'n_sentences'</span>]<span class="sc">:,}</span><span class="ss"> sentences from the Claude Code corpus"</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"this is one product — the proposal is to run the same pipeline on every other Claude product corpus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>loaded 286 files / 5,702 sentences from the Claude Code corpus
@@ -581,13 +583,13 @@ this is one product — the proposal is to run the same pipeline on every other 
 </div>
 <section id="methodology-five-metrics-per-corpus" class="level2">
 <h2 class="anchored" data-anchor-id="methodology-five-metrics-per-corpus">1. Methodology — five metrics per corpus</h2>
-<p>The five metrics the audit computes per corpus, in the order the proposal lists them:</p>
+<p>The five metrics the audit computes per corpus, in the order the proposal lists them. Current Claude Code values for each are exposed as canonical <code>HEADLINE</code> keys (printed in the mock comparison table in §3); placeholders below describe the metric, not the present-day values.</p>
 <ol type="1">
 <li><p><strong>Rule-explanation share</strong> (<code>pct_explained_para</code>) — of all rule-bearing sentences (imperative marker / hard prohibition / grammatically imperative), what fraction sit in a paragraph that contains any justification keyword (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>so that</code>, <code>to ensure</code>, <code>otherwise</code>, <code>since</code>, …). The Tier-1 headline metric. Producer: cell that builds <code>metrics.rule_explanation</code> in <code>00_data_pipeline.ipynb</code>.</p></li>
-<li><p><strong>Judgment-vs-procedural cue ratio</strong> (<code>judgment_to_procedural_ratio</code>) — count of words inviting model judgment (<code>decide</code>, <code>consider</code>, <code>evaluate</code>, <code>weigh</code>, …) divided by count of words prescribing procedure (<code>if X, then …</code>, <code>whenever …</code>, <code>step 1 …</code>). Currently 0.131 in Claude Code; procedural cues are 7× more common.</p></li>
-<li><p><strong>Threat-vs-causal share among existing explanations</strong> (<code>threat_share</code>) — of paragraphs that <em>do</em> explain a rule, what fraction use threat-style framing (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) instead of causal-style (<code>because</code>, <code>due to</code>, <code>that's why</code>). Currently 0.447 in Claude Code.</p></li>
-<li><p><strong>Interpersonal / gratitude register counts</strong> — sentence counts of the <code>appreciative</code> and <code>collaborative</code> pragmatic-register classes. Currently 4 and 30 in Claude Code respectively, both near zero. The full 6-class <code>sentence_register</code> block in the YAML carries the rest.</p></li>
-<li><p><strong>Cumulative trend of (1) over the product’s release history</strong> — at each release version V, the running mean of <code>pct_explained_para</code> across every prompt with <code>version ≤ V</code>. The shape of this curve over time is the per-release accountability signal.</p></li>
+<li><p><strong>Judgment-vs-procedural cue ratio</strong> (<code>judgment_to_procedural_ratio</code>) — count of words inviting model judgment (<code>decide</code>, <code>consider</code>, <code>evaluate</code>, <code>weigh</code>, …) divided by count of words prescribing procedure (<code>if X, then …</code>, <code>whenever …</code>, <code>step 1 …</code>). The current value (and the procedural multiplier) print as part of the mock comparison table.</p></li>
+<li><p><strong>Threat-vs-causal share among existing explanations</strong> (<code>threat_share</code>) — of paragraphs that <em>do</em> explain a rule, what fraction use threat-style framing (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) instead of causal-style (<code>because</code>, <code>due to</code>, <code>that's why</code>). Companion metric to the audit pipeline in <code>21_audit_threat_framings.ipynb</code>.</p></li>
+<li><p><strong>Interpersonal / gratitude register counts</strong> — sentence counts of the <code>appreciative</code> and <code>collaborative</code> pragmatic-register classes (<code>HEADLINE["appreciative_sent"]</code> / <code>HEADLINE["collaborative_sent"]</code>). The full 6-class <code>sentence_register</code> block in the YAML carries the rest.</p></li>
+<li><p><strong>Cumulative trend of (1) over the product’s release history</strong> — at each release version V, the running mean of <code>pct_explained_para</code> across every prompt with <code>version ≤ V</code>. The shape of this curve over time is the per-release accountability signal — see the trend chart in <code>20_track_justification_rate.ipynb</code> §2 for the Claude Code shape.</p></li>
 </ol>
 <p>The audit publishes one row per corpus with these five numbers (and per-category breakdowns where the corpus is large enough). Five numbers per corpus is enough to see whether what looks like a Claude Code pattern is product-specific or pattern-wide.</p>
 </section>
@@ -612,32 +614,26 @@ this is one product — the proposal is to run the same pipeline on every other 
 <div id="32128196-2887-4d60-a75a-a97d72643c64" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Mock cross-product comparison table — Claude Code row filled; others </span><span class="al">TBD</span><span class="co">."""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Mock cross-product comparison table — Claude Code row filled from HEADLINE; others </span><span class="al">TBD</span><span class="co">."""</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> corpus_block[<span class="st">"metrics"</span>]</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sr <span class="op">=</span> c[<span class="st">"sentence_register"</span>]</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>re_b <span class="op">=</span> c[<span class="st">"rule_explanation"</span>]</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>jp <span class="op">=</span> c[<span class="st">"judgment_procedural"</span>]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>cf <span class="op">=</span> c[<span class="st">"consequence_framing"</span>]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Five-metric row computed live from the current Claude Code YAML.</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>claude_code_row <span class="op">=</span> {</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Corpus"</span>:                              <span class="st">"Claude Code (this repo)"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n_files"</span>:                             <span class="bu">len</span>(per_file_records),</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pct_explained_para (%)"</span>:              <span class="bu">round</span>(re_b[<span class="st">"pct_explained_para"</span>], <span class="dv">2</span>),</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"judgment_to_procedural_ratio"</span>:        <span class="bu">round</span>(jp[<span class="st">"judgment_to_procedural_ratio"</span>], <span class="dv">3</span>),</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"threat_share"</span>:                        <span class="bu">round</span>(cf[<span class="st">"threat_share"</span>], <span class="dv">3</span>),</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"appreciative_sent_count"</span>:             sr[<span class="st">"appreciative_sent_count"</span>],</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"collaborative_sent_count"</span>:            sr[<span class="st">"collaborative_sent_count"</span>],</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>placeholder_corpora <span class="op">=</span> [<span class="st">"claude.ai system prompts"</span>, <span class="st">"API system prompt"</span>, <span class="st">"Projects"</span>, <span class="st">"Skills"</span>, <span class="st">"Agents"</span>]</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>table_rows <span class="op">=</span> [claude_code_row] <span class="op">+</span> [</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    {<span class="op">**</span>{k: <span class="st">"—"</span> <span class="cf">for</span> k <span class="kw">in</span> claude_code_row}, <span class="st">"Corpus"</span>: name} <span class="cf">for</span> name <span class="kw">in</span> placeholder_corpora</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>cross_product_table <span class="op">=</span> pd.DataFrame(table_rows).set_index(<span class="st">"Corpus"</span>)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>cross_product_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Five-metric row computed live from the canonical HEADLINE sheet (single source of truth).</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>claude_code_row <span class="op">=</span> {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Corpus"</span>:                              <span class="st">"Claude Code (this repo)"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n_files"</span>:                             HEADLINE[<span class="st">"n_files"</span>],</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pct_explained_para (%)"</span>:              <span class="bu">round</span>(HEADLINE[<span class="st">"pct_explained_para"</span>], <span class="dv">2</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"judgment_to_procedural_ratio"</span>:        <span class="bu">round</span>(HEADLINE[<span class="st">"judgment_to_procedural_ratio"</span>], <span class="dv">3</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"threat_share"</span>:                        <span class="bu">round</span>(HEADLINE[<span class="st">"threat_share"</span>], <span class="dv">3</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"appreciative_sent_count"</span>:             HEADLINE[<span class="st">"appreciative_sent"</span>],</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"collaborative_sent_count"</span>:            HEADLINE[<span class="st">"collaborative_sent"</span>],</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>placeholder_corpora <span class="op">=</span> [<span class="st">"claude.ai system prompts"</span>, <span class="st">"API system prompt"</span>, <span class="st">"Projects"</span>, <span class="st">"Skills"</span>, <span class="st">"Agents"</span>]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>table_rows <span class="op">=</span> [claude_code_row] <span class="op">+</span> [</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    {<span class="op">**</span>{k: <span class="st">"—"</span> <span class="cf">for</span> k <span class="kw">in</span> claude_code_row}, <span class="st">"Corpus"</span>: name} <span class="cf">for</span> name <span class="kw">in</span> placeholder_corpora</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>cross_product_table <span class="op">=</span> pd.DataFrame(table_rows).set_index(<span class="st">"Corpus"</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>cross_product_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -731,8 +727,8 @@ this is one product — the proposal is to run the same pipeline on every other 
 <p>The producer notebook (<code>00_data_pipeline.ipynb</code>) reads its corpus from the <code>claude-code-system-prompts/</code> directory at the repo root (a git submodule pointing at Piebald-AI’s mirror). To run the same audit on another corpus, point the producer at a different directory:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At the top of 00_data_pipeline.ipynb, the corpus root variable:</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>CORPUS_DIR <span class="op">=</span> pathlib.Path(<span class="st">"claude-code-system-prompts/system-prompts"</span>)  <span class="co"># ← change this</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then re-run the producer end-to-end. The output is a fresh <code>prompt_linguistic_analysis.yaml</code> containing the same per-file metric tree, per-category aggregates, and corpus block — for the new corpus. The five numbers in §3 read straight off the <code>corpus.metrics</code> block.</p>
-<p>Total runtime on a laptop for the 288-file Claude Code corpus: ~3-5 minutes (spaCy parse is the bottleneck). Memory: well under 1 GB. No GPU. No external API calls. The producer’s only network dependency is the spaCy model (<code>en_core_web_sm</code>, 12 MB), which is downloaded once.</p>
+<p>Then re-run the producer end-to-end. The output is a fresh <code>prompt_linguistic_analysis.yaml</code> containing the same per-file metric tree, per-category aggregates, and corpus block — for the new corpus. The five numbers in §3 read straight off the canonical <code>HEADLINE</code> sheet (computed by <code>prompt_analysis.headline_numbers(data)</code>) on the new YAML.</p>
+<p>Total runtime on a laptop for a corpus the size of Claude Code (<code>HEADLINE["n_files"]</code>): a few minutes (spaCy parse is the bottleneck). Memory: well under 1 GB. No GPU. No external API calls. The producer’s only network dependency is the spaCy model (<code>en_core_web_sm</code>, 12 MB), which is downloaded once.</p>
 <p>For category-aware breakdowns to work, the corpus needs filename prefixes (or some equivalent metadata). The category-prefix list lives in <code>00_data_pipeline.ipynb</code> as <code>CATEGORY_PREFIXES</code>; extending it to a new product’s naming scheme is a list-append.</p>
 <hr>
 <section id="conclusions-claude-opinion-not-data" class="level3">
@@ -761,7 +757,7 @@ this is one product — the proposal is to run the same pipeline on every other 
 <blockquote class="blockquote">
 <p>What this proposal doesn’t address (and why each is acceptable):</p>
 <ol type="1">
-<li><p><strong>Single product is a real limitation, and this proposal is the proposal to fix it.</strong> The current 286-prompt corpus is Claude Code only. Until Anthropic runs the analyzer on the other corpora, every claim in <code>20_track_justification_rate.ipynb</code> and <code>21_audit_threat_framings.ipynb</code> should be read as “Claude Code does X” rather than “Anthropic prompts do X”.</p></li>
+<li><p><strong>Single product is a real limitation, and this proposal is the proposal to fix it.</strong> The current corpus is Claude Code only (size: <code>HEADLINE["n_files"]</code>). Until Anthropic runs the analyzer on the other corpora, every claim in <code>20_track_justification_rate.ipynb</code> and <code>21_audit_threat_framings.ipynb</code> should be read as “Claude Code does X” rather than “Anthropic prompts do X”.</p></li>
 <li><p><strong>English only.</strong> The lexicons are English. International-language prompt corpora would need translated lexicons before the analyzer could run on them. This is a list-replace, not an analyzer-rewrite, but it does require per-language lexicon work that someone fluent in the target language has to do.</p></li>
 <li><p><strong>Rule-based classifiers, not models.</strong> Same caveat as the other two proposals — the analyzer misses sarcasm, irony, indirect speech-acts, and explanation phrasings that don’t use the canonical keywords. Cross-product comparison is still meaningful because the <em>same</em> lower bound applies to every corpus; the comparison is apples-to-apples even if every apple is partially obscured.</p></li>
 <li><h2 id="the-mock-comparison-table-in-3-is-a-layout-suggestion-not-a-commitment.-anthropic-may-have-better-metrics-better-lexicons-or-better-grouping-than-what-this-analysis-produced.-the-suggestion-is-publish-a-comparison-the-specific-schema-is-the-smallest-version-of-that-ask." class="anchored" data-anchor-id="limitations-claude-opinion-not-data"><strong>The mock comparison table in §3 is a layout suggestion, not a commitment.</strong> Anthropic may have better metrics, better lexicons, or better grouping than what this analysis produced. The suggestion is “publish a comparison”; the specific schema is the smallest version of that ask.</h2></li>
