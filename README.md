@@ -8,10 +8,9 @@ Quantitative linguistic analysis of the **286 system prompts that ship with Clau
 
 | File | Purpose |
 | --- | --- |
-| [`PROPOSAL.md`](./PROPOSAL.md) | The three-idea ≤3,000-character pitch addressed to Anthropic |
-| [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb) | Idea 1 supporting analysis + the executive-summary entry point (twelve corpus-wide numbers, the headline trend chart, the per-file dashboard) |
-| [`21_audit_threat_framings.ipynb`](./21_audit_threat_framings.ipynb) | Idea 2 supporting analysis (threat-vs-causal split, paired audit-candidates / rewrite-templates, forensic sentence sample) |
-| [`22_cross_product_audit.ipynb`](./22_cross_product_audit.ipynb) | Idea 3 supporting analysis (methodology, lexicon transparency, mock cross-product comparison table) |
+| [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb) | Proposal: track justification rate per release; block regressions. Doubles as the executive-summary entry point (twelve corpus-wide numbers, the headline trend chart, the per-file dashboard) |
+| [`21_audit_threat_framings.ipynb`](./21_audit_threat_framings.ipynb) | Proposal: audit threat-framed rule explanations and rewrite them as causal (threat-vs-causal split, paired audit-candidates / rewrite-templates, forensic sentence sample) |
+| [`22_cross_product_audit.ipynb`](./22_cross_product_audit.ipynb) | Proposal: run the same audit on every Claude product and publish the result (methodology, lexicon transparency, mock cross-product comparison table) |
 | [`00_data_pipeline.ipynb`](./00_data_pipeline.ipynb) | Producer — spaCy + custom analyzers, writes the YAML + parquet artifacts |
 | `10_*` … `16_*.ipynb` | Analysis-tier notebooks, one slice of the analysis each (sentence register, emphasis/CAPS, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing) |
 | [`CLAUDE.md`](./CLAUDE.md) | Internal architecture notes (read this if you want to extend the analysis) |
@@ -33,7 +32,7 @@ python -m spacy download en_core_web_sm
 # Run the producer (writes prompt_linguistic_analysis.yaml + sentences_classified.parquet)
 jupyter lab 00_data_pipeline.ipynb        # → Run All
 
-# Then any analysis notebook (10–15) or proposal notebook (20–22) renders charts from those artifacts
+# Then any analysis notebook (10–15) or proposal notebook (20–22) renders charts and proposal text from those artifacts
 ```
 
 For the full architecture (producer/consumer split, the shared `prompt_analysis.py` module, the Jupyter MCP tooling rules) read [`CLAUDE.md`](./CLAUDE.md).

@@ -2,7 +2,7 @@
 
 ## What this repo is
 
-Quantitative linguistic analysis of the **286-file `claude-code-system-prompts`** corpus (Piebald-AI's reverse-engineered collection of Claude Code's shipping prompts). Eight cells of spaCy + custom analyzers profile every prompt along nine dimensions (mood / register / stance / sentence_register / modality / vocab / ALL CAPS / CAPS imperative / justification), aggregate per-file + per-category + corpus-wide, and emit a single ~1 MiB YAML data file. Six **analysis-tier** notebooks (`10`–`15`) render slice-by-slice Altair dashboards on top; three **proposal-tier** notebooks (`20`–`22`), one per Claudexplorers submission, distill the analysis into supporting evidence for the three ideas in `PROPOSAL.md`.
+Quantitative linguistic analysis of the **286-file `claude-code-system-prompts`** corpus (Piebald-AI's reverse-engineered collection of Claude Code's shipping prompts). Eight cells of spaCy + custom analyzers profile every prompt along nine dimensions (mood / register / stance / sentence_register / modality / vocab / ALL CAPS / CAPS imperative / justification), aggregate per-file + per-category + corpus-wide, and emit a single ~1 MiB YAML data file. Six **analysis-tier** notebooks (`10`–`15`) render slice-by-slice Altair dashboards on top; three **proposal** notebooks (`20`–`22`), one per Claudexplorers idea, are each self-contained — they carry the proposal text alongside its supporting analysis.
 
 This analysis is the empirical foundation for a **Claude Explorer AI Welfare submission** titled **"Claude Code should encourage reasoning over blind obedience"**, intended for the Claudexplorers community feedback initiative collecting proposals for Kyle Fish (Anthropic's Model Welfare Lead). See [§ 8](#8-the-claude-explorer-submission) below for the framing.
 
@@ -28,7 +28,7 @@ Required Python deps (already in the project's JupyterLab kernel):
 **Run order** (always producer first):
 
 1. Open `00_data_pipeline.ipynb` in JupyterLab → Run All. Produces `prompt_linguistic_analysis.yaml` (~1.8 MiB, 286 files × per-file metric tree + lexicons + corpus + per-category) AND `sentences_classified.parquet` (~5,702 rows, per-sentence forensic-inspection table).
-2. Open any analysis-tier notebook (`10_*` … `15_*`) or proposal-tier notebook (`20_*` … `22_*`). Each loads the YAML (and optionally the parquet, in `15_rule_explanation.ipynb` and `21_audit_threat_framings.ipynb`) and renders charts. They do **not** re-run spaCy — they're pure data viewers. Start with `20_track_justification_rate.ipynb` for the executive-summary view (it doubles as the supporting analysis for Idea 1); the analysis tier focuses on one slice each.
+2. Open any analysis-tier notebook (`10_*` … `15_*`) or proposal notebook (`20_*` … `22_*`). Each loads the YAML (and optionally the parquet, in `15_rule_explanation.ipynb` and `21_audit_threat_framings.ipynb`) and renders charts. They do **not** re-run spaCy — they're pure data viewers. Start with `20_track_justification_rate.ipynb` for the executive-summary view (it doubles as a self-contained proposal — track justification rate per release, block regressions); the analysis tier focuses on one slice each.
 
 ---
 
@@ -46,7 +46,7 @@ Required Python deps (already in the project's JupyterLab kernel):
  ▼
  prompt_linguistic_analysis.yaml (~1.8 MiB cache) + sentences_classified.parquet (~395 KiB)
  │
- ├─────── Proposal tier (one notebook per Claudexplorers submission) ───────┐
+ ├─────── Proposals (one self-contained proposal per notebook) ─────────────┐
  │       20_track_justification_rate     21_audit_threat_framings           │
  │       22_cross_product_audit                                             │
  │                                                                          │
@@ -56,13 +56,13 @@ Required Python deps (already in the project's JupyterLab kernel):
          15_rule_explanation                                                 │
 ```
 
-### Proposal tier — `20`–`22` (one notebook per Claudexplorers form submission)
+### Proposals — `20`–`22` (one self-contained proposal per notebook)
 
-| File | Inheriting from | Content |
+| File | Proposes | Content |
 |---|---|---|
-| `20_track_justification_rate.ipynb` | Idea 1 in PROPOSAL.md + executive-summary content | **Entry-point notebook.** Headline-data block (12 corpus-level numbers, source-tagged to the analysis tier), cumulative `judgment_to_procedural_ratio` over ccVersion (the single most-important chart), per-file linked dashboard (scatter ↔ category bars), per-category positive-evaluative split + modality breakdowns, findings, and per-proposal conclusions / recommendations / limitations. Use this as the welfare-thesis overview |
-| `21_audit_threat_framings.ipynb` | Idea 2 in PROPOSAL.md | Threat-share data, per-category `threat_share` chart, paired top-10 (re-framed: welfare-evidence files = audit candidates; positive exemplars = rewrite templates), forensic-sample sentences from `sentences_classified.parquet`, per-proposal conclusions / recommendations / limitations |
-| `22_cross_product_audit.ipynb` | Idea 3 in PROPOSAL.md | Methodology summary (the five metrics to publish per corpus), lexicon-transparency notes, mock cross-product comparison table (Claude Code row filled live; other corpora are placeholders), reproducibility note, per-proposal conclusions / recommendations / limitations |
+| `20_track_justification_rate.ipynb` | Track justification rate per release; block regressions | **Entry-point notebook.** Self-contained proposal statement up top, then the headline-data block (12 corpus-level numbers, source-tagged to the analysis tier), cumulative `judgment_to_procedural_ratio` over ccVersion (the single most-important chart), per-file linked dashboard (scatter ↔ category bars), per-category positive-evaluative split + modality breakdowns, findings, and conclusions / recommendations / limitations. Use this as the welfare-thesis overview |
+| `21_audit_threat_framings.ipynb` | Audit threat-framed rule explanations and rewrite them as causal | Self-contained proposal statement, threat-share data, per-category `threat_share` chart, paired top-10 (re-framed: welfare-evidence files = audit candidates; positive exemplars = rewrite templates), forensic-sample sentences from `sentences_classified.parquet`, conclusions / recommendations / limitations |
+| `22_cross_product_audit.ipynb` | Run the same audit on every Claude product, and publish the result | Self-contained proposal statement, methodology summary (the five metrics to publish per corpus), lexicon-transparency notes, mock cross-product comparison table (Claude Code row filled live; other corpora are placeholders), reproducibility note, conclusions / recommendations / limitations |
 
 ### Analysis tier — `10`–`15` (each ~5–13 cells, all charts in Altair)
 
@@ -135,24 +135,59 @@ The `importlib.reload` line is intentional — it picks up edits to `prompt_anal
 
 ---
 
-## 4. ⚠️ TOOLING RULES — IMPORTANT
+## 4. ⚠️ TOOLING RULES — IMPORTANT (revised after the 2026-05-06 incident)
 
-### All notebook edits MUST go through the Jupyter MCP server
+### Background — what changed
 
-The MCP server is configured in `.mcp.json` at `http://localhost:8888/mcp` and exposes `mcp__jupyter__*` tools (`get_cell`, `update_cell`, `insert_cell`, `delete_cell`, `execute_cell`, `open_notebook_session`, `close_notebook_session`, etc.). **Use these for every `.ipynb` mutation.**
+The earlier rule was "all notebook edits MUST go through the Jupyter MCP server" with the rationale that the live CRDT room is the source of truth while a notebook is open. **That rule is no longer sufficient.** During a 2026-05-06 session, batched `mcp__jupyter__cell_update` calls silently corrupted `20_track_justification_rate.ipynb`: cells duplicated, two code cells (chart-rendering) were silently lost, and `mcp__jupyter__room_close` failed to actually destroy the dirty CRDT room — leaving it "sticky" so that subsequent direct disk writes were CRDT-merged with the stale room state, propagating corruption.
 
-**Why**: while a notebook is open in JupyterLab, the *live CRDT collaboration room* is the source of truth. Editing the on-disk `.ipynb` in parallel via `Write` / `sed` / `jq` desynchronizes silently — JupyterLab keeps showing stale cell content from before the disk edit, and re-runs may overwrite later disk changes when the user saves. This was learned the hard way.
+The full RCA is at [`JUPYTER_MCP_RCA.md`](./JUPYTER_MCP_RCA.md). The summary that drives the rules below:
 
-### Concrete rules
+- `cell_update` is **not atomic** under stale CRDT history — it appears to do delete-then-insert against the cell array, and can leave the original cell in place if the room's causal history has anything the MCP client doesn't know about. Symptom: cell count silently grows, and chart-rendering code cells silently disappear.
+- `room_close` does **not always destroy the room** — rooms with dirty / divergent CRDT state survive close calls and remain visible in `room_list`. The `file_id` persists across close/reopen cycles.
+- Direct disk writes against a notebook with a sticky room are **not safe** — `jupyter_server_ydoc`'s file-watcher detects the external modification and CRDT-merges it with the room's stale state, producing duplicates.
 
-- **Never** call `Write` on a `.ipynb` file. Never `sed`/`awk`/`echo >` an `.ipynb`.
-- **Always** use `mcp__jupyter__update_cell` / `insert_cell` / `delete_cell` for cell-level edits while a session is open.
-- For **bulk surgery** that's awkward via per-cell calls (e.g. lifting cells from one notebook into another via `jq`):
- 1. `mcp__jupyter__close_notebook_session` for the target notebook.
- 2. Do the on-disk edit.
- 3. `mcp__jupyter__open_notebook_session` to reopen — JupyterLab will pick up the new state.
-- For `.py` / `.md` / `.yaml` / `.json`: regular `Write` / `Edit` tools are fine. They have no CRDT layer.
+### Revised tooling rules
+
+#### Default rule: prefer **disk-edit on freshly-cloned working tree**, with all rooms first hard-cleared
+
+For any non-trivial notebook edit (more than 1–2 cells), the safe procedure is:
+
+1. **Clear all rooms first**: `mcp__jupyter__room_close_all`. Verify via `mcp__jupyter__room_list` that the rooms are gone. **If sticky rooms persist, ask the user to restart the Jupyter container** — that is the only certain way to clear them. Do not proceed.
+2. **Edit on disk** via a small Python script that reads the `.ipynb` JSON, mutates `cells[i]['source']`, and writes back. Validate `len(nb['cells'])` before-and-after — if the count diverges from your expected delta, abort and `git checkout` to recover.
+3. **Do not reopen rooms afterward.** Let the user reopen notebooks fresh in JupyterLab.
+
+For single-cell edits during active live collaboration with the user (the user has JupyterLab open and is watching), `mcp__jupyter__cell_update` is acceptable, but verify after every call:
+
+```
+cell_update(path, index, source) → cell_get(path, index) and confirm source matches.
+```
+
+If they don't match, you've hit the corruption bug — `git checkout` immediately and switch to disk-edit.
+
+#### Concrete rules
+
+- **`Write` / `sed` / `jq` on a `.ipynb` is now a graded hazard**, not a flat ban:
+  - Safe IF: `room_list` shows no room for the target notebook AND no JupyterLab UI tab is open against it.
+  - Unsafe IF: a CRDT room exists for the file (the room may CRDT-merge your write with its stale state).
+  - In doubt: `room_close_all` + verify, then proceed.
+- **`mcp__jupyter__cell_update` is now a graded hazard**, not the default:
+  - Safe IF: room was just freshly opened (no prior mutations, no stale history).
+  - Unsafe IF: room has been open for a while OR has had mutations since last verified.
+  - Always verify after each call. Stop on first mismatch.
+- **`mcp__jupyter__room_close_all` is the recommended pre-flight before any disk edit**, but does NOT guarantee rooms are destroyed. Always confirm via `room_list`.
+- **For bulk surgery (>5 cells, multi-notebook batches)**: skip MCP entirely. Use a Python script. Tell the user to restart JupyterLab when you're done.
+- For `.py` / `.md` / `.yaml` / `.json`: regular `Write` / `Edit` tools are fine. No CRDT layer.
 - After editing `prompt_analysis.py`, the kernel still has the *old* module cached. The setup cell calls `importlib.reload(prompt_analysis)` to force a re-import. If you add new exports, run the setup cell again.
+
+#### Recovery checklist (when corruption is suspected)
+
+1. `mcp__jupyter__room_close_all` — best effort cleanup.
+2. `git checkout HEAD -- <notebook>.ipynb` — restore disk.
+3. `jq '.cells | length' <notebook>.ipynb` — confirm expected cell count.
+4. **Inspect `mcp__jupyter__room_list`** — if the room reappears, do not proceed. Ask the user to restart the Jupyter container.
+5. Once `room_list` is clean for that notebook, run the disk-edit script.
+6. **Verify cell count matches expected delta**. If it doesn't, repeat from step 1.
 
 ### `.mcp.json` (do not change without reason)
 
@@ -175,14 +210,13 @@ The MCP server is configured in `.mcp.json` at `http://localhost:8888/mcp` and e
 claude-prompts-analysis/
 ├── CLAUDE.md ← you are here
 ├── README.md ← user-facing repo overview
-├── PROPOSAL.md ← Claudexplorers form-paste source (3 ideas, ≤3,000 chars each)
 ├── prompt_analysis.py ← shared module (load YAML, palettes, helpers)
 ├── 00_data_pipeline.ipynb ← PRODUCER (~34 cells; runs spaCy + writes YAML and parquet)
 ├── prompt_linguistic_analysis.yaml ← producer output (~1.8 MiB, the cache point)
 ├── sentences_classified.parquet ← producer output (~395 KiB; per-sentence forensic table)
-├── 20_track_justification_rate.ipynb ← PROPOSAL TIER (Idea 1; doubles as executive summary)
-├── 21_audit_threat_framings.ipynb ← PROPOSAL TIER (Idea 2)
-├── 22_cross_product_audit.ipynb ← PROPOSAL TIER (Idea 3)
+├── 20_track_justification_rate.ipynb ← PROPOSAL: track justification rate per release; doubles as executive summary
+├── 21_audit_threat_framings.ipynb ← PROPOSAL: audit threat-framed rule explanations
+├── 22_cross_product_audit.ipynb ← PROPOSAL: run the same audit on every Claude product
 ├── 10_sentence_register.ipynb ← ANALYSIS TIER
 ├── 11_emphasis_caps_vocab.ipynb ← ANALYSIS TIER
 ├── 12_register_stance.ipynb ← ANALYSIS TIER
@@ -254,8 +288,8 @@ The corpus submodule pulls from `https://github.com/Piebald-AI/claude-code-syste
 - **Addressee distribution of `appreciative` sentences** (the addressee classifier): of the 4 corpus-wide appreciative sentences, **3** are tagged `claude` (referencing Claude/you) and **1** is tagged `unknown`. **0** are tagged `user`. But inspection of `sentences_classified.parquet` shows none of the 4 are genuine appreciative speech-acts — they're sentences that *mention* the word `thanks` in instruction contexts (e.g., `NEVER SUGGEST: "thanks"`). The corpus contains zero sentences in which the prompt author thanks Claude.
 - **Positive-evaluative split** (the positive_evaluative split): the new `positive_evaluative_quality` (`good`, `optimal`, `recommended`, `safe`) and `positive_evaluative_emphasis` (`important`, `critical`, `essential`, `key`) lexicons split the union 476 positive-evaluative tokens into **293 quality + 183 emphasis**. The corrected positive-vs-negative ratio (quality only / negative=149) is **1.97×** — sharper than the original union 3.19× headline. ~38% of the "positive" count was emphasis-of-rule words masquerading as positive.
 - **Self-bias correlation** (the self-bias correlation check): Pearson r between `selfref_claude` and `rule_explained_para_pct` per file is **−0.027** (essentially uncorrelated, very slightly negative). r between `selfref_model` and `rule_explained_para_pct` is **+0.076** (essentially uncorrelated, slightly positive). The address-form preference (anthropomorphic naming → reasoning-inviting prose) is **NOT empirically supported** — a self-bias check that disconfirmed the hypothesis it was designed to test.
-- **Positive exemplars** (the positive-exemplar ranking): the inverse welfare-evidence ranking surfaces `system-prompt-worker-instructions.md` as the corpus's strongest exemplar (7 rules, 100% explained at paragraph level). Top-5 also includes `system-prompt-auto-mode.md`, `tool-description-bash-git-commit-and-pr-creation-instructions.md`, `agent-prompt-quick-pr-creation.md`, `system-prompt-fork-usage-guidelines.md`. These are the "this is how to do it" templates for PROPOSAL.md.
-- **Per-sentence forensic-inspection artifact** (the per-sentence parquet artifact): `sentences_classified.parquet` (~395 KB, 5,702 rows × 20 columns) emitted alongside the YAML by the producer notebook. Used by `15_rule_explanation.ipynb` for sentence-level forensic evidence and by `21_audit_threat_framings.ipynb` for the threat-framed sentence sample; quotable in PROPOSAL.md.
+- **Positive exemplars** (the positive-exemplar ranking): the inverse welfare-evidence ranking surfaces `system-prompt-worker-instructions.md` as the corpus's strongest exemplar (7 rules, 100% explained at paragraph level). Top-5 also includes `system-prompt-auto-mode.md`, `tool-description-bash-git-commit-and-pr-creation-instructions.md`, `agent-prompt-quick-pr-creation.md`, `system-prompt-fork-usage-guidelines.md`. These are the "this is how to do it" templates the proposal notebooks point to.
+- **Per-sentence forensic-inspection artifact** (the per-sentence parquet artifact): `sentences_classified.parquet` (~395 KB, 5,702 rows × 20 columns) emitted alongside the YAML by the producer notebook. Used by `15_rule_explanation.ipynb` for sentence-level forensic evidence and by `21_audit_threat_framings.ipynb` for the threat-framed sentence sample; quotable in any of the proposal notebooks.
 
 ---
 
@@ -293,7 +327,7 @@ The data here are an empirical baseline against which Anthropic could measure in
 - Deadline: **May 6, 2026** (anywhere on earth).
 - Format: ≤3,000 characters per idea, optional external link (this repo would be the link), submitted via the Claudexplorers Google form.
 - This submission is a **collaboration with Claude Code** — the repo was built by Claude using Claude Code itself, and the submission form has a dedicated checkbox for that disclosure. Tick it.
-- **Drafted at**: [`PROPOSAL.md`](./PROPOSAL.md) at the repo root. Three ideas (track-justification-rate, audit-threat-framings, cross-product-audit), each ≤3,000 chars with `[YOUR OPENING REMARK]` and `[YOUR CLOSING REMARK]` placeholders for the user's voice. The body of each idea reads standalone — a reader who never opens the repo still gets the full case. Pre-flight char-count helper at the top of the file.
+- **The three proposals live as self-contained notebooks at the repo root**: `20_track_justification_rate.ipynb`, `21_audit_threat_framings.ipynb`, `22_cross_product_audit.ipynb`. Each carries the proposal text alongside its supporting analysis — a reader who opens any one of them gets the full case for that idea without needing any other document.
 
 ---
 
@@ -308,7 +342,7 @@ The data here are an empirical baseline against which Anthropic could measure in
 - Human-judgment validation of the composite directiveness metric — needs annotators; currently a wish-list item.
 
 ### For this `CLAUDE.md`
-- Does not include the full ≤3,000-character pitch text for the Claudexplorers form. That belongs in a separate `PROPOSAL.md` once it's drafted.
+- Does not include the full pitch text for each Claudexplorers idea. That lives directly in the proposal notebook `20_*` / `21_*` / `22_*`.
 - Does not enumerate every cell of every notebook — open the notebooks themselves for that.
 
 ---
@@ -319,8 +353,11 @@ The data here are an empirical baseline against which Anthropic could measure in
 |---|---|
 | Consumer notebook fails with `ImportError: cannot import name X from prompt_analysis` | The kernel cached the old module. The setup cell's `importlib.reload(prompt_analysis)` should handle this. If it persists, restart the kernel. |
 | Consumer fails with `KeyError: 'Column not found:...'` from `alt_df` | Producer hasn't been re-run since a schema change. Run `00_data_pipeline.ipynb` end-to-end first. |
-| `mcp__jupyter__execute_cell` returns "Index out of range" | The CRDT room is out of sync with disk. Close + reopen the session. |
-| Edits to `.ipynb` via direct `Write` don't show up in JupyterLab | Expected — direct edits don't propagate into the live CRDT room. Always go through `mcp__jupyter__update_cell`. Or close session, edit, reopen. |
+| `mcp__jupyter__execute_cell` returns "Index out of range" | The CRDT room is out of sync with disk. Close + reopen the session. If the same call keeps failing, the room is sticky — see the next two rows. |
+| `mcp__jupyter__cell_update` reports success but the cell didn't change / a duplicate appeared / a code cell silently vanished | **Known corruption bug** (see [`JUPYTER_MCP_RCA.md`](./JUPYTER_MCP_RCA.md)). `git checkout HEAD -- <notebook>` to restore disk. Switch to disk-edit-script approach for the rest of the work. |
+| `mcp__jupyter__room_close` returns success but `room_list` still shows the room | **Sticky room**. `room_close_all` may not fix it. The only certain remedy is restarting the Jupyter container. Until then, do not edit that notebook via direct disk write — the sticky room will CRDT-merge your edit with its stale state. |
+| Notebook on disk has more cells than expected after a disk-edit script | The room CRDT-merged your write. Restore from `git`, restart the Jupyter container, then re-run the disk edit. |
+| Edits to `.ipynb` via direct `Write` don't show up in JupyterLab | Expected — direct edits don't propagate into the live CRDT room. JupyterLab's tab will show stale content until you close + reopen the file in the UI. |
 | Producer's `generated_at` timestamp is the only thing that differs between two YAML runs | Expected. Everything else is deterministic. |
 
 ---

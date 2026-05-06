@@ -15,7 +15,6 @@ project:
     - 13_correlation_directiveness.ipynb
     - 14_ccversion_trends.ipynb
     - 15_rule_explanation.ipynb
-    - PROPOSAL.md
 
 execute:
   enabled: false
@@ -49,8 +48,6 @@ website:
           - 15_rule_explanation.ipynb
       - href: 00_data_pipeline.ipynb
         text: Pipeline
-      - href: PROPOSAL.md
-        text: Proposal text
 
   sidebar:
     style: docked
@@ -58,7 +55,7 @@ website:
     contents:
       - href: index.qmd
         text: "Home"
-      - section: "Proposals (one notebook per submission)"
+      - section: "Proposals (each notebook is a self-contained proposal)"
         contents:
           - 20_track_justification_rate.ipynb
           - 21_audit_threat_framings.ipynb
@@ -74,7 +71,6 @@ website:
       - section: "Reference"
         contents:
           - 00_data_pipeline.ipynb
-          - PROPOSAL.md
 
   page-footer:
     left: |

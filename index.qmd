@@ -11,7 +11,7 @@ format:
 ---
 
 ::: {.callout-tip appearance="simple" icon=false}
-**New here?** Skip straight to [**`20_track_justification_rate.ipynb`**](20_track_justification_rate.ipynb) — it's the entry-point notebook (twelve corpus-wide numbers, the headline trend chart, the per-file dashboard) and the supporting analysis for Idea 1 of the submission. The two companion proposal notebooks are [`21_audit_threat_framings.ipynb`](21_audit_threat_framings.ipynb) (Idea 2 — threat-vs-causal audit) and [`22_cross_product_audit.ipynb`](22_cross_product_audit.ipynb) (Idea 3 — cross-product comparison).
+**New here?** Skip straight to [**`20_track_justification_rate.ipynb`**](20_track_justification_rate.ipynb) — it's the entry-point notebook (twelve corpus-wide numbers, the headline trend chart, the per-file dashboard) and a self-contained proposal: track justification rate per release; block regressions. The two companion proposals are [`21_audit_threat_framings.ipynb`](21_audit_threat_framings.ipynb) (audit threat-framed rule explanations and rewrite them as causal) and [`22_cross_product_audit.ipynb`](22_cross_product_audit.ipynb) (run the same audit on every Claude product, and publish the result).
 :::
 
 ## What this is
@@ -22,7 +22,7 @@ The submission's thesis is one sentence:
 
 > The 286 system prompts that ship with Claude Code train the model toward **compliance**, not toward **reasoning** — and the data show the corpus has been moving in that direction over time, not against it.
 
-Every claim in the submission is grounded in a number on this site. The full pitch text is at [PROPOSAL.md](PROPOSAL.md). Every linguistic and statistical term used in any chart is defined inline in the producer notebook ([`00_data_pipeline.ipynb`](00_data_pipeline.ipynb)) at first use.
+Every claim in the submission is grounded in a number on this site. The full pitch text for each idea lives directly in its proposal notebook (`20_*` / `21_*` / `22_*`) — open any one for the self-contained case. Every linguistic and statistical term used in any chart is defined inline in the producer notebook ([`00_data_pipeline.ipynb`](00_data_pipeline.ipynb)) at first use.
 
 ## Headline numbers
 
@@ -53,10 +53,9 @@ The interactive version (with hover tooltips on every release) lives in [`20_tra
 
 ## How to read this site
 
-- [**Proposal notebooks `20`–`22`**](20_track_justification_rate.ipynb) — one notebook per Claudexplorers submission. `20_track_justification_rate.ipynb` is the entry point (it doubles as the executive summary: twelve numbers, headline trend, per-file dashboard). `21_audit_threat_framings.ipynb` covers the threat-vs-causal audit. `22_cross_product_audit.ipynb` covers cross-product comparison.
+- [**Proposal notebooks `20`–`22`**](20_track_justification_rate.ipynb) — three self-contained proposals. `20_track_justification_rate.ipynb` proposes tracking justification rate per release (and doubles as the executive summary: twelve numbers, headline trend, per-file dashboard). `21_audit_threat_framings.ipynb` proposes a threat-vs-causal rewriting audit. `22_cross_product_audit.ipynb` proposes running the same audit on every Claude product and publishing the result.
 - [**Analysis notebooks `10`–`15`**](10_sentence_register.ipynb) — one notebook per slice of the analysis (sentence-register, emphasis, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing). Each is standalone.
 - [**`00_data_pipeline.ipynb`**](00_data_pipeline.ipynb) — the producer. spaCy + custom analyzers turn 286 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 43 cells; included for reproducibility.
-- [**`PROPOSAL.md`**](PROPOSAL.md) — the three-idea ≤3,000-character pitch addressed to Anthropic (the form-paste source).
 
 ## Reproducing it
 

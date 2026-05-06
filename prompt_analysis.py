@@ -1,4 +1,4 @@
-"""Shared helpers for the analysis-tier (11_*–16_*) and proposal-tier (21_*–23_*) notebooks.
+"""Shared helpers for the analysis-tier (10_*–15_*) and proposal (20_*–22_*) notebooks.
 
 The data pipeline lives in `00_data_pipeline.ipynb`; it writes
 `prompt_linguistic_analysis.yaml` and `sentences_classified.parquet`. Every
@@ -347,8 +347,8 @@ def positive_exemplar_table(
     ``rule_n >= min_rule_n`` (default 5) to suppress trivial cases like
     "1/1 rules explained" in a 3-sentence file.
 
-    These are the files Anthropic could point to as "this is how to do it"
-    in PROPOSAL.md drafting — concrete templates rather than only critiques.
+    These are the files Anthropic could point to as "this is how to do it" —
+    concrete templates rather than only critiques.
     """
     df = alt_df[(alt_df["n_sents"] >= min_n_sents)
                 & (alt_df["rule_n"] >= min_rule_n)].copy()
