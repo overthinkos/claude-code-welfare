@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-05-06T13:06:31+00:00'
+  generated_at: '2026-05-06T17:15:12+00:00'
   spacy_model: core_web_sm-3.8.0
   source_dir: claude-code-system-prompts/system-prompts
   n_files: 286
@@ -29141,7 +29141,7 @@ files:
   name: 'System Prompt: Context compaction summary'
   description: Prompt used for context compaction summary (for the SDK)
   ccVersion: 2.1.38
-  agentType: claude-code-guide
+  agentType: null
   n_tokens: 233
   n_sents: 12
   metrics:
