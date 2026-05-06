@@ -5,7 +5,7 @@ project:
     - figures/
   render:
     - index.qmd
-    - 00_data_pipeline.ipynb
+    - 05_headline_and_audit.ipynb
     - 10_sentence_register.ipynb
     - 11_emphasis_caps_vocab.ipynb
     - 12_register_stance.ipynb
@@ -33,7 +33,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: 00_data_pipeline.ipynb
+      - href: 05_headline_and_audit.ipynb
         text: Pipeline
       - text: Analysis
         menu:
@@ -57,7 +57,7 @@ website:
         text: "Home"
       - section: "Pipeline"
         contents:
-          - 00_data_pipeline.ipynb
+          - 05_headline_and_audit.ipynb
       - section: "Analysis"
         contents:
           - 10_sentence_register.ipynb

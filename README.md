@@ -11,7 +11,7 @@ Quantitative linguistic analysis of the **286 system prompts that ship with Clau
 | [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb) | Proposal: track justification rate per release; block regressions. Doubles as the executive-summary entry point (twelve corpus-wide numbers, the headline trend chart, the per-file dashboard) |
 | [`21_audit_threat_framings.ipynb`](./21_audit_threat_framings.ipynb) | Proposal: audit threat-framed rule explanations and rewrite them as causal (threat-vs-causal split, paired audit-candidates / rewrite-templates, forensic sentence sample) |
 | [`22_cross_product_audit.ipynb`](./22_cross_product_audit.ipynb) | Proposal: run the same audit on every Claude product and publish the result (methodology, lexicon transparency, mock cross-product comparison table) |
-| [`00_data_pipeline.ipynb`](./00_data_pipeline.ipynb) | Producer — spaCy + custom analyzers, writes the YAML + parquet artifacts |
+| [`00_setup_and_corpus.ipynb`](./00_setup_and_corpus.ipynb) → [`05_headline_and_audit.ipynb`](./05_headline_and_audit.ipynb) | Six-stage producer chain — corpus parse, register / vocab+emphasis / rules+welfare analyzers, assemble + write YAML + parquet, headline + audit. Lexicons and analyzer functions live in [`prompt_pipeline.py`](./prompt_pipeline.py); intermediate artifacts cache under `_pipeline_cache/` (gitignored) |
 | `10_*` … `16_*.ipynb` | Analysis-tier notebooks, one slice of the analysis each (sentence register, emphasis/CAPS, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing) |
 | [`CLAUDE.md`](./CLAUDE.md) | Internal architecture notes (read this if you want to extend the analysis) |
 | `prompt_linguistic_analysis.yaml` | Cached output of the producer (~1.8 MiB) |
@@ -29,8 +29,16 @@ pip install "spacy>=3.8" pandas pyyaml pyarrow "altair>=6" vl-convert-python \
             vega_datasets python-frontmatter tqdm
 python -m spacy download en_core_web_sm
 
-# Run the producer (writes prompt_linguistic_analysis.yaml + sentences_classified.parquet)
-jupyter lab 00_data_pipeline.ipynb        # → Run All
+# Run the producer chain in order — each stage Run All. Only stage 00 runs spaCy;
+# 01–03 reload the cached DocBin and run analyzer families; 04 assembles + writes the
+# final YAML + parquet; 05 prints the canonical HEADLINE sheet + audit table.
+jupyter lab \
+    00_setup_and_corpus.ipynb       \
+    01_analyzers_register.ipynb     \
+    02_analyzers_vocab_emphasis.ipynb \
+    03_analyzers_rules_welfare.ipynb  \
+    04_assemble_aggregate_write.ipynb \
+    05_headline_and_audit.ipynb
 
 # Then any analysis notebook (10–15) or proposal notebook (20–22) renders charts and proposal text from those artifacts
 ```

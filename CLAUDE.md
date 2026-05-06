@@ -23,28 +23,40 @@ Required Python deps (already in the project's JupyterLab kernel):
 
 `spacy>=3.8` · `en_core_web_sm` 3.8.0 · `pandas` · `pyyaml` · `pyarrow` · `altair>=6` · `vl-convert-python` · `vega_datasets` · `python-frontmatter` · `tqdm`
 
-(`pyarrow` is for the `sentences_classified.parquet` artifact emitted by `00_data_pipeline.ipynb` alongside the YAML. `vl-convert-python` is the Altair PNG export backend used by `20_track_justification_rate.ipynb` and `21_audit_threat_framings.ipynb` to write the headline charts under `figures/`.)
+(`pyarrow` is for the `sentences_classified.parquet` artifact emitted by `04_assemble_aggregate_write.ipynb` alongside the YAML. `vl-convert-python` is the Altair PNG export backend used by `20_track_justification_rate.ipynb` and `21_audit_threat_framings.ipynb` to write the headline charts under `figures/`.)
 
 **Run order** (always producer first):
 
-1. Open `00_data_pipeline.ipynb` in JupyterLab → Run All. Produces `prompt_linguistic_analysis.yaml` (~1.8 MiB, 286 files × per-file metric tree + lexicons + corpus + per-category) AND `sentences_classified.parquet` (~5,702 rows, per-sentence forensic-inspection table).
+1. Run the 6-stage producer chain in order — each notebook is a separate Run All. Stage `00_setup_and_corpus` runs spaCy once and writes `_pipeline_cache/corpus_docs.spacy` + `_pipeline_cache/corpus_meta.parquet`. Stages `01_analyzers_register`, `02_analyzers_vocab_emphasis`, `03_analyzers_rules_welfare` each reload that cache, run an analyzer family, and write a `partial_*.json` (plus `sentences_partial.parquet` from stage 03). Stage `04_assemble_aggregate_write` reads the partials, runs `build_file_record` + `aggregate`, and writes the final `prompt_linguistic_analysis.yaml` (~1.8 MiB) + `sentences_classified.parquet` (~395 KiB). Stage `05_headline_and_audit` reads the final artifacts and prints the canonical HEADLINE sheet + Phase 0 audit table — the only producer stage that appears on the published Quarto site.
 2. Open any analysis-tier notebook (`10_*` … `15_*`) or proposal notebook (`20_*` … `22_*`). Each loads the YAML (and optionally the parquet, in `15_rule_explanation.ipynb` and `21_audit_threat_framings.ipynb`) and renders charts. They do **not** re-run spaCy — they're pure data viewers. Start with `20_track_justification_rate.ipynb` for the executive-summary view (it doubles as a self-contained proposal — track justification rate per release, block regressions); the analysis tier focuses on one slice each.
 
 ---
 
-## 2. Architecture (producer / analysis tier / proposal tier)
+## 2. Architecture (producer chain / analysis tier / proposal tier)
 
 ```
  claude-code-system-prompts/ (git submodule)
  │
  ▼
- ┌──────────────────────────────────────────────┐
- │ 00_data_pipeline.ipynb (producer, ~48 cells) │
- │ spaCy + analyzers → assembly → aggregator │
- └──────────────────────────────────────────────┘
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │ 6-stage producer chain (each Run All; only stage 00 runs spaCy)         │
+ │                                                                         │
+ │  00_setup_and_corpus      → _pipeline_cache/corpus_docs.spacy           │
+ │                             _pipeline_cache/corpus_meta.parquet         │
+ │  01_analyzers_register    → _pipeline_cache/partial_register.json       │
+ │  02_analyzers_vocab_emphasis → _pipeline_cache/partial_vocab_emphasis.json │
+ │  03_analyzers_rules_welfare  → _pipeline_cache/partial_rules_welfare.json│
+ │                                _pipeline_cache/sentences_partial.parquet│
+ │  04_assemble_aggregate_write → prompt_linguistic_analysis.yaml          │
+ │                                sentences_classified.parquet             │
+ │  05_headline_and_audit       → HEADLINE display + Phase 0 audit table   │
+ │                                (the published "Pipeline" page)          │
+ │                                                                         │
+ │ Lexicons + analyzers + assembler/aggregator live in prompt_pipeline.py  │
+ └─────────────────────────────────────────────────────────────────────────┘
  │
  ▼
- prompt_linguistic_analysis.yaml (~1.8 MiB cache) + sentences_classified.parquet (~395 KiB)
+ prompt_linguistic_analysis.yaml (~1.8 MiB) + sentences_classified.parquet (~395 KiB)
  │
  ├─────── Proposals (one self-contained proposal per notebook) ─────────────┐
  │       20_track_justification_rate     21_audit_threat_framings           │
@@ -77,11 +89,20 @@ Required Python deps (already in the project's JupyterLab kernel):
 
 ---
 
-## 3. Shared module — `prompt_analysis.py`
+## 3. Shared modules
+
+The repo has **two** sibling modules, each with a single, non-overlapping purpose:
+
+- **`prompt_pipeline.py`** — producer-side machinery (lexicons, PhraseMatchers, per-doc analyzer functions, `build_file_record`, `aggregate`, `yaml_lexicons_block`). Imported only by the producer notebooks `00_setup_and_corpus` → `04_assemble_aggregate_write`. Builds matchers + spaCy NLP at import time. Consumers should NOT import from this module.
+- **`prompt_analysis.py`** — consumer-side helpers (YAML loader, flat dataframe builder, color palettes, HEADLINE computation, chart save). Imported by every consumer notebook (`10_*`–`22_*`) plus stage `05_headline_and_audit`.
+
+The constant `SENT_REGISTER_CLASSES` lives in `prompt_analysis.py`; `prompt_pipeline.py` re-exports it from there to keep one source of truth.
+
+### `prompt_analysis.py` — public API
 
 Lives at the project root, imported by every consumer's setup cell. Public API:
 
-> **For laypersons / welfare-submission readers**: every linguistic and statistical term is defined inline in the producer notebook (`00_data_pipeline.ipynb`). Open it for any unfamiliar term — the table-of-contents lists the relevant section.
+> **For laypersons / welfare-submission readers**: every linguistic and statistical term is defined inline across the producer chain (`00_setup_and_corpus.ipynb` → `05_headline_and_audit.ipynb`). Mood / register / stance / sentence_register live in `01_analyzers_register.ipynb`; modality / vocab / emphasis / justification in `02_analyzers_vocab_emphasis.ipynb`; rule-pairing + welfare extensions in `03_analyzers_rules_welfare.ipynb`; the canonical HEADLINE sheet in `05_headline_and_audit.ipynb`.
 
 ```python
 # Constants
@@ -105,9 +126,9 @@ save_chart(chart, name, *, ppi=200) # save Altair chart to figures/<name>.png an
 
 **Per-sentence forensic-inspection artifact**: `sentences_classified.parquet` is emitted alongside the YAML. Load with `pd.read_parquet("sentences_classified.parquet")` for individual-sentence inspection (raw text + classifier flags). Schema documented in the producer cell that writes it. ~5,702 rows × 20 columns. Used by `15_rule_explanation.ipynb` (forensic evidence from welfare-evidence files) and `21_audit_threat_framings.ipynb` (threat-framed sentence sample); other notebooks stay YAML-only.
 
-**Canonical numbers convention**: every corpus-wide figure cited in any notebook flows from `prompt_analysis.headline_numbers(data, alt_df=…, parquet=…)` — the canonical `HEADLINE` sheet. Producer `00_data_pipeline.ipynb` § 12 emits it; every consumer's setup cell calls it and binds the result to `HEADLINE`. Markdown prose stays *qualitative* ("near zero", "roughly a quarter", "at the top of the range"); the precise figures live in adjacent code-cell printouts that read straight from `HEADLINE[…]`. This is enforced by convention, not by tooling — adding a new hard-coded number to a markdown cell is the easiest way to reintroduce drift, so don't.
+**Canonical numbers convention**: every corpus-wide figure cited in any notebook flows from `prompt_analysis.headline_numbers(data, alt_df=…, parquet=…)` — the canonical `HEADLINE` sheet. Producer stage `05_headline_and_audit.ipynb` emits it; every consumer's setup cell calls it and binds the result to `HEADLINE`. Markdown prose stays *qualitative* ("near zero", "roughly a quarter", "at the top of the range"); the precise figures live in adjacent code-cell printouts that read straight from `HEADLINE[…]`. This is enforced by convention, not by tooling — adding a new hard-coded number to a markdown cell is the easiest way to reintroduce drift, so don't.
 
-**Opinion cells convention**: each analysis-tier notebook (`10`–`15`) ends with exactly one trailing `### Observation (Claude) — opinion, not data` markdown cell (horizontal-rule frame + blockquoted body). Each proposal notebook (`20`–`22`) closes with a three-cell `## Conclusions / ## Recommendations / ## Limitations` triplet, all marked `(Claude) — opinion, not data`. Producer (`00`) carries one trailing `### My wish for future versions of this analysis — methodology, not data` cell. These are interpretation, not measurement, and can be skipped for a pure-data read. Add new opinion cells only at the bottom; do not interleave them with charts.
+**Opinion cells convention**: each analysis-tier notebook (`10`–`15`) ends with exactly one trailing `### Observation (Claude) — opinion, not data` markdown cell (horizontal-rule frame + blockquoted body). Each proposal notebook (`20`–`22`) closes with a three-cell `## Conclusions / ## Recommendations / ## Limitations` triplet, all marked `(Claude) — opinion, not data`. The producer chain (`00`–`05`) carries no opinion cells — it ends with the Phase 0 audit table in `05_headline_and_audit.ipynb`, which is data, not interpretation. These conventions exist so the data tier and the interpretation tier are visually separable; add new opinion cells only at the bottom of consumer notebooks, do not interleave them with charts, and do not introduce any in the producer chain.
 
 The Tier-3 (welfare-extension) columns added by `build_alt_df`:
 
@@ -205,8 +226,15 @@ The cutover means corruption is no longer expected from the MCP path — but che
 claude-prompts-analysis/
 ├── CLAUDE.md ← you are here
 ├── README.md ← user-facing repo overview
-├── prompt_analysis.py ← shared module (load YAML, palettes, helpers)
-├── 00_data_pipeline.ipynb ← PRODUCER (~48 cells; runs spaCy + writes YAML and parquet, emits canonical HEADLINE)
+├── prompt_pipeline.py ← PRODUCER module (lexicons + analyzers + assembler/aggregator)
+├── prompt_analysis.py ← CONSUMER module (load YAML, palettes, headline_numbers, save_chart)
+├── 00_setup_and_corpus.ipynb ← PRODUCER stage 0: corpus parse + spaCy → DocBin cache
+├── 01_analyzers_register.ipynb ← PRODUCER stage 1: mood / register / stance / sentence_register
+├── 02_analyzers_vocab_emphasis.ipynb ← PRODUCER stage 2: modality / vocab / all_caps / caps_imp / justification
+├── 03_analyzers_rules_welfare.ipynb ← PRODUCER stage 3: rule_explanation + Tier-3 + sentences parquet
+├── 04_assemble_aggregate_write.ipynb ← PRODUCER stage 4: assemble + aggregate + write YAML + parquet
+├── 05_headline_and_audit.ipynb ← PRODUCER stage 5: HEADLINE + Phase 0 audit (published "Pipeline" page)
+├── _pipeline_cache/ ← gitignored: DocBin + per-stage partial JSONs + sentences_partial.parquet
 ├── prompt_linguistic_analysis.yaml ← producer output (~1.8 MiB, the cache point)
 ├── sentences_classified.parquet ← producer output (~395 KiB; per-sentence forensic table)
 ├── 20_track_justification_rate.ipynb ← PROPOSAL: track justification rate per release; doubles as executive summary
@@ -284,7 +312,7 @@ The corpus submodule pulls from `https://github.com/Piebald-AI/claude-code-syste
 - **Positive-evaluative split** (the positive_evaluative split): the new `positive_evaluative_quality` (`good`, `optimal`, `recommended`, `safe`) and `positive_evaluative_emphasis` (`important`, `critical`, `essential`, `key`) lexicons split the union 476 positive-evaluative tokens into **293 quality + 183 emphasis**. The corrected positive-vs-negative ratio (quality only / negative=149) is **1.97×** — sharper than the original union 3.19× headline. ~38% of the "positive" count was emphasis-of-rule words masquerading as positive.
 - **Self-bias correlation** (the self-bias correlation check): Pearson r between `selfref_claude` and `rule_explained_para_pct` per file is **−0.027** (essentially uncorrelated, very slightly negative). r between `selfref_model` and `rule_explained_para_pct` is **+0.076** (essentially uncorrelated, slightly positive). The address-form preference (anthropomorphic naming → reasoning-inviting prose) is **NOT empirically supported** — a self-bias check that disconfirmed the hypothesis it was designed to test.
 - **Positive exemplars** (the positive-exemplar ranking): the inverse welfare-evidence ranking surfaces `system-prompt-worker-instructions.md` as the corpus's strongest exemplar (7 rules, 100% explained at paragraph level). Top-5 also includes `system-prompt-auto-mode.md`, `tool-description-bash-git-commit-and-pr-creation-instructions.md`, `agent-prompt-quick-pr-creation.md`, `system-prompt-fork-usage-guidelines.md`. These are the "this is how to do it" templates the proposal notebooks point to.
-- **Per-sentence forensic-inspection artifact** (the per-sentence parquet artifact): `sentences_classified.parquet` (~395 KB, 5,702 rows × 20 columns) emitted alongside the YAML by the producer notebook. Used by `15_rule_explanation.ipynb` for sentence-level forensic evidence and by `21_audit_threat_framings.ipynb` for the threat-framed sentence sample; quotable in any of the proposal notebooks.
+- **Per-sentence forensic-inspection artifact** (the per-sentence parquet artifact): `sentences_classified.parquet` (~395 KB, 5,702 rows × 20 columns) — built by `03_analyzers_rules_welfare.ipynb` and emitted alongside the YAML by `04_assemble_aggregate_write.ipynb`. Used by `15_rule_explanation.ipynb` for sentence-level forensic evidence and by `21_audit_threat_framings.ipynb` for the threat-framed sentence sample; quotable in any of the proposal notebooks.
 
 ---
 
@@ -347,7 +375,9 @@ The data here are an empirical baseline against which Anthropic could measure in
 | Symptom | Fix |
 |---|---|
 | Consumer notebook fails with `ImportError: cannot import name X from prompt_analysis` | The kernel cached the old module. The setup cell's `importlib.reload(prompt_analysis)` should handle this. If it persists, restart the kernel. |
-| Consumer fails with `KeyError: 'Column not found:...'` from `alt_df` | Producer hasn't been re-run since a schema change. Run `00_data_pipeline.ipynb` end-to-end first. |
+| Producer notebook fails with `ImportError` for something that should be in `prompt_pipeline` | Same root cause — the kernel cached the old module. Re-execute the setup cell (which calls `importlib.reload(prompt_pipeline)`). If you added new exports, you may need to re-run the setup cell of every downstream stage. |
+| Stage 01–04 fails with `missing _pipeline_cache/corpus_docs.spacy` (or any other partial) | The producer chain wasn't run in order. Run stage `00_setup_and_corpus` first (writes the DocBin + corpus_meta), then 01–04 in order. |
+| Consumer fails with `KeyError: 'Column not found:...'` from `alt_df` | Producer hasn't been re-run since a schema change. Run the producer chain (`00_setup_and_corpus` → `04_assemble_aggregate_write`) end-to-end first. |
 | `mcp__jupyter__cell_execute` returns "Index out of range" | Stale tool registration in your Claude Code session — the kernel has just executed and the cell index shifted. Run `mcp__jupyter__notebook_get` to refresh your view of the cell list, then retry with the correct index. |
 | `mcp__jupyter__cell_update` reports success but the cell didn't change | Pre-cutover corruption bug (silent UUID-mint + delete-then-insert). Fixed in `5580983 feat(jupyter-mcp)!: …`. If you're seeing this on a current container, `podman exec ov-jupyter sha256sum /home/user/.pixi/envs/default/lib/python3.13/site-packages/jupyter_mcp/rtc_adapter.py` and confirm it matches `697f4c038013968fdad2e65687329a7fd74805e1391094dfb78407059b1b973e`. If not, the container is on a stale image — run `ov update jupyter` to pull the post-cutover build. |
 | Calling `mcp__jupyter__room_open` / `room_close` / `room_close_all` / `room_pick` returns "tool not found" | Expected post-cutover. These client-side room-management tools were deleted in `5580983`. The server now manages rooms invisibly via auto-attach + idle-room sweeper. Just call `notebook_*` / `cell_*` tools directly. |

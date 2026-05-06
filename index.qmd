@@ -28,15 +28,15 @@ The submission proposes three concrete asks of Anthropic, each developed in its 
 - [**`21_audit_threat_framings.ipynb`**](21_audit_threat_framings.ipynb) — when prompts *do* explain a rule, almost half of those "explanations" are threats ("will fail", "or else", "is forbidden") rather than reasons. Audit them and rewrite each into causal framing.
 - [**`22_cross_product_audit.ipynb`**](22_cross_product_audit.ipynb) — run the same analyzer on every other Claude system-prompt corpus (claude.ai, the API, Projects, Skills, agent products) and publish the comparison.
 
-Every claim in any of these proposals is grounded in a number on this site, and every linguistic / statistical term used in any chart is defined in plain language in the producer notebook ([`00_data_pipeline.ipynb`](00_data_pipeline.ipynb)) at first use. The corpus-wide numbers cited across the notebooks all flow from a single canonical `HEADLINE` sheet computed by `prompt_analysis.headline_numbers()` in `00_data_pipeline.ipynb` § 12 — every consumer notebook calls it in its setup cell rather than hard-coding values, so the figures are always in sync with the latest YAML.
+Every claim in any of these proposals is grounded in a number on this site, and every linguistic / statistical term used in any chart is defined in plain language across the six-stage producer chain ([`00_setup_and_corpus.ipynb`](00_setup_and_corpus.ipynb) → [`05_headline_and_audit.ipynb`](05_headline_and_audit.ipynb)) at first use. The corpus-wide numbers cited across the notebooks all flow from a single canonical `HEADLINE` sheet computed by `prompt_analysis.headline_numbers()` and printed by [`05_headline_and_audit.ipynb`](05_headline_and_audit.ipynb) — every consumer notebook calls the same function in its setup cell rather than hard-coding values, so the figures are always in sync with the latest YAML.
 
 ## Headline numbers
 
-Twelve corpus-level measurements, computed by `00_data_pipeline.ipynb` from the [Piebald-AI `claude-code-system-prompts` corpus](https://github.com/Piebald-AI/claude-code-system-prompts) (286 prompt files, 5,702 sentences, spanning 57 distinct Claude Code release versions). All values below are mirrored from the canonical `HEADLINE` sheet emitted by the producer; if the corpus is regenerated the table is what to refresh first.
+Twelve corpus-level measurements, computed by the producer chain (`00_setup_and_corpus.ipynb` → `04_assemble_aggregate_write.ipynb`) from the [Piebald-AI `claude-code-system-prompts` corpus](https://github.com/Piebald-AI/claude-code-system-prompts) (286 prompt files, 5,702 sentences, spanning 57 distinct Claude Code release versions). All values below are mirrored from the canonical `HEADLINE` sheet emitted by [`05_headline_and_audit.ipynb`](05_headline_and_audit.ipynb); if the corpus is regenerated the table is what to refresh first.
 
 | What's being measured                                                                                                                                                                  | Value                                                | Source notebook |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------- |
-| Corpus size                                                                                                                                                                            | 286 prompt files / 5,702 sentences / 57 release versions | [00](00_data_pipeline.ipynb) |
+| Corpus size                                                                                                                                                                            | 286 prompt files / 5,702 sentences / 57 release versions | [05](05_headline_and_audit.ipynb) |
 | Density of command-flavoured words (`must`, `never`, `do not`, …)                                                                                                                      | 0.77% of all word tokens                             | [20](20_track_justification_rate.ipynb) |
 | Sentences that grammatically read as commands ("imperative")                                                                                                                           | 31.30% of all sentences                              | [10](10_sentence_register.ipynb) |
 | **Sentences expressing gratitude or praise** (`thank you`, `appreciate`, `great job`, …) — across the whole corpus                                                                     | **4 in 5,702 sentences (0.070%)**                    | [10](10_sentence_register.ipynb) |
@@ -63,7 +63,7 @@ The interactive version (with hover tooltips on every release) lives in [`20_tra
 
 The notebooks form a three-chapter flow — pipeline first, slice analyses on top of that, proposals built on top of those.
 
-- **Pipeline** — [**`00_data_pipeline.ipynb`**](00_data_pipeline.ipynb). The data producer: spaCy + a set of small hand-written classifiers turn 286 prompt files into one ~1.8 MiB YAML and one ~395 KiB per-sentence parquet, plus the canonical `HEADLINE` sheet that every consumer notebook reads. Included for reproducibility, and the canonical home where every linguistic / statistical term used elsewhere in the site is defined in plain language at first use.
+- **Pipeline** — [**`05_headline_and_audit.ipynb`**](05_headline_and_audit.ipynb) is the user-facing face of a six-stage producer chain (`00_setup_and_corpus` → `01_analyzers_register` → `02_analyzers_vocab_emphasis` → `03_analyzers_rules_welfare` → `04_assemble_aggregate_write` → `05_headline_and_audit`). spaCy + a set of small hand-written classifiers turn 286 prompt files into one ~1.8 MiB YAML and one ~395 KiB per-sentence parquet; stage 05 prints the canonical `HEADLINE` sheet that every consumer notebook reads. The chain is included for reproducibility, and the canonical home where every linguistic / statistical term used elsewhere in the site is defined in plain language at first use; the lexicons and analyzer functions live in `prompt_pipeline.py`.
 - **Analysis** — six notebooks, each rendering one slice of the data: [`10_sentence_register.ipynb`](10_sentence_register.ipynb) (per-sentence speech-act classes), [`11_emphasis_caps_vocab.ipynb`](11_emphasis_caps_vocab.ipynb) (ALL CAPS, "shouted" command words, full vocabulary heatmap), [`12_register_stance.ipynb`](12_register_stance.ipynb) (formality scale + commitment polarity), [`13_correlation_directiveness.ipynb`](13_correlation_directiveness.ipynb) (cross-metric correlations + a single composite "directiveness" score), [`14_ccversion_trends.ipynb`](14_ccversion_trends.ipynb) (every metric plotted across release versions), [`15_rule_explanation.ipynb`](15_rule_explanation.ipynb) (the headline rule-vs-justification pairing). Each is standalone and reads from the YAML produced by the pipeline. Each ends with exactly one **`Observation (Claude) — opinion, not data`** markdown cell so a reader can see what is data and what is interpretation at a glance.
 - **Proposal** — three self-contained proposals built on top of the analysis tier: [`20_track_justification_rate.ipynb`](20_track_justification_rate.ipynb) (track the rate of explained rules per release), [`21_audit_threat_framings.ipynb`](21_audit_threat_framings.ipynb) (rewrite threat-framed rules as causal), [`22_cross_product_audit.ipynb`](22_cross_product_audit.ipynb) (run the same audit on every Claude product). Each closes with a `Conclusions / Recommendations / Limitations` triplet of opinion-marked cells; the asks are framed as "I'd want X" rather than as imperatives, and the limitations spell out what each proposal can't tell us.
 
@@ -75,10 +75,17 @@ The full source is at [github.com/overthinkos/claude-code-welfare](https://githu
 git clone --recurse-submodules https://github.com/overthinkos/claude-code-welfare
 cd claude-code-welfare
 python -m spacy download en_core_web_sm   # if not already installed
-jupyter lab 00_data_pipeline.ipynb        # → Run All
+# Run the 6-stage producer chain in order (only stage 00 runs spaCy):
+jupyter lab \
+    00_setup_and_corpus.ipynb         \
+    01_analyzers_register.ipynb       \
+    02_analyzers_vocab_emphasis.ipynb \
+    03_analyzers_rules_welfare.ipynb  \
+    04_assemble_aggregate_write.ipynb \
+    05_headline_and_audit.ipynb       # → Run All on each
 ```
 
-This regenerates `prompt_linguistic_analysis.yaml` and `sentences_classified.parquet` from the corpus submodule. The Analysis and Proposal notebooks then read from those two artifacts — they don't re-run spaCy.
+Stage 04 writes the final `prompt_linguistic_analysis.yaml` and `sentences_classified.parquet`; stages 00–03 cache intermediate artifacts under `_pipeline_cache/` (gitignored). The Analysis and Proposal notebooks then read from those two final artifacts — they don't re-run spaCy.
 
 ## A note on authorship
 

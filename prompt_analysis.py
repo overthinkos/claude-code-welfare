@@ -1,7 +1,10 @@
 """Shared helpers for the analysis-tier (10_*–15_*) and proposal (20_*–22_*) notebooks.
 
-The data pipeline lives in `00_data_pipeline.ipynb`; it writes
-`prompt_linguistic_analysis.yaml` and `sentences_classified.parquet`. Every
+The data pipeline lives in the 6-stage producer chain
+(`00_setup_and_corpus.ipynb` → `04_assemble_aggregate_write.ipynb`); stage 04
+writes `prompt_linguistic_analysis.yaml` and `sentences_classified.parquet`.
+The lexicons and analyzer functions are factored into the sibling module
+`prompt_pipeline.py` (producer-side); this module is consumer-side. Every
 consumer notebook starts with:
 
     from prompt_analysis import (load_yaml, build_alt_df, version_order,
@@ -59,7 +62,7 @@ _BLOCK_PREFIX: dict[str, str] = {
 # --- I/O -----------------------------------------------------------------
 
 def load_yaml(path: str | Path = "prompt_linguistic_analysis.yaml") -> dict:
-    """Load the per-file + corpus + per-category YAML produced by 00_data_pipeline."""
+    """Load the per-file + corpus + per-category YAML produced by the producer chain (stage 04)."""
     with open(path) as f:
         return yaml.safe_load(f)
 
@@ -69,7 +72,10 @@ def load_yaml(path: str | Path = "prompt_linguistic_analysis.yaml") -> dict:
 def _flatten(rec: dict) -> dict:
     """Flatten one per-file record into a flat dict for Altair.
 
-    Lifted from cell 43 of the original notebook; semantics unchanged.
+    Originally lifted from cell 43 of the legacy `00_data_pipeline.ipynb`;
+    that monolithic producer was split into stages 00–05 and the cell is
+    now equivalent to the YAML-write step in `04_assemble_aggregate_write.ipynb`.
+    Semantics unchanged.
     """
     out = {k: rec.get(k) or rec.get(k, "")
            for k in ("path", "category", "name", "description",

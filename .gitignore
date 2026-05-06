@@ -18,3 +18,9 @@ venv/
 /.quarto/
 
 **/*.quarto_ipynb
+
+# Producer pipeline cache (intermediate artifacts written by stages 00–03)
+_pipeline_cache/
+
+# Baseline snapshots used during refactors
+*.baseline
