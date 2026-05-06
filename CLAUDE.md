@@ -81,7 +81,7 @@ Required Python deps (already in the project's JupyterLab kernel):
 
 Lives at the project root, imported by every consumer's setup cell. Public API:
 
-> **For laypersons / welfare-submission readers**: every linguistic and statistical term used in any notebook is defined in [`GLOSSARY.md`](./GLOSSARY.md) at the repo root. If a chart axis label, tooltip field, or markdown phrase looks unfamiliar, that's the canonical reference.
+> **For laypersons / welfare-submission readers**: every linguistic and statistical term is defined inline in the producer notebook (`00_data_pipeline.ipynb`). Open it for any unfamiliar term — the table-of-contents lists the relevant section.
 
 ```python
 # Constants
@@ -189,7 +189,6 @@ claude-prompts-analysis/
 ├── 13_correlation_directiveness.ipynb ← ANALYSIS TIER
 ├── 14_ccversion_trends.ipynb ← ANALYSIS TIER
 ├── 15_rule_explanation.ipynb ← ANALYSIS TIER (Tier-1 rule-pairing + Tier-3 welfare extensions)
-├── GLOSSARY.md ← plain-English definitions of every linguistic/statistical term
 ├── index.qmd, _quarto.yml ← Quarto site configuration
 ├── figures/ ← exported PNGs (judgment_procedural_trend.png, welfare_evidence_pairing.png)
 ├── claude-code-system-prompts/ ← git submodule, the corpus (286.md files)

@@ -14,7 +14,6 @@ Quantitative linguistic analysis of the **286 system prompts that ship with Clau
 | [`22_cross_product_audit.ipynb`](./22_cross_product_audit.ipynb) | Idea 3 supporting analysis (methodology, lexicon transparency, mock cross-product comparison table) |
 | [`00_data_pipeline.ipynb`](./00_data_pipeline.ipynb) | Producer — spaCy + custom analyzers, writes the YAML + parquet artifacts |
 | `10_*` … `16_*.ipynb` | Analysis-tier notebooks, one slice of the analysis each (sentence register, emphasis/CAPS, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing) |
-| [`GLOSSARY.md`](./GLOSSARY.md) | Plain-English definitions of every linguistic/statistical term used anywhere |
 | [`CLAUDE.md`](./CLAUDE.md) | Internal architecture notes (read this if you want to extend the analysis) |
 | `prompt_linguistic_analysis.yaml` | Cached output of the producer (~1.8 MiB) |
 | `sentences_classified.parquet` | Per-sentence forensic-inspection table (~395 KiB, 5,702 rows) |

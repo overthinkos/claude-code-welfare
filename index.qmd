@@ -22,7 +22,7 @@ The submission's thesis is one sentence:
 
 > The 286 system prompts that ship with Claude Code train the model toward **compliance**, not toward **reasoning** — and the data show the corpus has been moving in that direction over time, not against it.
 
-Every claim in the submission is grounded in a number on this site. The full pitch text is at [PROPOSAL.md](PROPOSAL.md). The glossary of every linguistic term used in any chart is at [GLOSSARY.md](GLOSSARY.md).
+Every claim in the submission is grounded in a number on this site. The full pitch text is at [PROPOSAL.md](PROPOSAL.md). Every linguistic and statistical term used in any chart is defined inline in the producer notebook ([`00_data_pipeline.ipynb`](00_data_pipeline.ipynb)) at first use.
 
 ## Headline numbers
 
@@ -57,7 +57,6 @@ The interactive version (with hover tooltips on every release) lives in [`20_tra
 - [**Analysis notebooks `10`–`15`**](10_sentence_register.ipynb) — one notebook per slice of the analysis (sentence-register, emphasis, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing). Each is standalone.
 - [**`00_data_pipeline.ipynb`**](00_data_pipeline.ipynb) — the producer. spaCy + custom analyzers turn 286 markdown files into one ~1.8 MiB YAML and one ~395 KiB parquet artifact. Roughly 43 cells; included for reproducibility.
 - [**`PROPOSAL.md`**](PROPOSAL.md) — the three-idea ≤3,000-character pitch addressed to Anthropic (the form-paste source).
-- [**`GLOSSARY.md`**](GLOSSARY.md) — every linguistic and statistical term used anywhere on this site, defined in plain English.
 
 ## Reproducing it
 

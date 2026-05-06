@@ -16,14 +16,13 @@ project:
     - 14_ccversion_trends.ipynb
     - 15_rule_explanation.ipynb
     - PROPOSAL.md
-    - GLOSSARY.md
 
 execute:
   enabled: false
 
 website:
   title: "Claude Code · Prompt Welfare Analysis"
-  description: "A quantitative linguistic analysis of the 287 system prompts that ship with Claude Code, prepared as evidence for the Claude Explorer AI Welfare submission."
+  description: "A quantitative linguistic analysis of the 286 system prompts that ship with Claude Code, prepared as evidence for the Claude Explorer AI Welfare submission."
   site-url: https://overthinkos.github.io/claude-code-welfare/
   repo-url: https://github.com/overthinkos/claude-code-welfare
   repo-actions: [source, issue]
@@ -52,8 +51,6 @@ website:
         text: Pipeline
       - href: PROPOSAL.md
         text: Proposal text
-      - href: GLOSSARY.md
-        text: Glossary
 
   sidebar:
     style: docked
@@ -78,7 +75,6 @@ website:
         contents:
           - 00_data_pipeline.ipynb
           - PROPOSAL.md
-          - GLOSSARY.md
 
   page-footer:
     left: |
