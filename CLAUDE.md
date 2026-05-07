@@ -75,6 +75,42 @@ Each Bash tool call on Claude Code on the web is a fresh shell — `VIRTUAL_ENV`
 | `claude-code-system-prompts/` empty after fresh clone | `git submodule update --init --recursive` (also runs as the `SessionStart` hook). |
 | MCP `cell_*` tool fails on Claude Code on the web | Expected — no JupyterLab on the web. Drive notebooks via `jupyter nbconvert --execute --inplace` instead. |
 
+## Default PR-handling workflow (automatic)
+
+When asked to address open PRs on this repo, run this loop end-to-end with no human-in-the-loop confirmations. The decision is automatic, not credulous: deny as readily as accept.
+
+### Accept / deny criteria
+
+**Accept** if all hold: premise reproduces against current code/data; in scope (no drive-by refactors); convention-compliant per the rules above (producer/consumer split, canonical-numbers, opinion cells, out-of-scope list); every numerical claim in the diff (or in prose the diff modifies) reproduces from the YAML/parquet via `prompt_analysis.headline_numbers(…)` to rounding precision; local test passes *and* exercises the changed behaviour; no collateral damage to unrelated files or to `prompt_linguistic_analysis.yaml` (unless the PR is explicitly a producer-chain change); editorial quality matches the existing voice; net-positive (not pure churn).
+
+**Accept with fix commits** if premise/scope/conventions are right but execution has fixable defects (off-by-one numbers, broken cross-links, stale notebook cell, mismatched table in the PR body). Fixes go on top of the PR branch as new commits — never amends, never force-pushes — then re-run the test gate.
+
+**Deny (close)** if any: premise is wrong; conflicts with stated conventions; pure churn; adds abstractions/feature-flags/backwards-compat shims for hypothetical future use; touches the out-of-scope list; test fails and the fix would change what the PR is *for*; numerical claim doesn't reproduce *and* the PR's narrative depends on that exact number; producer-chain change without a producer-chain test (`00`–`05` end-to-end with `HEADLINE` diff); conflict resolution would silently change another PR's intent.
+
+**Escalate** only for genuine thesis-direction judgment calls. Comment, leave open, move to the next PR.
+
+### The 10-step loop, per PR `<N>`
+
+1. `gh pr view <N> --json mergeable,mergeStateStatus`. `BEHIND` → `gh pr update-branch <N>`. `CONFLICTING` → `gh pr checkout <N>`, re-apply via `Edit` (`.qmd`/`.md`/`.py`) or MCP `cell_update` (`.ipynb`), commit, push.
+2. Apply the criteria against PR description + diff. Immediate-deny case → step 9.
+3. `git fetch origin && gh pr checkout <N>`.
+4. Local test gate: `.qmd`/`.md` → `quarto render <page>` (exit 0, no warnings on changed section). `.ipynb` → `notebook_get` to confirm content; sync via `cell_update` if room is stale; markdown cells skip execution; code cells get `cell_execute` on touched + downstream; producer-chain notebooks re-run `00`–`05` in order. `.py` → run downstream integration test (`05_headline_and_audit` for `prompt_analysis.py`; full chain for `prompt_pipeline.py`). Numerical claims → re-derive every number; mismatch ≥ rounding precision = fail.
+5. Reapply criteria with the test result. Pass + green → step 7. Fixable defect → step 6. Fundamental → step 9.
+6. Add fix commit(s) on top of the PR branch (never amend, never force-push). `git commit && git push origin HEAD`. Loop back to step 4.
+7. `gh pr review <N> --approve --body "…"` — summarise tests run, every numerical claim's verification with the actual value inline, any fix commits, residual caveats.
+8. `gh pr merge <N> --squash --subject "<PR title>" --body "<short body>"`.
+9. **Deny path**: `gh pr review <N> --request-changes --body "<reason aligned with criteria>"`, `gh pr close <N>`.
+10. Cleanup (always runs, accept *or* deny): `git checkout main && git pull origin main`; `git push origin --delete <head-ref>`; `git branch -D <head-ref>` if a local checkout exists.
+
+### Invariants
+
+- Never merge without a green local test that exercises the changed behaviour.
+- Fix commits go on top of the PR branch, never as amends/force-pushes, never as post-merge cleanup on `main`.
+- Notebook edits go through MCP `cell_*` tools — never direct `Write`/`sed`/`jq`, even on a feature branch.
+- Squash-merge is the default merge mode.
+- Branch deletion is unconditional after merge or close.
+- The loop is fully automatic; the loop denies as readily as it accepts.
+
 ---
 
 *Edit `.ipynb` files via the Jupyter MCP server. Be terse. Name files precisely.*
