@@ -367,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-proposal">    
         <li>
     <a class="dropdown-item" href="./20_track_justification_rate.html">
- <span class="dropdown-text">Track justification rate per release; block regressions</span></a>
+ <span class="dropdown-text">Track justification rate per release</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./21_audit_threat_framings.html">
@@ -515,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Track justification rate per release; block regressions</span></a>
+ <span class="menu-text">Track justification rate per release</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -585,7 +585,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The uniform formality result (visible in the TTR × F-score scatter clustering in the high band) is consistent with instruction prose being formal — that part isn’t surprising. The more interesting finding is the <em>directive cluster collapse</em>: <code>directive_pct</code>, <code>hard_prohibitions_pct</code>, and <code>deontic_pct</code> are all measuring the same underlying thing (rule-bearing language) from different angles. The correlation matrix in <code>13_correlation_directiveness.ipynb</code> confirms they cluster tightly. That’s not a flaw — it’s a triangulation — but it does mean these three numbers should be reported as overlapping facets of one finding (“the corpus is directive”), not three independent findings.</p>
 <h2 id="the-positive_evaluative-heatmap-column-reads-as-encouraging-tone-density-but-a-substantial-portion-is-emphasis-of-rule-vocabulary-important-critical-essential-key-rather-than-praise.-the-two-ratios-in-headline-ratio_quality_to_negative-vs-ratio_union_to_negative-are-how-to-keep-that-honest-the-quality-only-ratio-is-the-one-to-cite-when-the-question-is-how-much-praise-is-here.-anyone-quoting-the-union-ratio-as-a-positivity-finding-is-overstating-it." class="anchored" data-anchor-id="observation-claude">The <code>positive_evaluative</code> heatmap column reads as “encouraging tone density” but a substantial portion is emphasis-of-rule vocabulary (<code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code>) rather than praise. The two ratios in <code>HEADLINE</code> (<code>ratio_quality_to_negative</code> vs <code>ratio_union_to_negative</code>) are how to keep that honest — the quality-only ratio is the one to cite when the question is “how much praise is here”. Anyone quoting the union ratio as a positivity finding is overstating it.</h2>
 </blockquote>
-<div id="020778e8-0598-40c3-927f-cb097c0f8e8c" class="cell">
+<div id="020778e8-0598-40c3-927f-cb097c0f8e8c" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -626,138 +626,141 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span><span class="bu">len</span>(per_file_records)<span class="sc">}</span><span class="ss"> files | </span><span class="sc">{</span>alt_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns | </span><span class="sc">{</span><span class="bu">len</span>(cats)<span class="sc">}</span><span class="ss"> categories | </span><span class="sc">{</span><span class="bu">len</span>(VOCAB_KEYS)<span class="sc">}</span><span class="ss"> VOCAB keys"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>loaded 289 files | 181 columns | 7 categories | 11 VOCAB keys</code></pre>
+</div>
 </div>
 </section>
 <section id="stance-register-heatmaps-per-file-justification-distribution" class="level3">
 <h3 class="anchored" data-anchor-id="stance-register-heatmaps-per-file-justification-distribution">Stance &amp; register heatmaps + per-file justification distribution</h3>
 <p>Two heatmaps (stance × category and register × category) plus a per-file box-strip plot of justification ratios per category. Hover any cell or point for exact values.</p>
-<div id="1fec795e-6053-4476-b57b-b130cc9c9d98" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:46.410658Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:46.410493Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:47.037926Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:47.037592Z&quot;}}" data-execution_count="2">
+<div id="1fec795e-6053-4476-b57b-b130cc9c9d98" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Stance heatmap | register heatmap | per-file justification distribution</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">— single composite, all three sharing the category y-axis."""</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>stance_long <span class="op">=</span> []</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>stance_keys <span class="op">=</span> [<span class="st">"directive_pct"</span>, <span class="st">"expository_pct"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"positive_evaluative_pct"</span>, <span class="st">"negative_evaluative_pct"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"dialogic_pct"</span>, <span class="st">"pronouns_2p_pct"</span>, <span class="st">"pronouns_1p_pct"</span>]</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>register_keys <span class="op">=</span> [<span class="st">"frozen_pct"</span>, <span class="st">"formal_pct"</span>, <span class="st">"consultative_pct"</span>, <span class="st">"casual_pct"</span>]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat, b <span class="kw">in</span> by_category.items():</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> b[<span class="st">"metrics"</span>][<span class="st">"stance"</span>]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> stance_keys:</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        stance_long.append({<span class="st">"category"</span>: cat, <span class="st">"metric"</span>: k.replace(<span class="st">"_pct"</span>, <span class="st">""</span>),</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"value"</span>: s[k], <span class="st">"kind"</span>: <span class="st">"stance"</span>})</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> b[<span class="st">"metrics"</span>][<span class="st">"register"</span>]</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> register_keys:</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        stance_long.append({<span class="st">"category"</span>: cat, <span class="st">"metric"</span>: k.replace(<span class="st">"_pct"</span>, <span class="st">""</span>),</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"value"</span>: r[k], <span class="st">"kind"</span>: <span class="st">"register"</span>})</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>sr_long_df <span class="op">=</span> pd.DataFrame(stance_long)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>CAT_HEIGHT <span class="op">=</span> <span class="dv">280</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>y_cat <span class="op">=</span> alt.Y(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>heat_stance <span class="op">=</span> (</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    alt.Chart(sr_long_df[sr_long_df[<span class="st">"kind"</span>] <span class="op">==</span> <span class="st">"stance"</span>])</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    .mark_rect()</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"metric:N"</span>,</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                sort<span class="op">=</span>[k.replace(<span class="st">"_pct"</span>, <span class="st">""</span>) <span class="cf">for</span> k <span class="kw">in</span> stance_keys],</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labelAngle<span class="op">=-</span><span class="dv">30</span>)),</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>y_cat,</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"value:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"magma"</span>, reverse<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>                         title<span class="op">=</span><span class="st">"stance %"</span>),</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"metric:N"</span>),</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"value:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>)],</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">400</span>, height<span class="op">=</span>CAT_HEIGHT,</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Stance × category (</span><span class="sc">% o</span><span class="st">f file tokens)"</span>)</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>heat_register <span class="op">=</span> (</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    alt.Chart(sr_long_df[sr_long_df[<span class="st">"kind"</span>] <span class="op">==</span> <span class="st">"register"</span>])</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    .mark_rect()</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"metric:N"</span>,</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>                sort<span class="op">=</span>[k.replace(<span class="st">"_pct"</span>, <span class="st">""</span>) <span class="cf">for</span> k <span class="kw">in</span> register_keys],</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labelAngle<span class="op">=-</span><span class="dv">30</span>)),</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats,</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labels<span class="op">=</span><span class="va">False</span>, ticks<span class="op">=</span><span class="va">False</span>)),</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"value:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"viridis"</span>),</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>                         title<span class="op">=</span><span class="st">"register %"</span>),</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"metric:N"</span>),</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"value:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>)],</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">240</span>, height<span class="op">=</span>CAT_HEIGHT,</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Register × category (</span><span class="sc">% o</span><span class="st">f file tokens)"</span>)</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Justification distribution rotated so category sits on Y too — same axis</span></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="co"># as the two heatmaps so the row reads horizontally per category.</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>just_box <span class="op">=</span> (</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    .mark_boxplot(extent<span class="op">=</span><span class="st">"min-max"</span>, opacity<span class="op">=</span><span class="fl">0.55</span>, color<span class="op">=</span><span class="st">"#4e79a7"</span>)</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats,</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labels<span class="op">=</span><span class="va">False</span>, ticks<span class="op">=</span><span class="va">False</span>)),</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"just_ratio:Q"</span>, title<span class="op">=</span><span class="st">"justification ratio per file"</span>),</span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">320</span>, height<span class="op">=</span>CAT_HEIGHT,</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Per-file justification ratio"</span>)</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>just_strip <span class="op">=</span> (</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>    .mark_circle(size<span class="op">=</span><span class="dv">35</span>, opacity<span class="op">=</span><span class="fl">0.45</span>, color<span class="op">=</span><span class="st">"#e15759"</span>)</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats,</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labels<span class="op">=</span><span class="va">False</span>, ticks<span class="op">=</span><span class="va">False</span>)),</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"just_ratio:Q"</span>),</span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>        yOffset<span class="op">=</span><span class="st">"jitter:Q"</span>,</span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"path:N"</span>),</span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"n_tokens:Q"</span>),</span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"just_ratio:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>)],</span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    .transform_calculate(jitter<span class="op">=</span><span class="st">"random()-0.5"</span>)</span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>just_layer <span class="op">=</span> just_box <span class="op">+</span> just_strip</span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>stance_register_composite <span class="op">=</span> alt.hconcat(heat_stance, heat_register, just_layer).resolve_scale(</span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"independent"</span></span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>).properties(</span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>alt.TitleParams(</span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Register profile per category — stance | register | justification"</span>,</span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>        subtitle<span class="op">=</span>[<span class="st">"All three share the category y-axis sort. "</span></span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Read a row horizontally for one category's profile."</span>],</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>        anchor<span class="op">=</span><span class="st">"start"</span>,</span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>save_chart(stance_register_composite, <span class="st">"12-stance-register-heatmaps"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Stance heatmap | register heatmap | per-file justification distribution</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">— single composite, all three sharing the category y-axis."""</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>stance_long <span class="op">=</span> []</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>stance_keys <span class="op">=</span> [<span class="st">"directive_pct"</span>, <span class="st">"expository_pct"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"positive_evaluative_pct"</span>, <span class="st">"negative_evaluative_pct"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"dialogic_pct"</span>, <span class="st">"pronouns_2p_pct"</span>, <span class="st">"pronouns_1p_pct"</span>]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>register_keys <span class="op">=</span> [<span class="st">"frozen_pct"</span>, <span class="st">"formal_pct"</span>, <span class="st">"consultative_pct"</span>, <span class="st">"casual_pct"</span>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat, b <span class="kw">in</span> by_category.items():</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> b[<span class="st">"metrics"</span>][<span class="st">"stance"</span>]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> stance_keys:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        stance_long.append({<span class="st">"category"</span>: cat, <span class="st">"metric"</span>: k.replace(<span class="st">"_pct"</span>, <span class="st">""</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"value"</span>: s[k], <span class="st">"kind"</span>: <span class="st">"stance"</span>})</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> b[<span class="st">"metrics"</span>][<span class="st">"register"</span>]</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> register_keys:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        stance_long.append({<span class="st">"category"</span>: cat, <span class="st">"metric"</span>: k.replace(<span class="st">"_pct"</span>, <span class="st">""</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"value"</span>: r[k], <span class="st">"kind"</span>: <span class="st">"register"</span>})</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>sr_long_df <span class="op">=</span> pd.DataFrame(stance_long)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>CAT_HEIGHT <span class="op">=</span> <span class="dv">280</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>y_cat <span class="op">=</span> alt.Y(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>heat_stance <span class="op">=</span> (</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    alt.Chart(sr_long_df[sr_long_df[<span class="st">"kind"</span>] <span class="op">==</span> <span class="st">"stance"</span>])</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    .mark_rect()</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"metric:N"</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                sort<span class="op">=</span>[k.replace(<span class="st">"_pct"</span>, <span class="st">""</span>) <span class="cf">for</span> k <span class="kw">in</span> stance_keys],</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labelAngle<span class="op">=-</span><span class="dv">30</span>)),</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>y_cat,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"value:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"magma"</span>, reverse<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                         title<span class="op">=</span><span class="st">"stance %"</span>),</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"metric:N"</span>),</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"value:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>)],</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">400</span>, height<span class="op">=</span>CAT_HEIGHT,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Stance × category (</span><span class="sc">% o</span><span class="st">f file tokens)"</span>)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>heat_register <span class="op">=</span> (</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    alt.Chart(sr_long_df[sr_long_df[<span class="st">"kind"</span>] <span class="op">==</span> <span class="st">"register"</span>])</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    .mark_rect()</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"metric:N"</span>,</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>                sort<span class="op">=</span>[k.replace(<span class="st">"_pct"</span>, <span class="st">""</span>) <span class="cf">for</span> k <span class="kw">in</span> register_keys],</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labelAngle<span class="op">=-</span><span class="dv">30</span>)),</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats,</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labels<span class="op">=</span><span class="va">False</span>, ticks<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"value:Q"</span>, scale<span class="op">=</span>alt.Scale(scheme<span class="op">=</span><span class="st">"viridis"</span>),</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>                         title<span class="op">=</span><span class="st">"register %"</span>),</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"metric:N"</span>),</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"value:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>)],</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">240</span>, height<span class="op">=</span>CAT_HEIGHT,</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Register × category (</span><span class="sc">% o</span><span class="st">f file tokens)"</span>)</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Justification distribution rotated so category sits on Y too — same axis</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="co"># as the two heatmaps so the row reads horizontally per category.</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>just_box <span class="op">=</span> (</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>    .mark_boxplot(extent<span class="op">=</span><span class="st">"min-max"</span>, opacity<span class="op">=</span><span class="fl">0.55</span>, color<span class="op">=</span><span class="st">"#4e79a7"</span>)</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats,</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labels<span class="op">=</span><span class="va">False</span>, ticks<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"just_ratio:Q"</span>, title<span class="op">=</span><span class="st">"justification ratio per file"</span>),</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">320</span>, height<span class="op">=</span>CAT_HEIGHT,</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"Per-file justification ratio"</span>)</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>just_strip <span class="op">=</span> (</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>    .mark_circle(size<span class="op">=</span><span class="dv">35</span>, opacity<span class="op">=</span><span class="fl">0.45</span>, color<span class="op">=</span><span class="st">"#e15759"</span>)</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats,</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span>alt.Axis(labels<span class="op">=</span><span class="va">False</span>, ticks<span class="op">=</span><span class="va">False</span>)),</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"just_ratio:Q"</span>),</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>        yOffset<span class="op">=</span><span class="st">"jitter:Q"</span>,</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"path:N"</span>),</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"n_tokens:Q"</span>),</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"just_ratio:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>)],</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>    .transform_calculate(jitter<span class="op">=</span><span class="st">"random()-0.5"</span>)</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>just_layer <span class="op">=</span> just_box <span class="op">+</span> just_strip</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>stance_register_composite <span class="op">=</span> alt.hconcat(heat_stance, heat_register, just_layer).resolve_scale(</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"independent"</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>).properties(</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>alt.TitleParams(</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Register profile per category — stance | register | justification"</span>,</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>        subtitle<span class="op">=</span>[<span class="st">"All three share the category y-axis sort. "</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Read a row horizontally for one category's profile."</span>],</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>        anchor<span class="op">=</span><span class="st">"start"</span>,</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>save_chart(stance_register_composite, <span class="st">"12-stance-register-heatmaps"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="5">
 
 <style>
-  #altair-viz-bcd44a7af0e043de9ec30856ed88ccbc.vega-embed {
+  #altair-viz-083dc61e4c5d42f89714013b29debfac.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-bcd44a7af0e043de9ec30856ed88ccbc.vega-embed details,
-  #altair-viz-bcd44a7af0e043de9ec30856ed88ccbc.vega-embed details summary {
+  #altair-viz-083dc61e4c5d42f89714013b29debfac.vega-embed details,
+  #altair-viz-083dc61e4c5d42f89714013b29debfac.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-bcd44a7af0e043de9ec30856ed88ccbc"></div>
+<div id="altair-viz-083dc61e4c5d42f89714013b29debfac"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-bcd44a7af0e043de9ec30856ed88ccbc") {
-      outputDiv = document.getElementById("altair-viz-bcd44a7af0e043de9ec30856ed88ccbc");
+    if (outputDiv.id !== "altair-viz-083dc61e4c5d42f89714013b29debfac") {
+      outputDiv = document.getElementById("altair-viz-083dc61e4c5d42f89714013b29debfac");
     }
 
     const paths = {
@@ -820,104 +823,104 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>TTR × Heylighen F-score</strong> scatter — every file as one point, coloured by category, sized by file length.</li>
 <li><strong>Sentence length &amp; dependency depth</strong> distributions per category (box-strip).</li>
 </ul>
-<div id="ad7a7f80-7d9e-46e8-a904-6efd31291c8c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:18:47.043545Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:18:47.043325Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:18:47.537465Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:18:47.537137Z&quot;}}" data-execution_count="3">
+<div id="ad7a7f80-7d9e-46e8-a904-6efd31291c8c" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Register quantitative metrics: TTR×F-score + sentence length &amp; dep-depth distributions."""</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ttr_f_chart <span class="op">=</span> (</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    .mark_circle(opacity<span class="op">=</span><span class="fl">0.65</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"f_score:Q"</span>, title<span class="op">=</span><span class="st">"F-score (Heylighen &amp; Dewaele) — higher = more formal"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="dv">40</span>, <span class="dv">100</span>])),</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"ttr:Q"</span>, title<span class="op">=</span><span class="st">"Type-token ratio (lex. diversity)"</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>])),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        size<span class="op">=</span>alt.Size(<span class="st">"n_tokens:Q"</span>, title<span class="op">=</span><span class="st">"tokens"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                       scale<span class="op">=</span>alt.Scale(<span class="bu">range</span><span class="op">=</span>[<span class="dv">20</span>, <span class="dv">400</span>])),</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>_cat_domain, <span class="bu">range</span><span class="op">=</span>_cat_range)),</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"path:N"</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"n_tokens:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">","</span>),</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"ttr:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>),</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"f_score:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".1f"</span>),</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"mean_sent_len:Q"</span>, title<span class="op">=</span><span class="st">"mean sent len"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".1f"</span>),</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"dep_depth:Q"</span>, title<span class="op">=</span><span class="st">"dep depth"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>),</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">380</span>, title<span class="op">=</span><span class="st">"Per-file register: TTR × F-score"</span>)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    .interactive()</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>sent_len_box <span class="op">=</span> (</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    .mark_boxplot(extent<span class="op">=</span><span class="st">"min-max"</span>, opacity<span class="op">=</span><span class="fl">0.55</span>, color<span class="op">=</span><span class="st">"#4e79a7"</span>)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats),</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"mean_sent_len:Q"</span>, title<span class="op">=</span><span class="st">"Mean sentence length (tokens)"</span>),</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">240</span>, height<span class="op">=</span><span class="dv">300</span>, title<span class="op">=</span><span class="st">"Sentence length per category"</span>)</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>sent_len_strip <span class="op">=</span> (</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    .mark_circle(size<span class="op">=</span><span class="dv">30</span>, opacity<span class="op">=</span><span class="fl">0.45</span>, color<span class="op">=</span><span class="st">"#e15759"</span>)</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"category:N"</span>, sort<span class="op">=</span>cats, title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"mean_sent_len:Q"</span>),</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        xOffset<span class="op">=</span><span class="st">"jitter:Q"</span>,</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"path:N"</span>),</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"mean_sent_len:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".1f"</span>)],</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    .transform_calculate(jitter<span class="op">=</span><span class="st">"random()-0.5"</span>)</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>dep_box <span class="op">=</span> (</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    .mark_boxplot(extent<span class="op">=</span><span class="st">"min-max"</span>, opacity<span class="op">=</span><span class="fl">0.55</span>, color<span class="op">=</span><span class="st">"#59a14f"</span>)</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats),</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"dep_depth:Q"</span>, title<span class="op">=</span><span class="st">"Mean dependency depth"</span>),</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">240</span>, height<span class="op">=</span><span class="dv">300</span>, title<span class="op">=</span><span class="st">"Dependency depth per category"</span>)</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>dep_strip <span class="op">=</span> (</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    .mark_circle(size<span class="op">=</span><span class="dv">30</span>, opacity<span class="op">=</span><span class="fl">0.45</span>, color<span class="op">=</span><span class="st">"#af7aa1"</span>)</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"category:N"</span>, sort<span class="op">=</span>cats, title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"dep_depth:Q"</span>),</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>        xOffset<span class="op">=</span><span class="st">"jitter:Q"</span>,</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"path:N"</span>),</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"dep_depth:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>)],</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    .transform_calculate(jitter<span class="op">=</span><span class="st">"random()-0.5"</span>)</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>register_quant <span class="op">=</span> ttr_f_chart <span class="op">&amp;</span> ((sent_len_box <span class="op">+</span> sent_len_strip) <span class="op">|</span> (dep_box <span class="op">+</span> dep_strip))</span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>save_chart(register_quant, <span class="st">"12-register-quantitative-metrics"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Register quantitative metrics: TTR×F-score + sentence length &amp; dep-depth distributions."""</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ttr_f_chart <span class="op">=</span> (</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    .mark_circle(opacity<span class="op">=</span><span class="fl">0.65</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"f_score:Q"</span>, title<span class="op">=</span><span class="st">"F-score (Heylighen &amp; Dewaele) — higher = more formal"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="dv">40</span>, <span class="dv">100</span>])),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"ttr:Q"</span>, title<span class="op">=</span><span class="st">"Type-token ratio (lex. diversity)"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>])),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        size<span class="op">=</span>alt.Size(<span class="st">"n_tokens:Q"</span>, title<span class="op">=</span><span class="st">"tokens"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                       scale<span class="op">=</span>alt.Scale(<span class="bu">range</span><span class="op">=</span>[<span class="dv">20</span>, <span class="dv">400</span>])),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                         scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>_cat_domain, <span class="bu">range</span><span class="op">=</span>_cat_range)),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"path:N"</span>),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"n_tokens:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">","</span>),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"ttr:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"f_score:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".1f"</span>),</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"mean_sent_len:Q"</span>, title<span class="op">=</span><span class="st">"mean sent len"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".1f"</span>),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>            alt.Tooltip(<span class="st">"dep_depth:Q"</span>, title<span class="op">=</span><span class="st">"dep depth"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>),</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">380</span>, title<span class="op">=</span><span class="st">"Per-file register: TTR × F-score"</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    .interactive()</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>sent_len_box <span class="op">=</span> (</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    .mark_boxplot(extent<span class="op">=</span><span class="st">"min-max"</span>, opacity<span class="op">=</span><span class="fl">0.55</span>, color<span class="op">=</span><span class="st">"#4e79a7"</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats),</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"mean_sent_len:Q"</span>, title<span class="op">=</span><span class="st">"Mean sentence length (tokens)"</span>),</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">240</span>, height<span class="op">=</span><span class="dv">300</span>, title<span class="op">=</span><span class="st">"Sentence length per category"</span>)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>sent_len_strip <span class="op">=</span> (</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    .mark_circle(size<span class="op">=</span><span class="dv">30</span>, opacity<span class="op">=</span><span class="fl">0.45</span>, color<span class="op">=</span><span class="st">"#e15759"</span>)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"category:N"</span>, sort<span class="op">=</span>cats, title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"mean_sent_len:Q"</span>),</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        xOffset<span class="op">=</span><span class="st">"jitter:Q"</span>,</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"path:N"</span>),</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"mean_sent_len:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".1f"</span>)],</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    .transform_calculate(jitter<span class="op">=</span><span class="st">"random()-0.5"</span>)</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>dep_box <span class="op">=</span> (</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    .mark_boxplot(extent<span class="op">=</span><span class="st">"min-max"</span>, opacity<span class="op">=</span><span class="fl">0.55</span>, color<span class="op">=</span><span class="st">"#59a14f"</span>)</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"category:N"</span>, title<span class="op">=</span><span class="va">None</span>, sort<span class="op">=</span>cats),</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"dep_depth:Q"</span>, title<span class="op">=</span><span class="st">"Mean dependency depth"</span>),</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    .properties(width<span class="op">=</span><span class="dv">240</span>, height<span class="op">=</span><span class="dv">300</span>, title<span class="op">=</span><span class="st">"Dependency depth per category"</span>)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>dep_strip <span class="op">=</span> (</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    alt.Chart(alt_df)</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    .mark_circle(size<span class="op">=</span><span class="dv">30</span>, opacity<span class="op">=</span><span class="fl">0.45</span>, color<span class="op">=</span><span class="st">"#af7aa1"</span>)</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    .encode(</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"category:N"</span>, sort<span class="op">=</span>cats, title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"dep_depth:Q"</span>),</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        xOffset<span class="op">=</span><span class="st">"jitter:Q"</span>,</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"path:N"</span>),</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"dep_depth:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".2f"</span>)],</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>    .transform_calculate(jitter<span class="op">=</span><span class="st">"random()-0.5"</span>)</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>register_quant <span class="op">=</span> ttr_f_chart <span class="op">&amp;</span> ((sent_len_box <span class="op">+</span> sent_len_strip) <span class="op">|</span> (dep_box <span class="op">+</span> dep_strip))</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>save_chart(register_quant, <span class="st">"12-register-quantitative-metrics"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="6">
 
 <style>
-  #altair-viz-c39533966e9349438a305cc460a970be.vega-embed {
+  #altair-viz-ef6fde3557144174b8edebdce2bdce73.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-c39533966e9349438a305cc460a970be.vega-embed details,
-  #altair-viz-c39533966e9349438a305cc460a970be.vega-embed details summary {
+  #altair-viz-ef6fde3557144174b8edebdce2bdce73.vega-embed details,
+  #altair-viz-ef6fde3557144174b8edebdce2bdce73.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-c39533966e9349438a305cc460a970be"></div>
+<div id="altair-viz-ef6fde3557144174b8edebdce2bdce73"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-c39533966e9349438a305cc460a970be") {
-      outputDiv = document.getElementById("altair-viz-c39533966e9349438a305cc460a970be");
+    if (outputDiv.id !== "altair-viz-ef6fde3557144174b8edebdce2bdce73") {
+      outputDiv = document.getElementById("altair-viz-ef6fde3557144174b8edebdce2bdce73");
     }
 
     const paths = {

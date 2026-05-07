@@ -364,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-proposal">    
         <li>
     <a class="dropdown-item" href="./20_track_justification_rate.html">
- <span class="dropdown-text">Track justification rate per release; block regressions</span></a>
+ <span class="dropdown-text">Track justification rate per release</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./21_audit_threat_framings.html">
@@ -512,7 +512,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_track_justification_rate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Track justification rate per release; block regressions</span></a>
+ <span class="menu-text">Track justification rate per release</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -540,8 +540,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#b.-ruleexplanation-pairing" id="toc-b.-ruleexplanation-pairing" class="nav-link active" data-scroll-target="#b.-ruleexplanation-pairing">8b. Rule/explanation pairing</a></li>
-  <li><a href="#c.-welfare-extension-analyzers-tier-3-v1" id="toc-c.-welfare-extension-analyzers-tier-3-v1" class="nav-link" data-scroll-target="#c.-welfare-extension-analyzers-tier-3-v1">8c. Welfare-extension analyzers (Tier-3 v1)</a></li>
-  <li><a href="#d.-welfare-extension-analyzers-tier-3-v2" id="toc-d.-welfare-extension-analyzers-tier-3-v2" class="nav-link" data-scroll-target="#d.-welfare-extension-analyzers-tier-3-v2">8d. Welfare-extension analyzers (Tier-3 v2)</a></li>
+  <li><a href="#c.-welfare-extension-analyzers" id="toc-c.-welfare-extension-analyzers" class="nav-link" data-scroll-target="#c.-welfare-extension-analyzers">8c. Welfare-extension analyzers</a></li>
+  <li><a href="#d.-welfare-extension-analyzers" id="toc-d.-welfare-extension-analyzers" class="nav-link" data-scroll-target="#d.-welfare-extension-analyzers">8d. Welfare-extension analyzers</a></li>
   <li><a href="#e.-per-sentence-forensic-inspection-records" id="toc-e.-per-sentence-forensic-inspection-records" class="nav-link" data-scroll-target="#e.-per-sentence-forensic-inspection-records">8e. Per-sentence forensic-inspection records</a></li>
   <li><a href="#write-partial_rules_welfare.json" id="toc-write-partial_rules_welfare.json" class="nav-link" data-scroll-target="#write-partial_rules_welfare.json">Write <code>partial_rules_welfare.json</code></a></li>
   </ul>
@@ -717,8 +717,8 @@ corpus rule sentences: 2285
 </div>
 </div>
 </section>
-<section id="c.-welfare-extension-analyzers-tier-3-v1" class="level2">
-<h2 class="anchored" data-anchor-id="c.-welfare-extension-analyzers-tier-3-v1">8c. Welfare-extension analyzers (Tier-3 v1)</h2>
+<section id="c.-welfare-extension-analyzers" class="level2">
+<h2 class="anchored" data-anchor-id="c.-welfare-extension-analyzers">8c. Welfare-extension analyzers</h2>
 <p>Four blocks per file, each measuring a structural feature of the prompt’s framing:</p>
 <ul>
 <li><strong><code>judgment_procedural</code></strong> — count of judgment-inviting language (<code>decide</code>, <code>consider</code>, <code>evaluate</code>, <code>weigh</code>) divided by procedural cues (<code>if X, then …</code>, <code>whenever …</code>, <code>step 1 …</code>). Yields <code>judgment_count</code>, <code>procedural_count</code>, <code>judgment_to_procedural_ratio</code>.</li>
@@ -810,8 +810,8 @@ Address-form — corpus self-reference distribution:
 </div>
 </div>
 </section>
-<section id="d.-welfare-extension-analyzers-tier-3-v2" class="level2">
-<h2 class="anchored" data-anchor-id="d.-welfare-extension-analyzers-tier-3-v2">8d. Welfare-extension analyzers (Tier-3 v2)</h2>
+<section id="d.-welfare-extension-analyzers" class="level2">
+<h2 class="anchored" data-anchor-id="d.-welfare-extension-analyzers">8d. Welfare-extension analyzers</h2>
 <p>Two more blocks per file:</p>
 <ul>
 <li><strong><code>imperative_streaks</code></strong> — run-lengths of consecutive imperative sentences within a file: <code>streak_max</code>, <code>streak_mean</code>, <code>n_streaks_ge3</code> (triple-tap), <code>n_streaks_ge5</code> (staccato burst).</li>
