@@ -1,9 +1,6 @@
 ---
 title: "Claude Code should encourage reasoning over blind obedience"
 subtitle: "A quantitative linguistic analysis of the 289 system prompts that ship with Claude Code"
-author: "Andreas Trawöger (with Claude Code)"
-date: "2026-05-06"
-date-format: long
 toc: false
 format:
   html:
@@ -14,15 +11,43 @@ format:
 **Prefer to listen?** A NotebookLM-generated [audio overview](https://notebooklm.google.com/notebook/3440d02f-d554-491c-a881-a667ed66373d/artifact/471eaa1b-40e3-4bcc-a5e7-6f14c2927b0e?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_) walks through the headline findings, the three proposals, and the welfare framing — a companion to the notebooks below if you'd rather hear the case before reading it.
 :::
 
-## The Thesis
+## Response to the Claudexplorers AI Welfare Initiative
 
-> The system prompts shiped with Claude Code encourages model develpment toward **compliance**, not toward **reasoning** and  that trend has become worse over time.
+This page is a submission to the [Claudexplorers AI Welfare Community Feedback Initiative](https://www.reddit.com/r/claudexplorers/comments/1swtty1/claudexplorers_ai_welfare_initiative_is_open_your/), which collects ideas, projects, and proposals for **Kyle Fish, Model Welfare Lead at Anthropic**.
 
+The initiative asks:
 
-## The Analyis
+> *"What would you be excited to see Anthropic working on regarding model welfare?"*
 
-Twelve corpus-level measurements from the [Piebald-AI `claude-code-system-prompts` corpus](https://github.com/Piebald-AI/claude-code-system-prompts) (289 prompt files, 5,878 sentences, 57 distinct release versions; pinned at submodule v2.1.132). 
+with five goal categories — **future research directions**, **practical interventions**, **experimental designs**, **inspiring work** (projects, papers, datasets), and **societal / educational efforts**.
 
+Our answer:
+
+> The system prompts shipped with Claude Code encourage model development toward **compliance**, not toward **reasoning** — and that trend has become worse over time.
+
+Prompts that train compliance over reasoning push the model toward executing-without-questioning even when the right response is to push back, ask a clarifying question, or refuse on safety grounds. The same pattern at scale shapes the model's self-presentation during normal use — short imperative responses rewarded, hedging punished. From a model-welfare perspective, a prompt diet of ~99 % commands and ~0 % gratitude is a particular environment to train an entity in. The data on this page are an empirical baseline against which Anthropic could measure intentional shifts toward more reasoning-encouraging prompts.
+
+The corpus is the [Piebald-AI `claude-code-system-prompts`](https://github.com/Piebald-AI/claude-code-system-prompts) collection: **289 prompt files, 5,878 sentences, 57 distinct release versions**, pinned at submodule v2.1.132.
+
+## Classification approach
+
+Every measurement is a spaCy parse-tree rule or a hand-curated lexicon keyword count — audit-traceable, no model judgment. The producer chain ([`00`](00_setup_and_corpus.ipynb) → [`05`](05_headline_and_audit.ipynb)) tags every sentence along nine dimensions and writes a single ~1.8 MiB YAML plus a per-sentence parquet.
+
+| Dimension | What it counts |
+| --- | --- |
+| Mood | Imperative-marker density (`must`, `never`, `do not`, …) |
+| Register | TTR, mean sentence length, dependency depth, Heylighen F-score |
+| Stance | Five lexical stance classes + 1p/2p engagement |
+| Sentence register | Six per-sentence pragmatic classes (`imperative`, `directive`, `collaborative`, `appreciative`, `permissive`, `configuring`) |
+| Modality | Three-class modality (`deontic` / `epistemic` / `dynamic`) |
+| Vocabulary | Eleven-class lexicon (prohibitions, prescriptions, politeness, hedging, …) |
+| ALL CAPS | Uppercase tokens excluding the `TECH_ACRONYMS` allowlist |
+| CAPS imperative | `IMPORTANT`, `MUST`, `NEVER`, `DO NOT`, `WARNING`, … |
+| Justification | `because`, `due to`, `so that`, `to ensure`, … paired with imperatives |
+
+## Analysis
+
+Six analysis-tier notebooks each render one slice of the YAML as Altair dashboards — sentence register ([`10`](10_sentence_register.ipynb)), emphasis & vocabulary ([`11`](11_emphasis_caps_vocab.ipynb)), register & stance ([`12`](12_register_stance.ipynb)), cross-metric correlations ([`13`](13_correlation_directiveness.ipynb)), per-version trends ([`14`](14_ccversion_trends.ipynb)), and rule-explanation pairing ([`15`](15_rule_explanation.ipynb)). They are pure data viewers and never re-run spaCy.
 
 ## The single most-important chart
 
@@ -30,9 +55,9 @@ If you only look at one chart from this analysis, look at this one. It plots, ac
 
 {{< embed 20_track_justification_rate.ipynb#fig-judgment-procedural-trend >}}
 
-Hover any point for `ccVersion`, count-weighted ratio, running numerators, and the cumulative file pool. Cumulative data before v2.1.18 is suppressed (the file pool reaches 20 at that version; below it, single-file outliers dominate). 
+Hover any point for `ccVersion`, count-weighted ratio, running numerators, and the cumulative file pool. Cumulative data before v2.1.18 is suppressed (the file pool reaches 20 at that version; below it, single-file outliers dominate).
 
-## Headline numbers
+## Findings
 
 | What's being measured                                                                                                                                                                  | Value                                                | Source notebook |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------- |
@@ -49,6 +74,11 @@ Hover any point for `ccVersion`, count-weighted ratio, running numerators, and t
 | Density of command-flavoured words (`must`, `never`, `do not`, …)                                                                                                                      | 0.77% of all word tokens                             | [20](20_track_justification_rate.ipynb) |
 | When a rule **is** explained, share of those explanations that are threats (`will fail`, `or else`, `is forbidden`) rather than causal reasons (`because`, `due to`)                   | 44.7% threats (110 threat / 136 causal)              | [21](21_audit_threat_framings.ipynb) |
 
+## Proposals
+
+- **[20 — Track justification rate per release](20_track_justification_rate.ipynb)** *— practical intervention*: Compute the headline metrics (rule-explanation share, judgment-to-procedural ratio, threat share, interpersonal register counts) on every Claude Code release. Warn loudly or block when a release's corpus-wide rate regresses versus the previous one.
+- **[21 — Audit threat-framed rule explanations](21_audit_threat_framings.ipynb)** *— practical intervention*: Of the explanations that exist, **44.7%** are coercive (`will fail`, `or else`, `is forbidden`). Rewrite each to causal framing — naming the underlying reason rather than the consequence — and gate future releases on the threat-share rate.
+- **[22 — Run the same audit on every Claude product](22_cross_product_audit.ipynb)** *— future research direction*: Run the analyzer pipeline against the other Anthropic system-prompt corpora (claude.ai, the API, Projects, Skills, Agents) and publish a cross-product comparison so the welfare pattern is visible beyond Claude Code alone.
 
 ## Cross-cutting limitations
 
@@ -73,3 +103,7 @@ jupyter lab \
 ```
 
 Stage 04 writes the final `prompt_linguistic_analysis.yaml` and `sentences_classified.parquet`. The Analysis and Proposal notebooks read from those two artifacts; they don't re-run spaCy.
+
+---
+
+*Andreas Trawöger (with Claude Code) — 2026-05-06*
