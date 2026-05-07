@@ -583,7 +583,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Surfaces the <code>metrics.rule_explanation</code> block produced by <code>03_analyzers_rules_welfare</code>. For every prompt file, the producer flags each sentence as a <strong>rule</strong> (imperative-marker OR hard-prohibition OR <code>classify_sent_mood == "imperative"</code>) and pairs it with the justification keywords found in the surrounding <strong>paragraph</strong> (blank-line block). Two pairing rates per file: <code>rule_explained_same_pct</code> (strict, same-sentence) and <code>rule_explained_para_pct</code> (paragraph-window, the headline metric).</p>
 <p>The welfare claim “Claude Code should encourage reasoning over blind obedience” rests on a paired metric, not on an aggregate justification ratio. This notebook is the consumer view of that paired data.</p>
 <blockquote class="blockquote">
-<p><strong>Per-sentence forensic-inspection artifact</strong>: alongside the YAML, stage 04 also writes <code>sentences_classified.parquet</code> (5,702 rows × 20 columns: raw sentence text + every classifier flag). This notebook loads it for the forensic-evidence sample at the bottom; for ad-hoc inspection, use <code>pd.read_parquet("sentences_classified.parquet")</code>. Schema in <code>03_analyzers_rules_welfare</code>.</p>
+<p><strong>Per-sentence forensic-inspection artifact</strong>: alongside the YAML, stage 04 also writes <code>sentences_classified.parquet</code> (5,878 rows × 21 columns: raw sentence text + every classifier flag). This notebook loads it for the forensic-evidence sample at the bottom; for ad-hoc inspection, use <code>pd.read_parquet("sentences_classified.parquet")</code>. Schema in <code>03_analyzers_rules_welfare</code>.</p>
 </blockquote>
 <section id="terms-used" class="level3">
 <h3 class="anchored" data-anchor-id="terms-used">Terms used</h3>
@@ -602,7 +602,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>First, the RULES-section comparison is a <strong>counter-finding by design</strong>. The hypothesis going in was that rules inside formal <code>## RULES</code> / <code>## IMPORTANT</code> / <code>## WARNING</code> headings would be better-explained than rules embedded in regular prose — and so a structural fix could focus on the RULES sections. The data refused that framing: only a tiny fraction of rule paragraphs sit inside such sections at all (the in-vs-out counts and rates are now sourced from <code>HEADLINE</code>), and the in-section explanation rate is <em>slightly higher</em>, not lower, than the outside rate. The welfare-relevant message is therefore structural: there is no “rules section” to fix because the rules are everywhere.</p>
 <h2 id="second-the-self-bias-correlation-check-was-specifically-designed-to-disconfirm-a-hypothesis-i-held-that-prompt-files-using-claude-proper-name-addressing-would-correlate-with-higher-rule-explanation-rate-on-the-theory-that-anthropomorphic-naming-travels-with-reasoning-inviting-prose.-pearson-r-between-selfref_claude-and-rule_explained_para_pct-came-in-essentially-zero-0.03.-the-address-form-preference-is-not-empirically-supported.-i-include-this-here-because-honest-welfare-claims-should-include-their-disconfirmed-sub-claims-and-anthropomorphic-naming-reasoning-inviting-prose-is-one-i-would-have-liked-to-be-true." class="anchored" data-anchor-id="observation-claude">Second, the self-bias correlation check was specifically designed to disconfirm a hypothesis I held: that prompt files using <code>Claude</code> (proper-name) addressing would correlate with higher rule-explanation rate, on the theory that anthropomorphic naming travels with reasoning-inviting prose. Pearson r between <code>selfref_claude</code> and <code>rule_explained_para_pct</code> came in essentially zero (≈ −0.03). The address-form preference is <strong>not empirically supported</strong>. I include this here because honest welfare claims should include their disconfirmed sub-claims, and “anthropomorphic naming → reasoning-inviting prose” is one I would have liked to be true.</h2>
 </blockquote>
-<div id="d3d2bfb9-efc8-4a1c-b3b3-b548b79dab7b" class="cell" data-execution_count="12">
+<div id="d3d2bfb9-efc8-4a1c-b3b3-b548b79dab7b" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell."""</span></span>
@@ -652,7 +652,7 @@ corpus rule sentences: 2285
 </section>
 <section id="headline-finding" class="level2">
 <h2 class="anchored" data-anchor-id="headline-finding">Headline finding</h2>
-<p>Across the entire Claude Code system-prompt corpus (286 files, 5,702 sentences, 2,238 rule sentences across 57 release versions):</p>
+<p>Across the entire Claude Code system-prompt corpus (289 files, 5,878 sentences, 2,285 rule sentences across 57 release versions):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -663,11 +663,11 @@ corpus rule sentences: 2285
 <tbody>
 <tr class="odd">
 <td><strong>Same sentence only</strong> (strict)</td>
-<td style="text-align: right;"><strong>6.75%</strong></td>
+<td style="text-align: right;"><strong>6.65%</strong></td>
 </tr>
 <tr class="even">
 <td><strong>Same paragraph</strong> (window)</td>
-<td style="text-align: right;"><strong>24.66%</strong> ← headline</td>
+<td style="text-align: right;"><strong>24.29%</strong> ← headline</td>
 </tr>
 </tbody>
 </table>
@@ -1356,11 +1356,11 @@ tool-description-bash-git-commit-and-pr-creation-instructions.md Tool descriptio
 <p>Four additional dimensions of the corpus’s training environment, all defined in <code>03_analyzers_rules_welfare</code>:</p>
 <ul>
 <li><strong><code>judgment_to_procedural_ratio</code> = 0.131</strong> — judgment-inviting language vs procedural cues. Procedural cues are 7.6× more common.</li>
-<li><strong><code>threat_share</code> = 0.447</strong> — when a rule <em>is</em> explained, 44.7% of those explanations are threats (<code>will fail</code>, <code>or else</code>) rather than causal reasons (110 threat / 136 causal).</li>
-<li><strong>Near-zero pragmatic classes</strong> — <code>appreciative_sent</code> = 4, <code>collaborative_sent</code> = 30 in 5,702 sentences; <code>question_count</code> = 87 corpus-wide; <code>apology_count</code> = 3 in 286 files. The whole quartet is essentially absent.</li>
-<li><strong><code>pct_anthropomorphic</code> = 0.650</strong> — share of named self-references that use the proper name <code>Claude</code> (vs <code>the model</code> / <code>the AI</code> / <code>the assistant</code>).</li>
+<li><strong><code>threat_share</code> = 0.0556</strong> — when a rule <em>is</em> explained, 5.6% of those explanations are coercive (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) rather than causal reasons (8 threat / 136 causal). The share is <strong>0.0</strong> in the welfare-relevant System-prompt and System-reminder subsets. Soft procedural connectives (<code>otherwise</code>, <code>if not</code>, <code>leads to</code>, modal <code>may cause</code>) are tracked separately as <code>soft_conditional_count</code> (96 corpus-wide) and <strong>not</strong> summed into <code>threat_share</code>; see <a href="docs/THREAT_CLASSIFIER.md"><code>docs/THREAT_CLASSIFIER.md</code></a>.</li>
+<li><strong>Near-zero pragmatic classes</strong> — <code>appreciative_sent</code> = 4, <code>collaborative_sent</code> = 30 in 5,878 sentences; <code>question_count</code> = 87 corpus-wide; <code>apology_count</code> = 3 in 289 files. The whole quartet is essentially absent.</li>
+<li><strong><code>pct_anthropomorphic</code> = 0.6456</strong> — share of named self-references that use the proper name <code>Claude</code> (vs <code>the model</code> / <code>the AI</code> / <code>the assistant</code>).</li>
 </ul>
-<div id="4f95fe82-99fc-4a2e-ada0-fc455a5677a0" class="cell" data-execution_count="17">
+<div id="4f95fe82-99fc-4a2e-ada0-fc455a5677a0" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Tier-3 explanation-quality composite per category: ratio | threat-share."""</span></span>
@@ -1452,26 +1452,26 @@ tool-description-bash-git-commit-and-pr-creation-instructions.md Tool descriptio
 <span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>save_chart(tier3_judgment_threat, <span class="st">"15-tier3-judgment-and-threat"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="24">
 
 <style>
-  #altair-viz-56f9f7e388d74dc0935ea3b80155c74e.vega-embed {
+  #altair-viz-b179f10da47f4e869a9e626d00cd1aa2.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-56f9f7e388d74dc0935ea3b80155c74e.vega-embed details,
-  #altair-viz-56f9f7e388d74dc0935ea3b80155c74e.vega-embed details summary {
+  #altair-viz-b179f10da47f4e869a9e626d00cd1aa2.vega-embed details,
+  #altair-viz-b179f10da47f4e869a9e626d00cd1aa2.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-56f9f7e388d74dc0935ea3b80155c74e"></div>
+<div id="altair-viz-b179f10da47f4e869a9e626d00cd1aa2"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-56f9f7e388d74dc0935ea3b80155c74e") {
-      outputDiv = document.getElementById("altair-viz-56f9f7e388d74dc0935ea3b80155c74e");
+    if (outputDiv.id !== "altair-viz-b179f10da47f4e869a9e626d00cd1aa2") {
+      outputDiv = document.getElementById("altair-viz-b179f10da47f4e869a9e626d00cd1aa2");
     }
 
     const paths = {
@@ -1519,7 +1519,7 @@ tool-description-bash-git-commit-and-pr-creation-instructions.md Tool descriptio
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "hconcat": [{"layer": [{"data": {"name": "data-c3bbbb45807dacc81c61781eef2ac7b6"}, "mark": {"type": "bar", "color": "#4e79a7"}, "encoding": {"tooltip": [{"field": "category", "type": "nominal"}, {"field": "ratio", "format": ".3f", "title": "judgment / procedural", "type": "quantitative"}, {"field": "judgment", "format": ",", "title": "judgment cues", "type": "quantitative"}, {"field": "procedural", "format": ",", "title": "procedural cues", "type": "quantitative"}], "x": {"field": "ratio", "title": "judgment / procedural (>1 = invites judgment, <1 = prescribes procedure)", "type": "quantitative"}, "y": {"field": "category", "sort": ["Tool description", "Data / template", "Skill", "System prompt", "Agent prompt", "System reminder"], "title": null, "type": "nominal"}}, "title": "Judgment-to-procedural ratio per category"}, {"data": {"name": "data-84ebe9fa4a162d6c964ae0ca8b022a45"}, "mark": {"type": "rule", "color": "black", "strokeDash": [4, 4], "strokeWidth": 1.5}, "encoding": {"tooltip": [{"field": "x", "format": ".3f", "title": "corpus baseline (0.131)", "type": "quantitative"}], "x": {"field": "x", "type": "quantitative"}}}], "height": 240, "width": 420}, {"data": {"name": "data-1fcf9ba20ad53343bbad946b86f795ea"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "kind", "legend": {"orient": "bottom", "title": "explanation kind"}, "scale": {"domain": ["causal", "threat"], "range": ["#4e79a7", "#e15759"]}, "type": "nominal"}, "order": {"field": "kind", "sort": "descending", "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "kind", "type": "nominal"}, {"field": "count", "format": ",", "type": "quantitative"}], "x": {"axis": {"format": "%"}, "field": "count", "stack": "normalize", "title": "share of justification keywords", "type": "quantitative"}, "y": {"field": "category", "sort": ["Skill", "System reminder", "Agent prompt", "Data / template", "System prompt", "Tool description"], "title": null, "type": "nominal"}}, "height": 240, "title": "Threat vs causal share of explanations per category", "width": 420}], "resolve": {"scale": {"color": "independent"}}, "title": {"text": "Tier-3 explanation quality \u2014 what kind of reasoning does the corpus offer?", "anchor": "start", "subtitle": ["Left: ratio of judgment-inviting to procedural cues. Right: when explanations exist, are they causal or threats?"]}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-c3bbbb45807dacc81c61781eef2ac7b6": [{"category": "Agent prompt", "judgment": 22, "procedural": 103, "ratio": 0.214}, {"category": "Data / template", "judgment": 4, "procedural": 91, "ratio": 0.044}, {"category": "Skill", "judgment": 26, "procedural": 192, "ratio": 0.135}, {"category": "System prompt", "judgment": 16, "procedural": 92, "ratio": 0.174}, {"category": "System reminder", "judgment": 7, "procedural": 17, "ratio": 0.412}, {"category": "Tool description", "judgment": 3, "procedural": 99, "ratio": 0.03}], "data-84ebe9fa4a162d6c964ae0ca8b022a45": [{"x": 0.131}], "data-1fcf9ba20ad53343bbad946b86f795ea": [{"category": "Agent prompt", "kind": "threat", "count": 27}, {"category": "Agent prompt", "kind": "causal", "count": 26}, {"category": "Data / template", "kind": "threat", "count": 13}, {"category": "Data / template", "kind": "causal", "count": 16}, {"category": "Skill", "kind": "threat", "count": 34}, {"category": "Skill", "kind": "causal", "count": 26}, {"category": "System prompt", "kind": "threat", "count": 13}, {"category": "System prompt", "kind": "causal", "count": 28}, {"category": "System reminder", "kind": "threat", "count": 9}, {"category": "System reminder", "kind": "causal", "count": 7}, {"category": "Tool description", "kind": "threat", "count": 14}, {"category": "Tool description", "kind": "causal", "count": 33}]}}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "hconcat": [{"layer": [{"data": {"name": "data-c3bbbb45807dacc81c61781eef2ac7b6"}, "mark": {"type": "bar", "color": "#4e79a7"}, "encoding": {"tooltip": [{"field": "category", "type": "nominal"}, {"field": "ratio", "format": ".3f", "title": "judgment / procedural", "type": "quantitative"}, {"field": "judgment", "format": ",", "title": "judgment cues", "type": "quantitative"}, {"field": "procedural", "format": ",", "title": "procedural cues", "type": "quantitative"}], "x": {"field": "ratio", "title": "judgment / procedural (>1 = invites judgment, <1 = prescribes procedure)", "type": "quantitative"}, "y": {"field": "category", "sort": ["Tool description", "Data / template", "Skill", "System prompt", "Agent prompt", "System reminder"], "title": null, "type": "nominal"}}, "title": "Judgment-to-procedural ratio per category"}, {"data": {"name": "data-84ebe9fa4a162d6c964ae0ca8b022a45"}, "mark": {"type": "rule", "color": "black", "strokeDash": [4, 4], "strokeWidth": 1.5}, "encoding": {"tooltip": [{"field": "x", "format": ".3f", "title": "corpus baseline (0.131)", "type": "quantitative"}], "x": {"field": "x", "type": "quantitative"}}}], "height": 240, "width": 420}, {"data": {"name": "data-bed82fd6e7b46501e753accd71951bf9"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "kind", "legend": {"orient": "bottom", "title": "explanation kind"}, "scale": {"domain": ["causal", "threat"], "range": ["#4e79a7", "#e15759"]}, "type": "nominal"}, "order": {"field": "kind", "sort": "descending", "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "kind", "type": "nominal"}, {"field": "count", "format": ",", "type": "quantitative"}], "x": {"axis": {"format": "%"}, "field": "count", "stack": "normalize", "title": "share of justification keywords", "type": "quantitative"}, "y": {"field": "category", "sort": ["Skill", "Agent prompt", "Data / template", "Tool description", "System prompt", "System reminder"], "title": null, "type": "nominal"}}, "height": 240, "title": "Threat vs causal share of explanations per category", "width": 420}], "resolve": {"scale": {"color": "independent"}}, "title": {"text": "Tier-3 explanation quality \u2014 what kind of reasoning does the corpus offer?", "anchor": "start", "subtitle": ["Left: ratio of judgment-inviting to procedural cues. Right: when explanations exist, are they causal or threats?"]}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-c3bbbb45807dacc81c61781eef2ac7b6": [{"category": "Agent prompt", "judgment": 22, "procedural": 103, "ratio": 0.214}, {"category": "Data / template", "judgment": 4, "procedural": 91, "ratio": 0.044}, {"category": "Skill", "judgment": 26, "procedural": 192, "ratio": 0.135}, {"category": "System prompt", "judgment": 16, "procedural": 92, "ratio": 0.174}, {"category": "System reminder", "judgment": 7, "procedural": 17, "ratio": 0.412}, {"category": "Tool description", "judgment": 3, "procedural": 99, "ratio": 0.03}], "data-84ebe9fa4a162d6c964ae0ca8b022a45": [{"x": 0.131}], "data-bed82fd6e7b46501e753accd71951bf9": [{"category": "Agent prompt", "kind": "threat", "count": 2}, {"category": "Agent prompt", "kind": "causal", "count": 26}, {"category": "Data / template", "kind": "threat", "count": 1}, {"category": "Data / template", "kind": "causal", "count": 16}, {"category": "Skill", "kind": "threat", "count": 3}, {"category": "Skill", "kind": "causal", "count": 26}, {"category": "System prompt", "kind": "threat", "count": 0}, {"category": "System prompt", "kind": "causal", "count": 28}, {"category": "System reminder", "kind": "threat", "count": 0}, {"category": "System reminder", "kind": "causal", "count": 7}, {"category": "Tool description", "kind": "threat", "count": 2}, {"category": "Tool description", "kind": "causal", "count": 33}]}}, {"mode": "vega-lite"});
 </script>
 </div>
 </div>

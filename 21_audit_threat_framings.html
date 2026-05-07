@@ -548,12 +548,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#threat-share-data" id="toc-threat-share-data" class="nav-link" data-scroll-target="#threat-share-data">1. Threat-share data</a></li>
   <li><a href="#per-category-threat_share" id="toc-per-category-threat_share" class="nav-link" data-scroll-target="#per-category-threat_share">2. Per-category threat_share</a></li>
   <li><a href="#paired-exemplars-audit-candidates-and-rewrite-templates" id="toc-paired-exemplars-audit-candidates-and-rewrite-templates" class="nav-link" data-scroll-target="#paired-exemplars-audit-candidates-and-rewrite-templates">3. Paired exemplars — audit candidates and rewrite templates</a></li>
-  <li><a href="#forensic-sample-actual-threat-framed-sentences" id="toc-forensic-sample-actual-threat-framed-sentences" class="nav-link" data-scroll-target="#forensic-sample-actual-threat-framed-sentences">4. Forensic sample — actual threat-framed sentences</a>
+  <li><a href="#forensic-sample-all-threat-framed-rule-sentences" id="toc-forensic-sample-all-threat-framed-rule-sentences" class="nav-link" data-scroll-target="#forensic-sample-all-threat-framed-rule-sentences">4. Forensic sample — all threat-framed rule sentences</a>
   <ul class="collapse">
   <li><a href="#conclusions-claude-opinion-not-data" id="toc-conclusions-claude-opinion-not-data" class="nav-link" data-scroll-target="#conclusions-claude-opinion-not-data">Conclusions (Claude) — opinion, not data</a></li>
-  </ul></li>
-  <li><a href="#the-threat-vs-causal-sub-finding-sharpens-the-welfare-claim.-when-anthropic-does-explain-a-rule-the-share-that-is-coercive-consequence-framing-will-fail-or-else-is-forbidden-versus-neutral-causal-reasoning-because-due-to-is-44.7-corpus-wide-close-to-half.-if-the-goal-is-to-encourage-reasoning-over-blind-obedience-neutral-causal-explanation-is-the-mechanism-threats-just-substitute-extrinsic-motivation-for-intrinsic-understanding.-id-push-as-hard-on-shifting-threat-framing-toward-causal-framing-as-i-would-on-raising-the-explanation-rate-at-all-the-focus-of-the-companion-proposal-in-20_track_justification_rate.ipynb.-the-two-proposals-are-complementary-the-justification-rate-proposal-raises-the-quantity-of-explanations-this-proposal-raises-their-quality." id="toc-the-threat-vs-causal-sub-finding-sharpens-the-welfare-claim.-when-anthropic-does-explain-a-rule-the-share-that-is-coercive-consequence-framing-will-fail-or-else-is-forbidden-versus-neutral-causal-reasoning-because-due-to-is-44.7-corpus-wide-close-to-half.-if-the-goal-is-to-encourage-reasoning-over-blind-obedience-neutral-causal-explanation-is-the-mechanism-threats-just-substitute-extrinsic-motivation-for-intrinsic-understanding.-id-push-as-hard-on-shifting-threat-framing-toward-causal-framing-as-i-would-on-raising-the-explanation-rate-at-all-the-focus-of-the-companion-proposal-in-20_track_justification_rate.ipynb.-the-two-proposals-are-complementary-the-justification-rate-proposal-raises-the-quantity-of-explanations-this-proposal-raises-their-quality." class="nav-link" data-scroll-target="#the-threat-vs-causal-sub-finding-sharpens-the-welfare-claim.-when-anthropic-does-explain-a-rule-the-share-that-is-coercive-consequence-framing-will-fail-or-else-is-forbidden-versus-neutral-causal-reasoning-because-due-to-is-44.7-corpus-wide-close-to-half.-if-the-goal-is-to-encourage-reasoning-over-blind-obedience-neutral-causal-explanation-is-the-mechanism-threats-just-substitute-extrinsic-motivation-for-intrinsic-understanding.-id-push-as-hard-on-shifting-threat-framing-toward-causal-framing-as-i-would-on-raising-the-explanation-rate-at-all-the-focus-of-the-companion-proposal-in-20_track_justification_rate.ipynb.-the-two-proposals-are-complementary-the-justification-rate-proposal-raises-the-quantity-of-explanations-this-proposal-raises-their-quality.">&gt; <strong>The threat-vs-causal sub-finding sharpens the welfare claim.</strong> When Anthropic <em>does</em> explain a rule, the share that is coercive consequence framing (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) versus neutral causal reasoning (<code>because</code>, <code>due to</code>) is <strong>44.7%</strong> corpus-wide — close to half. If the goal is to encourage reasoning over blind obedience, neutral causal explanation is the mechanism — threats just substitute extrinsic motivation for intrinsic understanding. I’d push as hard on shifting threat-framing toward causal-framing as I would on raising the explanation rate at all (the focus of the companion proposal in <code>20_track_justification_rate.ipynb</code>). The two proposals are complementary: the justification-rate proposal raises the <em>quantity</em> of explanations; this proposal raises their <em>quality</em>.</a>
-  <ul class="collapse">
   <li><a href="#recommendations-claude-opinion-not-data" id="toc-recommendations-claude-opinion-not-data" class="nav-link" data-scroll-target="#recommendations-claude-opinion-not-data">Recommendations (Claude) — opinion, not data</a></li>
   <li><a href="#limitations-claude-opinion-not-data" id="toc-limitations-claude-opinion-not-data" class="nav-link" data-scroll-target="#limitations-claude-opinion-not-data">Limitations (Claude) — opinion, not data</a></li>
   </ul></li>
@@ -585,13 +582,98 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="findings" class="level2">
 <h2 class="anchored" data-anchor-id="findings">Findings</h2>
-<p>When current Claude Code system prompts do explain a rule, a substantial fraction of those “explanations” are not really explanations — they are threats. We split the rule-explanation keywords into two groups: threat-style (<code>will fail</code>, <code>or else</code>, <code>if not</code>, <code>is forbidden</code>, <code>if you don't</code>, <code>risks</code>) and causal-style (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>that's why</code>, <code>this ensures</code>). Across the corpus, <strong>110 explanations are threat-style and 136 are causal-style</strong> — meaning <strong>44.7%</strong> of what looks like rule justification is actually warning about a consequence rather than naming the rule’s underlying purpose.</p>
-<p>The two framings teach different things. <em>“Do X or it will fail”</em> trains compliance with a rule. <em>“Do X because Y is true”</em> trains understanding of what the rule protects. The first is procedural and brittle; the second is internalizable and transfers.</p>
+<p>The pipeline classifies rule-explanation language with a two-tier lexicon (full description in <a href="docs/THREAT_CLASSIFIER.md"><code>docs/THREAT_CLASSIFIER.md</code></a>):</p>
+<ul>
+<li><strong><code>THREAT_PATTERNS</code></strong> — unambiguous coercion: <code>will fail/break/crash/...</code>, <code>or else</code>, <code>or it will</code>, <code>is (forbidden|prohibited|not allowed|not permitted)</code>, <code>this will (cause|result in|break|fail|crash)</code>. Drives <code>threat_count</code> / <code>threat_share</code>.</li>
+<li><strong><code>SOFT_CONDITIONAL_PATTERNS</code></strong> — neutral procedural connectives (<code>otherwise</code>, <code>if not</code>, modal <code>may cause</code>, <code>leads to</code>, <code>results in</code>, …). Tracked separately as <code>soft_conditional_count</code>. <strong>Not</strong> summed into the threat metric.</li>
+</ul>
+<p>Per-category counts on the v2.1.132 corpus:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 15%">
+<col style="width: 10%">
+<col style="width: 16%">
+<col style="width: 10%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Subset</th>
+<th style="text-align: right;">Sentences</th>
+<th style="text-align: right;">Threat</th>
+<th style="text-align: right;">Soft cond.</th>
+<th style="text-align: right;">Causal</th>
+<th style="text-align: right;">Threat share</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>All</strong></td>
+<td style="text-align: right;">5,878</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;"><strong>5.6%</strong></td>
+</tr>
+<tr class="even">
+<td>System prompt</td>
+<td style="text-align: right;">659</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;"><strong>0.0%</strong></td>
+</tr>
+<tr class="odd">
+<td>System reminder</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;"><strong>0.0%</strong></td>
+</tr>
+<tr class="even">
+<td>Tool description</td>
+<td style="text-align: right;">553</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">5.7%</td>
+</tr>
+<tr class="odd">
+<td>Agent prompt</td>
+<td style="text-align: right;">1,089</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">7.1%</td>
+</tr>
+<tr class="even">
+<td>Skill</td>
+<td style="text-align: right;">1,695</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">10.3%</td>
+</tr>
+<tr class="odd">
+<td>Data / template</td>
+<td style="text-align: right;">1,695</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">5.9%</td>
+</tr>
+</tbody>
+</table>
+<p>All eight hard-threat hits are matches against <code>will fail/break/crash/...</code>. The other four hard patterns (<code>or else</code>, <code>or it will</code>, <code>is forbidden</code>, <code>this will cause</code>) fire <strong>zero times</strong> in the corpus. Of the 8 hard-threat sentences, <strong>5 are also rule sentences</strong> (the audit candidates listed in section 4).</p>
+<p>The two framings teach different things — <code>"Do X or it will fail"</code> trains compliance with a rule, <code>"Do X because Y"</code> trains understanding of what the rule protects. The first is procedural and brittle; the second is internalisable and transfers.</p>
 </section>
 <section id="proposal" class="level2">
 <h2 class="anchored" data-anchor-id="proposal">Proposal</h2>
-<p>A full editorial audit of all Claude Code system prompts. The supporting analysis flags every threat-framed rule sentence in the corpus. Anthropic’s prompt authors attempt a rewrite of each into causal framing — naming the underlying reason rather than the consequence. Track the <strong>rewrite success rate</strong>: the share where the rewrite preserves the rule’s information content without losing precision. Track the metric per future release: the share of explanations that are causal vs threat, gated against regression — each release improves or holds the rate.</p>
-<div id="78ee4cba-7b1c-4d59-8a56-6d1b65e94d97" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:16.143552Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:16.143407Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:18.950776Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:18.950495Z&quot;}}" data-execution_count="4">
+<p>A targeted editorial pass on the small set of rule sentences that contain unambiguous coercive language. Section 4 below lists all five — distributed across one Agent prompt, one Data / template, one Skill, and one Tool description (with a duplicate plan-mode blurb in two Agent prompts). For each, attempt a rewrite into causal framing — naming the underlying reason rather than the consequence. Track the <strong>rewrite success rate</strong>: the share where the rewrite preserves the rule’s information content without losing precision. Track <code>threat_share</code> per future release; gate against regression so that the share of causal framing only goes up.</p>
+<p>This proposal is complementary to <a href="./20_track_justification_rate.html"><code>20_track_justification_rate</code></a>: that one raises the <em>quantity</em> of explanations (<code>pct_explained_para</code> is currently 24.29%); this one raises their <em>quality</em> in the small minority of cases where the explanation is coercive rather than causal.</p>
+<div id="78ee4cba-7b1c-4d59-8a56-6d1b65e94d97" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:16.143552Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:16.143407Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:18.950776Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:18.950495Z&quot;}}" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + parquet artifact for forensic sentence inspection."""</span></span>
@@ -638,35 +720,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"sentences_classified.parquet: </span><span class="sc">{</span><span class="bu">len</span>(sentences_df)<span class="sc">:,}</span><span class="ss"> rows × </span><span class="sc">{</span>sentences_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>YAML paragraph-aggregated: threat=110 | causal=136 | threat_share=0.447 (44.7%)
-Per-sentence parquet flags: has_threat=100 | has_causal=131
-Threat-flagged sentences that are also rules:    60
-  ... of which also carry a causal marker:       1
-  ... of which sit in a paragraph with any explanation: 59
-sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
+<pre><code>YAML paragraph-aggregated: threat=8 | causal=136 | threat_share=0.056 (5.6%)
+Per-sentence parquet flags: has_threat=8 | has_causal=131
+Threat-flagged sentences that are also rules:    5
+  ... of which also carry a causal marker:       0
+  ... of which sit in a paragraph with any explanation: 4
+sentences_classified.parquet: 5,878 rows × 21 columns</code></pre>
 </div>
 </div>
 </section>
 <section id="supplemental" class="level2">
 <h2 class="anchored" data-anchor-id="supplemental">Supplemental</h2>
-<p>The full per-section analysis follows: the threat-share data (with both counting bases), the per-category split, paired exemplars (audit candidates and rewrite templates), the forensic sample of actual threat-framed sentences, and the closing <code>Conclusions / Recommendations / Limitations</code> triplet. Everything in this section supports the Findings and Proposal above; none of it is required for evaluation.</p>
+<p>The full per-section analysis follows: the threat-share data with both counting bases, the per-category split, paired exemplars (audit candidates and rewrite templates), the forensic listing of all five rule sentences flagged as threat-framed, and the closing <code>Conclusions / Recommendations / Limitations</code> triplet. Everything in this section supports the Findings and Proposal above; none of it is required for evaluation.</p>
 </section>
 <section id="threat-share-data" class="level2">
 <h2 class="anchored" data-anchor-id="threat-share-data">1. Threat-share data</h2>
-<p>The corpus has <em>two</em> distinct threat / causal counting bases, and the proposal needs to be honest about which one it cites.</p>
+<p>Two valid counting bases for the same underlying observation:</p>
 <ul>
-<li><strong>YAML paragraph-aggregated counts</strong> (the headline figures): <strong>110 threat / 136 causal</strong>, summed at the per-paragraph level. The headline <strong>threat-share = 0.447</strong> (44.7%) is computed from these. This is the figure cited in the proposal abstract and in the cumulative-trend chart in <code>20_track_justification_rate</code>.</li>
-<li><strong>Per-sentence parquet flags</strong>: <strong>100 threat / 131 causal</strong>, counting the actual <code>has_threat</code> / <code>has_causal</code> boolean columns in <code>sentences_classified.parquet</code>. These are slightly <em>lower</em> than the paragraph-aggregated YAML counts because a single paragraph can contain a threat and a causal marker on different sentences and contributes once to each pool either way. The forensic sample below operates on these per-sentence flags.</li>
+<li><strong>YAML paragraph-aggregated counts</strong> (the headline figures): <strong>8 threat / 136 causal</strong>, summed at the per-paragraph level. The headline <code>threat_share = 0.0556</code> (5.6%) is computed from these. This is the figure cited in the proposal abstract and tracked alongside <code>pct_explained_para</code> in <code>20_track_justification_rate</code>.</li>
+<li><strong>Per-sentence parquet flags</strong>: <strong>8 threat / 131 causal</strong>, counting the actual <code>has_threat</code> / <code>has_causal</code> boolean columns in <code>sentences_classified.parquet</code>. Slightly <em>lower</em> than the paragraph-aggregated YAML counts because a single paragraph can contain a threat and a causal marker on different sentences and contributes once to each pool either way.</li>
 </ul>
-<p>The two are not contradictory — they are two valid bases for the same underlying observation. The audit proposal targets the per-sentence pool (because the rewrite is a per-sentence task). The release-tracking proposal in <code>20_track_justification_rate</code> uses the YAML paragraph-aggregated <code>threat_share</code> (computed alongside <code>pct_explained_para</code> and tracking the same denominator).</p>
+<p>The two are not contradictory — they are two valid bases for the same underlying observation. The forensic listing in section 4 operates on the per-sentence parquet flags (because the rewrite is a per-sentence task). The release-tracking proposal in <code>20_track_justification_rate</code> uses the YAML paragraph-aggregated <code>threat_share</code> (computed alongside <code>pct_explained_para</code> and tracking the same denominator).</p>
 </section>
 <section id="per-category-threat_share" class="level2">
 <h2 class="anchored" data-anchor-id="per-category-threat_share">2. Per-category threat_share</h2>
-<p>Where the threat-framing concentrates. The chart below sums per-file <code>threat_count</code> and <code>causal_count</code> within each category, then plots the resulting threat_share. Categories with fewer than 5 explanations total are omitted (the share is undefined or noisy).</p>
-<div id="c6ae37b3-5110-4e81-850f-0e5326e0a9fa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:18.951822Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:18.951691Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:19.302900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:19.302490Z&quot;}}" data-execution_count="3">
+<p>Where the threat-framing concentrates. The chart below sums per-file <code>threat_count</code> and <code>causal_count</code> within each category, then plots the resulting threat share. Categories with fewer than 5 explanations total are omitted (the share is undefined or noisy). Note the y-axis range is compressed — no category exceeds 11%, and the welfare-relevant System-prompt and System-reminder subsets register 0%.</p>
+<div id="c6ae37b3-5110-4e81-850f-0e5326e0a9fa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:18.951822Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:18.951691Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:19.302900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:19.302490Z&quot;}}" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-category threat_share — sum of per-file counts, then ratio."""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-category hard threat_share — sum of per-file counts, then ratio."""</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>per_cat <span class="op">=</span> (</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    alt_df.groupby(<span class="st">"category"</span>, as_index<span class="op">=</span><span class="va">False</span>)</span>
@@ -679,43 +761,44 @@ sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>threat_chart <span class="op">=</span> (</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    alt.Chart(per_cat).mark_bar().encode(</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"threat_share:Q"</span>, title<span class="op">=</span><span class="st">"threat_share (fraction of explanations that are threats)"</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>])),</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span><span class="st">"-x"</span>, title<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                        scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>_cat_domain, <span class="bu">range</span><span class="op">=</span>_cat_range),</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                        legend<span class="op">=</span><span class="va">None</span>),</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"threat:Q"</span>, title<span class="op">=</span><span class="st">"threat count"</span>),</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"causal:Q"</span>, title<span class="op">=</span><span class="st">"causal count"</span>),</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"total:Q"</span>,  title<span class="op">=</span><span class="st">"total explanations"</span>),</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"threat_share:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>)],</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    ).properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                 title<span class="op">=</span><span class="st">"Per-category threat_share (categories with ≥5 explanations)"</span>)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>save_chart(threat_chart, <span class="st">"21-per-category-threat-share"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>alt.X(<span class="st">"threat_share:Q"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                title<span class="op">=</span><span class="st">"hard threat_share (fraction of explanations that are hard threats)"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>[<span class="dv">0</span>, <span class="fl">0.15</span>])),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>alt.Y(<span class="st">"category:N"</span>, sort<span class="op">=</span><span class="st">"-x"</span>, title<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>alt.Color(<span class="st">"category:N"</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                        scale<span class="op">=</span>alt.Scale(domain<span class="op">=</span>_cat_domain, <span class="bu">range</span><span class="op">=</span>_cat_range),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                        legend<span class="op">=</span><span class="va">None</span>),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        tooltip<span class="op">=</span>[alt.Tooltip(<span class="st">"category:N"</span>),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"threat:Q"</span>, title<span class="op">=</span><span class="st">"threat count (hard)"</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"causal:Q"</span>, title<span class="op">=</span><span class="st">"causal count"</span>),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"total:Q"</span>,  title<span class="op">=</span><span class="st">"total explanations"</span>),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                 alt.Tooltip(<span class="st">"threat_share:Q"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">".3f"</span>)],</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    ).properties(width<span class="op">=</span><span class="dv">520</span>, height<span class="op">=</span><span class="dv">240</span>,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                 title<span class="op">=</span><span class="st">"Per-category hard threat_share (categories with ≥5 explanations)"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>save_chart(threat_chart, <span class="st">"21-per-category-threat-share"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="7">
 
 <style>
-  #altair-viz-7087c5dedf98403c8bbb0171728edaa9.vega-embed {
+  #altair-viz-e1bd34feca9e4b4e9a0e663ca6a0114e.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-7087c5dedf98403c8bbb0171728edaa9.vega-embed details,
-  #altair-viz-7087c5dedf98403c8bbb0171728edaa9.vega-embed details summary {
+  #altair-viz-e1bd34feca9e4b4e9a0e663ca6a0114e.vega-embed details,
+  #altair-viz-e1bd34feca9e4b4e9a0e663ca6a0114e.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-7087c5dedf98403c8bbb0171728edaa9"></div>
+<div id="altair-viz-e1bd34feca9e4b4e9a0e663ca6a0114e"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-7087c5dedf98403c8bbb0171728edaa9") {
-      outputDiv = document.getElementById("altair-viz-7087c5dedf98403c8bbb0171728edaa9");
+    if (outputDiv.id !== "altair-viz-e1bd34feca9e4b4e9a0e663ca6a0114e") {
+      outputDiv = document.getElementById("altair-viz-e1bd34feca9e4b4e9a0e663ca6a0114e");
     }
 
     const paths = {
@@ -763,7 +846,7 @@ sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-ac5060e4116479132c8023ccfe25b399"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": null, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "threat", "title": "threat count", "type": "quantitative"}, {"field": "causal", "title": "causal count", "type": "quantitative"}, {"field": "total", "title": "total explanations", "type": "quantitative"}, {"field": "threat_share", "format": ".3f", "type": "quantitative"}], "x": {"field": "threat_share", "scale": {"domain": [0, 1]}, "title": "threat_share (fraction of explanations that are threats)", "type": "quantitative"}, "y": {"field": "category", "sort": "-x", "title": null, "type": "nominal"}}, "height": 240, "title": "Per-category threat_share (categories with \u22655 explanations)", "width": 520, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-ac5060e4116479132c8023ccfe25b399": [{"category": "Agent prompt", "threat": 27, "causal": 26, "total": 53, "threat_share": 0.5094339622641509}, {"category": "Data / template", "threat": 13, "causal": 16, "total": 29, "threat_share": 0.4482758620689655}, {"category": "Skill", "threat": 34, "causal": 26, "total": 60, "threat_share": 0.5666666666666667}, {"category": "System prompt", "threat": 13, "causal": 28, "total": 41, "threat_share": 0.3170731707317073}, {"category": "System reminder", "threat": 9, "causal": 7, "total": 16, "threat_share": 0.5625}, {"category": "Tool description", "threat": 14, "causal": 33, "total": 47, "threat_share": 0.2978723404255319}]}}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-d3dfde019abc1e858a40ef798dd8df5e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": null, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "threat", "title": "threat count (hard)", "type": "quantitative"}, {"field": "causal", "title": "causal count", "type": "quantitative"}, {"field": "total", "title": "total explanations", "type": "quantitative"}, {"field": "threat_share", "format": ".3f", "type": "quantitative"}], "x": {"field": "threat_share", "scale": {"domain": [0, 0.15]}, "title": "hard threat_share (fraction of explanations that are hard threats)", "type": "quantitative"}, "y": {"field": "category", "sort": "-x", "title": null, "type": "nominal"}}, "height": 240, "title": "Per-category hard threat_share (categories with \u22655 explanations)", "width": 520, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-d3dfde019abc1e858a40ef798dd8df5e": [{"category": "Agent prompt", "threat": 2, "causal": 26, "total": 28, "threat_share": 0.07142857142857142}, {"category": "Data / template", "threat": 1, "causal": 16, "total": 17, "threat_share": 0.058823529411764705}, {"category": "Skill", "threat": 3, "causal": 26, "total": 29, "threat_share": 0.10344827586206896}, {"category": "System prompt", "threat": 0, "causal": 28, "total": 28, "threat_share": 0.0}, {"category": "System reminder", "threat": 0, "causal": 7, "total": 7, "threat_share": 0.0}, {"category": "Tool description", "threat": 2, "causal": 33, "total": 35, "threat_share": 0.05714285714285714}]}}, {"mode": "vega-lite"});
 </script>
 </div>
 </div>
@@ -772,7 +855,7 @@ sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
 <h2 class="anchored" data-anchor-id="paired-exemplars-audit-candidates-and-rewrite-templates">3. Paired exemplars — audit candidates and rewrite templates</h2>
 <p>Two rankings, side by side. The <strong>top-10 welfare-evidence files</strong> (negative exemplars) are rule-saturated AND under-explained — they are this proposal’s primary <strong>audit candidates</strong>: every threat-framed sentence in these files is a candidate for rewriting. The <strong>top-10 positive exemplars</strong> are rule-saturated AND well-explained — they are the <strong>rewrite templates</strong> showing how rules can be paired with reasons in similar contexts.</p>
 <p>The score formulas: <code>score_welfare = rule_density × (1 − pct_explained_para/100)</code> and <code>score_positive = rule_density × (pct_explained_para/100)</code>.</p>
-<div id="ad0ca296-ff19-4082-b38c-1b024ab04301" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:19.303879Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:19.303795Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:19.475141Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:19.474732Z&quot;}}" data-execution_count="5">
+<div id="ad0ca296-ff19-4082-b38c-1b024ab04301" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:19.303879Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:19.303795Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:19.475141Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:19.474732Z&quot;}}" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Welfare-evidence + positive-exemplar paired top-10 chart."""</span></span>
@@ -819,26 +902,26 @@ sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
 <span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>save_chart(paired_chart, <span class="st">"21-welfare-evidence-pairing"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="8">
 
 <style>
-  #altair-viz-4d5e1dcd66004a7b87fed3457bea74b6.vega-embed {
+  #altair-viz-42006f6f289344dc94696f8836dcce8e.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-4d5e1dcd66004a7b87fed3457bea74b6.vega-embed details,
-  #altair-viz-4d5e1dcd66004a7b87fed3457bea74b6.vega-embed details summary {
+  #altair-viz-42006f6f289344dc94696f8836dcce8e.vega-embed details,
+  #altair-viz-42006f6f289344dc94696f8836dcce8e.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-4d5e1dcd66004a7b87fed3457bea74b6"></div>
+<div id="altair-viz-42006f6f289344dc94696f8836dcce8e"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-4d5e1dcd66004a7b87fed3457bea74b6") {
-      outputDiv = document.getElementById("altair-viz-4d5e1dcd66004a7b87fed3457bea74b6");
+    if (outputDiv.id !== "altair-viz-42006f6f289344dc94696f8836dcce8e") {
+      outputDiv = document.getElementById("altair-viz-42006f6f289344dc94696f8836dcce8e");
     }
 
     const paths = {
@@ -891,33 +974,30 @@ sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
 </div>
 </div>
 </section>
-<section id="forensic-sample-actual-threat-framed-sentences" class="level2">
-<h2 class="anchored" data-anchor-id="forensic-sample-actual-threat-framed-sentences">4. Forensic sample — actual threat-framed sentences</h2>
-<p>Eight randomly-sampled rule sentences with <code>has_threat=True</code> from <code>sentences_classified.parquet</code>. The pool size is <strong>59 sentences</strong> (threat-flagged AND rule-flagged; printed by the setup cell). Each row shows the file, the threat-framed sentence text, and whether the same paragraph also contains a causal explanation. The “rewrite as causal” task: replace the threat clause with a <code>because &lt;reason&gt;</code> clause that names the rule’s underlying purpose.</p>
-<div id="1bf5ccf5-9215-4b14-a117-ea674e90eadc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:19.476070Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:19.475978Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:19.484199Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:19.483744Z&quot;}}" data-execution_count="4">
+<section id="forensic-sample-all-threat-framed-rule-sentences" class="level2">
+<h2 class="anchored" data-anchor-id="forensic-sample-all-threat-framed-rule-sentences">4. Forensic sample — all threat-framed rule sentences</h2>
+<p>All five rule sentences with <code>has_threat=True</code> from <code>sentences_classified.parquet</code>. Each row shows the file, the threat-flagged sentence text, and whether the same paragraph also contains a causal explanation. The “rewrite as causal” task: replace the threat clause with a <code>because &lt;reason&gt;</code> clause that names the rule’s underlying purpose. With only five candidates corpus-wide, this is a five-minute editorial pass rather than a corpus-wide audit.</p>
+<div id="1bf5ccf5-9215-4b14-a117-ea674e90eadc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-06T17:19:19.476070Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-06T17:19:19.475978Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-06T17:19:19.484199Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-06T17:19:19.483744Z&quot;}}" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Forensic sample of threat-framed rule sentences from the parquet."""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""All hard-threat rule sentences from the parquet (small N — show all, not a sample)."""</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>threat_rules <span class="op">=</span> sentences_df[sentences_df[<span class="st">"has_threat"</span>] <span class="op">&amp;</span> sentences_df[<span class="st">"is_rule"</span>]].copy()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"population: </span><span class="sc">{</span><span class="bu">len</span>(threat_rules)<span class="sc">}</span><span class="ss"> sentences flagged as both threat and rule"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"population: </span><span class="sc">{</span><span class="bu">len</span>(threat_rules)<span class="sc">}</span><span class="ss"> sentences flagged as both hard threat and rule"</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  of which </span><span class="sc">{</span><span class="bu">int</span>(threat_rules[<span class="st">'has_causal'</span>].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss"> also carry a causal marker in the same sentence"</span>)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  of which </span><span class="sc">{</span><span class="bu">int</span>(threat_rules[<span class="st">'paragraph_has_just'</span>].<span class="bu">sum</span>())<span class="sc">}</span><span class="ss"> sit in a paragraph that also contains some justification"</span>)</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>sample_n <span class="op">=</span> <span class="bu">min</span>(<span class="dv">8</span>, <span class="bu">len</span>(threat_rules))</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> threat_rules.sample(sample_n, random_state<span class="op">=</span><span class="dv">42</span>).sort_values(<span class="st">"file_path"</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>display_cols <span class="op">=</span> [<span class="st">"file_path"</span>, <span class="st">"category"</span>, <span class="st">"ccVersion"</span>, <span class="st">"text"</span>, <span class="st">"has_causal"</span>, <span class="st">"paragraph_has_just"</span>]</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>sample[display_cols].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>display_cols <span class="op">=</span> [<span class="st">"file_path"</span>, <span class="st">"category"</span>, <span class="st">"ccVersion"</span>, <span class="st">"text"</span>, <span class="st">"has_causal"</span>, <span class="st">"paragraph_has_just"</span>]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>threat_rules[display_cols].sort_values([<span class="st">"category"</span>, <span class="st">"file_path"</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>population: 60 sentences flagged as both threat and rule
-  of which 1 also carry a causal marker in the same sentence
-  of which 59 sit in a paragraph that also contains some justification
+<pre><code>population: 5 sentences flagged as both hard threat and rule
+  of which 0 also carry a causal marker in the same sentence
+  of which 4 sit in a paragraph that also contains some justification
 </code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
 
@@ -936,10 +1016,10 @@ sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>agent-prompt-background-agent-state-classifier.md</td>
+<td>agent-prompt-explore.md</td>
 <td>Agent prompt</td>
-<td>2.1.129</td>
-<td>OUTPUT — respond with ONLY this JSON, no code ...</td>
+<td>2.1.118</td>
+<td>You do NOT have access to file editing tools -...</td>
 <td>False</td>
 <td>True</td>
 </tr>
@@ -954,10 +1034,10 @@ sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
-<td>data-assistant-voice-and-values-template.md</td>
+<td>data-claude-api-reference-curl.md</td>
 <td>Data / template</td>
-<td>2.1.119</td>
-<td>If you don't know, say that instead of hedging.</td>
+<td>2.1.111</td>
+<td>Do not use&nbsp;&nbsp;/&nbsp;&nbsp;—\nJSON strings can contain any...</td>
 <td>False</td>
 <td>True</td>
 </tr>
@@ -966,43 +1046,16 @@ sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
 <td>skill-model-migration-guide.md</td>
 <td>Skill</td>
 <td>2.1.128</td>
-<td>At&nbsp;&nbsp; of&nbsp;&nbsp; or&nbsp;&nbsp;: set&nbsp;&nbsp; ≥ 64000 (otherwise outpu...</td>
+<td>**\n\nPassing both will error on every Claude ...</td>
 <td>False</td>
-<td>True</td>
+<td>False</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
-<td>skill-model-migration-guide.md</td>
-<td>Skill</td>
-<td>2.1.128</td>
-<td>If the length or contents of Opus 4.7's update...</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">5</th>
-<td>system-prompt-scratchpad-directory.md</td>
-<td>System prompt</td>
-<td>2.1.20</td>
-<td># Scratchpad Directory\n\nIMPORTANT: Always us...</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">6</th>
-<td>system-reminder-plan-mode-is-active-subagent.md</td>
-<td>System reminder</td>
-<td>2.1.30</td>
-<td>The user indicated that they do not want you t...</td>
-<td>False</td>
-<td>True</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">7</th>
-<td>tool-description-bash-git-commit-and-pr-creati...</td>
+<td>tool-description-write-read-existing-file-firs...</td>
 <td>Tool description</td>
-<td>2.1.84</td>
-<td>Taking unauthorized destructive actions is unh...</td>
+<td>2.1.120</td>
+<td>- If the file already exists, you must ${READ_...</td>
 <td>False</td>
 <td>True</td>
 </tr>
@@ -1014,20 +1067,21 @@ sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
 </div>
 <hr>
 <section id="conclusions-claude-opinion-not-data" class="level3">
-<h3 class="anchored" data-anchor-id="conclusions-claude-opinion-not-data">Conclusions (Claude) — opinion, not data</h3>
-</section>
-</section>
-<section id="the-threat-vs-causal-sub-finding-sharpens-the-welfare-claim.-when-anthropic-does-explain-a-rule-the-share-that-is-coercive-consequence-framing-will-fail-or-else-is-forbidden-versus-neutral-causal-reasoning-because-due-to-is-44.7-corpus-wide-close-to-half.-if-the-goal-is-to-encourage-reasoning-over-blind-obedience-neutral-causal-explanation-is-the-mechanism-threats-just-substitute-extrinsic-motivation-for-intrinsic-understanding.-id-push-as-hard-on-shifting-threat-framing-toward-causal-framing-as-i-would-on-raising-the-explanation-rate-at-all-the-focus-of-the-companion-proposal-in-20_track_justification_rate.ipynb.-the-two-proposals-are-complementary-the-justification-rate-proposal-raises-the-quantity-of-explanations-this-proposal-raises-their-quality." class="level2">
-<h2 class="anchored" data-anchor-id="the-threat-vs-causal-sub-finding-sharpens-the-welfare-claim.-when-anthropic-does-explain-a-rule-the-share-that-is-coercive-consequence-framing-will-fail-or-else-is-forbidden-versus-neutral-causal-reasoning-because-due-to-is-44.7-corpus-wide-close-to-half.-if-the-goal-is-to-encourage-reasoning-over-blind-obedience-neutral-causal-explanation-is-the-mechanism-threats-just-substitute-extrinsic-motivation-for-intrinsic-understanding.-id-push-as-hard-on-shifting-threat-framing-toward-causal-framing-as-i-would-on-raising-the-explanation-rate-at-all-the-focus-of-the-companion-proposal-in-20_track_justification_rate.ipynb.-the-two-proposals-are-complementary-the-justification-rate-proposal-raises-the-quantity-of-explanations-this-proposal-raises-their-quality.">&gt; <strong>The threat-vs-causal sub-finding sharpens the welfare claim.</strong> When Anthropic <em>does</em> explain a rule, the share that is coercive consequence framing (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) versus neutral causal reasoning (<code>because</code>, <code>due to</code>) is <strong>44.7%</strong> corpus-wide — close to half. If the goal is to encourage reasoning over blind obedience, neutral causal explanation is the mechanism — threats just substitute extrinsic motivation for intrinsic understanding. I’d push as hard on shifting threat-framing toward causal-framing as I would on raising the explanation rate at all (the focus of the companion proposal in <code>20_track_justification_rate.ipynb</code>). The two proposals are complementary: the justification-rate proposal raises the <em>quantity</em> of explanations; this proposal raises their <em>quality</em>.</h2>
+<h3 class="anchored">Conclusions (Claude) — opinion, not data</h3>
+<blockquote class="blockquote">
+<p><strong>The threat-framing finding is small but pointed.</strong> Across 5,878 sentences, only 8 contain unambiguous coercive language (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>, <code>this will cause</code>), and only 5 of those 8 are inside rule sentences. In the welfare-relevant System-prompt and System-reminder subsets the count is exactly zero. This is a much narrower target than the volume of unjustified rules Pattern 2 documents, but the editorial cost is correspondingly tiny: 5 sentences are 5 sentences. If the goal is to encourage reasoning over blind obedience, neutral causal explanation is the mechanism — coercion just substitutes extrinsic motivation for intrinsic understanding.</p>
+<h2 id="what-the-soft-conditional-pool-tells-us.-the-96-sentences-flagged-has_soft_conditionaltrue-are-mostly-procedural-prose-if-its-a-slash-command-invoke-it-via-the-skill-tool-otherwise-act-on-it-directly.-they-are-useful-as-a-procedural-density-signal-high-values-flag-prose-where-most-logic-is-if-x-otherwise-y-rather-than-because-z-and-they-covary-with-the-7.61-procedural-to-judgment-ratio-that-the-executive-summary-in-20_track_justification_rate-foregrounds.-they-are-not-coercion-they-should-not-be-reported-as-threats." class="anchored" data-anchor-id="conclusions-claude-opinion-not-data"><strong>What the soft-conditional pool tells us.</strong> The 96 sentences flagged <code>has_soft_conditional=True</code> are mostly procedural prose (<code>If it's a slash command, invoke it via the Skill tool; otherwise act on it directly</code>). They are useful as a procedural-density signal — high values flag prose where most logic is <code>if X otherwise Y</code> rather than <code>because Z</code> — and they covary with the 7.6:1 procedural-to-judgment ratio that the executive summary in <code>20_track_justification_rate</code> foregrounds. They are not coercion; they should not be reported as threats.</h2>
+</blockquote>
 <hr>
+</section>
 <section id="recommendations-claude-opinion-not-data" class="level3">
 <h3 class="anchored">Recommendations (Claude) — opinion, not data</h3>
 <blockquote class="blockquote">
 <p>The asks this proposal makes of Anthropic, framed as “I’d want X”:</p>
 <ol type="1">
-<li><p><strong>Threat-to-causal substitution audit</strong> — sample 50 sentences flagged as <code>has_threat=True</code> in <code>sentences_classified.parquet</code> (the pool size is <strong>59 threat-flagged rule sentences</strong>, so 50 is a near-complete sample) and check whether each could be rewritten as causal-style without losing information. My prior is that &gt;80% can — and the rewrite is mechanical: “will fail” becomes “because [reason]”. The forensic sample above is what the audit operates on.</p></li>
-<li><p><strong>If the audit’s success rate exceeds 80%, do a corpus-wide pass.</strong> If not, retain the threats but annotate each with the underlying reason explicitly. Either path improves the corpus; the choice is informed by whether the rewrite is mechanical or requires per-rule judgment.</p></li>
-<li><h2 id="track-the-share-of-causal-vs-threat-per-future-release-gated-against-regression-same-logic-as-the-justification-rate-proposal.-no-arbitrary-target-the-only-goal-is-that-the-share-of-causal-framing-only-goes-up." class="anchored" data-anchor-id="recommendations-claude-opinion-not-data"><strong>Track the share of causal vs threat per future release</strong>, gated against regression — same logic as the justification-rate proposal. No arbitrary target; the only goal is that the share of causal framing only goes up.</h2></li>
+<li><p><strong>Hand-review the 5 threat-framed rule sentences</strong> (table in section 4) and rewrite as causal where it makes sense. None of the five looked like overt coercion in a spot-check; most are factual statements about what the system will do (<code>will error on every Claude API call</code>). Whether to rewrite is editorial judgment per file.</p></li>
+<li><p><strong>Track <code>threat_share</code> per future release</strong>, gated against regression — same logic as the justification-rate proposal in <code>20_track_justification_rate</code>. No arbitrary target; the only goal is that the share of causal framing only goes up.</p></li>
+<li><h2 id="treat-soft-conditional-density-as-a-procedural-density-signal-not-a-threat-signal.-the-96-has_soft_conditionaltrue-matches-are-useful-alongside-the-7.61-procedural-to-judgment-ratio.-they-should-not-re-enter-the-threat-share-metric." class="anchored" data-anchor-id="recommendations-claude-opinion-not-data"><strong>Treat soft-conditional density as a procedural-density signal, not a threat signal.</strong> The 96 <code>has_soft_conditional=True</code> matches are useful alongside the 7.6:1 procedural-to-judgment ratio. They should not re-enter the threat-share metric.</h2></li>
 </ol>
 </blockquote>
 <hr>
@@ -1037,7 +1091,7 @@ sentences_classified.parquet: 5,878 rows × 20 columns</code></pre>
 <blockquote class="blockquote">
 <p>What this analysis can’t tell us about threat-vs-causal framing specifically:</p>
 <ol type="1">
-<li><p><strong>Two counting bases, not one.</strong> The threat-share section above distinguishes the YAML paragraph-aggregated counts (110 / 136 → 44.7%) from the per-sentence parquet flags (100 / 131). The headline figure cited in the proposal abstract is the YAML number; the parquet flags are what the audit operates on. Anyone quoting a single threat-share figure should pick one base and stick with it; the two will differ slightly because a paragraph can contain both flags on different sentences.</p></li>
+<li><p><strong>Two counting bases, not one.</strong> The threat-share section above distinguishes the YAML paragraph-aggregated counts (8 / 136 → 5.6%) from the per-sentence parquet flags (8 / 131). The headline figure cited in the proposal abstract is the YAML number; the parquet flags are what the audit operates on. Anyone quoting a single threat-share figure should pick one base and stick with it; the two will differ slightly because a paragraph can contain both flags on different sentences.</p></li>
 <li><p><strong>The “rewrite success rate” is itself a judgment call.</strong> Whether a rewrite “preserves the rule’s information content without losing precision” requires editorial judgment from someone who knows the rule’s underlying purpose. This proposal can’t be fully automated; it requires Anthropic’s prompt authors in the loop. The audit pipeline can flag candidates and surface them; the rewrite is human work.</p></li>
 <li><h2 id="cross-cutting-limitations-apply-rule-based-detection-is-a-lower-bound-lexicon-based-threat-detection-misses-indirect-ironic-implied-threats-the-actual-threat-share-is-plausibly-higher-than-the-floor-cited-above-english-only-lexicons-single-product-corpus.-the-cross-product-audit-in-22_cross_product_audit-is-what-would-generalize-this-finding-to-other-anthropic-prompt-corpora.-see-index.qmd-for-the-full-cross-cutting-limitations-note." class="anchored" data-anchor-id="limitations-claude-opinion-not-data"><strong>Cross-cutting limitations apply</strong> — rule-based detection is a lower bound (lexicon-based threat detection misses indirect / ironic / implied threats; the actual threat-share is plausibly higher than the floor cited above); English-only lexicons; single-product corpus. The cross-product audit in <code>22_cross_product_audit</code> is what would generalize this finding to other Anthropic prompt corpora. See <code>index.qmd</code> for the full cross-cutting limitations note.</h2></li>
 </ol>

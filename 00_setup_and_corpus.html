@@ -615,7 +615,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong><code>per_sent</code> (rate per sentence)</strong> — <code>count / total_sentences</code>. Can be &gt; 1 if a feature appears multiple times per sentence on average. Answers: “how often per sentence does this feature appear?” Use this when comparing categories where typical sentence length differs — a category with long, dense sentences will have similar <code>pct</code> but higher <code>per_sent</code>.</p></li>
 <li><p><strong><code>sent_pct</code> (% of sentences with this flag)</strong> — <code>sentences_with_flag / total_sentences × 100</code>. Used only for the <code>sentence_register</code> multi-label classifier (defined in <code>01_analyzers_register</code>); per-class values can sum to more than 100% across the six classes, since a single sentence can carry several flags simultaneously.</p></li>
 </ul>
-<div id="255f5730-c331-4d40-aaa3-4a1eef5e5eb4" class="cell" data-execution_count="1">
+<div id="255f5730-c331-4d40-aaa3-4a1eef5e5eb4" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">--</span>quiet spacy python<span class="op">-</span>frontmatter pyarrow altair vl<span class="op">-</span>convert<span class="op">-</span>python</span>
@@ -632,7 +632,7 @@ You can now load the package via spacy.load('en_core_web_sm')
 </div>
 </div>
 </div>
-<div id="1c84a1e9-d125-4dcf-9f57-73d9eb2d6c5c" class="cell" data-execution_count="2">
+<div id="1c84a1e9-d125-4dcf-9f57-73d9eb2d6c5c" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Path configuration. Notebook lives at the project root (claude-prompts-analysis/).</span></span>
@@ -707,7 +707,7 @@ output:    corpus_docs.spacy, corpus_meta.parquet</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="a82db2ba-3ccf-4a9d-9b9b-ae9102b224c4" class="cell" data-execution_count="3">
+<div id="a82db2ba-3ccf-4a9d-9b9b-ae9102b224c4" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Load every .md file: parse HTML-comment frontmatter, strip code, categorize.</span></span>
@@ -770,7 +770,7 @@ output:    corpus_docs.spacy, corpus_meta.parquet</code></pre>
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"88e16d4dd115415ba45db8c2d45439d8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"07049514f18f4dfd8d75b974714f1e17","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -791,7 +791,7 @@ top 5 ccVersions: {'2.1.53': 47, '2.1.18': 23, '2.1.128': 18, '2.1.132': 17, '2.
 files with non-empty agentType: 5</code></pre>
 </div>
 </div>
-<div id="be05dc8e-00d8-431e-9e1c-c0fc3abe7ee1" class="cell" data-execution_count="4">
+<div id="be05dc8e-00d8-431e-9e1c-c0fc3abe7ee1" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Run the spaCy pipeline once, then cache:</span></span>
@@ -830,7 +830,7 @@ files with non-empty agentType: 5</code></pre>
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"3ecd71ba9e0a47c09d646d57d7620b1a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"f498d07e0ac743758737e379d0d2624b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stdout">

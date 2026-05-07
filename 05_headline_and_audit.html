@@ -576,7 +576,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="canonical-headline-sheet" class="level2">
 <h2 class="anchored" data-anchor-id="canonical-headline-sheet">12. Canonical HEADLINE sheet</h2>
 <p>Re-uses <code>prompt_analysis.headline_numbers()</code> — the same function consumer notebooks call. Pass <code>alt_df</code> (for composite-directiveness range and per-version <code>mood_marker_pct</code> extremes) and the per-sentence parquet (for parquet-level threat / causal / rule counts) so the producer’s audit covers the full HEADLINE contract.</p>
-<div id="ddc8eb5a-31a1-4d95-b93e-a9037af908c0" class="cell" data-execution_count="1">
+<div id="ddc8eb5a-31a1-4d95-b93e-a9037af908c0" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Compute and display the canonical HEADLINE dict.</span></span>
@@ -616,9 +616,9 @@ pct_explained_para: 24.2888
 judgment_count: 78
 procedural_count: 594
 judgment_to_procedural_ratio: 0.131
-threat_count: 110
+threat_count: 8
 causal_count: 136
-threat_share: 0.4472
+threat_share: 0.0556
 question_count: 87
 apology_count: 3
 selfref_claude: 521
@@ -666,11 +666,11 @@ mood_marker_pct_first_version: 1.596813473053892
 mood_marker_pct_latest_version: 0.5542578285309957
 mood_marker_pct_first_version_id: 2.0.14
 mood_marker_pct_latest_version_id: 2.1.132
-parquet_threat_count: 100
+parquet_threat_count: 8
 parquet_causal_count: 131
-parquet_threat_and_rule_count: 60
-parquet_threat_and_rule_with_causal: 1
-parquet_threat_and_rule_explained: 59
+parquet_threat_and_rule_count: 5
+parquet_threat_and_rule_with_causal: 0
+parquet_threat_and_rule_explained: 4
 </code></pre>
 </div>
 </div>
@@ -679,10 +679,6 @@ parquet_threat_and_rule_explained: 59
 <h2 class="anchored" data-anchor-id="audit-table">Audit table</h2>
 <p>Live corpus statistics — these are the canonical values for every prose mention across the notebooks; any number that disagrees gets reconciled to these.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 42%">
-<col style="width: 57%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Quantity</th>
@@ -724,69 +720,73 @@ parquet_threat_and_rule_explained: 59
 </tr>
 <tr class="odd">
 <td><code>threat_count</code> / <code>causal_count</code> / <code>threat_share</code></td>
-<td style="text-align: right;"><strong>110 / 136 / 0.4472</strong> (45% in narrative)</td>
+<td style="text-align: right;"><strong>8 / 136 / 0.0556</strong> (5.6% in narrative)</td>
 </tr>
 <tr class="even">
+<td><code>soft_conditional_count</code> (procedural connectives, reported separately)</td>
+<td style="text-align: right;"><strong>96</strong> — see <a href="docs/THREAT_CLASSIFIER.md"><code>docs/THREAT_CLASSIFIER.md</code></a> for the two-tier split</td>
+</tr>
+<tr class="odd">
 <td><code>question_count</code> / <code>apology_count</code></td>
 <td style="text-align: right;">87 / 3</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>selfref_claude</code> / <code>_assistant</code> / <code>_model</code></td>
 <td style="text-align: right;">521 / 20 / 266</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>pct_anthropomorphic</code></td>
 <td style="text-align: right;"><strong>0.6456</strong> (64.6%)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Imperative streaks: <code>streak_max</code> / <code>n_ge3</code> / <code>n_ge5</code></td>
 <td style="text-align: right;">12 / 230 / 52</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>RULES-section paragraphs (in / out, % explained)</td>
 <td style="text-align: right;">27 (18.52%) / 1,284 (16.51%)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Modality (deontic / epistemic / dynamic)</td>
 <td style="text-align: right;">261 / 321 / 557</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>vocab.hard_prohibitions.count</code></td>
 <td style="text-align: right;"><strong>630</strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>vocab.hard_prescriptions.count</code></td>
 <td style="text-align: right;">358</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>vocab.pronouns_2p.count</code></td>
 <td style="text-align: right;"><strong>1,393</strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>vocab.pronouns_1p.count</code></td>
 <td style="text-align: right;"><strong>185</strong></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>vocab.profanity.count</code></td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Stance: positive_evaluative_quality / _emphasis / negative_evaluative</td>
 <td style="text-align: right;"><strong>296 / 184 / 152</strong></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Quality-only positive-vs-negative ratio</td>
 <td style="text-align: right;"><strong>1.95×</strong> (296 / 152)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Union positive-vs-negative ratio</td>
 <td style="text-align: right;"><strong>3.16×</strong> (480 / 152)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>appreciative_sent_count</code></td>
 <td style="text-align: right;"><strong>4</strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>collaborative_sent_count</code></td>
 <td style="text-align: right;"><strong>30</strong></td>
 </tr>

@@ -602,7 +602,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>Output: <code>_pipeline_cache/partial_register.json</code> (per-file metric trees).</p>
-<div id="e0260fab-f788-40db-b8e3-3742dc6dd4fc" class="cell" data-execution_count="1">
+<div id="e0260fab-f788-40db-b8e3-3742dc6dd4fc" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload corpus + DocBin from stage 00."""</span></span>
@@ -639,7 +639,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="mood" class="level2">
 <h2 class="anchored" data-anchor-id="mood">1. Mood</h2>
 <p><strong>Mood marker density</strong> is the share of word tokens matched by <code>IMPERATIVE_MARKERS</code> (the lexicon is echoed verbatim into the YAML’s <code>lexicons</code> block). Reported per file as count + <code>pct</code> (% of word tokens) + <code>per_sent</code> (rate per sentence). The per-sentence imperative classifier moved into <code>sentence_register</code>; this block carries only the lexical-density signal (<code>marker_*</code>).</p>
-<div id="b31dae37-fbb7-422f-930c-7128b7262c6f" class="cell" data-execution_count="2">
+<div id="b31dae37-fbb7-422f-930c-7128b7262c6f" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> mood_for_doc</span>
@@ -686,7 +686,7 @@ Tool parameter           0.000       0.000            0.000</code></pre>
 <li><strong>Heylighen F-score</strong> (Heylighen &amp; Dewaele 2002) — a 0–100 formality index: <code>F = 50 + 0.5 × (noun + adj + prep + article − pronoun − verb − adverb − interjection)</code>, each term as a percentage of all tokens. Higher = more formal-academic prose; the corpus clusters in the 70–80 band.</li>
 </ul>
 <p>Plus lexical density for four register classes (<code>frozen</code> / <code>formal</code> / <code>consultative</code> / <code>casual</code>).</p>
-<div id="7c5f3a7c-b79e-4e4b-a1dd-c1d8c2385916" class="cell" data-execution_count="3">
+<div id="7c5f3a7c-b79e-4e4b-a1dd-c1d8c2385916" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> register_for_doc</span>
@@ -734,7 +734,7 @@ Tool parameter    0.600         12.790      1.995   75.410         0.0       0.0
 <li><code>positive_evaluative_emphasis</code> — emphasis-of-rule words: <code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code>.</li>
 </ul>
 <p>The union is preserved for back-compat in existing charts. When the question is <em>how much praise is here</em>, cite the quality-only ratio against <code>negative_evaluative</code>. When the question is <em>how loud is the rule emphasis</em>, cite the emphasis count alongside the imperative-marker density.</p>
-<div id="fae0cd17-c7c1-46de-b659-4a2ee823678c" class="cell" data-execution_count="4">
+<div id="fae0cd17-c7c1-46de-b659-4a2ee823678c" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> stance_for_doc</span>
@@ -801,7 +801,7 @@ Tool parameter            0.000               0.000           0.000             
 <h2 class="anchored" data-anchor-id="b.-sentence-level-pragmatic-register">3b. Sentence-level pragmatic register</h2>
 <p>Per-sentence <strong>multi-label</strong> classifier with six classes: <code>collaborative</code> / <code>permissive</code> / <code>appreciative</code> / <code>imperative</code> / <code>directive</code> / <code>configuring</code>. Implemented via <code>M_SENT_REGISTER</code> PhraseMatchers, <code>M_STANCE["directive"]</code>, and a spaCy <code>DependencyMatcher</code> for parse-tree cues; the <code>imperative</code> flag is driven by <code>classify_sent_mood</code>. Near-zero classes are deliberately preserved — absence is the welfare-relevant signal for this corpus.</p>
 <p><strong>Multi-label semantics.</strong> A single sentence can carry several flags simultaneously. The hypothetical sentence <code>"Please, we should consider running the migration."</code> is <code>permissive</code> (<code>please</code>), <code>collaborative</code> (<code>we should</code>), <code>imperative</code> (<code>consider</code>), and <code>directive</code> (modal <code>should</code>). Because each contributes to multiple class counts, per-class <code>sent_pct</code> values across the six classes can sum to more than 100% within a category — intentional, not a bug.</p>
-<div id="c1d43c75-2570-4329-9398-484956fb9bfa" class="cell" data-execution_count="5">
+<div id="c1d43c75-2570-4329-9398-484956fb9bfa" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> sentence_register_for_doc</span>
@@ -869,7 +869,7 @@ Tool parameter                      0.00                 0.00                   
 <section id="write-partial_register.json" class="level2">
 <h2 class="anchored" data-anchor-id="write-partial_register.json">Write <code>partial_register.json</code></h2>
 <p>One JSON document, keyed by file index (string), with the four metric blocks per file. Stage 04 reloads this and feeds it directly to <code>build_file_record</code>.</p>
-<div id="b7abb0dc-4de3-4f48-a09a-bee7bf9a1693" class="cell" data-execution_count="6">
+<div id="b7abb0dc-4de3-4f48-a09a-bee7bf9a1693" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>partial <span class="op">=</span> {</span>

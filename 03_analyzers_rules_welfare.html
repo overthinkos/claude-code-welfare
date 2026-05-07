@@ -611,7 +611,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>_pipeline_cache/partial_rules_welfare.json</code></li>
 <li><code>_pipeline_cache/sentences_partial.parquet</code> (stage 04 promotes this to the final <code>sentences_classified.parquet</code>)</li>
 </ul>
-<div id="38376d07-0e60-460e-8403-24c588e77d99" class="cell" data-execution_count="1">
+<div id="38376d07-0e60-460e-8403-24c588e77d99" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload corpus + DocBin from stage 00."""</span></span>
@@ -655,7 +655,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong><code>pct_explained_same</code></strong> — % of rule sentences whose own sentence contains a justification keyword (strict, e.g.&nbsp;<code>"Do not X because Y."</code>).</li>
 <li><strong><code>pct_explained_para</code></strong> — % of rule sentences with a justification keyword anywhere in their paragraph (e.g.&nbsp;<code>"Do not X. Y."</code>). The headline welfare metric.</li>
 </ul>
-<div id="094c86d3-581b-4f55-bf5d-8dd3e6768dbc" class="cell" data-execution_count="2">
+<div id="094c86d3-581b-4f55-bf5d-8dd3e6768dbc" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> rule_explanation_for_doc</span>
@@ -726,7 +726,7 @@ corpus rule sentences: 2285
 <li><strong><code>socratic</code></strong> — <code>question_count</code> (rhetorical-filtered) and <code>apology_count</code> (<code>unfortunately</code>, <code>we acknowledge</code>, <code>we know this is</code>).</li>
 <li><strong><code>address_form</code></strong> — counts of <code>selfref_claude</code> (<code>Claude</code> / <code>you</code>-as-Claude proper-name), <code>selfref_assistant</code> (<code>the assistant</code>), <code>selfref_model</code> (<code>the model</code> / <code>the AI</code>), <code>selfref_2p</code>, <code>selfref_we</code>. The anthropomorphic share = <code>selfref_claude / (selfref_claude + selfref_assistant + selfref_model)</code>.</li>
 </ul>
-<div id="9df9035d-0d70-4d56-a882-4ee385266479" class="cell" data-execution_count="3">
+<div id="9df9035d-0d70-4d56-a882-4ee385266479" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> welfare_extensions_for_doc</span>
@@ -793,9 +793,9 @@ corpus judgment_count:  78
 corpus procedural_count: 594
 corpus judgment_to_procedural_ratio: 0.131
 
-corpus threat_count: 110
+corpus threat_count: 8
 corpus causal_count: 136
-corpus threat_share: 0.447
+corpus threat_share: 0.056
 
 corpus question_count: 87
 corpus apology_count:  3
@@ -817,7 +817,7 @@ Address-form — corpus self-reference distribution:
 <li><strong><code>imperative_streaks</code></strong> — run-lengths of consecutive imperative sentences within a file: <code>streak_max</code>, <code>streak_mean</code>, <code>n_streaks_ge3</code> (triple-tap), <code>n_streaks_ge5</code> (staccato burst).</li>
 <li><strong><code>rules_section</code></strong> — in-vs-outside markdown sections whose heading matches <code>RULES_HEADING_RE</code> (<code>## RULES</code>, <code>## IMPORTANT</code>, <code>## WARNING</code>) or is ALL-CAPS. Compares explanation rates across the two sets.</li>
 </ul>
-<div id="dac27de3-ed49-4c40-901d-780500a57225" class="cell" data-execution_count="4">
+<div id="dac27de3-ed49-4c40-901d-780500a57225" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> imperative_streaks_for_doc, rules_section_for_doc</span>
@@ -874,16 +874,16 @@ corpus pct_rule_paragraphs_explained_out:   16.51%</code></pre>
 </section>
 <section id="e.-per-sentence-forensic-inspection-records" class="level2">
 <h2 class="anchored" data-anchor-id="e.-per-sentence-forensic-inspection-records">8e. Per-sentence forensic-inspection records</h2>
-<p>One row per non-empty sentence (5,702 total, 20 columns). Stage 04 promotes this partial to the final <code>sentences_classified.parquet</code> consumed by <code>15_rule_explanation</code> and <code>21_audit_threat_framings</code>. Columns:</p>
+<p>One row per non-empty sentence (5,878 total, 21 columns). Stage 04 promotes this partial to the final <code>sentences_classified.parquet</code> consumed by <code>15_rule_explanation</code> and <code>21_audit_threat_framings</code>. Columns:</p>
 <ul>
 <li><strong>File-level</strong>: <code>file_idx</code>, <code>path</code>, <code>category</code>, <code>ccVersion</code>.</li>
 <li><strong>Position</strong>: <code>paragraph_idx</code>, <code>sent_idx</code>, <code>text</code> (raw sentence string).</li>
 <li><strong>Rule classification</strong>: <code>is_imperative</code>, <code>is_prohibition</code>, <code>is_rule</code> (the 3-condition OR).</li>
 <li><strong>Justification pairing</strong>: <code>has_just_in_sent</code>, <code>paragraph_has_just</code>, <code>is_explained_para</code>.</li>
-<li><strong>Consequence framing</strong>: <code>has_threat</code>, <code>has_causal</code>.</li>
+<li><strong>Consequence framing</strong>: <code>has_threat</code>, <code>has_causal</code>, <code>has_soft_conditional</code>.</li>
 <li><strong>Address form</strong>: <code>mentions_claude</code>, <code>mentions_model</code>, <code>addressee</code> (categorical: <code>claude</code> / <code>user</code> / <code>unknown</code>).</li>
 </ul>
-<div id="b6b22506-5b97-4c9d-8b41-9b1561e03228" class="cell" data-execution_count="5">
+<div id="b6b22506-5b97-4c9d-8b41-9b1561e03228" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> build_sentence_records</span>
@@ -904,8 +904,8 @@ corpus pct_rule_paragraphs_explained_out:   16.51%</code></pre>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  addressee distribution: </span><span class="sc">{</span>addr_dist<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>wrote _pipeline_cache/sentences_partial.parquet  (413,352 bytes, 403.7 KiB)
-      5,878 per-sentence rows × 20 columns
+<pre><code>wrote _pipeline_cache/sentences_partial.parquet  (413,958 bytes, 404.3 KiB)
+      5,878 per-sentence rows × 21 columns
 
 flag totals:
               is_imperative:  2283
@@ -914,7 +914,7 @@ flag totals:
            has_just_in_sent:   293
          paragraph_has_just:  1215
           is_explained_para:   555
-                 has_threat:   100
+                 has_threat:     8
                  has_causal:   131
             mentions_claude:   400
              mentions_model:   235
@@ -924,7 +924,7 @@ flag totals:
 </section>
 <section id="write-partial_rules_welfare.json" class="level2">
 <h2 class="anchored" data-anchor-id="write-partial_rules_welfare.json">Write <code>partial_rules_welfare.json</code></h2>
-<div id="a0f20151-309b-4add-8513-b8216705c55f" class="cell" data-execution_count="6">
+<div id="a0f20151-309b-4add-8513-b8216705c55f" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>partial <span class="op">=</span> {</span>
@@ -946,7 +946,7 @@ flag totals:
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"      </span><span class="sc">{</span><span class="bu">len</span>(partial)<span class="sc">}</span><span class="ss"> per-file records, 7 blocks each"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>wrote _pipeline_cache/partial_rules_welfare.json  (581,256 bytes, 567.6 KiB)
+<pre><code>wrote _pipeline_cache/partial_rules_welfare.json  (599,468 bytes, 585.4 KiB)
       289 per-file records, 7 blocks each</code></pre>
 </div>
 </div>
