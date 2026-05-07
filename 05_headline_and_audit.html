@@ -576,7 +576,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="canonical-headline-sheet" class="level2">
 <h2 class="anchored" data-anchor-id="canonical-headline-sheet">12. Canonical HEADLINE sheet</h2>
 <p>Re-uses <code>prompt_analysis.headline_numbers()</code> — the same function consumer notebooks call. Pass <code>alt_df</code> (for composite-directiveness range and per-version <code>mood_marker_pct</code> extremes) and the per-sentence parquet (for parquet-level threat / causal / rule counts) so the producer’s audit covers the full HEADLINE contract.</p>
-<div id="ddc8eb5a-31a1-4d95-b93e-a9037af908c0" class="cell" data-execution_count="5">
+<div id="ddc8eb5a-31a1-4d95-b93e-a9037af908c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:40.574413Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:40.574233Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:45.178544Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:45.177330Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Compute and display the canonical HEADLINE dict.</span></span>
@@ -589,21 +589,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml <span class="im">as</span> _yaml</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> pathlib.Path(<span class="st">"/home/user/workspace/claude-prompts-analysis"</span>).resolve()</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pathlib.Path.cwd() <span class="op">!=</span> PROJECT_ROOT:</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    os.chdir(PROJECT_ROOT)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_analysis</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)  <span class="co"># pick up edits without restarting the kernel</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> load_yaml, build_alt_df, headline_numbers</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>data    <span class="op">=</span> load_yaml()</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>alt_df  <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>parquet <span class="op">=</span> pd.read_parquet(<span class="st">"sentences_classified.parquet"</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df, parquet<span class="op">=</span>parquet)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(_yaml.safe_dump(HEADLINE, sort_keys<span class="op">=</span><span class="va">False</span>, default_flow_style<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>_here <span class="op">=</span> pathlib.Path.cwd().resolve()</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> <span class="bu">next</span>(</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    (p <span class="cf">for</span> p <span class="kw">in</span> [_here, <span class="op">*</span>_here.parents] <span class="cf">if</span> (p <span class="op">/</span> <span class="st">"prompt_pipeline.py"</span>).is_file()),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">None</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> PROJECT_ROOT <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"Could not find prompt_pipeline.py walking up from </span><span class="sc">{</span>_here<span class="sc">}</span><span class="ss">. "</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Run from inside the claude-prompts-analysis repo."</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pathlib.Path.cwd() <span class="op">!=</span> PROJECT_ROOT:</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    os.chdir(PROJECT_ROOT)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_analysis</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)  <span class="co"># pick up edits without restarting the kernel</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> load_yaml, build_alt_df, headline_numbers</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>data    <span class="op">=</span> load_yaml()</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>alt_df  <span class="op">=</span> build_alt_df(data)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>parquet <span class="op">=</span> pd.read_parquet(<span class="st">"sentences_classified.parquet"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df, parquet<span class="op">=</span>parquet)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(_yaml.safe_dump(HEADLINE, sort_keys<span class="op">=</span><span class="va">False</span>, default_flow_style<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>n_files: 289

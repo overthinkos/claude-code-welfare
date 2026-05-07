@@ -611,7 +611,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>_pipeline_cache/partial_rules_welfare.json</code></li>
 <li><code>_pipeline_cache/sentences_partial.parquet</code> (stage 04 promotes this to the final <code>sentences_classified.parquet</code>)</li>
 </ul>
-<div id="38376d07-0e60-460e-8403-24c588e77d99" class="cell" data-execution_count="7">
+<div id="38376d07-0e60-460e-8403-24c588e77d99" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:14.645697Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:14.645520Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:16.745162Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:16.744109Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload corpus + DocBin from stage 00."""</span></span>
@@ -620,27 +620,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spacy.tokens <span class="im">import</span> DocBin</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> pathlib.Path(<span class="st">"/home/user/workspace/claude-prompts-analysis"</span>).resolve()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pathlib.Path.cwd() <span class="op">!=</span> PROJECT_ROOT:</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    os.chdir(PROJECT_ROOT)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>CACHE_DIR    <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"_pipeline_cache"</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>DOCBIN_IN    <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_docs.spacy"</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>META_IN      <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_meta.parquet"</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>PARTIAL_OUT  <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"partial_rules_welfare.json"</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>PARQUET_OUT  <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"sentences_partial.parquet"</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> DOCBIN_IN.exists(),  <span class="ss">f"missing </span><span class="sc">{</span>DOCBIN_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> META_IN.exists(),    <span class="ss">f"missing </span><span class="sc">{</span>META_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>_here <span class="op">=</span> pathlib.Path.cwd().resolve()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> <span class="bu">next</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    (p <span class="cf">for</span> p <span class="kw">in</span> [_here, <span class="op">*</span>_here.parents] <span class="cf">if</span> (p <span class="op">/</span> <span class="st">"prompt_pipeline.py"</span>).is_file()),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">None</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> PROJECT_ROOT <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"Could not find prompt_pipeline.py walking up from </span><span class="sc">{</span>_here<span class="sc">}</span><span class="ss">. "</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Run from inside the claude-prompts-analysis repo."</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pathlib.Path.cwd() <span class="op">!=</span> PROJECT_ROOT:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    os.chdir(PROJECT_ROOT)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_pipeline</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_pipeline)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> NLP</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(META_IN)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> <span class="bu">list</span>(DocBin().from_disk(DOCBIN_IN).get_docs(NLP.vocab))</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(docs) <span class="op">==</span> <span class="bu">len</span>(df), <span class="ss">f"DocBin/df length mismatch: </span><span class="sc">{</span><span class="bu">len</span>(docs)<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reloaded </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> files"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>CACHE_DIR    <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"_pipeline_cache"</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>DOCBIN_IN    <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_docs.spacy"</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>META_IN      <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_meta.parquet"</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>PARTIAL_OUT  <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"partial_rules_welfare.json"</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>PARQUET_OUT  <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"sentences_partial.parquet"</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> DOCBIN_IN.exists(),  <span class="ss">f"missing </span><span class="sc">{</span>DOCBIN_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> META_IN.exists(),    <span class="ss">f"missing </span><span class="sc">{</span>META_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_pipeline</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_pipeline)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> NLP</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(META_IN)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> <span class="bu">list</span>(DocBin().from_disk(DOCBIN_IN).get_docs(NLP.vocab))</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(docs) <span class="op">==</span> <span class="bu">len</span>(df), <span class="ss">f"DocBin/df length mismatch: </span><span class="sc">{</span><span class="bu">len</span>(docs)<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reloaded </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> files"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>reloaded 289 files</code></pre>
@@ -655,7 +664,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong><code>pct_explained_same</code></strong> — % of rule sentences whose own sentence contains a justification keyword (strict, e.g.&nbsp;<code>"Do not X because Y."</code>).</li>
 <li><strong><code>pct_explained_para</code></strong> — % of rule sentences with a justification keyword anywhere in their paragraph (e.g.&nbsp;<code>"Do not X. Y."</code>). The headline welfare metric.</li>
 </ul>
-<div id="094c86d3-581b-4f55-bf5d-8dd3e6768dbc" class="cell" data-execution_count="8">
+<div id="094c86d3-581b-4f55-bf5d-8dd3e6768dbc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:16.747916Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:16.747613Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:18.602983Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:18.601897Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> rule_explanation_for_doc</span>
@@ -726,7 +735,7 @@ corpus rule sentences: 2285
 <li><strong><code>socratic</code></strong> — <code>question_count</code> (rhetorical-filtered) and <code>apology_count</code> (<code>unfortunately</code>, <code>we acknowledge</code>, <code>we know this is</code>).</li>
 <li><strong><code>address_form</code></strong> — counts of <code>selfref_claude</code> (<code>Claude</code> / <code>you</code>-as-Claude proper-name), <code>selfref_assistant</code> (<code>the assistant</code>), <code>selfref_model</code> (<code>the model</code> / <code>the AI</code>), <code>selfref_2p</code>, <code>selfref_we</code>. The anthropomorphic share = <code>selfref_claude / (selfref_claude + selfref_assistant + selfref_model)</code>.</li>
 </ul>
-<div id="9df9035d-0d70-4d56-a882-4ee385266479" class="cell" data-execution_count="9">
+<div id="9df9035d-0d70-4d56-a882-4ee385266479" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:18.605119Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:18.604905Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:19.237590Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:19.236538Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> welfare_extensions_for_doc</span>
@@ -817,7 +826,7 @@ Address-form — corpus self-reference distribution:
 <li><strong><code>imperative_streaks</code></strong> — run-lengths of consecutive imperative sentences within a file: <code>streak_max</code>, <code>streak_mean</code>, <code>n_streaks_ge3</code> (triple-tap), <code>n_streaks_ge5</code> (staccato burst).</li>
 <li><strong><code>rules_section</code></strong> — in-vs-outside markdown sections whose heading matches <code>RULES_HEADING_RE</code> (<code>## RULES</code>, <code>## IMPORTANT</code>, <code>## WARNING</code>) or is ALL-CAPS. Compares explanation rates across the two sets.</li>
 </ul>
-<div id="dac27de3-ed49-4c40-901d-780500a57225" class="cell" data-execution_count="10">
+<div id="dac27de3-ed49-4c40-901d-780500a57225" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:19.239889Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:19.239702Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:21.206141Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:21.205137Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> imperative_streaks_for_doc, rules_section_for_doc</span>
@@ -883,7 +892,7 @@ corpus pct_rule_paragraphs_explained_out:   16.51%</code></pre>
 <li><strong>Consequence framing</strong>: <code>has_threat</code>, <code>has_causal</code>, <code>has_soft_conditional</code>.</li>
 <li><strong>Address form</strong>: <code>mentions_claude</code>, <code>mentions_model</code>, <code>addressee</code> (categorical: <code>claude</code> / <code>user</code> / <code>unknown</code>).</li>
 </ul>
-<div id="b6b22506-5b97-4c9d-8b41-9b1561e03228" class="cell" data-execution_count="11">
+<div id="b6b22506-5b97-4c9d-8b41-9b1561e03228" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:21.208630Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:21.208429Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:23.556820Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:23.555615Z&quot;}}" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> build_sentence_records</span>
@@ -924,7 +933,7 @@ flag totals:
 </section>
 <section id="write-partial_rules_welfare.json" class="level2">
 <h2 class="anchored" data-anchor-id="write-partial_rules_welfare.json">Write <code>partial_rules_welfare.json</code></h2>
-<div id="a0f20151-309b-4add-8513-b8216705c55f" class="cell" data-execution_count="12">
+<div id="a0f20151-309b-4add-8513-b8216705c55f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:23.559040Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:23.558780Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:23.582328Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:23.581005Z&quot;}}" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>partial <span class="op">=</span> {</span>

@@ -602,7 +602,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>Output: <code>_pipeline_cache/partial_register.json</code> (per-file metric trees).</p>
-<div id="e0260fab-f788-40db-b8e3-3742dc6dd4fc" class="cell" data-execution_count="7">
+<div id="e0260fab-f788-40db-b8e3-3742dc6dd4fc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:01.733563Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:01.733370Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:03.736337Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:03.734964Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload corpus + DocBin from stage 00."""</span></span>
@@ -611,26 +611,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spacy.tokens <span class="im">import</span> DocBin</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> pathlib.Path(<span class="st">"/home/user/workspace/claude-prompts-analysis"</span>).resolve()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pathlib.Path.cwd() <span class="op">!=</span> PROJECT_ROOT:</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    os.chdir(PROJECT_ROOT)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>CACHE_DIR  <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"_pipeline_cache"</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>DOCBIN_IN  <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_docs.spacy"</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>META_IN    <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_meta.parquet"</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>PARTIAL_OUT <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"partial_register.json"</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> DOCBIN_IN.exists(),  <span class="ss">f"missing </span><span class="sc">{</span>DOCBIN_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> META_IN.exists(),    <span class="ss">f"missing </span><span class="sc">{</span>META_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_pipeline</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_pipeline)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> NLP</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(META_IN)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> <span class="bu">list</span>(DocBin().from_disk(DOCBIN_IN).get_docs(NLP.vocab))</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(docs) <span class="op">==</span> <span class="bu">len</span>(df), <span class="ss">f"DocBin/df length mismatch: </span><span class="sc">{</span><span class="bu">len</span>(docs)<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reloaded </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> files, </span><span class="sc">{</span><span class="bu">sum</span>(d.<span class="fu">__len__</span>() <span class="cf">for</span> d <span class="kw">in</span> docs)<span class="sc">:,}</span><span class="ss"> doc tokens"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>_here <span class="op">=</span> pathlib.Path.cwd().resolve()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> <span class="bu">next</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    (p <span class="cf">for</span> p <span class="kw">in</span> [_here, <span class="op">*</span>_here.parents] <span class="cf">if</span> (p <span class="op">/</span> <span class="st">"prompt_pipeline.py"</span>).is_file()),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">None</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> PROJECT_ROOT <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"Could not find prompt_pipeline.py walking up from </span><span class="sc">{</span>_here<span class="sc">}</span><span class="ss">. "</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Run from inside the claude-prompts-analysis repo."</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pathlib.Path.cwd() <span class="op">!=</span> PROJECT_ROOT:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    os.chdir(PROJECT_ROOT)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>CACHE_DIR  <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"_pipeline_cache"</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>DOCBIN_IN  <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_docs.spacy"</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>META_IN    <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"corpus_meta.parquet"</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>PARTIAL_OUT <span class="op">=</span> CACHE_DIR <span class="op">/</span> <span class="st">"partial_register.json"</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> DOCBIN_IN.exists(),  <span class="ss">f"missing </span><span class="sc">{</span>DOCBIN_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> META_IN.exists(),    <span class="ss">f"missing </span><span class="sc">{</span>META_IN<span class="sc">}</span><span class="ss"> — run 00_setup_and_corpus first"</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_pipeline</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_pipeline)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> NLP</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(META_IN)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> <span class="bu">list</span>(DocBin().from_disk(DOCBIN_IN).get_docs(NLP.vocab))</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(docs) <span class="op">==</span> <span class="bu">len</span>(df), <span class="ss">f"DocBin/df length mismatch: </span><span class="sc">{</span><span class="bu">len</span>(docs)<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reloaded </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> files, </span><span class="sc">{</span><span class="bu">sum</span>(d.<span class="fu">__len__</span>() <span class="cf">for</span> d <span class="kw">in</span> docs)<span class="sc">:,}</span><span class="ss"> doc tokens"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>reloaded 289 files, 145,445 doc tokens</code></pre>
@@ -639,7 +648,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="mood" class="level2">
 <h2 class="anchored" data-anchor-id="mood">1. Mood</h2>
 <p><strong>Mood marker density</strong> is the share of word tokens matched by <code>IMPERATIVE_MARKERS</code> (the lexicon is echoed verbatim into the YAML’s <code>lexicons</code> block). Reported per file as count + <code>pct</code> (% of word tokens) + <code>per_sent</code> (rate per sentence). The per-sentence imperative classifier moved into <code>sentence_register</code>; this block carries only the lexical-density signal (<code>marker_*</code>).</p>
-<div id="b31dae37-fbb7-422f-930c-7128b7262c6f" class="cell" data-execution_count="8">
+<div id="b31dae37-fbb7-422f-930c-7128b7262c6f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:03.738725Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:03.738398Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:03.764747Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:03.763436Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> mood_for_doc</span>
@@ -686,7 +695,7 @@ Tool parameter           0.000       0.000            0.000</code></pre>
 <li><strong>Heylighen F-score</strong> (Heylighen &amp; Dewaele 2002) — a 0–100 formality index: <code>F = 50 + 0.5 × (noun + adj + prep + article − pronoun − verb − adverb − interjection)</code>, each term as a percentage of all tokens. Higher = more formal-academic prose; the corpus clusters in the 70–80 band.</li>
 </ul>
 <p>Plus lexical density for four register classes (<code>frozen</code> / <code>formal</code> / <code>consultative</code> / <code>casual</code>).</p>
-<div id="7c5f3a7c-b79e-4e4b-a1dd-c1d8c2385916" class="cell" data-execution_count="9">
+<div id="7c5f3a7c-b79e-4e4b-a1dd-c1d8c2385916" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:03.767009Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:03.766798Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:04.123470Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:04.122121Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> register_for_doc</span>
@@ -734,7 +743,7 @@ Tool parameter    0.600         12.790      1.995   75.410         0.0       0.0
 <li><code>positive_evaluative_emphasis</code> — emphasis-of-rule words: <code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code>.</li>
 </ul>
 <p>The union is preserved for back-compat in existing charts. When the question is <em>how much praise is here</em>, cite the quality-only ratio against <code>negative_evaluative</code>. When the question is <em>how loud is the rule emphasis</em>, cite the emphasis count alongside the imperative-marker density.</p>
-<div id="fae0cd17-c7c1-46de-b659-4a2ee823678c" class="cell" data-execution_count="10">
+<div id="fae0cd17-c7c1-46de-b659-4a2ee823678c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:04.125664Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:04.125430Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:04.212684Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:04.211660Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> stance_for_doc</span>
@@ -801,7 +810,7 @@ Tool parameter            0.000               0.000           0.000             
 <h2 class="anchored" data-anchor-id="b.-sentence-level-pragmatic-register">3b. Sentence-level pragmatic register</h2>
 <p>Per-sentence <strong>multi-label</strong> classifier with six classes: <code>collaborative</code> / <code>permissive</code> / <code>appreciative</code> / <code>imperative</code> / <code>directive</code> / <code>configuring</code>. Implemented via <code>M_SENT_REGISTER</code> PhraseMatchers, <code>M_STANCE["directive"]</code>, and a spaCy <code>DependencyMatcher</code> for parse-tree cues; the <code>imperative</code> flag is driven by <code>classify_sent_mood</code>. Near-zero classes are deliberately preserved — absence is the welfare-relevant signal for this corpus.</p>
 <p><strong>Multi-label semantics.</strong> A single sentence can carry several flags simultaneously. The hypothetical sentence <code>"Please, we should consider running the migration."</code> is <code>permissive</code> (<code>please</code>), <code>collaborative</code> (<code>we should</code>), <code>imperative</code> (<code>consider</code>), and <code>directive</code> (modal <code>should</code>). Because each contributes to multiple class counts, per-class <code>sent_pct</code> values across the six classes can sum to more than 100% within a category — intentional, not a bug.</p>
-<div id="c1d43c75-2570-4329-9398-484956fb9bfa" class="cell" data-execution_count="11">
+<div id="c1d43c75-2570-4329-9398-484956fb9bfa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:04.215137Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:04.214948Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:04.917688Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:04.916572Z&quot;}}" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> sentence_register_for_doc</span>
@@ -869,7 +878,7 @@ Tool parameter                      0.00                 0.00                   
 <section id="write-partial_register.json" class="level2">
 <h2 class="anchored" data-anchor-id="write-partial_register.json">Write <code>partial_register.json</code></h2>
 <p>One JSON document, keyed by file index (string), with the four metric blocks per file. Stage 04 reloads this and feeds it directly to <code>build_file_record</code>.</p>
-<div id="b7abb0dc-4de3-4f48-a09a-bee7bf9a1693" class="cell" data-execution_count="12">
+<div id="b7abb0dc-4de3-4f48-a09a-bee7bf9a1693" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:04.919741Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:04.919534Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:04.944592Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:04.943230Z&quot;}}" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>partial <span class="op">=</span> {</span>
