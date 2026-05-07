@@ -608,7 +608,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <p>The justification ratio depends on the per-file imperative <code>marker_count</code>. We recompute it locally with the same matcher used in stage 01 (<code>prompt_pipeline.M_IMPERATIVE</code>) — keeps stage 02 self-contained without reading stage 01’s partial.</p>
 <p>Output: <code>_pipeline_cache/partial_vocab_emphasis.json</code>.</p>
-<div id="bf2b7971-123a-463c-a174-204bbec0c182" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:38.769549Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:38.769424Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:39.934584Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:39.934035Z&quot;}}" data-execution_count="1">
+<div id="bf2b7971-123a-463c-a174-204bbec0c182" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:54.608756Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:54.608609Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:55.814886Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:55.814456Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload corpus + DocBin from stage 00."""</span></span>
@@ -655,7 +655,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="modality" class="level2">
 <h2 class="anchored" data-anchor-id="modality">4. Modality</h2>
 <p>A single spaCy parse-tree detector classifies every modal expression as <strong>deontic</strong> (<code>must</code>, <code>should</code>, <code>have to</code>, <code>need to</code> + verb), <strong>epistemic</strong> (<code>may</code>, <code>might</code>, modals followed by <code>be</code>/<code>have</code>, epistemic adverbs like <code>likely</code>/<code>probably</code>), or <strong>dynamic</strong> (<code>can</code>, <code>could</code>, <code>able to</code>, <code>will</code>/<code>would</code>).</p>
-<div id="6ef0f273-fd8a-452c-8405-499ebe43f0ed" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:39.935981Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:39.935803Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:40.016081Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:40.015610Z&quot;}}" data-execution_count="2">
+<div id="6ef0f273-fd8a-452c-8405-499ebe43f0ed" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:55.816531Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:55.816319Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:55.902713Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:55.902186Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> modality_for_doc</span>
@@ -720,7 +720,7 @@ dynamic_count      557</code></pre>
 <li><code>profanity</code> — explicit obscenity (zero matches in this corpus).</li>
 <li><code>pronouns_2p</code>, <code>pronouns_1p</code> — second- and first-person pronouns.</li>
 </ul>
-<div id="c80255b8-286f-4151-aaf9-8dff8f6d734d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:40.017066Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:40.016969Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:40.047711Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:40.047142Z&quot;}}" data-execution_count="3">
+<div id="c80255b8-286f-4151-aaf9-8dff8f6d734d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:55.903925Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:55.903817Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:55.933768Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:55.933271Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> vocab_for_doc, VOCAB_KEYS</span>
@@ -771,31 +771,32 @@ corpus-wide raw counts:
 <section id="all-caps-emphasis" class="level2">
 <h2 class="anchored" data-anchor-id="all-caps-emphasis">6. ALL CAPS emphasis</h2>
 <p>Every uppercase token (≥2 characters) excluding the curated <code>TECH_ACRONYMS</code> allowlist (e.g.&nbsp;<code>API</code>, <code>URL</code>, <code>JSON</code> — not emphasis-flagged).</p>
-<div id="0a60913d-ed1c-4114-9fc8-e4f61ce6b3e7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:40.049152Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:40.049045Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:40.079410Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:40.079051Z&quot;}}" data-execution_count="4">
+<div id="0a60913d-ed1c-4114-9fc8-e4f61ce6b3e7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:55.934744Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:55.934632Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:55.965832Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:55.965325Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> all_caps_for_text, ALLCAPS_RE, TECH_ACRONYMS</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>all_caps_per_file <span class="op">=</span> [all_caps_for_text(t, n, s)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                     <span class="cf">for</span> t, n, s <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"raw_text"</span>], df[<span class="st">"n_tokens"</span>], df[<span class="st">"n_sents"</span>])]</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df_all_caps <span class="op">=</span> pd.DataFrame(all_caps_per_file)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"per-file ALL CAPS (head):"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_all_caps.head().to_string())</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category mean ALL CAPS (</span><span class="sc">% o</span><span class="st">f words / per sentence):"</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], df_all_caps[[<span class="st">"count"</span>, <span class="st">"pct"</span>, <span class="st">"per_sent"</span>]]], axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>corpus_all_caps <span class="op">=</span> Counter()</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> txt <span class="kw">in</span> df[<span class="st">"raw_text"</span>]:</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> tok <span class="kw">in</span> ALLCAPS_RE.findall(txt):</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> tok <span class="kw">not</span> <span class="kw">in</span> TECH_ACRONYMS:</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>            corpus_all_caps[tok] <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"corpus-wide top-25 ALL CAPS tokens:"</span>)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> tok, c <span class="kw">in</span> corpus_all_caps.most_common(<span class="dv">25</span>):</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tok<span class="sc">:20s}</span><span class="ss"> </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> all_caps_for_text, ALLCAPS_RE</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lexicons <span class="im">import</span> TECH_ACRONYMS</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>all_caps_per_file <span class="op">=</span> [all_caps_for_text(t, n, s)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                     <span class="cf">for</span> t, n, s <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"raw_text"</span>], df[<span class="st">"n_tokens"</span>], df[<span class="st">"n_sents"</span>])]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>df_all_caps <span class="op">=</span> pd.DataFrame(all_caps_per_file)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"per-file ALL CAPS (head):"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_all_caps.head().to_string())</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category mean ALL CAPS (</span><span class="sc">% o</span><span class="st">f words / per sentence):"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], df_all_caps[[<span class="st">"count"</span>, <span class="st">"pct"</span>, <span class="st">"per_sent"</span>]]], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>corpus_all_caps <span class="op">=</span> Counter()</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> txt <span class="kw">in</span> df[<span class="st">"raw_text"</span>]:</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> tok <span class="kw">in</span> ALLCAPS_RE.findall(txt):</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> tok <span class="kw">not</span> <span class="kw">in</span> TECH_ACRONYMS:</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>            corpus_all_caps[tok] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"corpus-wide top-25 ALL CAPS tokens:"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> tok, c <span class="kw">in</span> corpus_all_caps.most_common(<span class="dv">25</span>):</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tok<span class="sc">:20s}</span><span class="ss"> </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>per-file ALL CAPS (head):
@@ -849,32 +850,33 @@ corpus-wide top-25 ALL CAPS tokens:
 <section id="caps-imperative-tokens" class="level2">
 <h2 class="anchored" data-anchor-id="caps-imperative-tokens">7. CAPS imperative tokens</h2>
 <p>Direct match against <code>CAPS_IMPERATIVE_TOKENS</code> (<code>IMPORTANT</code>, <code>MUST</code>, <code>NEVER</code>, <code>DO NOT</code>, <code>WARNING</code> …). Word-boundary regex handles multi-word phrases (<code>MUST NOT</code>, <code>VERY IMPORTANT</code>).</p>
-<div id="66817170-cc5d-4d16-98f2-8f242896bc45" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:40.080588Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:40.080473Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:40.115399Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:40.115017Z&quot;}}" data-execution_count="5">
+<div id="66817170-cc5d-4d16-98f2-8f242896bc45" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:55.967006Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:55.966911Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:55.999217Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:55.998895Z&quot;}}" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> caps_imperative_for_text, CAPS_IMP_RE, CAPS_IMPERATIVE_TOKENS</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>caps_imperative_per_file <span class="op">=</span> [</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    caps_imperative_for_text(t, n, s)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t, n, s <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"raw_text"</span>], df[<span class="st">"n_tokens"</span>], df[<span class="st">"n_sents"</span>])</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>df_caps_imperative <span class="op">=</span> pd.DataFrame(caps_imperative_per_file)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"per-file CAPS imperative (head):"</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_caps_imperative.head().to_string())</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category mean CAPS imperative (</span><span class="sc">% o</span><span class="st">f words / per sentence):"</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], df_caps_imperative[[<span class="st">"count"</span>, <span class="st">"pct"</span>, <span class="st">"per_sent"</span>]]], axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>corpus_caps_imperative <span class="op">=</span> Counter()</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> txt <span class="kw">in</span> df[<span class="st">"raw_text"</span>]:</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    corpus_caps_imperative.update(CAPS_IMP_RE.findall(txt))</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"corpus-wide CAPS imperative frequency:"</span>)</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> tok <span class="kw">in</span> CAPS_IMPERATIVE_TOKENS:</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> corpus_caps_imperative[tok]:</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tok<span class="sc">:18s}</span><span class="ss"> </span><span class="sc">{</span>corpus_caps_imperative[tok]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> caps_imperative_for_text, CAPS_IMP_RE</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lexicons <span class="im">import</span> CAPS_IMPERATIVE_TOKENS</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>caps_imperative_per_file <span class="op">=</span> [</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    caps_imperative_for_text(t, n, s)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t, n, s <span class="kw">in</span> <span class="bu">zip</span>(df[<span class="st">"raw_text"</span>], df[<span class="st">"n_tokens"</span>], df[<span class="st">"n_sents"</span>])</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>df_caps_imperative <span class="op">=</span> pd.DataFrame(caps_imperative_per_file)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"per-file CAPS imperative (head):"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_caps_imperative.head().to_string())</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"category mean CAPS imperative (</span><span class="sc">% o</span><span class="st">f words / per sentence):"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.concat([df[[<span class="st">"category"</span>]], df_caps_imperative[[<span class="st">"count"</span>, <span class="st">"pct"</span>, <span class="st">"per_sent"</span>]]], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        .groupby(<span class="st">"category"</span>).mean(numeric_only<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_string())</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>corpus_caps_imperative <span class="op">=</span> Counter()</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> txt <span class="kw">in</span> df[<span class="st">"raw_text"</span>]:</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    corpus_caps_imperative.update(CAPS_IMP_RE.findall(txt))</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"corpus-wide CAPS imperative frequency:"</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> tok <span class="kw">in</span> CAPS_IMPERATIVE_TOKENS:</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> corpus_caps_imperative[tok]:</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>tok<span class="sc">:18s}</span><span class="ss"> </span><span class="sc">{</span>corpus_caps_imperative[tok]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>per-file CAPS imperative (head):
@@ -919,7 +921,7 @@ corpus-wide CAPS imperative frequency:
 <h2 class="anchored" data-anchor-id="justification-patterns">8. Justification patterns</h2>
 <p>Counts of <code>JUSTIFICATION_PATTERNS</code> regex matches per file (<code>count</code>, <code>pct</code>, <code>per_sent</code>) plus the <strong>justification ratio</strong>: <code>count / (marker_count + 1)</code>.</p>
 <p>The <code>+ 1</code> in the denominator prevents division-by-zero when a file has zero imperative markers, and softens the ratio for very-low-marker files (one reason in a file with one rule scores 0.5, not 1.0). <code>marker_count</code> is recomputed locally with the same <code>M_IMPERATIVE</code> matcher used in stage 01, so this notebook stays self-contained.</p>
-<div id="2d8f4124-ec5e-4f70-9d0d-b131f419baf4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:40.116689Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:40.116584Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:40.388501Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:40.388046Z&quot;}}" data-execution_count="6">
+<div id="2d8f4124-ec5e-4f70-9d0d-b131f419baf4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:56.000575Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:56.000401Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:56.219342Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:56.218813Z&quot;}}" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> justification_for_text, M_IMPERATIVE, count_matcher</span>
@@ -964,7 +966,7 @@ Tool parameter    0.000  0.000     0.000  0.000</code></pre>
 </section>
 <section id="write-partial_vocab_emphasis.json" class="level2">
 <h2 class="anchored" data-anchor-id="write-partial_vocab_emphasis.json">Write <code>partial_vocab_emphasis.json</code></h2>
-<div id="07ec996e-1040-4f63-8159-4573bf5ca9e6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:40.389717Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:40.389606Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:40.429756Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:40.429257Z&quot;}}" data-execution_count="7">
+<div id="07ec996e-1040-4f63-8159-4573bf5ca9e6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:56.220481Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:56.220340Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:56.260828Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:56.260302Z&quot;}}" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>partial <span class="op">=</span> {</span>

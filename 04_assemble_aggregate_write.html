@@ -577,7 +577,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Round-trips the YAML to verify schema integrity.</li>
 </ol>
 <p>Stage 05 then reads these final artifacts and prints the canonical HEADLINE sheet.</p>
-<div id="c9d75f9e-b25f-4cc4-8597-48c2de42d031" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:49.076827Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:49.076662Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:50.250647Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:50.250228Z&quot;}}" data-execution_count="1">
+<div id="c9d75f9e-b25f-4cc4-8597-48c2de42d031" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:06.755064Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:06.754964Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:07.898479Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:07.898161Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload everything: corpus_meta + DocBin + 3 partial JSONs + per-sentence parquet."""</span></span>
@@ -643,7 +643,7 @@ partials: register=289, vocab_emphasis=289, rules_welfare=289</code></pre>
 <h2 class="anchored" data-anchor-id="assemble-per-file-metrics">9. Assemble per-file metrics</h2>
 <p>Stitches the three partials into the unified per-block dict expected by <code>build_file_record</code>. Field-naming contract: - <code>count</code> — raw integer - <code>pct</code> — % of word tokens (0-100) - <code>per_sent</code> — average matches per sentence (rate) - <code>sent_pct</code> — % of sentences (used only by sentence_register)</p>
 <p>The <code>rule_explanation</code> block uses <code>n_*</code> for raw counts and <code>pct_*</code> for percentages because its denominator is <em>rule sentences</em>, not all word tokens.</p>
-<div id="dfe6ff45-1674-4a21-ad0c-3fe712fcecda" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:50.251863Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:50.251661Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:50.274523Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:50.274016Z&quot;}}" data-execution_count="2">
+<div id="dfe6ff45-1674-4a21-ad0c-3fe712fcecda" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:07.899894Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:07.899721Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:07.921740Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:07.921339Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> build_file_record</span>
@@ -860,7 +860,7 @@ partials: register=289, vocab_emphasis=289, rules_welfare=289</code></pre>
 <section id="corpus-per-category-aggregation" class="level2">
 <h2 class="anchored" data-anchor-id="corpus-per-category-aggregation">10. Corpus + per-category aggregation</h2>
 <p><code>aggregate(per_file_records, indices, df, docs)</code> sums per-file counts for every density block and recomputes pct / per_sent from totals. TTR + dep-depth are recomputed by walking the union of docs (set semantics + per-token traversal don’t compose as simple sums).</p>
-<div id="4ad1cc4b-aae0-4e3b-8009-e7195e779c4e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:50.275724Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:50.275583Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:50.759157Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:50.758684Z&quot;}}" data-execution_count="3">
+<div id="4ad1cc4b-aae0-4e3b-8009-e7195e779c4e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:07.922905Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:07.922794Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:08.392501Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:08.392153Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> aggregate</span>
@@ -922,7 +922,7 @@ Tool parameter     files=  1  tokens=   179  imp_sent%= 78.6  dir_sent%=  0.0  c
 <section id="write-the-final-artifacts" class="level2">
 <h2 class="anchored" data-anchor-id="write-the-final-artifacts">11. Write the final artifacts</h2>
 <p>Composes the YAML output dict (metadata + lexicons + corpus + by_category + files), writes it, copies the per-sentence parquet from <code>_pipeline_cache/</code>, and round-trips the YAML to verify schema integrity.</p>
-<div id="feb4021b-ef01-4da6-91a9-87577e59b6ba" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:50.760393Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:50.760283Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:53.885196Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:53.884805Z&quot;}}" data-execution_count="4">
+<div id="feb4021b-ef01-4da6-91a9-87577e59b6ba" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:08.393664Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:08.393553Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:11.554830Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:11.554396Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> yaml_lexicons_block</span>
@@ -999,7 +999,7 @@ Tool parameter     files=  1  tokens=   179  imp_sent%= 78.6  dir_sent%=  0.0  c
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>wrote prompt_linguistic_analysis.yaml
-      1,909,866 bytes (1865.1 KiB)
+      1,905,273 bytes (1860.6 KiB)
 wrote sentences_classified.parquet
       413,958 bytes (404.3 KiB), 5,878 rows
 round-trip OK — top-level keys: ['metadata', 'lexicons', 'corpus', 'by_category', 'files']

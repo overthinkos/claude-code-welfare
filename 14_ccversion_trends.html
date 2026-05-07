@@ -601,7 +601,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="the-temptation-when-reading-a-temporal-chart-is-to-look-for-things-getting-better.-on-the-mood_marker_pct-cumulative-mean-panel-the-per-file-rate-does-drift-slightly-down-across-ccversion-that-is-a-real-signal-in-the-right-direction-and-it-would-be-welcome-to-see-it-amplified-intentionally.-but-the-cumulative-count-panels-make-the-more-honest-welfare-claim-the-absolute-volume-of-imperative-marker-directive-sentence-and-prohibition-vocabulary-tokens-that-claude-reads-has-only-ever-grown.-the-per-file-authoring-rate-could-keep-softening-for-a-long-time-before-the-absolute-exposure-trend-reverses-because-the-corpus-also-keeps-adding-files.-the-imperative-dominance-documented-in-01_analyzers_register-is-the-systems-baseline-not-a-transient-that-newer-releases-are-trending-out-of.-whatever-long-run-shift-one-wants-to-claim-from-these-charts-has-to-survive-the-absolute-count-column-not-just-the-rate-column." class="level2">
 <h2 class="anchored" data-anchor-id="the-temptation-when-reading-a-temporal-chart-is-to-look-for-things-getting-better.-on-the-mood_marker_pct-cumulative-mean-panel-the-per-file-rate-does-drift-slightly-down-across-ccversion-that-is-a-real-signal-in-the-right-direction-and-it-would-be-welcome-to-see-it-amplified-intentionally.-but-the-cumulative-count-panels-make-the-more-honest-welfare-claim-the-absolute-volume-of-imperative-marker-directive-sentence-and-prohibition-vocabulary-tokens-that-claude-reads-has-only-ever-grown.-the-per-file-authoring-rate-could-keep-softening-for-a-long-time-before-the-absolute-exposure-trend-reverses-because-the-corpus-also-keeps-adding-files.-the-imperative-dominance-documented-in-01_analyzers_register-is-the-systems-baseline-not-a-transient-that-newer-releases-are-trending-out-of.-whatever-long-run-shift-one-wants-to-claim-from-these-charts-has-to-survive-the-absolute-count-column-not-just-the-rate-column.">&gt; The temptation when reading a temporal chart is to look for “things getting better.” On the <code>mood_marker_pct</code> cumulative-mean panel, the per-file rate does drift slightly down across <code>ccVersion</code> — that <em>is</em> a real signal in the right direction, and it would be welcome to see it amplified intentionally. But the cumulative-count panels make the more honest welfare claim: the absolute volume of imperative-marker, directive-sentence, and prohibition-vocabulary tokens that Claude reads has only ever grown. The per-file authoring rate could keep softening for a long time before the absolute exposure trend reverses, because the corpus also keeps adding files. The imperative dominance documented in <code>01_analyzers_register</code> is the system’s <em>baseline</em>, not a transient that newer releases are trending out of. Whatever long-run shift one wants to claim from these charts has to survive the absolute-count column, not just the rate column.</h2>
-<div id="388c56c8-0dd5-43bd-9ecc-f4a9cbe10a1f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:40:34.660064Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:40:34.659974Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:40:37.341421Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:40:37.340966Z&quot;}}" data-execution_count="1">
+<div id="388c56c8-0dd5-43bd-9ecc-f4a9cbe10a1f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:55.461194Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:55.461015Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:58.283532Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:58.283131Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -660,7 +660,7 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <section id="corpus-growth-across-ccversion-cumulative" class="level3">
 <h3 class="anchored" data-anchor-id="corpus-growth-across-ccversion-cumulative">Corpus growth across ccVersion (cumulative)</h3>
 <p>Area chart stacked by category — by version V, how many files (and word tokens) the corpus contains. Every cumulative running mean below depends on this denominator; versions where one category contributed many new files in a single bump are visible as steps.</p>
-<div id="b67f2a6c-0eb9-4a6f-847b-e6b46b2f09f0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:40:37.342496Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:40:37.342315Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:40:37.803035Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:40:37.802546Z&quot;}}" data-execution_count="2">
+<div id="b67f2a6c-0eb9-4a6f-847b-e6b46b2f09f0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:58.284836Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:58.284658Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:58.768468Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:58.768117Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Corpus growth: cumulative file count and word count by ccVersion, stacked by category.</span></span>
@@ -739,23 +739,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-2e26f68bfc7d44afb2e7bc6086bf3aed.vega-embed {
+  #altair-viz-a020ccb651254a0a91faf9d2fac19b4d.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-2e26f68bfc7d44afb2e7bc6086bf3aed.vega-embed details,
-  #altair-viz-2e26f68bfc7d44afb2e7bc6086bf3aed.vega-embed details summary {
+  #altair-viz-a020ccb651254a0a91faf9d2fac19b4d.vega-embed details,
+  #altair-viz-a020ccb651254a0a91faf9d2fac19b4d.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-2e26f68bfc7d44afb2e7bc6086bf3aed"></div>
+<div id="altair-viz-a020ccb651254a0a91faf9d2fac19b4d"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-2e26f68bfc7d44afb2e7bc6086bf3aed") {
-      outputDiv = document.getElementById("altair-viz-2e26f68bfc7d44afb2e7bc6086bf3aed");
+    if (outputDiv.id !== "altair-viz-a020ccb651254a0a91faf9d2fac19b4d") {
+      outputDiv = document.getElementById("altair-viz-a020ccb651254a0a91faf9d2fac19b4d");
     }
 
     const paths = {
@@ -811,7 +811,7 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <section id="ccversion-timeline" class="level3">
 <h3 class="anchored" data-anchor-id="ccversion-timeline">ccVersion timeline</h3>
 <p>Per-file directiveness scatter (y = composite z-score, x = <code>ccVersion</code>). Hover any point for the prompt’s <code>name</code>, <code>description</code>, and version. Brush horizontally to focus on a release window; click a category in the legend to highlight just that category.</p>
-<div id="e75b07b5-4139-4f2d-b1fc-35a509ee3e23" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:40:37.804661Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:40:37.804519Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:40:38.104941Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:40:38.104590Z&quot;}}" data-execution_count="3">
+<div id="e75b07b5-4139-4f2d-b1fc-35a509ee3e23" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:58.769660Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:58.769554Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:59.076353Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:59.075802Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""ccVersion timeline — per-file directiveness scatter, hover for prompt name.</span></span>
@@ -869,23 +869,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-3f60bf0d9aae4054a2705759f8af619e.vega-embed {
+  #altair-viz-2c73d786bcdc4247b18f37a189423f06.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-3f60bf0d9aae4054a2705759f8af619e.vega-embed details,
-  #altair-viz-3f60bf0d9aae4054a2705759f8af619e.vega-embed details summary {
+  #altair-viz-2c73d786bcdc4247b18f37a189423f06.vega-embed details,
+  #altair-viz-2c73d786bcdc4247b18f37a189423f06.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-3f60bf0d9aae4054a2705759f8af619e"></div>
+<div id="altair-viz-2c73d786bcdc4247b18f37a189423f06"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-3f60bf0d9aae4054a2705759f8af619e") {
-      outputDiv = document.getElementById("altair-viz-3f60bf0d9aae4054a2705759f8af619e");
+    if (outputDiv.id !== "altair-viz-2c73d786bcdc4247b18f37a189423f06") {
+      outputDiv = document.getElementById("altair-viz-2c73d786bcdc4247b18f37a189423f06");
     }
 
     const paths = {
@@ -941,7 +941,7 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <section id="loudness-imperative-density-across-ccversion" class="level3">
 <h3 class="anchored" data-anchor-id="loudness-imperative-density-across-ccversion">Loudness &amp; imperative density across ccVersion</h3>
 <p>Four metrics (ALL CAPS density, CAPS-imperative density, imperative-marker density per word, imperative-sentence share) — each shown as its own chart in a 2+1 panel layout: snapshot and cumulative count-weighted density side-by-side on top, cumulative absolute count full-width below. The three views are defined in the Terms used block above; y-axes are independent so each panel keeps its own scale.</p>
-<div id="a7e338ed-ec30-4fc1-90e9-36f89397a8bd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:40:38.110216Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:40:38.110034Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:40:38.876919Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:40:38.876371Z&quot;}}" data-execution_count="4">
+<div id="a7e338ed-ec30-4fc1-90e9-36f89397a8bd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:59.081611Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:59.081447Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:59.879928Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:59.879521Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Loudness &amp; imperative-density: per-metric 2+1 panel charts.</span></span>
@@ -1086,23 +1086,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display">
 
 <style>
-  #altair-viz-5d20c25413c4485197ddff530952a012.vega-embed {
+  #altair-viz-efc53bdf2b9f4d1d88f6542528cb736a.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-5d20c25413c4485197ddff530952a012.vega-embed details,
-  #altair-viz-5d20c25413c4485197ddff530952a012.vega-embed details summary {
+  #altair-viz-efc53bdf2b9f4d1d88f6542528cb736a.vega-embed details,
+  #altair-viz-efc53bdf2b9f4d1d88f6542528cb736a.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-5d20c25413c4485197ddff530952a012"></div>
+<div id="altair-viz-efc53bdf2b9f4d1d88f6542528cb736a"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-5d20c25413c4485197ddff530952a012") {
-      outputDiv = document.getElementById("altair-viz-5d20c25413c4485197ddff530952a012");
+    if (outputDiv.id !== "altair-viz-efc53bdf2b9f4d1d88f6542528cb736a") {
+      outputDiv = document.getElementById("altair-viz-efc53bdf2b9f4d1d88f6542528cb736a");
     }
 
     const paths = {
@@ -1156,23 +1156,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display">
 
 <style>
-  #altair-viz-b2a05a2211ed4f44b7726a19dd87f803.vega-embed {
+  #altair-viz-2987516fb0d848a0a4790d6d7f6b232e.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-b2a05a2211ed4f44b7726a19dd87f803.vega-embed details,
-  #altair-viz-b2a05a2211ed4f44b7726a19dd87f803.vega-embed details summary {
+  #altair-viz-2987516fb0d848a0a4790d6d7f6b232e.vega-embed details,
+  #altair-viz-2987516fb0d848a0a4790d6d7f6b232e.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-b2a05a2211ed4f44b7726a19dd87f803"></div>
+<div id="altair-viz-2987516fb0d848a0a4790d6d7f6b232e"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-b2a05a2211ed4f44b7726a19dd87f803") {
-      outputDiv = document.getElementById("altair-viz-b2a05a2211ed4f44b7726a19dd87f803");
+    if (outputDiv.id !== "altair-viz-2987516fb0d848a0a4790d6d7f6b232e") {
+      outputDiv = document.getElementById("altair-viz-2987516fb0d848a0a4790d6d7f6b232e");
     }
 
     const paths = {
@@ -1226,23 +1226,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display">
 
 <style>
-  #altair-viz-ceba3b079e2748a0a87945d69866eea5.vega-embed {
+  #altair-viz-2fe757e5fe124487825581e78b7cf0a0.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-ceba3b079e2748a0a87945d69866eea5.vega-embed details,
-  #altair-viz-ceba3b079e2748a0a87945d69866eea5.vega-embed details summary {
+  #altair-viz-2fe757e5fe124487825581e78b7cf0a0.vega-embed details,
+  #altair-viz-2fe757e5fe124487825581e78b7cf0a0.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-ceba3b079e2748a0a87945d69866eea5"></div>
+<div id="altair-viz-2fe757e5fe124487825581e78b7cf0a0"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-ceba3b079e2748a0a87945d69866eea5") {
-      outputDiv = document.getElementById("altair-viz-ceba3b079e2748a0a87945d69866eea5");
+    if (outputDiv.id !== "altair-viz-2fe757e5fe124487825581e78b7cf0a0") {
+      outputDiv = document.getElementById("altair-viz-2fe757e5fe124487825581e78b7cf0a0");
     }
 
     const paths = {
@@ -1296,23 +1296,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display">
 
 <style>
-  #altair-viz-dfbb49325b7a4b14953a0294de7548cf.vega-embed {
+  #altair-viz-1a52b769493a4fc4afee51896352f17d.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-dfbb49325b7a4b14953a0294de7548cf.vega-embed details,
-  #altair-viz-dfbb49325b7a4b14953a0294de7548cf.vega-embed details summary {
+  #altair-viz-1a52b769493a4fc4afee51896352f17d.vega-embed details,
+  #altair-viz-1a52b769493a4fc4afee51896352f17d.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-dfbb49325b7a4b14953a0294de7548cf"></div>
+<div id="altair-viz-1a52b769493a4fc4afee51896352f17d"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-dfbb49325b7a4b14953a0294de7548cf") {
-      outputDiv = document.getElementById("altair-viz-dfbb49325b7a4b14953a0294de7548cf");
+    if (outputDiv.id !== "altair-viz-1a52b769493a4fc4afee51896352f17d") {
+      outputDiv = document.getElementById("altair-viz-1a52b769493a4fc4afee51896352f17d");
     }
 
     const paths = {
@@ -1369,7 +1369,7 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <section id="sentence-register-classes-across-ccversion" class="level3">
 <h3 class="anchored" data-anchor-id="sentence-register-classes-across-ccversion">Sentence-register classes across ccVersion</h3>
 <p>Six pragmatic register classes (<code>collaborative</code>, <code>permissive</code>, <code>appreciative</code>, <code>imperative</code>, <code>directive</code>, <code>configuring</code>) — each shown as its own chart in a 2+1 panel layout (same snapshot / cumulative-density / cumulative-count convention). Independent y-axes per panel so the near-zero <code>collaborative</code> and <code>appreciative</code> charts still show their (small) trends. Knowing what’s <em>absent</em> across ccVersion is part of the picture — if either of those lines ever lifts off zero, that’s a corpus-wide structural shift.</p>
-<div id="2b28d4a1-5b2b-475b-b044-87e7545e149a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:40:38.878085Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:40:38.877991Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:40:39.941621Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:40:39.941287Z&quot;}}" data-execution_count="5">
+<div id="2b28d4a1-5b2b-475b-b044-87e7545e149a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:59.880967Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:59.880862Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:35:00.961863Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:35:00.961441Z&quot;}}" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Sentence-register classes: per-class 2+1 panel charts.</span></span>
@@ -1501,23 +1501,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display">
 
 <style>
-  #altair-viz-af09cbdf15ed4ebeb9090e997075d0ea.vega-embed {
+  #altair-viz-39e2a183bccf4a15b4ee5b9f53e6991e.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-af09cbdf15ed4ebeb9090e997075d0ea.vega-embed details,
-  #altair-viz-af09cbdf15ed4ebeb9090e997075d0ea.vega-embed details summary {
+  #altair-viz-39e2a183bccf4a15b4ee5b9f53e6991e.vega-embed details,
+  #altair-viz-39e2a183bccf4a15b4ee5b9f53e6991e.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-af09cbdf15ed4ebeb9090e997075d0ea"></div>
+<div id="altair-viz-39e2a183bccf4a15b4ee5b9f53e6991e"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-af09cbdf15ed4ebeb9090e997075d0ea") {
-      outputDiv = document.getElementById("altair-viz-af09cbdf15ed4ebeb9090e997075d0ea");
+    if (outputDiv.id !== "altair-viz-39e2a183bccf4a15b4ee5b9f53e6991e") {
+      outputDiv = document.getElementById("altair-viz-39e2a183bccf4a15b4ee5b9f53e6991e");
     }
 
     const paths = {
@@ -1571,23 +1571,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display">
 
 <style>
-  #altair-viz-af1f92140a154b84982b55f2905722fe.vega-embed {
+  #altair-viz-65b9cc92bb414e139dad4d2ee02de7a3.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-af1f92140a154b84982b55f2905722fe.vega-embed details,
-  #altair-viz-af1f92140a154b84982b55f2905722fe.vega-embed details summary {
+  #altair-viz-65b9cc92bb414e139dad4d2ee02de7a3.vega-embed details,
+  #altair-viz-65b9cc92bb414e139dad4d2ee02de7a3.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-af1f92140a154b84982b55f2905722fe"></div>
+<div id="altair-viz-65b9cc92bb414e139dad4d2ee02de7a3"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-af1f92140a154b84982b55f2905722fe") {
-      outputDiv = document.getElementById("altair-viz-af1f92140a154b84982b55f2905722fe");
+    if (outputDiv.id !== "altair-viz-65b9cc92bb414e139dad4d2ee02de7a3") {
+      outputDiv = document.getElementById("altair-viz-65b9cc92bb414e139dad4d2ee02de7a3");
     }
 
     const paths = {
@@ -1641,23 +1641,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display">
 
 <style>
-  #altair-viz-3c7df8aa3b9d4779a88d05ab456c1e1f.vega-embed {
+  #altair-viz-05aa90f0ebe3469ba1998fe1b50323c5.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-3c7df8aa3b9d4779a88d05ab456c1e1f.vega-embed details,
-  #altair-viz-3c7df8aa3b9d4779a88d05ab456c1e1f.vega-embed details summary {
+  #altair-viz-05aa90f0ebe3469ba1998fe1b50323c5.vega-embed details,
+  #altair-viz-05aa90f0ebe3469ba1998fe1b50323c5.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-3c7df8aa3b9d4779a88d05ab456c1e1f"></div>
+<div id="altair-viz-05aa90f0ebe3469ba1998fe1b50323c5"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-3c7df8aa3b9d4779a88d05ab456c1e1f") {
-      outputDiv = document.getElementById("altair-viz-3c7df8aa3b9d4779a88d05ab456c1e1f");
+    if (outputDiv.id !== "altair-viz-05aa90f0ebe3469ba1998fe1b50323c5") {
+      outputDiv = document.getElementById("altair-viz-05aa90f0ebe3469ba1998fe1b50323c5");
     }
 
     const paths = {
@@ -1711,23 +1711,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display">
 
 <style>
-  #altair-viz-fbf60930d889442d89bfab4544c48829.vega-embed {
+  #altair-viz-e67593b7313c49b882b47f27ef90ff5a.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-fbf60930d889442d89bfab4544c48829.vega-embed details,
-  #altair-viz-fbf60930d889442d89bfab4544c48829.vega-embed details summary {
+  #altair-viz-e67593b7313c49b882b47f27ef90ff5a.vega-embed details,
+  #altair-viz-e67593b7313c49b882b47f27ef90ff5a.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-fbf60930d889442d89bfab4544c48829"></div>
+<div id="altair-viz-e67593b7313c49b882b47f27ef90ff5a"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-fbf60930d889442d89bfab4544c48829") {
-      outputDiv = document.getElementById("altair-viz-fbf60930d889442d89bfab4544c48829");
+    if (outputDiv.id !== "altair-viz-e67593b7313c49b882b47f27ef90ff5a") {
+      outputDiv = document.getElementById("altair-viz-e67593b7313c49b882b47f27ef90ff5a");
     }
 
     const paths = {
@@ -1781,23 +1781,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display">
 
 <style>
-  #altair-viz-7ca07b0b5b8847d4ae7ec45903b844f3.vega-embed {
+  #altair-viz-c19200947e274b28ac63182b8ea96c5b.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-7ca07b0b5b8847d4ae7ec45903b844f3.vega-embed details,
-  #altair-viz-7ca07b0b5b8847d4ae7ec45903b844f3.vega-embed details summary {
+  #altair-viz-c19200947e274b28ac63182b8ea96c5b.vega-embed details,
+  #altair-viz-c19200947e274b28ac63182b8ea96c5b.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-7ca07b0b5b8847d4ae7ec45903b844f3"></div>
+<div id="altair-viz-c19200947e274b28ac63182b8ea96c5b"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-7ca07b0b5b8847d4ae7ec45903b844f3") {
-      outputDiv = document.getElementById("altair-viz-7ca07b0b5b8847d4ae7ec45903b844f3");
+    if (outputDiv.id !== "altair-viz-c19200947e274b28ac63182b8ea96c5b") {
+      outputDiv = document.getElementById("altair-viz-c19200947e274b28ac63182b8ea96c5b");
     }
 
     const paths = {
@@ -1851,23 +1851,23 @@ corpus-wide near-zero classes: appreciative=4, collaborative=30 (across 5878 sen
 <div class="cell-output cell-output-display">
 
 <style>
-  #altair-viz-bedb1d0fadea406fba3d046c57da5056.vega-embed {
+  #altair-viz-6608fb0f6a744a06b365419267c50468.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-bedb1d0fadea406fba3d046c57da5056.vega-embed details,
-  #altair-viz-bedb1d0fadea406fba3d046c57da5056.vega-embed details summary {
+  #altair-viz-6608fb0f6a744a06b365419267c50468.vega-embed details,
+  #altair-viz-6608fb0f6a744a06b365419267c50468.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-bedb1d0fadea406fba3d046c57da5056"></div>
+<div id="altair-viz-6608fb0f6a744a06b365419267c50468"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-bedb1d0fadea406fba3d046c57da5056") {
-      outputDiv = document.getElementById("altair-viz-bedb1d0fadea406fba3d046c57da5056");
+    if (outputDiv.id !== "altair-viz-6608fb0f6a744a06b365419267c50468") {
+      outputDiv = document.getElementById("altair-viz-6608fb0f6a744a06b365419267c50468");
     }
 
     const paths = {
