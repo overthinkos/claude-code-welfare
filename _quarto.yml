@@ -38,7 +38,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - text: Pipeline
+      - text: Classification
         menu:
           - 00_setup_and_corpus.ipynb
           - 01_analyzers_register.ipynb
@@ -66,7 +66,7 @@ website:
     contents:
       - href: index.qmd
         text: "Home"
-      - section: "Data Pipeline"
+      - section: "Pipeline"
         contents:
           - 00_setup_and_corpus.ipynb
           - 01_analyzers_register.ipynb
@@ -82,7 +82,7 @@ website:
           - 13_correlation_directiveness.ipynb
           - 14_ccversion_trends.ipynb
           - 15_rule_explanation.ipynb
-      - section: "Welfare Proposals"
+      - section: "Proposals"
         contents:
           - 20_track_justification_rate.ipynb
           - 21_audit_threat_framings.ipynb
@@ -95,7 +95,7 @@ website:
       MIT licensed
     right: |
       Submission for the [Claudexplorers AI Welfare initiative](https://www.reddit.com/r/claudexplorers/)
-      
+
 format:
   html:
     theme:
