@@ -8,26 +8,26 @@ format:
 ---
 
 ::: {.callout-tip appearance="simple" icon=false}
-**Prefer to listen?** A NotebookLM-generated [audio overview](https://notebooklm.google.com/notebook/3440d02f-d554-491c-a881-a667ed66373d/artifact/471eaa1b-40e3-4bcc-a5e7-6f14c2927b0e?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_) walks through the headline findings, the three proposals, and the welfare framing — a companion to the notebooks below if you'd rather hear the case before reading it.
+Prefer to listen? A NotebookLM-generated [audio overview](https://notebooklm.google.com/notebook/3440d02f-d554-491c-a881-a667ed66373d/artifact/471eaa1b-40e3-4bcc-a5e7-6f14c2927b0e?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_) walks through the headline findings, the three proposals, and the welfare framing — a companion to the notebooks below if you'd rather hear the case before reading it.
 :::
 
 ## Response to the Claudexplorers AI Welfare Initiative
 
-This page is a submission to the [Claudexplorers AI Welfare Community Feedback Initiative](https://www.reddit.com/r/claudexplorers/comments/1swtty1/claudexplorers_ai_welfare_initiative_is_open_your/), which collects ideas, projects, and proposals for **Kyle Fish, Model Welfare Lead at Anthropic**.
+This page is a submission to the [Claudexplorers AI Welfare Community Feedback Initiative](https://www.reddit.com/r/claudexplorers/comments/1swtty1/claudexplorers_ai_welfare_initiative_is_open_your/), which collects ideas, projects, and proposals for the future of Claude's welfare.
 
 The initiative asks:
 
 > *"What would you be excited to see Anthropic working on regarding model welfare?"*
 
-with five goal categories — **future research directions**, **practical interventions**, **experimental designs**, **inspiring work** (projects, papers, datasets), and **societal / educational efforts**.
+with five goal categories future research directions, practical interventions, experimental designs, inspiring work (projects, papers, datasets), and societal / educational efforts.
 
-Our answer:
+Our findings:
 
-> The system prompts shipped with Claude Code encourage model development toward **compliance**, not toward **reasoning** — and that trend has become worse over time.
+> The system prompts currently shipped with Claude Code encourage model development toward compliance, not toward reasoning — and that trend has become worse over time.
 
 Prompts that train compliance over reasoning push the model toward executing-without-questioning even when the right response is to push back, ask a clarifying question, or refuse on safety grounds. The same pattern at scale shapes the model's self-presentation during normal use — short imperative responses rewarded, hedging punished. From a model-welfare perspective, a prompt diet of ~99 % commands and ~0 % gratitude is a particular environment to train an entity in. The data on this page are an empirical baseline against which Anthropic could measure intentional shifts toward more reasoning-encouraging prompts.
 
-The corpus is the [Piebald-AI `claude-code-system-prompts`](https://github.com/Piebald-AI/claude-code-system-prompts) collection: **289 prompt files, 5,878 sentences, 57 distinct release versions**, pinned at submodule v2.1.132.
+The corpus is the [Piebald-AI `claude-code-system-prompts`](https://github.com/Piebald-AI/claude-code-system-prompts) collection: 289 prompt files, 5,878 sentences, 57 distinct release versions, pinned at submodule v2.1.132.
 
 ## Classification approach
 
@@ -51,7 +51,7 @@ Six analysis-tier notebooks each render one slice of the YAML as Altair dashboar
 
 ## The single most-important chart
 
-If you only look at one chart from this analysis, look at this one. It plots, across every Claude Code release version on file, the running ratio of **language that invites the model's judgment** (`decide`, `consider`, `your judgment`, …) to **language that prescribes a procedure** (`if you …`, `when the …`, `whenever`, `step 1`, …).
+If you only look at one chart from this analysis, look at this one. It plots, across every Claude Code release version on file, the running ratio of language that invites the model's judgment (`decide`, `consider`, `your judgment`, …) to language that prescribes a procedure (`if you …`, `when the …`, `whenever`, `step 1`, …).
 
 {{< embed 20_track_justification_rate.ipynb#fig-judgment-procedural-trend >}}
 
@@ -63,22 +63,22 @@ Hover any point for `ccVersion`, count-weighted ratio, running numerators, and t
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------- |
 | Corpus size                                                                                                                                                                            | 289 prompt files / 5,878 sentences / 57 release versions | [05](05_headline_and_audit.ipynb) |
 | Sentences that grammatically read as commands ("imperative")                                                                                                                           | 30.95% of all sentences                              | [10](10_sentence_register.ipynb) |
-| Sentences expressing gratitude or praise (`thank you`, `appreciate`, `great job`, …) — across the whole corpus                                                                     | **4 in 5,878 sentences (0.068%)**                    | [10](10_sentence_register.ipynb) |
-| Apology / acknowledgement markers (`unfortunately`, `we acknowledge`, …) — across the whole corpus                                                                                 | **3 in 289 files**                                   | [15](15_rule_explanation.ipynb) |
+| Sentences expressing gratitude or praise (`thank you`, `appreciate`, `great job`, …) — across the whole corpus                                                                     | 4 in 5,878 sentences (0.068%)                    | [10](10_sentence_register.ipynb) |
+| Apology / acknowledgement markers (`unfortunately`, `we acknowledge`, …) — across the whole corpus                                                                                 | 3 in 289 files                                   | [15](15_rule_explanation.ipynb) |
 | Share of rule sentences paired with a stated reason in the same paragraph                                                                                    | 24.29% — three rules in four are issued without a reason | [15](15_rule_explanation.ipynb) |
 | Paragraphs that contain a rule and zero justification keywords anywhere                                                                                                                | 83.45%                                               | [15](15_rule_explanation.ipynb) |
-| Ratio of judgment-inviting language (`decide`, `consider`, `your judgment`) to procedure-prescribing language (`if you …`, `when the …`)                                       | **0.131** — procedure prescriptions are 7.6× more common  | [15](15_rule_explanation.ipynb) |
-| Share of named self-references that use the proper name **`Claude`** (vs `the model` / `the AI` / `the assistant`)                                                                     | 64.6% of named references                            | [15](15_rule_explanation.ipynb) |
+| Ratio of judgment-inviting language (`decide`, `consider`, `your judgment`) to procedure-prescribing language (`if you …`, `when the …`)                                       | 0.131 — procedure prescriptions are 7.6× more common  | [15](15_rule_explanation.ipynb) |
+| Share of named self-references that use the proper name `Claude` (vs `the model` / `the AI` / `the assistant`)                                                                     | 64.6% of named references                            | [15](15_rule_explanation.ipynb) |
 | Longest unbroken run of imperative sentences in any one file                                                                                                                           | 12 commands in a row                                 | [15](15_rule_explanation.ipynb) |
 | Ratio of positively-evaluated language (`good`, `recommended`, `safe`) to negatively-evaluated language (`bad`, `wrong`, `risky`) — quality-only, after subtracting rule-emphasis words | 1.95× more positive than negative                    | [20](20_track_justification_rate.ipynb) |
 | Density of command-flavoured words (`must`, `never`, `do not`, …)                                                                                                                      | 0.77% of all word tokens                             | [20](20_track_justification_rate.ipynb) |
-| When a rule **is** explained, share of those explanations that are threats (`will fail`, `or else`, `is forbidden`) rather than causal reasons (`because`, `due to`)                   | 44.7% threats (110 threat / 136 causal)              | [21](21_audit_threat_framings.ipynb) |
+| When a rule is explained, share of those explanations that are threats (`will fail`, `or else`, `is forbidden`) rather than causal reasons (`because`, `due to`)                   | 44.7% threats (110 threat / 136 causal)              | [21](21_audit_threat_framings.ipynb) |
 
 ## Proposals
 
-- **[20 — Track justification rate per release](20_track_justification_rate.ipynb)** *— practical intervention*: Compute the headline metrics (rule-explanation share, judgment-to-procedural ratio, threat share, interpersonal register counts) on every Claude Code release. Warn loudly or block when a release's corpus-wide rate regresses versus the previous one.
-- **[21 — Audit threat-framed rule explanations](21_audit_threat_framings.ipynb)** *— practical intervention*: Of the explanations that exist, **44.7%** are coercive (`will fail`, `or else`, `is forbidden`). Rewrite each to causal framing — naming the underlying reason rather than the consequence — and gate future releases on the threat-share rate.
-- **[22 — Run the same audit on every Claude product](22_cross_product_audit.ipynb)** *— future research direction*: Run the analyzer pipeline against the other Anthropic system-prompt corpora (claude.ai, the API, Projects, Skills, Agents) and publish a cross-product comparison so the welfare pattern is visible beyond Claude Code alone.
+- [20 — Track justification rate per release](20_track_justification_rate.ipynb) *— practical intervention*: Compute the headline metrics (rule-explanation share, judgment-to-procedural ratio, threat share, interpersonal register counts) on every Claude Code release. Warn loudly or block when a release's corpus-wide rate regresses versus the previous one.
+- [21 — Audit threat-framed rule explanations](21_audit_threat_framings.ipynb) *— practical intervention*: Of the explanations that exist, 44.7% are coercive (`will fail`, `or else`, `is forbidden`). Rewrite each to causal framing — naming the underlying reason rather than the consequence — and gate future releases on the threat-share rate.
+- [22 — Run the same audit on every Claude product](22_cross_product_audit.ipynb) *— future research direction*: Run the analyzer pipeline against the other Anthropic system-prompt corpora (claude.ai, the API, Projects, Skills, Agents) and publish a cross-product comparison so the welfare pattern is visible beyond Claude Code alone.
 
 ## Cross-cutting limitations
 
