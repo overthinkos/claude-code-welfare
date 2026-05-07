@@ -43,6 +43,7 @@ python -m pip install \
     pyyaml \
     pyarrow \
     "altair>=6" \
+    matplotlib \
     vl-convert-python \
     vega_datasets \
     python-frontmatter \
