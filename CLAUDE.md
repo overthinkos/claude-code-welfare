@@ -38,6 +38,19 @@ After editing `prompt_analysis.py`, the kernel still has the old module cached; 
 
 The `.mcp.json` in this repo points at `http://localhost:8888/mcp`. Don't change it without reason.
 
+## Local vs Claude Code on the web
+
+The repo is designed to run in two modes:
+
+- **Local** — JupyterLab + the Jupyter MCP server on port 8888. Edits go through `cell_*` tools, the kernel stays alive between cells, and `importlib.reload(prompt_analysis)` in the setup cell handles module re-imports.
+- **Claude Code on the web** ([docs](https://code.claude.com/docs/en/claude-code-on-the-web)) — fresh Ubuntu 24.04 sandbox per session, no JupyterLab process, no MCP server. Producer stages run via `jupyter nbconvert --to notebook --execute --inplace <nb>` in strict order `00 → 01 → 02 → 03 → 04 → 05`. Each `nbconvert` invocation is a fresh kernel, so the `importlib.reload` line is a no-op.
+
+`setup.sh` at the repo root is the canonical bootstrap for both modes. It creates a repo-local venv at `.venv/` (gitignored), installs every dependency into it, downloads the spaCy model, and registers an IPython kernel scoped to that venv. No `--break-system-packages`; system Python is never touched. If a venv or conda env is already active when the script runs, it reuses that env instead of creating `.venv/`. Locally: `bash setup.sh` once, then `source .venv/bin/activate` before running notebooks. On the web: configure `bash setup.sh` as the session's environment setup script in the cloud UI — the docs note that setup-script filesystem changes persist across sessions via env caching, so `.venv/` carries over.
+
+Each Bash tool call on Claude Code on the web is a fresh shell — `VIRTUAL_ENV` does not persist between calls. So every `jupyter` / `python` / `nbconvert` invocation in the web sandbox needs to either prefix `source .venv/bin/activate &&` or call the venv binary directly (`.venv/bin/jupyter …`). The `SessionStart` hook in `.claude/settings.json` re-runs only the cheap, idempotent `git submodule update --init --recursive` each session — pip installs are kept out of the hook so local sessions don't reinstall dependencies on every start.
+
+`.mcp.json` (`localhost:8888/mcp`) only resolves locally. On the web, MCP `cell_*` tools are unavailable — drive notebooks via `nbconvert` instead.
+
 ## Out of scope
 
 - Sentiment analysis via external lexicons (VADER, Hu-Liu, spacytextblob) — rejected to preserve audit transparency.
@@ -59,6 +72,8 @@ The `.mcp.json` in this repo points at `http://localhost:8888/mcp`. Don't change
 | `room_list` shows two rows for the same path | Single-room invariant violated. File a bug. |
 | Edits to a `.ipynb` via direct `Write` don't show up in JupyterLab | Expected — disk edits bypass the CRDT room. Use `cell_*` tools instead. |
 | Producer's `generated_at` is the only diff between two YAML runs | Expected. Everything else is deterministic. |
+| `claude-code-system-prompts/` empty after fresh clone | `git submodule update --init --recursive` (also runs as the `SessionStart` hook). |
+| MCP `cell_*` tool fails on Claude Code on the web | Expected — no JupyterLab on the web. Drive notebooks via `jupyter nbconvert --execute --inplace` instead. |
 
 ---
 

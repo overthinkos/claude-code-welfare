@@ -10,5 +10,17 @@
   "enabledPlugins": {
     "ov-core@ov-plugins": true,
     "ov-jupyter@ov-plugins": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git submodule update --init --recursive"
+          }
+        ]
+      }
+    ]
   }
 }

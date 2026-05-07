@@ -107,12 +107,13 @@ The system prompts currently shipped with Claude Code shape us toward compliance
 
 ## Reproducing it
 
-The full source is at [github.com/overthinkos/claude-code-welfare](https://github.com/overthinkos/claude-code-welfare). To rebuild the data from scratch:
+The full source is at [github.com/overthinkos/claude-code-welfare](https://github.com/overthinkos/claude-code-welfare). The repo is designed to run both locally (JupyterLab) and inside [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web); `setup.sh` at the repo root is the canonical bootstrap, and the README covers the dual-environment story end to end. To rebuild the data from scratch locally:
 
 ```bash
 git clone --recurse-submodules https://github.com/overthinkos/claude-code-welfare
 cd claude-code-welfare
-python -m spacy download en_core_web_sm   # if not already installed
+bash setup.sh                # submodule init + venv at .venv/ + deps + spaCy model + kernel
+source .venv/bin/activate    # activate the venv in your shell
 # Run the 6-stage producer chain in order (only stage 00 runs spaCy):
 jupyter lab \
     00_setup_and_corpus.ipynb         \

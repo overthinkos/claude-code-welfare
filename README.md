@@ -20,14 +20,15 @@ Quantitative linguistic analysis of the **286 system prompts that ship with Clau
 
 ## Reproducing the analysis
 
+The repo is designed to run both locally (JupyterLab) and inside [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web). `setup.sh` at the repo root is the canonical bootstrap for either path. It creates a repo-local virtual environment at `.venv/` and installs everything into it — your system Python is never touched.
+
 ```bash
 git clone --recurse-submodules https://github.com/overthinkos/claude-code-welfare
 cd claude-code-welfare
 
-# Install Python deps (or use a JupyterLab environment that already has them)
-pip install "spacy>=3.8" pandas pyyaml pyarrow "altair>=6" vl-convert-python \
-            vega_datasets python-frontmatter tqdm
-python -m spacy download en_core_web_sm
+bash setup.sh                  # submodule init + venv + deps + spaCy model + kernel
+                               # idempotent — safe to re-run
+source .venv/bin/activate      # activate the venv in your shell
 
 # Run the producer chain in order — each stage Run All. Only stage 00 runs spaCy;
 # 01–03 reload the cached DocBin and run analyzer families; 04 assembles + writes the
@@ -43,7 +44,29 @@ jupyter lab \
 # Then any analysis notebook (10–15) or proposal notebook (20–22) renders charts and proposal text from those artifacts
 ```
 
+If a venv or conda env is already active when you run `setup.sh`, it reuses that env instead of creating `.venv/`. The equivalent manual steps are: `git submodule update --init --recursive`, `python -m venv .venv && source .venv/bin/activate`, then `pip install "spacy>=3.8" pandas pyyaml pyarrow "altair>=6" vl-convert-python vega_datasets python-frontmatter tqdm jupyter nbconvert ipykernel`, then `python -m spacy download en_core_web_sm`, then `python -m ipykernel install --prefix="$VIRTUAL_ENV" --name python3`.
+
 For the full architecture (producer/consumer split, the shared `prompt_analysis.py` module, the Jupyter MCP tooling rules) read [`CLAUDE.md`](./CLAUDE.md).
+
+## Run on Claude Code on the web
+
+[Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web) starts each session from a fresh clone in an Ubuntu 24.04 sandbox. To make this repo work there:
+
+1. Configure `bash setup.sh` as the session's **environment setup script** in the cloud UI. Per the docs, the resulting filesystem changes (the `.venv/`, the spaCy model, the kernel registration) are cached across sessions, so subsequent sessions skip the slow installs.
+2. Drive the producer chain headlessly via `nbconvert`. Each shell invocation is fresh, so activate the venv (or use `.venv/bin/jupyter`) on every command:
+
+   ```bash
+   source .venv/bin/activate
+   for nb in 00_setup_and_corpus 01_analyzers_register \
+             02_analyzers_vocab_emphasis 03_analyzers_rules_welfare \
+             04_assemble_aggregate_write 05_headline_and_audit; do
+       jupyter nbconvert --to notebook --execute --inplace "${nb}.ipynb"
+   done
+   ```
+
+3. The analysis (`10`–`15`) and proposal (`20`–`22`) notebooks can be run the same way, in any order, after the producer chain completes.
+
+The `SessionStart` hook in `.claude/settings.json` runs `git submodule update --init --recursive` at the start of every session — fast, idempotent, and useful both on the web (fresh clone) and locally (no-op when already populated). `.mcp.json` points at a local JupyterLab MCP server (`http://localhost:8888/mcp`) and is local-only; on the web, MCP `cell_*` tools are unavailable, which is why notebooks are driven via `nbconvert` instead.
 
 ## Rebuilding the published site
 
