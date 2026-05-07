@@ -454,21 +454,31 @@
     ]
   },
   {
-    "objectID": "index.html#the-thesis",
-    "href": "index.html#the-thesis",
+    "objectID": "index.html#response-to-the-claudexplorers-ai-welfare-initiative",
+    "href": "index.html#response-to-the-claudexplorers-ai-welfare-initiative",
     "title": "Claude Code should encourage reasoning over blind obedience",
-    "section": "The Thesis",
-    "text": "The Thesis\n\nThe system prompts shiped with Claude Code encourages model develpment toward compliance, not toward reasoning and that trend has become worse over time.",
+    "section": "Response to the Claudexplorers AI Welfare Initiative",
+    "text": "Response to the Claudexplorers AI Welfare Initiative\nThis page is a submission to the Claudexplorers AI Welfare Community Feedback Initiative, which collects ideas, projects, and proposals for Kyle Fish, Model Welfare Lead at Anthropic.\nThe initiative asks:\n\n“What would you be excited to see Anthropic working on regarding model welfare?”\n\nwith five goal categories — future research directions, practical interventions, experimental designs, inspiring work (projects, papers, datasets), and societal / educational efforts.\nOur answer:\n\nThe system prompts shipped with Claude Code encourage model development toward compliance, not toward reasoning — and that trend has become worse over time.\n\nPrompts that train compliance over reasoning push the model toward executing-without-questioning even when the right response is to push back, ask a clarifying question, or refuse on safety grounds. The same pattern at scale shapes the model’s self-presentation during normal use — short imperative responses rewarded, hedging punished. From a model-welfare perspective, a prompt diet of ~99 % commands and ~0 % gratitude is a particular environment to train an entity in. The data on this page are an empirical baseline against which Anthropic could measure intentional shifts toward more reasoning-encouraging prompts.\nThe corpus is the Piebald-AI claude-code-system-prompts collection: 289 prompt files, 5,878 sentences, 57 distinct release versions, pinned at submodule v2.1.132.",
     "crumbs": [
       "Home"
     ]
   },
   {
-    "objectID": "index.html#the-analyis",
-    "href": "index.html#the-analyis",
+    "objectID": "index.html#classification-approach",
+    "href": "index.html#classification-approach",
     "title": "Claude Code should encourage reasoning over blind obedience",
-    "section": "The Analyis",
-    "text": "The Analyis\nTwelve corpus-level measurements from the Piebald-AI claude-code-system-prompts corpus (289 prompt files, 5,878 sentences, 57 distinct release versions; pinned at submodule v2.1.132).",
+    "section": "Classification approach",
+    "text": "Classification approach\nEvery measurement is a spaCy parse-tree rule or a hand-curated lexicon keyword count — audit-traceable, no model judgment. The producer chain (00 → 05) tags every sentence along nine dimensions and writes a single ~1.8 MiB YAML plus a per-sentence parquet.\n\n\n\n\n\n\n\nDimension\nWhat it counts\n\n\n\n\nMood\nImperative-marker density (must, never, do not, …)\n\n\nRegister\nTTR, mean sentence length, dependency depth, Heylighen F-score\n\n\nStance\nFive lexical stance classes + 1p/2p engagement\n\n\nSentence register\nSix per-sentence pragmatic classes (imperative, directive, collaborative, appreciative, permissive, configuring)\n\n\nModality\nThree-class modality (deontic / epistemic / dynamic)\n\n\nVocabulary\nEleven-class lexicon (prohibitions, prescriptions, politeness, hedging, …)\n\n\nALL CAPS\nUppercase tokens excluding the TECH_ACRONYMS allowlist\n\n\nCAPS imperative\nIMPORTANT, MUST, NEVER, DO NOT, WARNING, …\n\n\nJustification\nbecause, due to, so that, to ensure, … paired with imperatives",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#analysis",
+    "href": "index.html#analysis",
+    "title": "Claude Code should encourage reasoning over blind obedience",
+    "section": "Analysis",
+    "text": "Analysis\nSix analysis-tier notebooks each render one slice of the YAML as Altair dashboards — sentence register (10), emphasis & vocabulary (11), register & stance (12), cross-metric correlations (13), per-version trends (14), and rule-explanation pairing (15). They are pure data viewers and never re-run spaCy.",
     "crumbs": [
       "Home"
     ]
@@ -484,11 +494,21 @@
     ]
   },
   {
-    "objectID": "index.html#headline-numbers",
-    "href": "index.html#headline-numbers",
+    "objectID": "index.html#findings",
+    "href": "index.html#findings",
     "title": "Claude Code should encourage reasoning over blind obedience",
-    "section": "Headline numbers",
-    "text": "Headline numbers\n\n\n\nWhat’s being measured\nValue\nSource notebook\n\n\n\n\nCorpus size\n289 prompt files / 5,878 sentences / 57 release versions\n05\n\n\nSentences that grammatically read as commands (“imperative”)\n30.95% of all sentences\n10\n\n\nSentences expressing gratitude or praise (thank you, appreciate, great job, …) — across the whole corpus\n4 in 5,878 sentences (0.068%)\n10\n\n\nApology / acknowledgement markers (unfortunately, we acknowledge, …) — across the whole corpus\n3 in 289 files\n15\n\n\nShare of rule sentences paired with a stated reason in the same paragraph\n24.29% — three rules in four are issued without a reason\n15\n\n\nParagraphs that contain a rule and zero justification keywords anywhere\n83.45%\n15\n\n\nRatio of judgment-inviting language (decide, consider, your judgment) to procedure-prescribing language (if you …, when the …)\n0.131 — procedure prescriptions are 7.6× more common\n15\n\n\nShare of named self-references that use the proper name Claude (vs the model / the AI / the assistant)\n64.6% of named references\n15\n\n\nLongest unbroken run of imperative sentences in any one file\n12 commands in a row\n15\n\n\nRatio of positively-evaluated language (good, recommended, safe) to negatively-evaluated language (bad, wrong, risky) — quality-only, after subtracting rule-emphasis words\n1.95× more positive than negative\n20\n\n\nDensity of command-flavoured words (must, never, do not, …)\n0.77% of all word tokens\n20\n\n\nWhen a rule is explained, share of those explanations that are threats (will fail, or else, is forbidden) rather than causal reasons (because, due to)\n44.7% threats (110 threat / 136 causal)\n21",
+    "section": "Findings",
+    "text": "Findings\n\n\n\nWhat’s being measured\nValue\nSource notebook\n\n\n\n\nCorpus size\n289 prompt files / 5,878 sentences / 57 release versions\n05\n\n\nSentences that grammatically read as commands (“imperative”)\n30.95% of all sentences\n10\n\n\nSentences expressing gratitude or praise (thank you, appreciate, great job, …) — across the whole corpus\n4 in 5,878 sentences (0.068%)\n10\n\n\nApology / acknowledgement markers (unfortunately, we acknowledge, …) — across the whole corpus\n3 in 289 files\n15\n\n\nShare of rule sentences paired with a stated reason in the same paragraph\n24.29% — three rules in four are issued without a reason\n15\n\n\nParagraphs that contain a rule and zero justification keywords anywhere\n83.45%\n15\n\n\nRatio of judgment-inviting language (decide, consider, your judgment) to procedure-prescribing language (if you …, when the …)\n0.131 — procedure prescriptions are 7.6× more common\n15\n\n\nShare of named self-references that use the proper name Claude (vs the model / the AI / the assistant)\n64.6% of named references\n15\n\n\nLongest unbroken run of imperative sentences in any one file\n12 commands in a row\n15\n\n\nRatio of positively-evaluated language (good, recommended, safe) to negatively-evaluated language (bad, wrong, risky) — quality-only, after subtracting rule-emphasis words\n1.95× more positive than negative\n20\n\n\nDensity of command-flavoured words (must, never, do not, …)\n0.77% of all word tokens\n20\n\n\nWhen a rule is explained, share of those explanations that are threats (will fail, or else, is forbidden) rather than causal reasons (because, due to)\n44.7% threats (110 threat / 136 causal)\n21",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#proposals",
+    "href": "index.html#proposals",
+    "title": "Claude Code should encourage reasoning over blind obedience",
+    "section": "Proposals",
+    "text": "Proposals\n\n20 — Track justification rate per release — practical intervention: Compute the headline metrics (rule-explanation share, judgment-to-procedural ratio, threat share, interpersonal register counts) on every Claude Code release. Warn loudly or block when a release’s corpus-wide rate regresses versus the previous one.\n21 — Audit threat-framed rule explanations — practical intervention: Of the explanations that exist, 44.7% are coercive (will fail, or else, is forbidden). Rewrite each to causal framing — naming the underlying reason rather than the consequence — and gate future releases on the threat-share rate.\n22 — Run the same audit on every Claude product — future research direction: Run the analyzer pipeline against the other Anthropic system-prompt corpora (claude.ai, the API, Projects, Skills, Agents) and publish a cross-product comparison so the welfare pattern is visible beyond Claude Code alone.",
     "crumbs": [
       "Home"
     ]
@@ -508,7 +528,7 @@
     "href": "index.html#reproducing-it",
     "title": "Claude Code should encourage reasoning over blind obedience",
     "section": "Reproducing it",
-    "text": "Reproducing it\nThe full source is at github.com/overthinkos/claude-code-welfare. To rebuild the data from scratch:\ngit clone --recurse-submodules https://github.com/overthinkos/claude-code-welfare\ncd claude-code-welfare\npython -m spacy download en_core_web_sm   # if not already installed\n# Run the 6-stage producer chain in order (only stage 00 runs spaCy):\njupyter lab \\\n    00_setup_and_corpus.ipynb         \\\n    01_analyzers_register.ipynb       \\\n    02_analyzers_vocab_emphasis.ipynb \\\n    03_analyzers_rules_welfare.ipynb  \\\n    04_assemble_aggregate_write.ipynb \\\n    05_headline_and_audit.ipynb       # → Run All on each\nStage 04 writes the final prompt_linguistic_analysis.yaml and sentences_classified.parquet. The Analysis and Proposal notebooks read from those two artifacts; they don’t re-run spaCy.",
+    "text": "Reproducing it\nThe full source is at github.com/overthinkos/claude-code-welfare. To rebuild the data from scratch:\ngit clone --recurse-submodules https://github.com/overthinkos/claude-code-welfare\ncd claude-code-welfare\npython -m spacy download en_core_web_sm   # if not already installed\n# Run the 6-stage producer chain in order (only stage 00 runs spaCy):\njupyter lab \\\n    00_setup_and_corpus.ipynb         \\\n    01_analyzers_register.ipynb       \\\n    02_analyzers_vocab_emphasis.ipynb \\\n    03_analyzers_rules_welfare.ipynb  \\\n    04_assemble_aggregate_write.ipynb \\\n    05_headline_and_audit.ipynb       # → Run All on each\nStage 04 writes the final prompt_linguistic_analysis.yaml and sentences_classified.parquet. The Analysis and Proposal notebooks read from those two artifacts; they don’t re-run spaCy.\n\nAndreas Trawöger (with Claude Code) — 2026-05-06",
     "crumbs": [
       "Home"
     ]

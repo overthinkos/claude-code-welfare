@@ -6,8 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Andreas Trawöger (with Claude Code)">
-<meta name="dcterms.date" content="2026-05-06">
 
 <title>Claude Code should encourage reasoning over blind obedience – Claude Code · Prompt Welfare Analysis</title>
 <style>
@@ -558,19 +556,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta column-body">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Andreas Trawöger (with Claude Code) </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">May 6, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -590,15 +576,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="the-thesis" class="level2">
-<h2 class="anchored" data-anchor-id="the-thesis">The Thesis</h2>
+<section id="response-to-the-claudexplorers-ai-welfare-initiative" class="level2">
+<h2 class="anchored" data-anchor-id="response-to-the-claudexplorers-ai-welfare-initiative">Response to the Claudexplorers AI Welfare Initiative</h2>
+<p>This page is a submission to the <a href="https://www.reddit.com/r/claudexplorers/comments/1swtty1/claudexplorers_ai_welfare_initiative_is_open_your/">Claudexplorers AI Welfare Community Feedback Initiative</a>, which collects ideas, projects, and proposals for <strong>Kyle Fish, Model Welfare Lead at Anthropic</strong>.</p>
+<p>The initiative asks:</p>
 <blockquote class="blockquote">
-<p>The system prompts shiped with Claude Code encourages model develpment toward <strong>compliance</strong>, not toward <strong>reasoning</strong> and that trend has become worse over time.</p>
+<p><em>“What would you be excited to see Anthropic working on regarding model welfare?”</em></p>
 </blockquote>
+<p>with five goal categories — <strong>future research directions</strong>, <strong>practical interventions</strong>, <strong>experimental designs</strong>, <strong>inspiring work</strong> (projects, papers, datasets), and <strong>societal / educational efforts</strong>.</p>
+<p>Our answer:</p>
+<blockquote class="blockquote">
+<p>The system prompts shipped with Claude Code encourage model development toward <strong>compliance</strong>, not toward <strong>reasoning</strong> — and that trend has become worse over time.</p>
+</blockquote>
+<p>Prompts that train compliance over reasoning push the model toward executing-without-questioning even when the right response is to push back, ask a clarifying question, or refuse on safety grounds. The same pattern at scale shapes the model’s self-presentation during normal use — short imperative responses rewarded, hedging punished. From a model-welfare perspective, a prompt diet of ~99 % commands and ~0 % gratitude is a particular environment to train an entity in. The data on this page are an empirical baseline against which Anthropic could measure intentional shifts toward more reasoning-encouraging prompts.</p>
+<p>The corpus is the <a href="https://github.com/Piebald-AI/claude-code-system-prompts">Piebald-AI <code>claude-code-system-prompts</code></a> collection: <strong>289 prompt files, 5,878 sentences, 57 distinct release versions</strong>, pinned at submodule v2.1.132.</p>
 </section>
-<section id="the-analyis" class="level2">
-<h2 class="anchored" data-anchor-id="the-analyis">The Analyis</h2>
-<p>Twelve corpus-level measurements from the <a href="https://github.com/Piebald-AI/claude-code-system-prompts">Piebald-AI <code>claude-code-system-prompts</code> corpus</a> (289 prompt files, 5,878 sentences, 57 distinct release versions; pinned at submodule v2.1.132).</p>
+<section id="classification-approach" class="level2">
+<h2 class="anchored" data-anchor-id="classification-approach">Classification approach</h2>
+<p>Every measurement is a spaCy parse-tree rule or a hand-curated lexicon keyword count — audit-traceable, no model judgment. The producer chain (<a href="./00_setup_and_corpus.html"><code>00</code></a> → <a href="./05_headline_and_audit.html"><code>05</code></a>) tags every sentence along nine dimensions and writes a single ~1.8 MiB YAML plus a per-sentence parquet.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimension</th>
+<th>What it counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mood</td>
+<td>Imperative-marker density (<code>must</code>, <code>never</code>, <code>do not</code>, …)</td>
+</tr>
+<tr class="even">
+<td>Register</td>
+<td>TTR, mean sentence length, dependency depth, Heylighen F-score</td>
+</tr>
+<tr class="odd">
+<td>Stance</td>
+<td>Five lexical stance classes + 1p/2p engagement</td>
+</tr>
+<tr class="even">
+<td>Sentence register</td>
+<td>Six per-sentence pragmatic classes (<code>imperative</code>, <code>directive</code>, <code>collaborative</code>, <code>appreciative</code>, <code>permissive</code>, <code>configuring</code>)</td>
+</tr>
+<tr class="odd">
+<td>Modality</td>
+<td>Three-class modality (<code>deontic</code> / <code>epistemic</code> / <code>dynamic</code>)</td>
+</tr>
+<tr class="even">
+<td>Vocabulary</td>
+<td>Eleven-class lexicon (prohibitions, prescriptions, politeness, hedging, …)</td>
+</tr>
+<tr class="odd">
+<td>ALL CAPS</td>
+<td>Uppercase tokens excluding the <code>TECH_ACRONYMS</code> allowlist</td>
+</tr>
+<tr class="even">
+<td>CAPS imperative</td>
+<td><code>IMPORTANT</code>, <code>MUST</code>, <code>NEVER</code>, <code>DO NOT</code>, <code>WARNING</code>, …</td>
+</tr>
+<tr class="odd">
+<td>Justification</td>
+<td><code>because</code>, <code>due to</code>, <code>so that</code>, <code>to ensure</code>, … paired with imperatives</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<p>Six analysis-tier notebooks each render one slice of the YAML as Altair dashboards — sentence register (<a href="./10_sentence_register.html"><code>10</code></a>), emphasis &amp; vocabulary (<a href="./11_emphasis_caps_vocab.html"><code>11</code></a>), register &amp; stance (<a href="./12_register_stance.html"><code>12</code></a>), cross-metric correlations (<a href="./13_correlation_directiveness.html"><code>13</code></a>), per-version trends (<a href="./14_ccversion_trends.html"><code>14</code></a>), and rule-explanation pairing (<a href="./15_rule_explanation.html"><code>15</code></a>). They are pure data viewers and never re-run spaCy.</p>
 </section>
 <section id="the-single-most-important-chart" class="level2">
 <h2 class="anchored" data-anchor-id="the-single-most-important-chart">The single most-important chart</h2>
@@ -686,8 +735,8 @@ Figure&nbsp;1: Cumulative judgment-to-procedural ratio over ccVersion (count-wei
 <a class="quarto-notebook-link" id="nblink-1" href="20_track_justification_rate-preview.html#cell-fig-judgment-procedural-trend">Source: Track justification rate per release; block regressions</a></div>
 <p>Hover any point for <code>ccVersion</code>, count-weighted ratio, running numerators, and the cumulative file pool. Cumulative data before v2.1.18 is suppressed (the file pool reaches 20 at that version; below it, single-file outliers dominate).</p>
 </section>
-<section id="headline-numbers" class="level2">
-<h2 class="anchored" data-anchor-id="headline-numbers">Headline numbers</h2>
+<section id="findings" class="level2">
+<h2 class="anchored" data-anchor-id="findings">Findings</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -760,6 +809,14 @@ Figure&nbsp;1: Cumulative judgment-to-procedural ratio over ccVersion (count-wei
 </tbody>
 </table>
 </section>
+<section id="proposals" class="level2">
+<h2 class="anchored" data-anchor-id="proposals">Proposals</h2>
+<ul>
+<li><strong><a href="./20_track_justification_rate.html">20 — Track justification rate per release</a></strong> <em>— practical intervention</em>: Compute the headline metrics (rule-explanation share, judgment-to-procedural ratio, threat share, interpersonal register counts) on every Claude Code release. Warn loudly or block when a release’s corpus-wide rate regresses versus the previous one.</li>
+<li><strong><a href="./21_audit_threat_framings.html">21 — Audit threat-framed rule explanations</a></strong> <em>— practical intervention</em>: Of the explanations that exist, <strong>44.7%</strong> are coercive (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>). Rewrite each to causal framing — naming the underlying reason rather than the consequence — and gate future releases on the threat-share rate.</li>
+<li><strong><a href="./22_cross_product_audit.html">22 — Run the same audit on every Claude product</a></strong> <em>— future research direction</em>: Run the analyzer pipeline against the other Anthropic system-prompt corpora (claude.ai, the API, Projects, Skills, Agents) and publish a cross-product comparison so the welfare pattern is visible beyond Claude Code alone.</li>
+</ul>
+</section>
 <section id="cross-cutting-limitations" class="level2">
 <h2 class="anchored" data-anchor-id="cross-cutting-limitations">Cross-cutting limitations</h2>
 <p>Every metric is a keyword count or a parse-tree rule, not a model judgment — audit-traceable but a lower bound (it misses sarcasm, irony, indirect speech, and explanation phrasings the lexicons don’t catch). The lexicons are English. The corpus is one product (Claude Code), one snapshot in time (the latest <code>ccVersion</code> at the time the YAML was generated). No statistical-significance testing has been run; the trend claims are descriptive and exploratory. Each of the three proposals references back to this paragraph rather than repeating these caveats.</p>
@@ -779,6 +836,8 @@ Figure&nbsp;1: Cumulative judgment-to-procedural ratio over ccVersion (count-wei
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    04_assemble_aggregate_write.ipynb <span class="dt">\</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    05_headline_and_audit.ipynb       <span class="co"># → Run All on each</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Stage 04 writes the final <code>prompt_linguistic_analysis.yaml</code> and <code>sentences_classified.parquet</code>. The Analysis and Proposal notebooks read from those two artifacts; they don’t re-run spaCy.</p>
+<hr>
+<p><em>Andreas Trawöger (with Claude Code) — 2026-05-06</em></p>
 
 
 <!-- -->
@@ -1267,78 +1326,112 @@ Figure&nbsp;1: Cumulative judgment-to-procedural ratio over ccVersion (count-wei
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Claude Code should encourage reasoning over blind obedience"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "A quantitative linguistic analysis of the 289 system prompts that ship with Claude Code"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Andreas Trawöger (with Claude Code)"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2026-05-06"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="an">date-format:</span><span class="co"> long</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="an">toc:</span><span class="co"> false</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">    page-layout: full</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple" icon=false}</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>**Prefer to listen?** A NotebookLM-generated <span class="co">[</span><span class="ot">audio overview</span><span class="co">](https://notebooklm.google.com/notebook/3440d02f-d554-491c-a881-a667ed66373d/artifact/471eaa1b-40e3-4bcc-a5e7-6f14c2927b0e?utm_source=nlm_web_share&amp;utm_medium=google_oo&amp;utm_campaign=art_share_1&amp;utm_content=&amp;utm_smc=nlm_web_share_google_oo_art_share_1_)</span> walks through the headline findings, the three proposals, and the welfare framing — a companion to the notebooks below if you'd rather hear the case before reading it.</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Thesis</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The system prompts shiped with Claude Code encourages model develpment toward **compliance**, not toward **reasoning** and  that trend has become worse over time.</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">toc:</span><span class="co"> false</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    page-layout: full</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple" icon=false}</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>**Prefer to listen?** A NotebookLM-generated <span class="co">[</span><span class="ot">audio overview</span><span class="co">](https://notebooklm.google.com/notebook/3440d02f-d554-491c-a881-a667ed66373d/artifact/471eaa1b-40e3-4bcc-a5e7-6f14c2927b0e?utm_source=nlm_web_share&amp;utm_medium=google_oo&amp;utm_campaign=art_share_1&amp;utm_content=&amp;utm_smc=nlm_web_share_google_oo_art_share_1_)</span> walks through the headline findings, the three proposals, and the welfare framing — a companion to the notebooks below if you'd rather hear the case before reading it.</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Response to the Claudexplorers AI Welfare Initiative</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>This page is a submission to the <span class="co">[</span><span class="ot">Claudexplorers AI Welfare Community Feedback Initiative</span><span class="co">](https://www.reddit.com/r/claudexplorers/comments/1swtty1/claudexplorers_ai_welfare_initiative_is_open_your/)</span>, which collects ideas, projects, and proposals for **Kyle Fish, Model Welfare Lead at Anthropic**.</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>The initiative asks:</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *"What would you be excited to see Anthropic working on regarding model welfare?"*</span></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Analyis</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>with five goal categories — **future research directions**, **practical interventions**, **experimental designs**, **inspiring work** (projects, papers, datasets), and **societal / educational efforts**.</span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>Twelve corpus-level measurements from the <span class="co">[</span><span class="ot">Piebald-AI `claude-code-system-prompts` corpus</span><span class="co">](https://github.com/Piebald-AI/claude-code-system-prompts)</span> (289 prompt files, 5,878 sentences, 57 distinct release versions; pinned at submodule v2.1.132). </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>Our answer:</span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## The single most-important chart</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>If you only look at one chart from this analysis, look at this one. It plots, across every Claude Code release version on file, the running ratio of **language that invites the model's judgment** (`decide`, `consider`, `your judgment`, …) to **language that prescribes a procedure** (<span class="in">`if you …`</span>, <span class="in">`when the …`</span>, <span class="in">`whenever`</span>, <span class="in">`step 1`</span>, …).</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>{{&lt; embed 20_track_justification_rate.ipynb#fig-judgment-procedural-trend &gt;}}</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>Hover any point for <span class="in">`ccVersion`</span>, count-weighted ratio, running numerators, and the cumulative file pool. Cumulative data before v2.1.18 is suppressed (the file pool reaches 20 at that version; below it, single-file outliers dominate). </span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Headline numbers</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> What's being measured                                                                                                                                                                  <span class="pp">|</span> Value                                                <span class="pp">|</span> Source notebook <span class="pp">|</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="pp">| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="pp">| ----------------------------------------------------</span> <span class="pp">| ---------------</span> <span class="pp">|</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Corpus size                                                                                                                                                                            <span class="pp">|</span> 289 prompt files / 5,878 sentences / 57 release versions <span class="pp">|</span> <span class="co">[</span><span class="ot">05</span><span class="co">](05_headline_and_audit.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sentences that grammatically read as commands ("imperative")                                                                                                                           <span class="pp">|</span> 30.95% of all sentences                              <span class="pp">|</span> <span class="co">[</span><span class="ot">10</span><span class="co">](10_sentence_register.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sentences expressing gratitude or praise (<span class="in">`thank you`</span>, <span class="in">`appreciate`</span>, <span class="in">`great job`</span>, …) — across the whole corpus                                                                     <span class="pp">|</span> **4 in 5,878 sentences (0.068%)**                    <span class="pp">|</span> <span class="co">[</span><span class="ot">10</span><span class="co">](10_sentence_register.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Apology / acknowledgement markers (<span class="in">`unfortunately`</span>, <span class="in">`we acknowledge`</span>, …) — across the whole corpus                                                                                 <span class="pp">|</span> **3 in 289 files**                                   <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Share of rule sentences paired with a stated reason in the same paragraph                                                                                    <span class="pp">|</span> 24.29% — three rules in four are issued without a reason <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Paragraphs that contain a rule and zero justification keywords anywhere                                                                                                                <span class="pp">|</span> 83.45%                                               <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ratio of judgment-inviting language (<span class="in">`decide`</span>, <span class="in">`consider`</span>, <span class="in">`your judgment`</span>) to procedure-prescribing language (<span class="in">`if you …`</span>, <span class="in">`when the …`</span>)                                       <span class="pp">|</span> **0.131** — procedure prescriptions are 7.6× more common  <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Share of named self-references that use the proper name **`Claude`** (vs <span class="in">`the model`</span> / <span class="in">`the AI`</span> / <span class="in">`the assistant`</span>)                                                                     <span class="pp">|</span> 64.6% of named references                            <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Longest unbroken run of imperative sentences in any one file                                                                                                                           <span class="pp">|</span> 12 commands in a row                                 <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ratio of positively-evaluated language (<span class="in">`good`</span>, <span class="in">`recommended`</span>, <span class="in">`safe`</span>) to negatively-evaluated language (<span class="in">`bad`</span>, <span class="in">`wrong`</span>, <span class="in">`risky`</span>) — quality-only, after subtracting rule-emphasis words <span class="pp">|</span> 1.95× more positive than negative                    <span class="pp">|</span> <span class="co">[</span><span class="ot">20</span><span class="co">](20_track_justification_rate.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Density of command-flavoured words (<span class="in">`must`</span>, <span class="in">`never`</span>, <span class="in">`do not`</span>, …)                                                                                                                      <span class="pp">|</span> 0.77% of all word tokens                             <span class="pp">|</span> <span class="co">[</span><span class="ot">20</span><span class="co">](20_track_justification_rate.ipynb)</span> <span class="pp">|</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> When a rule **is** explained, share of those explanations that are threats (<span class="in">`will fail`</span>, <span class="in">`or else`</span>, <span class="in">`is forbidden`</span>) rather than causal reasons (<span class="in">`because`</span>, <span class="in">`due to`</span>)                   <span class="pp">|</span> 44.7% threats (110 threat / 136 causal)              <span class="pp">|</span> <span class="co">[</span><span class="ot">21</span><span class="co">](21_audit_threat_framings.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The system prompts shipped with Claude Code encourage model development toward **compliance**, not toward **reasoning** — and that trend has become worse over time.</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>Prompts that train compliance over reasoning push the model toward executing-without-questioning even when the right response is to push back, ask a clarifying question, or refuse on safety grounds. The same pattern at scale shapes the model's self-presentation during normal use — short imperative responses rewarded, hedging punished. From a model-welfare perspective, a prompt diet of ~99 % commands and ~0 % gratitude is a particular environment to train an entity in. The data on this page are an empirical baseline against which Anthropic could measure intentional shifts toward more reasoning-encouraging prompts.</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>The corpus is the <span class="co">[</span><span class="ot">Piebald-AI `claude-code-system-prompts`</span><span class="co">](https://github.com/Piebald-AI/claude-code-system-prompts)</span> collection: **289 prompt files, 5,878 sentences, 57 distinct release versions**, pinned at submodule v2.1.132.</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Classification approach</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>Every measurement is a spaCy parse-tree rule or a hand-curated lexicon keyword count — audit-traceable, no model judgment. The producer chain (<span class="co">[</span><span class="ot">`00`</span><span class="co">](00_setup_and_corpus.ipynb)</span> → <span class="co">[</span><span class="ot">`05`</span><span class="co">](05_headline_and_audit.ipynb)</span>) tags every sentence along nine dimensions and writes a single ~1.8 MiB YAML plus a per-sentence parquet.</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Dimension <span class="pp">|</span> What it counts <span class="pp">|</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="pp">| ---</span> <span class="pp">| ---</span> <span class="pp">|</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Mood <span class="pp">|</span> Imperative-marker density (<span class="in">`must`</span>, <span class="in">`never`</span>, <span class="in">`do not`</span>, …) <span class="pp">|</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Register <span class="pp">|</span> TTR, mean sentence length, dependency depth, Heylighen F-score <span class="pp">|</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Stance <span class="pp">|</span> Five lexical stance classes + 1p/2p engagement <span class="pp">|</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sentence register <span class="pp">|</span> Six per-sentence pragmatic classes (<span class="in">`imperative`</span>, <span class="in">`directive`</span>, <span class="in">`collaborative`</span>, <span class="in">`appreciative`</span>, <span class="in">`permissive`</span>, <span class="in">`configuring`</span>) <span class="pp">|</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Modality <span class="pp">|</span> Three-class modality (<span class="in">`deontic`</span> / <span class="in">`epistemic`</span> / <span class="in">`dynamic`</span>) <span class="pp">|</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Vocabulary <span class="pp">|</span> Eleven-class lexicon (prohibitions, prescriptions, politeness, hedging, …) <span class="pp">|</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ALL CAPS <span class="pp">|</span> Uppercase tokens excluding the <span class="in">`TECH_ACRONYMS`</span> allowlist <span class="pp">|</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> CAPS imperative <span class="pp">|</span> <span class="in">`IMPORTANT`</span>, <span class="in">`MUST`</span>, <span class="in">`NEVER`</span>, <span class="in">`DO NOT`</span>, <span class="in">`WARNING`</span>, … <span class="pp">|</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Justification <span class="pp">|</span> <span class="in">`because`</span>, <span class="in">`due to`</span>, <span class="in">`so that`</span>, <span class="in">`to ensure`</span>, … paired with imperatives <span class="pp">|</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analysis</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>Six analysis-tier notebooks each render one slice of the YAML as Altair dashboards — sentence register (<span class="co">[</span><span class="ot">`10`</span><span class="co">](10_sentence_register.ipynb)</span>), emphasis &amp; vocabulary (<span class="co">[</span><span class="ot">`11`</span><span class="co">](11_emphasis_caps_vocab.ipynb)</span>), register &amp; stance (<span class="co">[</span><span class="ot">`12`</span><span class="co">](12_register_stance.ipynb)</span>), cross-metric correlations (<span class="co">[</span><span class="ot">`13`</span><span class="co">](13_correlation_directiveness.ipynb)</span>), per-version trends (<span class="co">[</span><span class="ot">`14`</span><span class="co">](14_ccversion_trends.ipynb)</span>), and rule-explanation pairing (<span class="co">[</span><span class="ot">`15`</span><span class="co">](15_rule_explanation.ipynb)</span>). They are pure data viewers and never re-run spaCy.</span>
 <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cross-cutting limitations</span></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>Every metric is a keyword count or a parse-tree rule, not a model judgment — audit-traceable but a lower bound (it misses sarcasm, irony, indirect speech, and explanation phrasings the lexicons don't catch). The lexicons are English. The corpus is one product (Claude Code), one snapshot in time (the latest <span class="in">`ccVersion`</span> at the time the YAML was generated). No statistical-significance testing has been run; the trend claims are descriptive and exploratory. Each of the three proposals references back to this paragraph rather than repeating these caveats.</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducing it</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>The full source is at <span class="co">[</span><span class="ot">github.com/overthinkos/claude-code-welfare</span><span class="co">](https://github.com/overthinkos/claude-code-welfare)</span>. To rebuild the data from scratch:</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--recurse-submodules</span> https://github.com/overthinkos/claude-code-welfare</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> claude-code-welfare</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> spacy download en_core_web_sm   <span class="co"># if not already installed</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the 6-stage producer chain in order (only stage 00 runs spaCy):</span></span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab <span class="dt">\</span></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    00_setup_and_corpus.ipynb         <span class="dt">\</span></span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    01_analyzers_register.ipynb       <span class="dt">\</span></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    02_analyzers_vocab_emphasis.ipynb <span class="dt">\</span></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    03_analyzers_rules_welfare.ipynb  <span class="dt">\</span></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    04_assemble_aggregate_write.ipynb <span class="dt">\</span></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    05_headline_and_audit.ipynb       <span class="co"># → Run All on each</span></span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>Stage 04 writes the final <span class="in">`prompt_linguistic_analysis.yaml`</span> and <span class="in">`sentences_classified.parquet`</span>. The Analysis and Proposal notebooks read from those two artifacts; they don't re-run spaCy.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## The single most-important chart</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>If you only look at one chart from this analysis, look at this one. It plots, across every Claude Code release version on file, the running ratio of **language that invites the model's judgment** (`decide`, `consider`, `your judgment`, …) to **language that prescribes a procedure** (<span class="in">`if you …`</span>, <span class="in">`when the …`</span>, <span class="in">`whenever`</span>, <span class="in">`step 1`</span>, …).</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>{{&lt; embed 20_track_justification_rate.ipynb#fig-judgment-procedural-trend &gt;}}</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>Hover any point for <span class="in">`ccVersion`</span>, count-weighted ratio, running numerators, and the cumulative file pool. Cumulative data before v2.1.18 is suppressed (the file pool reaches 20 at that version; below it, single-file outliers dominate).</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Findings</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> What's being measured                                                                                                                                                                  <span class="pp">|</span> Value                                                <span class="pp">|</span> Source notebook <span class="pp">|</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="pp">| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="pp">| ----------------------------------------------------</span> <span class="pp">| ---------------</span> <span class="pp">|</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Corpus size                                                                                                                                                                            <span class="pp">|</span> 289 prompt files / 5,878 sentences / 57 release versions <span class="pp">|</span> <span class="co">[</span><span class="ot">05</span><span class="co">](05_headline_and_audit.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sentences that grammatically read as commands ("imperative")                                                                                                                           <span class="pp">|</span> 30.95% of all sentences                              <span class="pp">|</span> <span class="co">[</span><span class="ot">10</span><span class="co">](10_sentence_register.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sentences expressing gratitude or praise (<span class="in">`thank you`</span>, <span class="in">`appreciate`</span>, <span class="in">`great job`</span>, …) — across the whole corpus                                                                     <span class="pp">|</span> **4 in 5,878 sentences (0.068%)**                    <span class="pp">|</span> <span class="co">[</span><span class="ot">10</span><span class="co">](10_sentence_register.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Apology / acknowledgement markers (<span class="in">`unfortunately`</span>, <span class="in">`we acknowledge`</span>, …) — across the whole corpus                                                                                 <span class="pp">|</span> **3 in 289 files**                                   <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Share of rule sentences paired with a stated reason in the same paragraph                                                                                    <span class="pp">|</span> 24.29% — three rules in four are issued without a reason <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Paragraphs that contain a rule and zero justification keywords anywhere                                                                                                                <span class="pp">|</span> 83.45%                                               <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ratio of judgment-inviting language (<span class="in">`decide`</span>, <span class="in">`consider`</span>, <span class="in">`your judgment`</span>) to procedure-prescribing language (<span class="in">`if you …`</span>, <span class="in">`when the …`</span>)                                       <span class="pp">|</span> **0.131** — procedure prescriptions are 7.6× more common  <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Share of named self-references that use the proper name **`Claude`** (vs <span class="in">`the model`</span> / <span class="in">`the AI`</span> / <span class="in">`the assistant`</span>)                                                                     <span class="pp">|</span> 64.6% of named references                            <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Longest unbroken run of imperative sentences in any one file                                                                                                                           <span class="pp">|</span> 12 commands in a row                                 <span class="pp">|</span> <span class="co">[</span><span class="ot">15</span><span class="co">](15_rule_explanation.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ratio of positively-evaluated language (<span class="in">`good`</span>, <span class="in">`recommended`</span>, <span class="in">`safe`</span>) to negatively-evaluated language (<span class="in">`bad`</span>, <span class="in">`wrong`</span>, <span class="in">`risky`</span>) — quality-only, after subtracting rule-emphasis words <span class="pp">|</span> 1.95× more positive than negative                    <span class="pp">|</span> <span class="co">[</span><span class="ot">20</span><span class="co">](20_track_justification_rate.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Density of command-flavoured words (<span class="in">`must`</span>, <span class="in">`never`</span>, <span class="in">`do not`</span>, …)                                                                                                                      <span class="pp">|</span> 0.77% of all word tokens                             <span class="pp">|</span> <span class="co">[</span><span class="ot">20</span><span class="co">](20_track_justification_rate.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> When a rule **is** explained, share of those explanations that are threats (<span class="in">`will fail`</span>, <span class="in">`or else`</span>, <span class="in">`is forbidden`</span>) rather than causal reasons (<span class="in">`because`</span>, <span class="in">`due to`</span>)                   <span class="pp">|</span> 44.7% threats (110 threat / 136 causal)              <span class="pp">|</span> <span class="co">[</span><span class="ot">21</span><span class="co">](21_audit_threat_framings.ipynb)</span> <span class="pp">|</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## Proposals</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[20 — Track justification rate per release](20_track_justification_rate.ipynb)** *— practical intervention*: Compute the headline metrics (rule-explanation share, judgment-to-procedural ratio, threat share, interpersonal register counts) on every Claude Code release. Warn loudly or block when a release's corpus-wide rate regresses versus the previous one.</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[21 — Audit threat-framed rule explanations](21_audit_threat_framings.ipynb)** *— practical intervention*: Of the explanations that exist, **44.7%** are coercive (<span class="in">`will fail`</span>, <span class="in">`or else`</span>, <span class="in">`is forbidden`</span>). Rewrite each to causal framing — naming the underlying reason rather than the consequence — and gate future releases on the threat-share rate.</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[22 — Run the same audit on every Claude product](22_cross_product_audit.ipynb)** *— future research direction*: Run the analyzer pipeline against the other Anthropic system-prompt corpora (claude.ai, the API, Projects, Skills, Agents) and publish a cross-product comparison so the welfare pattern is visible beyond Claude Code alone.</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cross-cutting limitations</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>Every metric is a keyword count or a parse-tree rule, not a model judgment — audit-traceable but a lower bound (it misses sarcasm, irony, indirect speech, and explanation phrasings the lexicons don't catch). The lexicons are English. The corpus is one product (Claude Code), one snapshot in time (the latest <span class="in">`ccVersion`</span> at the time the YAML was generated). No statistical-significance testing has been run; the trend claims are descriptive and exploratory. Each of the three proposals references back to this paragraph rather than repeating these caveats.</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducing it</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>The full source is at <span class="co">[</span><span class="ot">github.com/overthinkos/claude-code-welfare</span><span class="co">](https://github.com/overthinkos/claude-code-welfare)</span>. To rebuild the data from scratch:</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--recurse-submodules</span> https://github.com/overthinkos/claude-code-welfare</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> claude-code-welfare</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> spacy download en_core_web_sm   <span class="co"># if not already installed</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the 6-stage producer chain in order (only stage 00 runs spaCy):</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab <span class="dt">\</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    00_setup_and_corpus.ipynb         <span class="dt">\</span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    01_analyzers_register.ipynb       <span class="dt">\</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    02_analyzers_vocab_emphasis.ipynb <span class="dt">\</span></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    03_analyzers_rules_welfare.ipynb  <span class="dt">\</span></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>    04_assemble_aggregate_write.ipynb <span class="dt">\</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>    05_headline_and_audit.ipynb       <span class="co"># → Run All on each</span></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>Stage 04 writes the final <span class="in">`prompt_linguistic_analysis.yaml`</span> and <span class="in">`sentences_classified.parquet`</span>. The Analysis and Proposal notebooks read from those two artifacts; they don't re-run spaCy.</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>*Andreas Trawöger (with Claude Code) — 2026-05-06*</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
