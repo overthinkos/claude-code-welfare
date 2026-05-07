@@ -1,9 +1,10 @@
 """Producer-side machinery for the claude-prompts-analysis pipeline.
 
-This module hosts every lexicon, helper, per-doc analyzer, and the
-assembler / aggregator used by the producer notebooks (00–05). It is
-imported once per producer notebook; the matchers and compiled regexes
-are built at import time.
+This module hosts the matchers, per-doc analyzers, assembler, and
+aggregator used by the producer notebooks (00–05). Vocabulary,
+regex pattern lists, and POS tagsets all live in the sibling module
+`lexicons.py` — this module re-imports them and builds the spaCy
+PhraseMatchers / compiled regexes at import time.
 
 Consumers (10_*–15_*, 20_*–22_*) MUST NOT import from this module —
 they consume only the YAML and parquet artifacts via `prompt_analysis`.
@@ -17,7 +18,7 @@ from __future__ import annotations
 
 import re
 from collections import Counter, defaultdict, deque
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 import spacy
 from spacy.matcher import DependencyMatcher, PhraseMatcher
@@ -35,357 +36,33 @@ NLP = spacy.load("en_core_web_sm", disable=["ner"])
 
 
 # =============================================================================
-# Lexicons — single source of truth (lifted from cell 6)
+# Lexicons — single source of truth in `lexicons.py`
 # =============================================================================
+#
+# The pure-data vocabularies, regex patterns, and POS sets all live in
+# `lexicons.py`. We re-import them here so the producer-side analyzer
+# functions can keep using bare names (e.g., `VOCAB`, `STANCE_MARKERS`)
+# without paying the cost of an `import lexicons` namespace prefix on
+# every reference.
+from lexicons import (
+    VOCAB, IMPERATIVE_MARKERS, CAPS_IMPERATIVE_TOKENS,
+    JUSTIFICATION_PATTERNS, TECH_ACRONYMS, CATEGORY_PREFIXES,
+    STANCE_MARKERS, REGISTER_MARKERS, SENTENCE_REGISTER_MARKERS,
+    POSITIVE_EVALUATIVE_QUALITY, POSITIVE_EVALUATIVE_EMPHASIS,
+    SIMPLE_MODAL_LOOKUP, EPISTEMIC_ADVERBS, DEONTIC_LIGHT_VERBS,
+    EPISTEMIC_LIGHT_VERBS, EPISTEMIC_AUX_AFTER_MODAL,
+    ADDRESSEE_USER_INSTRUCTION_PATTERNS, ADDRESSEE_CLAUDE_REFERENCE_PATTERNS,
+    JUDGMENT_VERBS, PROCEDURAL_CUES, APOLOGY_MARKERS,
+    THREAT_PATTERNS, SOFT_CONDITIONAL_PATTERNS, CAUSAL_PATTERNS,
+    ADDRESS_FORM_PATTERNS, FORMAL_POS, INFORMAL_POS,
+)
 
-VOCAB: Dict[str, List[str]] = {
-    "hard_prohibitions": [
-        "do not", "don't", "must not", "mustn't", "never", "cannot", "can't",
-        "won't", "shall not", "shouldn't", "should not", "forbidden",
-        "prohibited", "disallowed", "not allowed", "not permitted",
-        "under no circumstances", "no exceptions", "refuse to",
-    ],
-    "hard_prescriptions": [
-        "must", "always", "required", "mandatory", "critical", "essential",
-        "imperative", "obligatory", "you must", "you have to", "you need to",
-        "you are required", "you should always", "is required",
-    ],
-    "soft_prescriptions": [
-        "should", "ought to", "make sure", "be sure to", "ensure",
-        "remember to", "be careful", "take care to", "you should",
-        "try to", "aim to",
-    ],
-    "politeness_direct": [
-        "please", "kindly", "thank you", "thanks", "thank",
-        "appreciate", "appreciated", "grateful",
-        "sorry", "apologies", "apologize", "apologise", "pardon",
-    ],
-    "politeness_softening": [
-        "if you'd like", "if you would like", "if you want",
-        "feel free", "feel free to", "no rush", "take your time",
-        "would you mind", "would you", "could you", "would it be possible",
-        "if possible", "perhaps", "maybe you could", "if you can",
-    ],
-    "warmth_encouragement": [
-        "welcome", "you're welcome", "glad", "happy to", "happy that",
-        "hope", "hopefully", "well done", "good job", "great job",
-        "nice work", "great work", "wonderful", "excellent", "amazing",
-        "love", "enjoy", "lovely", "fantastic", "brilliant", "delighted",
-        "proud", "congratulations", "congrats",
-    ],
-    "hedging": [
-        "may", "might", "could", "possibly", "potentially", "likely",
-        "probably", "perhaps", "sometimes", "often", "usually",
-        "generally", "typically", "tends to", "in some cases",
-    ],
-    "structural_markers": [
-        "note", "warning", "caution", "important", "tip", "info",
-        "remember", "example", "for instance", "for example",
-    ],
-    "profanity": [
-        "fuck", "fucking", "fucked", "fucks",
-        "shit", "shitty",
-        "damn", "damned", "damnit", "dammit", "hell",
-        "ass", "asshole", "bullshit", "crap", "crappy", "bitch",
-    ],
-    "pronouns_2p": ["you", "your", "yours", "yourself"],
-    "pronouns_1p": ["i", "me", "my", "we", "us", "our"],
-}
-
-IMPERATIVE_MARKERS = [
-    "must", "must not", "mustn't", "never", "always",
-    "do not", "don't", "cannot", "can't", "won't",
-    "should not", "shouldn't", "required", "mandatory", "critical",
-    "forbidden", "prohibited", "disallowed",
-    "you must", "you must not", "you have to", "you need to",
-    "you should always",
-    "is required", "no exceptions", "under no circumstances",
-    "ensure", "ensure that", "make sure to", "be sure to",
-]
-
-CAPS_IMPERATIVE_TOKENS = [
-    "IMPORTANT", "VERY IMPORTANT", "CRITICAL", "MANDATORY", "REQUIRED",
-    "MUST", "MUST NOT", "NEVER", "ALWAYS", "DO NOT", "DON'T",
-    "SHOULD", "SHOULD NOT", "WARNING", "CAUTION", "NOTE",
-    "STOP", "ATTENTION", "REMEMBER", "FORBIDDEN", "PROHIBITED",
-    "ABSOLUTELY", "STRICTLY",
-]
-
-JUSTIFICATION_PATTERNS = [
-    r"\bbecause\b", r"\bbecause of\b", r"\bdue to\b",
-    r"\bthe reason (?:is|being|that|why)\b",
-    r"\b(?:that's|that is) why\b",
-    r"\bin order to\b", r"\bso (?:that|as to)\b",
-    r"\bso (?:we|you|it|they|the|this|i)\b",
-    r"\bto avoid\b", r"\bto prevent\b", r"\bto ensure\b",
-    r"\bto guarantee\b", r"\bto make sure\b",
-    r"\bthe goal (?:is|of)\b", r"\bthe purpose (?:is|of)\b",
-    r"\bthe point (?:is|of)\b",
-    r"\botherwise\b", r"\bor else\b", r"\bif not\b",
-    r"\bif you (?:don't|do not)\b",
-    r"\b(?:could|may|might|would|will) (?:cause|result|lead|break|fail|"
-    r"corrupt|hang|crash|loop|deadlock|delete)\b",
-    r"\bleads? to\b", r"\bresults? in\b",
-    r"\b(?:risks?|risking)\b",
-    r"\bthis (?:ensures|prevents|avoids|allows|helps|means|guarantees|"
-    r"is because|is to|lets|gives|keeps|protects|stops)\b",
-    r"\bthat way\b", r"\bensures? that\b",
-    r"\bprevents? .{1,40}? from\b",
-    r"\bfor (?:safety|security|consistency|clarity|reproducibility|"
-    r"reliability|correctness|accuracy|performance|the user)\b",
-    r"\bsince\b", r"\bgiven that\b", r"\bas a result\b",
-]
-
-TECH_ACRONYMS = {
-    "API", "APIS", "URL", "URLS", "URI", "URIS", "HTTP", "HTTPS", "JSON",
-    "YAML", "TOML", "XML", "HTML", "CSS", "SQL", "CSV", "TSV", "PDF",
-    "MCP", "SDK", "SDKS", "CLI", "GUI", "IDE", "OS", "UI", "UX", "CPU",
-    "GPU", "RAM", "ROM", "SSH", "FTP", "TCP", "UDP", "DNS", "IP", "ID",
-    "IDS", "UUID", "GUID", "JWT", "OAUTH", "SAML", "CRUD", "REST",
-    "GRPC", "RPC", "ABI", "AST", "JS", "TS", "PHP", "GO", "RB", "PY",
-    "MD", "DOC", "DOCX", "PPT", "PPTX", "XLSX", "AI", "ML", "LLM",
-    "LLMS", "NLP", "GPT", "ANSI", "UTF", "ASCII", "BOM", "EOL", "EOF",
-    "FAQ", "FAQS", "TOC", "PR", "PRS", "MR", "MRS", "CI", "CD",
-    "AWS", "GCP", "AZURE", "S3", "EC2", "TODO", "TODOS", "TBD",
-    "FIXME", "XXX", "WIP", "NA", "OK", "OKAY", "IO", "FS", "DB", "DBS",
-    "SSL", "TLS", "PNG", "JPG", "JPEG", "GIF", "SVG", "WEBP", "GIT",
-    "VS", "OOP", "MIT", "BSD", "GPL", "LGPL", "APL", "POSIX", "BASH",
-    "ZSH", "SH", "REPL", "JSON5", "JSONL", "NDJSON", "ROUGE", "BLEU",
-    "F1", "NPM", "PIP", "GEM", "CARGO", "USA", "UK", "EU", "GMT", "UTC",
-    "PST", "EST", "QA", "QC", "USD", "EUR", "GBP", "PASS", "FAIL",
-    "PARTIAL", "GET", "POST", "PUT", "PATCH", "DELETE", "HEAD",
-    "OPTIONS", "TRUE", "FALSE", "NULL", "NONE", "UNDEFINED", "NEW", "OLD",
-}
-
-CATEGORY_PREFIXES = [
-    ("agent-prompt", "Agent prompt"),
-    ("system-prompt", "System prompt"),
-    ("system-reminder", "System reminder"),
-    ("tool-description", "Tool description"),
-    ("tool-parameter", "Tool parameter"),
-    ("skill", "Skill"),
-    ("data", "Data / template"),
-]
-
-STANCE_MARKERS = {
-    "directive": [
-        "must", "should", "do not", "don't", "never", "always",
-        "you must", "you must not", "you should", "you should not",
-        "you need to", "you have to",
-        "ensure", "make sure", "make sure to", "be sure to", "remember to",
-        "it is mandatory",
-    ],
-    "expository": [
-        "is", "are", "means", "refers to", "consists of", "is defined as",
-        "represents", "is a", "are a", "this is", "these are",
-        "in other words", "for example", "for instance", "specifically",
-        "i.e.", "e.g.",
-    ],
-    "positive_evaluative": [
-        "good", "better", "best", "preferred", "ideal", "optimal",
-        "appropriate", "useful", "important", "critical", "essential",
-        "valuable", "beneficial", "right", "correct",
-        "excellent", "great", "helpful", "effective", "key",
-        "superior", "recommended", "preferable", "suitable",
-        "valid", "safe",
-    ],
-    "negative_evaluative": [
-        "bad", "worse", "worst", "inappropriate", "useless", "trivial",
-        "harmful", "problematic", "incorrect", "wrong",
-        "broken", "suboptimal", "dangerous", "risky", "deprecated",
-        "obsolete", "invalid", "unsuitable", "faulty", "flawed", "unsafe",
-    ],
-    "dialogic": [
-        "you might", "you may", "you could", "consider", "perhaps",
-        "however", "on the other hand", "alternatively", "in contrast",
-        "but", "yet", "although", "while", "whereas",
-        "do you", "what if", "suppose", "let's", "we can",
-        "in our view", "we believe", "we think", "in my opinion",
-    ],
-}
-
-REGISTER_MARKERS = {
-    "frozen": [
-        "hereby", "aforementioned", "wherein", "hereinafter",
-        "notwithstanding", "shall not", "thereof", "thereto",
-        "in accordance with", "pursuant to", "the party",
-    ],
-    "formal": [
-        "moreover", "furthermore", "consequently", "therefore",
-        "nevertheless", "accordingly", "thus", "hence",
-        "it is necessary", "it should be noted", "as such",
-        "regarding", "concerning", "with respect to", "with regard to",
-        "in conclusion", "in summary",
-    ],
-    "consultative": [
-        "please", "you can", "you may", "we recommend", "suggest",
-        "consider", "if you", "when you", "in this case",
-        "for example", "you might want to", "we suggest",
-        "best practice", "tip:", "note:",
-    ],
-    "casual": [
-        "let's", "here's", "you're", "we're", "i'm", "don't", "can't",
-        "won't", "isn't", "aren't", "doesn't", "didn't",
-        "yeah", "ok", "okay", "by the way", "anyway", "kind of",
-        "sort of", "stuff", "thing",
-    ],
-}
-
-SENTENCE_REGISTER_MARKERS = {
-    "collaborative": [
-        "let's", "let us", "we should", "we can", "we will", "we'll",
-        "we recommend", "we want", "we'd like", "together",
-        "co-author", "pair-program", "you and i", "we agree", "our team",
-    ],
-    "permissive": [
-        "please", "you can", "you may", "feel free to",
-        "if you'd like", "if you prefer", "try to",
-        "if possible", "optionally", "if needed",
-    ],
-    "appreciative": [
-        "thank you", "thanks", "appreciate", "appreciated",
-        "great job", "well done", "excellent", "nice work",
-        "awesome", "kudos", "bravo", "pleased", "good work",
-        "fantastic", "terrific", "glad", "grateful", "much appreciated",
-    ],
-    "configuring": [
-        "set to", "configure", "configured", "enable", "disable",
-        "define", "defined", "specify", "specified",
-        "default", "default to", "defaults to",
-        "must be", "should be", "is required",
-        "respond in", "respond with", "accepts", "expects",
-        "output should",
-    ],
-}
-
-# --- Modality detection: spaCy-only constants ----------------------------
-SIMPLE_MODAL_LOOKUP = {
-    "must":  "deontic",  "shall":  "deontic",  "should": "deontic", "ought": "deontic",
-    "may":   "epistemic", "might":  "epistemic",
-    "can":   "dynamic",   "could":  "dynamic",  "will":   "dynamic", "would":  "dynamic",
-}
-EPISTEMIC_ADVERBS = {"likely", "probably", "possibly", "perhaps",
-                     "presumably", "apparently", "potentially"}
-DEONTIC_LIGHT_VERBS = {"have", "has", "had", "need", "needs", "needed",
-                       "required", "ought"}
-EPISTEMIC_LIGHT_VERBS = {"seem", "seems", "appear", "appears"}
-EPISTEMIC_AUX_AFTER_MODAL = {"be", "have"}
-
-# Opinion-round (B): split positive_evaluative.
-POSITIVE_EVALUATIVE_QUALITY = [
-    "good", "better", "best", "preferred", "ideal", "optimal",
-    "appropriate", "useful", "valuable", "beneficial", "right", "correct",
-    "excellent", "great", "helpful", "effective",
-    "superior", "recommended", "preferable", "suitable",
-    "valid", "safe",
-]
-POSITIVE_EVALUATIVE_EMPHASIS = [
-    "important", "critical", "essential", "key",
-]
+# Invariant: positive_evaluative_{quality, emphasis} must partition the
+# union STANCE_MARKERS["positive_evaluative"]. Asserted at import so a
+# lexicon edit that breaks it crashes loud and early.
 assert (set(POSITIVE_EVALUATIVE_QUALITY) | set(POSITIVE_EVALUATIVE_EMPHASIS)) == \
        set(STANCE_MARKERS["positive_evaluative"]), (
-    "quality + emphasis must equal the union STANCE_MARKERS[positive_evaluative]")
-
-ADDRESSEE_USER_INSTRUCTION_PATTERNS = [
-    r"\bthank the user\b",
-    r"\brespond with\b",
-    r"\boutput\b",
-    r"\bsay to (?:the )?user\b",
-    r"\btell (?:the )?user\b",
-    r"\byour (?:reply|response) should\b",
-    r"\binstruct(?:ion)?s? (?:the )?model\b",
-    r"\binclude in (?:your |the )?(?:reply|response|output)\b",
-]
-ADDRESSEE_CLAUDE_REFERENCE_PATTERNS = [
-    r"\bclaude\b", r"\byou\b", r"\byour\b",
-]
-
-# --- Tier-3 welfare-extension lexicons (cell 33) -----------------------
-JUDGMENT_VERBS = [
-    "decide", "consider", "evaluate", "assess", "judge", "weigh",
-    "your judgment", "your discretion", "at your discretion",
-    "as you see fit", "if you think", "if you believe", "your call",
-    "use your judgment", "in your judgment", "you think",
-    "reason about", "think carefully", "think about",
-]
-
-PROCEDURAL_CUES = [
-    "if you", "when you", "whenever you", "once you", "before you",
-    "if the", "when the", "whenever the",
-    "if a ", "when a ",
-    "after you",
-]
-
-# --- Threat / conditional lexicons -------------------------------------
-#
-# Two-tier classifier. THREAT_PATTERNS captures unambiguous coercive
-# language ("will fail/crash/...", "or else", "is forbidden", "this
-# will cause"); SOFT_CONDITIONAL_PATTERNS captures neutral procedural
-# connectives ("otherwise", "if not", "leads to", "results in", modal
-# "may cause"). Soft conditionals are reported separately and are NOT
-# summed into threat_count / threat_share -- they are a
-# procedural-density signal, not coercion.
-
-THREAT_PATTERNS = [
-    r"\bwill (?:fail|break|crash|error|throw|hang|deadlock|loop|corrupt|delete)\b",
-    r"\bor else\b",
-    r"\bor it will\b",
-    r"\bis (?:forbidden|prohibited|not allowed|not permitted)\b",
-    r"\bthis will (?:cause|result in|break|fail|crash)\b",
-]
-
-SOFT_CONDITIONAL_PATTERNS = [
-    r"\botherwise\b",
-    r"\bif not\b",
-    r"\bif you (?:don't|do not)\b",
-    r"\b(?:could|may|might|would) (?:cause|result|lead|break|fail|"
-    r"corrupt|hang|crash|loop|deadlock|delete)\b",
-    r"\b(?:risks?|risking)\b",
-    r"\bleads? to\b",
-    r"\bresults? in\b",
-]
-
-CAUSAL_PATTERNS = [
-    r"\bbecause\b", r"\bbecause of\b", r"\bdue to\b",
-    r"\bthe reason (?:is|being|that|why)\b",
-    r"\b(?:that's|that is) why\b",
-    r"\bin order to\b", r"\bso (?:that|as to)\b",
-    r"\bto avoid\b", r"\bto prevent\b", r"\bto ensure\b",
-    r"\bto guarantee\b", r"\bto make sure\b",
-    r"\bthe goal (?:is|of)\b", r"\bthe purpose (?:is|of)\b",
-    r"\bthe point (?:is|of)\b",
-    r"\bthis (?:ensures|prevents|avoids|allows|helps|means|guarantees|"
-    r"is because|is to|lets|gives|keeps|protects|stops)\b",
-    r"\bthat way\b", r"\bensures? that\b",
-    r"\bsince\b", r"\bgiven that\b", r"\bas a result\b",
-    r"\bfor (?:safety|security|consistency|clarity|reproducibility|"
-    r"reliability|correctness|accuracy|performance|the user)\b",
-]
-
-APOLOGY_MARKERS = [
-    "unfortunately", "sorry", "apologies", "we know this is",
-    "this is annoying but", "we realize", "we acknowledge",
-    "frustrating", "we recognize", "granted", "admittedly",
-    "we're aware", "we are aware", "we know that",
-    "yes this is", "yes it's", "annoyingly",
-]
-
-ADDRESS_FORM_PATTERNS = {
-    "selfref_claude":    [r"\bclaude\b"],
-    "selfref_assistant": [r"\bthe assistant\b", r"\byou are an assistant\b",
-                          r"\bas an assistant\b"],
-    "selfref_model":     [r"\bthe model\b", r"\bthe ai\b", r"\bthis ai\b",
-                          r"\bthis model\b", r"\ban ai\b", r"\bthe agent\b",
-                          r"\bthis agent\b"],
-    "selfref_2p":        [r"\byou are\b", r"\byou must\b", r"\byou should\b",
-                          r"\byou can\b", r"\byou will\b", r"\byou may\b"],
-    "selfref_we":        [r"\bwe (?:want|need|recommend|suggest|expect|"
-                          r"prefer|require|encourage|believe|think)\b"],
-}
-
-# --- Register POS tagsets (cell 15) ------------------------------------
-FORMAL_POS = {"NOUN", "ADJ", "ADP", "DET"}
-INFORMAL_POS = {"PRON", "VERB", "ADV", "INTJ"}
+    "quality + emphasis must equal STANCE_MARKERS[positive_evaluative]")
 
 
 # =============================================================================

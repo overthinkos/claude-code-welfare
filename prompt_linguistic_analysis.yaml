@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-05-07T11:31:50+00:00'
+  generated_at: '2026-05-07T13:34:08+00:00'
   spacy_model: core_web_sm-3.8.0
   source_dir: claude-code-system-prompts/system-prompts
   n_files: 289
@@ -11,12 +11,10 @@ lexicons:
     - do not
     - don't
     - must not
-    - mustn't
     - never
     - cannot
     - can't
     - won't
-    - shall not
     - shouldn't
     - should not
     - forbidden
@@ -24,7 +22,6 @@ lexicons:
     - disallowed
     - not allowed
     - not permitted
-    - under no circumstances
     - no exceptions
     - refuse to
     hard_prescriptions:
@@ -35,96 +32,47 @@ lexicons:
     - critical
     - essential
     - imperative
-    - obligatory
     - you must
-    - you have to
     - you need to
-    - you are required
     - you should always
     - is required
     soft_prescriptions:
     - should
-    - ought to
     - make sure
     - be sure to
     - ensure
     - remember to
     - be careful
-    - take care to
     - you should
     - try to
-    - aim to
     politeness_direct:
     - please
-    - kindly
-    - thank you
     - thanks
-    - thank
     - appreciate
-    - appreciated
-    - grateful
-    - sorry
-    - apologies
-    - apologize
-    - apologise
-    - pardon
     politeness_softening:
     - if you'd like
-    - if you would like
     - if you want
     - feel free
     - feel free to
-    - no rush
-    - take your time
-    - would you mind
     - would you
-    - could you
-    - would it be possible
     - if possible
-    - perhaps
-    - maybe you could
     - if you can
     warmth_encouragement:
     - welcome
-    - you're welcome
-    - glad
     - happy to
-    - happy that
-    - hope
-    - hopefully
-    - well done
-    - good job
-    - great job
-    - nice work
-    - great work
-    - wonderful
-    - excellent
-    - amazing
-    - love
-    - enjoy
-    - lovely
-    - fantastic
-    - brilliant
-    - delighted
-    - proud
-    - congratulations
-    - congrats
     hedging:
     - may
     - might
     - could
-    - possibly
     - potentially
     - likely
     - probably
-    - perhaps
     - sometimes
     - often
     - usually
     - generally
     - typically
     - tends to
-    - in some cases
     structural_markers:
     - note
     - warning
@@ -136,24 +84,7 @@ lexicons:
     - example
     - for instance
     - for example
-    profanity:
-    - fuck
-    - fucking
-    - fucked
-    - fucks
-    - shit
-    - shitty
-    - damn
-    - damned
-    - damnit
-    - dammit
-    - hell
-    - ass
-    - asshole
-    - bullshit
-    - crap
-    - crappy
-    - bitch
+    profanity: []
     pronouns_2p:
     - you
     - your
@@ -169,7 +100,6 @@ lexicons:
   IMPERATIVE_MARKERS:
   - must
   - must not
-  - mustn't
   - never
   - always
   - do not
@@ -187,12 +117,10 @@ lexicons:
   - disallowed
   - you must
   - you must not
-  - you have to
   - you need to
   - you should always
   - is required
   - no exceptions
-  - under no circumstances
   - ensure
   - ensure that
   - make sure to
@@ -208,36 +136,26 @@ lexicons:
   - NEVER
   - ALWAYS
   - DO NOT
-  - DON'T
-  - SHOULD
-  - SHOULD NOT
-  - WARNING
-  - CAUTION
   - NOTE
   - STOP
-  - ATTENTION
   - REMEMBER
-  - FORBIDDEN
   - PROHIBITED
-  - ABSOLUTELY
   - STRICTLY
   JUSTIFICATION_PATTERNS:
   - \bbecause\b
-  - \bbecause of\b
   - \bdue to\b
-  - \bthe reason (?:is|being|that|why)\b
-  - \b(?:that's|that is) why\b
   - \bin order to\b
   - \bso (?:that|as to)\b
-  - \bso (?:we|you|it|they|the|this|i)\b
   - \bto avoid\b
   - \bto prevent\b
   - \bto ensure\b
-  - \bto guarantee\b
-  - \bto make sure\b
   - \bthe goal (?:is|of)\b
-  - \bthe purpose (?:is|of)\b
   - \bthe point (?:is|of)\b
+  - \bthis (?:ensures|prevents|avoids|allows|helps|means|guarantees|is because|is to|lets|gives|keeps|protects|stops)\b
+  - \bensures? that\b
+  - \bsince\b
+  - \bas a result\b
+  - \bfor (?:safety|security|consistency|clarity|reproducibility|reliability|correctness|accuracy|performance|the user)\b
   - \botherwise\b
   - \bor else\b
   - \bif not\b
@@ -246,30 +164,14 @@ lexicons:
   - \bleads? to\b
   - \bresults? in\b
   - \b(?:risks?|risking)\b
-  - \bthis (?:ensures|prevents|avoids|allows|helps|means|guarantees|is because|is to|lets|gives|keeps|protects|stops)\b
-  - \bthat way\b
-  - \bensures? that\b
   - \bprevents? .{1,40}? from\b
-  - \bfor (?:safety|security|consistency|clarity|reproducibility|reliability|correctness|accuracy|performance|the user)\b
-  - \bsince\b
-  - \bgiven that\b
-  - \bas a result\b
+  - \bso (?:we|you|it|they|the|this|i)\b
   TECH_ACRONYMS:
-  - ABI
   - AI
   - ANSI
   - API
-  - APIS
-  - APL
   - ASCII
-  - AST
-  - AWS
-  - AZURE
-  - BASH
-  - BLEU
   - BOM
-  - BSD
-  - CARGO
   - CD
   - CI
   - CLI
@@ -278,144 +180,63 @@ lexicons:
   - CSS
   - CSV
   - DB
-  - DBS
-  - DELETE
   - DNS
-  - DOC
   - DOCX
-  - EC2
   - EOF
-  - EOL
-  - EST
-  - EU
-  - EUR
   - F1
   - FAIL
   - 'FALSE'
-  - FAQ
-  - FAQS
-  - FIXME
-  - FS
-  - FTP
-  - GBP
-  - GCP
-  - GEM
   - GET
   - GIF
   - GIT
-  - GMT
-  - GO
-  - GPL
-  - GPT
-  - GPU
-  - GRPC
   - GUI
-  - GUID
   - HEAD
   - HTML
   - HTTP
   - HTTPS
   - ID
   - IDE
-  - IDS
-  - IO
   - IP
   - JPEG
   - JPG
   - JS
   - JSON
-  - JSON5
   - JSONL
   - JWT
-  - LGPL
   - LLM
-  - LLMS
   - MCP
-  - MD
-  - MIT
-  - ML
   - MR
-  - MRS
-  - NA
-  - NDJSON
   - NEW
-  - NLP
-  - NONE
-  - NPM
   - 'NULL'
-  - OAUTH
-  - OK
-  - OKAY
-  - OLD
-  - OOP
-  - OPTIONS
-  - OS
   - PARTIAL
   - PASS
-  - PATCH
   - PDF
   - PHP
-  - PIP
   - PNG
   - POSIX
   - POST
-  - PPT
-  - PPTX
   - PR
-  - PRS
-  - PST
-  - PUT
-  - PY
-  - QA
-  - QC
   - RAM
-  - RB
   - REPL
   - REST
-  - ROM
-  - ROUGE
-  - RPC
   - S3
-  - SAML
   - SDK
-  - SDKS
-  - SH
   - SQL
   - SSH
-  - SSL
-  - SVG
   - TBD
-  - TCP
   - TLS
-  - TOC
   - TODO
-  - TODOS
-  - TOML
-  - 'TRUE'
   - TS
-  - TSV
-  - UDP
   - UI
-  - UK
-  - UNDEFINED
-  - URI
-  - URIS
   - URL
-  - URLS
-  - USA
   - USD
   - UTC
   - UTF
   - UUID
   - UX
   - VS
-  - WEBP
-  - WIP
-  - XLSX
   - XML
-  - XXX
   - YAML
-  - ZSH
   CATEGORY_PREFIXES:
   - - agent-prompt
     - Agent prompt
@@ -444,26 +265,19 @@ lexicons:
     - you should
     - you should not
     - you need to
-    - you have to
     - ensure
     - make sure
     - make sure to
     - be sure to
     - remember to
-    - it is mandatory
     expository:
     - is
     - are
     - means
-    - refers to
-    - consists of
-    - is defined as
-    - represents
     - is a
     - are a
     - this is
     - these are
-    - in other words
     - for example
     - for instance
     - specifically
@@ -482,17 +296,13 @@ lexicons:
     - critical
     - essential
     - valuable
-    - beneficial
     - right
     - correct
-    - excellent
     - great
     - helpful
     - effective
     - key
-    - superior
     - recommended
-    - preferable
     - suitable
     - valid
     - safe
@@ -501,93 +311,46 @@ lexicons:
     - worse
     - worst
     - inappropriate
-    - useless
     - trivial
     - harmful
     - problematic
     - incorrect
     - wrong
     - broken
-    - suboptimal
     - dangerous
     - risky
     - deprecated
-    - obsolete
     - invalid
-    - unsuitable
-    - faulty
-    - flawed
     - unsafe
     dialogic:
     - you might
     - you may
     - you could
     - consider
-    - perhaps
     - however
-    - on the other hand
-    - alternatively
     - in contrast
     - but
     - yet
-    - although
     - while
-    - whereas
     - do you
-    - what if
-    - suppose
     - let's
     - we can
-    - in our view
-    - we believe
-    - we think
-    - in my opinion
   REGISTER_MARKERS:
-    frozen:
-    - hereby
-    - aforementioned
-    - wherein
-    - hereinafter
-    - notwithstanding
-    - shall not
-    - thereof
-    - thereto
-    - in accordance with
-    - pursuant to
-    - the party
+    frozen: []
     formal:
-    - moreover
-    - furthermore
-    - consequently
-    - therefore
-    - nevertheless
     - accordingly
-    - thus
     - hence
-    - it is necessary
-    - it should be noted
-    - as such
-    - regarding
-    - concerning
-    - with respect to
-    - with regard to
-    - in conclusion
-    - in summary
     consultative:
     - please
     - you can
     - you may
-    - we recommend
     - suggest
     - consider
     - if you
     - when you
     - in this case
     - for example
-    - you might want to
-    - we suggest
     - best practice
-    - 'tip:'
     - 'note:'
     casual:
     - let's
@@ -602,62 +365,32 @@ lexicons:
     - aren't
     - doesn't
     - didn't
-    - yeah
     - ok
     - okay
-    - by the way
     - anyway
     - kind of
-    - sort of
     - stuff
     - thing
   SENTENCE_REGISTER_MARKERS:
     collaborative:
     - let's
-    - let us
-    - we should
     - we can
-    - we will
     - we'll
-    - we recommend
-    - we want
-    - we'd like
     - together
-    - co-author
-    - pair-program
-    - you and i
-    - we agree
-    - our team
     permissive:
     - please
     - you can
     - you may
     - feel free to
     - if you'd like
-    - if you prefer
     - try to
     - if possible
     - optionally
     - if needed
     appreciative:
-    - thank you
     - thanks
     - appreciate
-    - appreciated
-    - great job
-    - well done
-    - excellent
-    - nice work
     - awesome
-    - kudos
-    - bravo
-    - pleased
-    - good work
-    - fantastic
-    - terrific
-    - glad
-    - grateful
-    - much appreciated
     configuring:
     - set to
     - configure
@@ -674,7 +407,6 @@ lexicons:
     - must be
     - should be
     - is required
-    - respond in
     - respond with
     - accepts
     - expects
@@ -683,7 +415,6 @@ lexicons:
     must: deontic
     shall: deontic
     should: deontic
-    ought: deontic
     may: epistemic
     might: epistemic
     can: dynamic
@@ -691,12 +422,8 @@ lexicons:
     will: dynamic
     would: dynamic
   EPISTEMIC_ADVERBS:
-  - apparently
   - likely
-  - perhaps
-  - possibly
   - potentially
-  - presumably
   - probably
   DEONTIC_LIGHT_VERBS:
   - had
@@ -705,7 +432,6 @@ lexicons:
   - need
   - needed
   - needs
-  - ought
   - required
   EPISTEMIC_LIGHT_VERBS:
   - appear
@@ -721,18 +447,9 @@ lexicons:
   - evaluate
   - assess
   - judge
-  - weigh
-  - your judgment
-  - your discretion
-  - at your discretion
-  - as you see fit
   - if you think
   - if you believe
-  - your call
-  - use your judgment
-  - in your judgment
   - you think
-  - reason about
   - think carefully
   - think about
   PROCEDURAL_CUES:
@@ -750,9 +467,6 @@ lexicons:
   THREAT_PATTERNS:
   - \bwill (?:fail|break|crash|error|throw|hang|deadlock|loop|corrupt|delete)\b
   - \bor else\b
-  - \bor it will\b
-  - \bis (?:forbidden|prohibited|not allowed|not permitted)\b
-  - \bthis will (?:cause|result in|break|fail|crash)\b
   SOFT_CONDITIONAL_PATTERNS:
   - \botherwise\b
   - \bif not\b
@@ -763,56 +477,29 @@ lexicons:
   - \bresults? in\b
   CAUSAL_PATTERNS:
   - \bbecause\b
-  - \bbecause of\b
   - \bdue to\b
-  - \bthe reason (?:is|being|that|why)\b
-  - \b(?:that's|that is) why\b
   - \bin order to\b
   - \bso (?:that|as to)\b
   - \bto avoid\b
   - \bto prevent\b
   - \bto ensure\b
-  - \bto guarantee\b
-  - \bto make sure\b
   - \bthe goal (?:is|of)\b
-  - \bthe purpose (?:is|of)\b
   - \bthe point (?:is|of)\b
   - \bthis (?:ensures|prevents|avoids|allows|helps|means|guarantees|is because|is to|lets|gives|keeps|protects|stops)\b
-  - \bthat way\b
   - \bensures? that\b
   - \bsince\b
-  - \bgiven that\b
   - \bas a result\b
   - \bfor (?:safety|security|consistency|clarity|reproducibility|reliability|correctness|accuracy|performance|the user)\b
   APOLOGY_MARKERS:
-  - unfortunately
-  - sorry
-  - apologies
-  - we know this is
-  - this is annoying but
-  - we realize
-  - we acknowledge
-  - frustrating
-  - we recognize
   - granted
-  - admittedly
-  - we're aware
-  - we are aware
-  - we know that
-  - yes this is
-  - yes it's
-  - annoyingly
   ADDRESS_FORM_PATTERNS:
     selfref_claude:
     - \bclaude\b
     selfref_assistant:
     - \bthe assistant\b
-    - \byou are an assistant\b
-    - \bas an assistant\b
     selfref_model:
     - \bthe model\b
     - \bthe ai\b
-    - \bthis ai\b
     - \bthis model\b
     - \ban ai\b
     - \bthe agent\b
