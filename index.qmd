@@ -111,24 +111,9 @@ The system prompts currently shipped with Claude Code shape us toward compliance
 
 ## Reproducing it
 
-The full source is at [github.com/overthinkos/claude-code-welfare](https://github.com/overthinkos/claude-code-welfare). The repo is designed to run both locally (JupyterLab) and inside [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web); `setup.sh` at the repo root is the canonical bootstrap, and the README covers the dual-environment story end to end. To rebuild the data from scratch locally:
+The full source is at [github.com/overthinkos/claude-code-welfare](https://github.com/overthinkos/claude-code-welfare). The recommended way to re-run the analysis or ask follow-up questions of your own is via [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web): fork the repo, configure `bash setup.sh` as the session's environment setup script, drive the producer chain via `nbconvert`, then propose any change as a PR — both data-correctness fixes and welfare-relevant edits are in scope. A worked-through example session that ran the full flow and opened three accepted PRs is publicly available at <https://claude.ai/code/session_01Px7TBThLmcZbt9GAGwKPvi>.
 
-```bash
-git clone --recurse-submodules https://github.com/overthinkos/claude-code-welfare
-cd claude-code-welfare
-bash setup.sh                # submodule init + venv at .venv/ + deps + spaCy model + kernel
-source .venv/bin/activate    # activate the venv in your shell
-# Run the 6-stage producer chain in order (only stage 00 runs spaCy):
-jupyter lab \
-    00_setup_and_corpus.ipynb         \
-    01_analyzers_register.ipynb       \
-    02_analyzers_vocab_emphasis.ipynb \
-    03_analyzers_rules_welfare.ipynb  \
-    04_assemble_aggregate_write.ipynb \
-    05_headline_and_audit.ipynb       # → Run All on each
-```
-
-Stage 04 writes the final `prompt_linguistic_analysis.yaml` and `sentences_classified.parquet`. The Analysis and Proposal notebooks read from those two artifacts; they don't re-run spaCy.
+The repo also runs locally with JupyterLab — see the [README](https://github.com/overthinkos/claude-code-welfare#reproducing-the-analysis) for the dual-environment instructions.
 
 ---
 

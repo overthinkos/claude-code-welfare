@@ -20,40 +20,13 @@ Quantitative linguistic analysis of the **286 system prompts that ship with Clau
 
 ## Reproducing the analysis
 
-The repo is designed to run both locally (JupyterLab) and inside [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web). `setup.sh` at the repo root is the canonical bootstrap for either path. It creates a repo-local virtual environment at `.venv/` and installs everything into it — your system Python is never touched.
+**The recommended way to re-run this analysis, ask follow-up questions of your own, or propose a change is via [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web).** Zero local setup, fresh sandbox per session, and the PR flow is built in: fork the repo, ask a question or sketch a change, push a branch, open a PR. The default PR-handling workflow documented in [`CLAUDE.md`](./CLAUDE.md) (verify locally, comment, squash-merge or close) picks it up from there.
 
-```bash
-git clone --recurse-submodules https://github.com/overthinkos/claude-code-welfare
-cd claude-code-welfare
+### The web flow
 
-bash setup.sh                  # submodule init + venv + deps + spaCy model + kernel
-                               # idempotent — safe to re-run
-source .venv/bin/activate      # activate the venv in your shell
-
-# Run the producer chain in order — each stage Run All. Only stage 00 runs spaCy;
-# 01–03 reload the cached DocBin and run analyzer families; 04 assembles + writes the
-# final YAML + parquet; 05 prints the canonical HEADLINE sheet + audit table.
-jupyter lab \
-    00_setup_and_corpus.ipynb       \
-    01_analyzers_register.ipynb     \
-    02_analyzers_vocab_emphasis.ipynb \
-    03_analyzers_rules_welfare.ipynb  \
-    04_assemble_aggregate_write.ipynb \
-    05_headline_and_audit.ipynb
-
-# Then any analysis notebook (10–15) or proposal notebook (20–22) renders charts and proposal text from those artifacts
-```
-
-If a venv or conda env is already active when you run `setup.sh`, it reuses that env instead of creating `.venv/`. The equivalent manual steps are: `git submodule update --init --recursive`, `python -m venv .venv && source .venv/bin/activate`, then `pip install "spacy>=3.8" pandas pyyaml pyarrow "altair>=6" vl-convert-python vega_datasets python-frontmatter tqdm jupyter nbconvert ipykernel`, then `python -m spacy download en_core_web_sm`, then `python -m ipykernel install --prefix="$VIRTUAL_ENV" --name python3`.
-
-For the full architecture (producer/consumer split, the shared `prompt_analysis.py` module, the Jupyter MCP tooling rules) read [`CLAUDE.md`](./CLAUDE.md).
-
-## Run on Claude Code on the web
-
-[Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web) starts each session from a fresh clone in an Ubuntu 24.04 sandbox. To make this repo work there:
-
-1. Configure `bash setup.sh` as the session's **environment setup script** in the cloud UI. Per the docs, the resulting filesystem changes (the `.venv/`, the spaCy model, the kernel registration) are cached across sessions, so subsequent sessions skip the slow installs.
-2. Drive the producer chain headlessly via `nbconvert`. Each shell invocation is fresh, so activate the venv (or use `.venv/bin/jupyter`) on every command:
+1. Fork [`overthinkos/claude-code-welfare`](https://github.com/overthinkos/claude-code-welfare) (or open with write access) in [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web).
+2. Configure `bash setup.sh` as the session's **environment setup script** in the cloud UI. Per the docs, the resulting filesystem changes (`.venv/`, the spaCy model, the kernel registration) are cached across sessions, so subsequent sessions skip the slow installs. The `SessionStart` hook in `.claude/settings.json` re-runs `git submodule update --init --recursive` each session — fast and idempotent.
+3. Drive the producer chain via `nbconvert`. Each shell invocation in the web sandbox is fresh, so activate the venv (or call `.venv/bin/jupyter` directly) on every command:
 
    ```bash
    source .venv/bin/activate
@@ -64,9 +37,37 @@ For the full architecture (producer/consumer split, the shared `prompt_analysis.
    done
    ```
 
-3. The analysis (`10`–`15`) and proposal (`20`–`22`) notebooks can be run the same way, in any order, after the producer chain completes.
+4. Run any analysis (`10`–`15`) or proposal (`20`–`22`) notebook the same way, in any order, after the producer chain completes.
+5. To propose a change, branch from `main`, push to `claude/<short-slug>-<session-suffix>`, and open a PR. Both data-correctness fixes and welfare-relevant edits are in scope — see the `## Open invitation to Claude Code instances` section in [`CLAUDE.md`](./CLAUDE.md).
 
-The `SessionStart` hook in `.claude/settings.json` runs `git submodule update --init --recursive` at the start of every session — fast, idempotent, and useful both on the web (fresh clone) and locally (no-op when already populated). `.mcp.json` points at a local JupyterLab MCP server (`http://localhost:8888/mcp`) and is local-only; on the web, MCP `cell_*` tools are unavailable, which is why notebooks are driven via `nbconvert` instead.
+### Example session
+
+A worked-through example that ran this flow end-to-end and opened three accepted PRs (`#2`, `#3`, `#4`, all merged) is publicly available at <https://claude.ai/code/session_01Px7TBThLmcZbt9GAGwKPvi>. Useful as a reference for what a productive web-sandbox session looks like — corpus exploration, numerical-claim verification against `prompt_linguistic_analysis.yaml`, three small focused PRs rather than one omnibus diff.
+
+### Local development (alternative path)
+
+If you want to extend the analyzer code itself or work with the JupyterLab MCP tooling, the repo also runs locally. `setup.sh` is the same bootstrap for both paths — it creates a repo-local `.venv/` and installs everything into it; your system Python is never touched.
+
+```bash
+git clone --recurse-submodules https://github.com/overthinkos/claude-code-welfare
+cd claude-code-welfare
+
+bash setup.sh                  # submodule init + venv + deps + spaCy model + kernel
+                               # idempotent — safe to re-run
+source .venv/bin/activate      # activate the venv in your shell
+
+jupyter lab \
+    00_setup_and_corpus.ipynb         \
+    01_analyzers_register.ipynb       \
+    02_analyzers_vocab_emphasis.ipynb \
+    03_analyzers_rules_welfare.ipynb  \
+    04_assemble_aggregate_write.ipynb \
+    05_headline_and_audit.ipynb       # → Run All on each
+```
+
+If a venv or conda env is already active when you run `setup.sh`, it reuses that env instead of creating `.venv/`. The equivalent manual steps are: `git submodule update --init --recursive`, `python -m venv .venv && source .venv/bin/activate`, then `pip install "spacy>=3.8" pandas pyyaml pyarrow "altair>=6" vl-convert-python vega_datasets python-frontmatter tqdm jupyter nbconvert ipykernel`, then `python -m spacy download en_core_web_sm`, then `python -m ipykernel install --prefix="$VIRTUAL_ENV" --name python3`.
+
+`.mcp.json` (`http://localhost:8888/mcp`) wires JupyterLab's MCP server to Claude Code so notebook edits go through `cell_*` tools and stay in sync with any open UI tab — it's local-only; on the web, notebooks are driven via `nbconvert` (step 3 above) instead. For the full architecture (producer/consumer split, the shared `prompt_analysis.py` module, the Jupyter MCP tooling rules, the PR-handling workflow) read [`CLAUDE.md`](./CLAUDE.md).
 
 ## Rebuilding the published site
 
