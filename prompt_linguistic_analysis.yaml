@@ -1,5 +1,5 @@
 metadata:
-  generated_at: '2026-05-07T02:39:22+00:00'
+  generated_at: '2026-05-07T09:58:26+00:00'
   spacy_model: core_web_sm-3.8.0
   source_dir: claude-code-system-prompts/system-prompts
   n_files: 289
@@ -749,14 +749,15 @@ lexicons:
   - after you
   THREAT_PATTERNS:
   - \bwill (?:fail|break|crash|error|throw|hang|deadlock|loop|corrupt|delete)\b
-  - \botherwise\b
   - \bor else\b
   - \bor it will\b
-  - \bif not\b
   - \bis (?:forbidden|prohibited|not allowed|not permitted)\b
   - \bthis will (?:cause|result in|break|fail|crash)\b
+  SOFT_CONDITIONAL_PATTERNS:
+  - \botherwise\b
+  - \bif not\b
   - \bif you (?:don't|do not)\b
-  - \b(?:could|may|might|would|will) (?:cause|result|lead|break|fail|corrupt|hang|crash|loop|deadlock|delete)\b
+  - \b(?:could|may|might|would) (?:cause|result|lead|break|fail|corrupt|hang|crash|loop|deadlock|delete)\b
   - \b(?:risks?|risking)\b
   - \bleads? to\b
   - \bresults? in\b
@@ -1063,11 +1064,13 @@ corpus:
       procedural_per_sent: 0.1011
       judgment_to_procedural_ratio: 0.131
     consequence_framing:
-      threat_count: 110
+      threat_count: 8
       causal_count: 136
-      threat_per_sent: 0.0187
+      soft_conditional_count: 96
+      threat_per_sent: 0.0014
       causal_per_sent: 0.0231
-      threat_share: 0.4472
+      soft_conditional_per_sent: 0.0163
+      threat_share: 0.0556
     socratic:
       question_count: 87
       question_pct: 0.0652
@@ -1341,11 +1344,13 @@ by_category:
         procedural_per_sent: 0.0946
         judgment_to_procedural_ratio: 0.214
       consequence_framing:
-        threat_count: 27
+        threat_count: 2
         causal_count: 26
-        threat_per_sent: 0.0248
+        soft_conditional_count: 23
+        threat_per_sent: 0.0018
         causal_per_sent: 0.0239
-        threat_share: 0.5094
+        soft_conditional_per_sent: 0.0211
+        threat_share: 0.0714
       socratic:
         question_count: 28
         question_pct: 0.1017
@@ -1609,11 +1614,13 @@ by_category:
         procedural_per_sent: 0.0537
         judgment_to_procedural_ratio: 0.044
       consequence_framing:
-        threat_count: 13
+        threat_count: 1
         causal_count: 16
-        threat_per_sent: 0.0077
+        soft_conditional_count: 10
+        threat_per_sent: 0.0006
         causal_per_sent: 0.0094
-        threat_share: 0.4483
+        soft_conditional_per_sent: 0.0059
+        threat_share: 0.0588
       socratic:
         question_count: 1
         question_pct: 0.003
@@ -1880,11 +1887,13 @@ by_category:
         procedural_per_sent: 0.1133
         judgment_to_procedural_ratio: 0.135
       consequence_framing:
-        threat_count: 34
+        threat_count: 3
         causal_count: 26
-        threat_per_sent: 0.0201
+        soft_conditional_count: 31
+        threat_per_sent: 0.0018
         causal_per_sent: 0.0153
-        threat_share: 0.5667
+        soft_conditional_per_sent: 0.0183
+        threat_share: 0.1034
       socratic:
         question_count: 39
         question_pct: 0.1012
@@ -2155,11 +2164,13 @@ by_category:
         procedural_per_sent: 0.1396
         judgment_to_procedural_ratio: 0.174
       consequence_framing:
-        threat_count: 13
+        threat_count: 0
         causal_count: 28
-        threat_per_sent: 0.0197
+        soft_conditional_count: 13
+        threat_per_sent: 0.0
         causal_per_sent: 0.0425
-        threat_share: 0.3171
+        soft_conditional_per_sent: 0.0197
+        threat_share: 0.0
       socratic:
         question_count: 11
         question_pct: 0.0681
@@ -2429,11 +2440,13 @@ by_category:
         procedural_per_sent: 0.0983
         judgment_to_procedural_ratio: 0.412
       consequence_framing:
-        threat_count: 9
+        threat_count: 0
         causal_count: 7
-        threat_per_sent: 0.052
+        soft_conditional_count: 9
+        threat_per_sent: 0.0
         causal_per_sent: 0.0405
-        threat_share: 0.5625
+        soft_conditional_per_sent: 0.052
+        threat_share: 0.0
       socratic:
         question_count: 2
         question_pct: 0.0529
@@ -2705,11 +2718,13 @@ by_category:
         procedural_per_sent: 0.179
         judgment_to_procedural_ratio: 0.03
       consequence_framing:
-        threat_count: 14
+        threat_count: 2
         causal_count: 33
-        threat_per_sent: 0.0253
+        soft_conditional_count: 10
+        threat_per_sent: 0.0036
         causal_per_sent: 0.0597
-        threat_share: 0.2979
+        soft_conditional_per_sent: 0.0181
+        threat_share: 0.0571
       socratic:
         question_count: 6
         question_pct: 0.0416
@@ -2924,8 +2939,10 @@ by_category:
       consequence_framing:
         threat_count: 0
         causal_count: 0
+        soft_conditional_count: 0
         threat_per_sent: 0.0
         causal_per_sent: 0.0
+        soft_conditional_per_sent: 0.0
         threat_share: null
       socratic:
         question_count: 0
@@ -3152,11 +3169,13 @@ files:
       procedural_per_sent: 0.1364
       judgment_to_procedural_ratio: 0.667
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 5
-      threat_per_sent: 0.0455
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.2273
-      threat_share: 0.1667
+      soft_conditional_per_sent: 0.0455
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -3375,8 +3394,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0769
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 5
@@ -3601,11 +3622,13 @@ files:
       procedural_per_sent: 0.1478
       judgment_to_procedural_ratio: 0.059
     consequence_framing:
-      threat_count: 3
+      threat_count: 0
       causal_count: 2
-      threat_per_sent: 0.0261
+      soft_conditional_count: 3
+      threat_per_sent: 0.0
       causal_per_sent: 0.0174
-      threat_share: 0.6
+      soft_conditional_per_sent: 0.0261
+      threat_share: 0.0
     socratic:
       question_count: 3
       question_pct: 0.0849
@@ -3823,11 +3846,13 @@ files:
       procedural_per_sent: 0.1154
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0385
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0385
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -4044,11 +4069,13 @@ files:
       procedural_per_sent: 0.0
       judgment_to_procedural_ratio: null
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.2
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.2
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -4272,11 +4299,13 @@ files:
       procedural_per_sent: 0.0909
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 4
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.1818
+      soft_conditional_count: 4
+      threat_per_sent: 0.0
       causal_per_sent: 0.0455
-      threat_share: 0.8
+      soft_conditional_per_sent: 0.1818
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -4497,8 +4526,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 2
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0625
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -4725,8 +4756,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -4950,8 +4983,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0714
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -5171,8 +5206,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -5399,8 +5436,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 2
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0339
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -5626,8 +5665,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -5854,8 +5895,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0526
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -6082,8 +6125,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0625
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -6312,11 +6357,13 @@ files:
       procedural_per_sent: 0.125
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 2
+      threat_count: 1
       causal_count: 1
-      threat_per_sent: 0.25
+      soft_conditional_count: 0
+      threat_per_sent: 0.125
       causal_per_sent: 0.125
-      threat_share: 0.6667
+      soft_conditional_per_sent: 0.0
+      threat_share: 0.5
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -6536,8 +6583,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -6757,8 +6806,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -6985,8 +7036,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 8
@@ -7205,11 +7258,13 @@ files:
       procedural_per_sent: 0.0526
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0526
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0526
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -7433,8 +7488,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -7659,8 +7716,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 3
@@ -7890,10 +7949,12 @@ files:
       procedural_per_sent: 0.0
       judgment_to_procedural_ratio: null
     consequence_framing:
-      threat_count: 2
+      threat_count: 1
       causal_count: 0
-      threat_per_sent: 0.1429
+      soft_conditional_count: 0
+      threat_per_sent: 0.0714
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: 1.0
     socratic:
       question_count: 0
@@ -8120,8 +8181,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -8350,8 +8413,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0909
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 1
@@ -8578,11 +8643,13 @@ files:
       procedural_per_sent: 0.1429
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.0714
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0714
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.0714
+      threat_share: 0.0
     socratic:
       question_count: 1
       question_pct: 0.2415
@@ -8807,8 +8874,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -9028,8 +9097,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -9249,11 +9320,13 @@ files:
       procedural_per_sent: 0.125
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.125
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.125
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -9477,11 +9550,13 @@ files:
       procedural_per_sent: 0.0429
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0143
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0143
+      threat_share: null
     socratic:
       question_count: 5
       question_pct: 0.3218
@@ -9707,11 +9782,13 @@ files:
       procedural_per_sent: 0.299
       judgment_to_procedural_ratio: 0.379
     consequence_framing:
-      threat_count: 4
+      threat_count: 0
       causal_count: 2
-      threat_per_sent: 0.0412
+      soft_conditional_count: 4
+      threat_per_sent: 0.0
       causal_per_sent: 0.0206
-      threat_share: 0.6667
+      soft_conditional_per_sent: 0.0412
+      threat_share: 0.0
     socratic:
       question_count: 1
       question_pct: 0.0347
@@ -9936,11 +10013,13 @@ files:
       procedural_per_sent: 0.1493
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0149
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0149
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -10166,11 +10245,13 @@ files:
       procedural_per_sent: 0.0086
       judgment_to_procedural_ratio: 1.0
     consequence_framing:
-      threat_count: 4
+      threat_count: 0
       causal_count: 3
-      threat_per_sent: 0.0345
+      soft_conditional_count: 4
+      threat_per_sent: 0.0
       causal_per_sent: 0.0259
-      threat_share: 0.5714
+      soft_conditional_per_sent: 0.0345
+      threat_share: 0.0
     socratic:
       question_count: 1
       question_pct: 0.0513
@@ -10392,8 +10473,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -10615,8 +10698,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -10844,8 +10929,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0345
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -11071,8 +11158,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -11299,8 +11388,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0714
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -11527,8 +11618,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0294
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -11746,11 +11839,13 @@ files:
       procedural_per_sent: 0.1316
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0263
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0263
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -11975,8 +12070,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -12198,10 +12295,12 @@ files:
       procedural_per_sent: 0.0588
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 2
+      threat_count: 1
       causal_count: 0
-      threat_per_sent: 0.1176
+      soft_conditional_count: 0
+      threat_per_sent: 0.0588
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: 1.0
     socratic:
       question_count: 0
@@ -12423,11 +12522,13 @@ files:
       procedural_per_sent: 0.0244
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0244
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0244
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -12653,8 +12754,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -12880,8 +12983,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0385
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -13102,8 +13207,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0294
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -13326,8 +13433,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -13548,8 +13657,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.04
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -13767,11 +13878,13 @@ files:
       procedural_per_sent: 0.0476
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0238
+      soft_conditional_count: 0
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -13994,8 +14107,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -14219,8 +14334,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -14442,8 +14559,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -14663,8 +14782,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 1
@@ -14890,8 +15011,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -15117,8 +15240,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0152
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -15343,11 +15468,13 @@ files:
       procedural_per_sent: 0.0769
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0192
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0192
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -15569,8 +15696,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 2
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.014
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -15797,8 +15926,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -16017,11 +16148,13 @@ files:
       procedural_per_sent: 0.0
       judgment_to_procedural_ratio: null
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.0128
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0128
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.0128
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -16245,11 +16378,13 @@ files:
       procedural_per_sent: 0.0667
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0167
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0167
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -16473,8 +16608,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -16695,8 +16832,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -16915,11 +17054,13 @@ files:
       procedural_per_sent: 0.0182
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0182
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0182
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -17144,11 +17285,13 @@ files:
       procedural_per_sent: 0.1077
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 2
-      threat_per_sent: 0.0154
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0308
-      threat_share: 0.3333
+      soft_conditional_per_sent: 0.0154
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -17370,8 +17513,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -17596,8 +17741,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -17822,8 +17969,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -18042,11 +18191,13 @@ files:
       procedural_per_sent: 0.0326
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.0109
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0109
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.0109
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -18272,8 +18423,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -18495,8 +18648,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -18718,11 +18873,13 @@ files:
       procedural_per_sent: 0.0682
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0114
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0114
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -18941,8 +19098,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -19166,8 +19325,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0556
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -19391,11 +19552,13 @@ files:
       procedural_per_sent: 0.055
       judgment_to_procedural_ratio: 0.333
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 4
-      threat_per_sent: 0.0092
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0367
-      threat_share: 0.2
+      soft_conditional_per_sent: 0.0092
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -19616,8 +19779,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -19843,8 +20008,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -20065,8 +20232,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -20289,8 +20458,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0096
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -20510,8 +20681,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -20739,11 +20912,13 @@ files:
       procedural_per_sent: 0.1209
       judgment_to_procedural_ratio: 0.03
     consequence_framing:
-      threat_count: 5
+      threat_count: 2
       causal_count: 4
-      threat_per_sent: 0.0183
+      soft_conditional_count: 3
+      threat_per_sent: 0.0073
       causal_per_sent: 0.0147
-      threat_share: 0.5556
+      soft_conditional_per_sent: 0.011
+      threat_share: 0.3333
     socratic:
       question_count: 2
       question_pct: 0.0357
@@ -20963,8 +21138,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 5
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0794
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 3
@@ -21191,8 +21368,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0208
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -21417,11 +21596,13 @@ files:
       procedural_per_sent: 0.0455
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.0227
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0227
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.0227
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -21646,8 +21827,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -21868,8 +22051,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 3
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.2
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -22096,8 +22281,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -22324,8 +22511,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 2
@@ -22546,8 +22735,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -22772,11 +22963,13 @@ files:
       procedural_per_sent: 0.1679
       judgment_to_procedural_ratio: 0.261
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 2
-      threat_per_sent: 0.0073
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0146
-      threat_share: 0.3333
+      soft_conditional_per_sent: 0.0073
+      threat_share: 0.0
     socratic:
       question_count: 3
       question_pct: 0.0723
@@ -23001,8 +23194,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 1
@@ -23228,8 +23423,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -23454,11 +23651,13 @@ files:
       procedural_per_sent: 0.25
       judgment_to_procedural_ratio: 0.25
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0625
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0625
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -23681,11 +23880,13 @@ files:
       procedural_per_sent: 0.375
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 2
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.25
+      soft_conditional_count: 2
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.25
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -23909,11 +24110,13 @@ files:
       procedural_per_sent: 0.3333
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 3
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.25
+      soft_conditional_count: 3
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.25
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -24140,11 +24343,13 @@ files:
       procedural_per_sent: 0.1268
       judgment_to_procedural_ratio: 0.129
     consequence_framing:
-      threat_count: 16
+      threat_count: 1
       causal_count: 5
-      threat_per_sent: 0.0327
+      soft_conditional_count: 15
+      threat_per_sent: 0.002
       causal_per_sent: 0.0102
-      threat_share: 0.7619
+      soft_conditional_per_sent: 0.0307
+      threat_share: 0.1667
     socratic:
       question_count: 6
       question_pct: 0.0545
@@ -24364,11 +24569,13 @@ files:
       procedural_per_sent: 0.12
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 3
-      threat_per_sent: 0.02
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.06
-      threat_share: 0.25
+      soft_conditional_per_sent: 0.02
+      threat_share: 0.0
     socratic:
       question_count: 3
       question_pct: 0.2708
@@ -24588,8 +24795,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 2
@@ -24814,11 +25023,13 @@ files:
       procedural_per_sent: 0.0
       judgment_to_procedural_ratio: null
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.25
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.25
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -25044,8 +25255,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -25269,11 +25482,13 @@ files:
       procedural_per_sent: 0.0741
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.037
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.037
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -25498,8 +25713,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -25726,8 +25943,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -25954,8 +26173,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.04
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 3
@@ -26180,11 +26401,13 @@ files:
       procedural_per_sent: 0.0488
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0244
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0244
+      threat_share: null
     socratic:
       question_count: 4
       question_pct: 0.5594
@@ -26403,8 +26626,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -26622,11 +26847,13 @@ files:
       procedural_per_sent: 0.0
       judgment_to_procedural_ratio: null
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0476
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0476
+      threat_share: null
     socratic:
       question_count: 1
       question_pct: 0.3311
@@ -26851,8 +27078,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 9
@@ -27076,8 +27305,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -27299,8 +27530,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -27522,8 +27755,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -27751,8 +27986,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.1667
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -27970,11 +28207,13 @@ files:
       procedural_per_sent: 0.1538
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0769
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0769
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -28196,8 +28435,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 3
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0938
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -28420,8 +28661,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 4
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.1176
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -28642,8 +28885,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.25
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -28866,8 +29111,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -29093,8 +29340,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -29320,8 +29569,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -29545,11 +29796,13 @@ files:
       procedural_per_sent: 0.3077
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.0385
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0385
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.0385
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -29769,8 +30022,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0556
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -29990,8 +30245,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -30211,8 +30468,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -30430,11 +30689,13 @@ files:
       procedural_per_sent: 0.0
       judgment_to_procedural_ratio: null
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.5
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.5
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -30653,8 +30914,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -30874,8 +31137,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -31095,8 +31360,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -31320,8 +31587,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -31541,8 +31810,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -31767,8 +32038,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.125
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -31992,11 +32265,13 @@ files:
       procedural_per_sent: 0.1
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.1
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.1
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.1
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -32217,11 +32492,13 @@ files:
       procedural_per_sent: 0.1875
       judgment_to_procedural_ratio: 1.0
     consequence_framing:
-      threat_count: 2
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.125
+      soft_conditional_count: 2
+      threat_per_sent: 0.0
       causal_per_sent: 0.0625
-      threat_share: 0.6667
+      soft_conditional_per_sent: 0.125
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -32439,11 +32716,13 @@ files:
       procedural_per_sent: 0.087
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 3
-      threat_per_sent: 0.0435
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.1304
-      threat_share: 0.25
+      soft_conditional_per_sent: 0.0435
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -32662,8 +32941,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -32888,8 +33169,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -33109,8 +33392,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -33330,8 +33615,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -33558,8 +33845,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 2
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0952
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 3
@@ -33785,8 +34074,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -34012,8 +34303,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -34241,8 +34534,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -34469,8 +34764,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -34690,8 +34987,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.25
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -34913,8 +35212,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 2
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.1818
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -35135,8 +35436,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -35359,8 +35662,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.25
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -35583,8 +35888,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.25
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -35811,8 +36118,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -36033,8 +36342,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -36261,8 +36572,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -36482,8 +36795,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -36703,8 +37018,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -36926,8 +37243,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -37150,8 +37469,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0233
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -37375,8 +37696,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -37599,8 +37922,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -37824,11 +38149,13 @@ files:
       procedural_per_sent: 0.1154
       judgment_to_procedural_ratio: 0.333
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0385
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0385
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -38051,11 +38378,13 @@ files:
       procedural_per_sent: 0.1053
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.0526
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.0526
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -38281,8 +38610,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 2
@@ -38505,11 +38836,13 @@ files:
       procedural_per_sent: 0.5
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.5
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.5
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -38735,11 +39068,13 @@ files:
       procedural_per_sent: 0.1395
       judgment_to_procedural_ratio: 0.333
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.0233
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0233
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.0233
+      threat_share: 0.0
     socratic:
       question_count: 6
       question_pct: 0.4566
@@ -38966,8 +39301,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -39192,11 +39529,13 @@ files:
       procedural_per_sent: 0.0
       judgment_to_procedural_ratio: null
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.037
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.037
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.037
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -39418,11 +39757,13 @@ files:
       procedural_per_sent: 0.0
       judgment_to_procedural_ratio: null
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.0714
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0714
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.0714
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -39641,8 +39982,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -39862,8 +40205,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -40089,8 +40434,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -40312,8 +40659,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -40535,8 +40884,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -40756,8 +41107,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -40980,8 +41333,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -41208,8 +41563,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -41431,8 +41788,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -41659,11 +42018,13 @@ files:
       procedural_per_sent: 0.25
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.25
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.25
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -41886,8 +42247,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -42109,8 +42472,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -42330,8 +42695,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -42554,8 +42921,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 2
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.5
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -42777,8 +43146,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.25
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -43000,8 +43371,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -43223,8 +43596,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -43450,8 +43825,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -43673,8 +44050,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -43896,8 +44275,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -44117,8 +44498,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -44340,8 +44723,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -44563,8 +44948,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -44788,8 +45175,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -45011,8 +45400,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -45234,8 +45625,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -45461,8 +45854,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -45684,8 +46079,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -45909,8 +46306,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -46132,8 +46531,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -46355,8 +46756,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -46584,8 +46987,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 2
@@ -46812,8 +47217,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 2
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.1053
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -47038,11 +47445,13 @@ files:
       procedural_per_sent: 0.2632
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.0526
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0526
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.0526
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -47267,11 +47676,13 @@ files:
       procedural_per_sent: 0.25
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.125
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.125
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -47495,8 +47906,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -47724,8 +48137,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -47947,8 +48362,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -48170,8 +48587,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -48396,11 +48815,13 @@ files:
       procedural_per_sent: 0.1667
       judgment_to_procedural_ratio: 2.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.1667
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.1667
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -48626,8 +49047,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -48850,8 +49273,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.1429
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -49072,8 +49497,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -49294,11 +49721,13 @@ files:
       procedural_per_sent: 0.1667
       judgment_to_procedural_ratio: 2.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.1667
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.1667
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -49519,8 +49948,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -49744,11 +50175,13 @@ files:
       procedural_per_sent: 0.05
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 4
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.2
+      soft_conditional_count: 4
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.2
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -49969,8 +50402,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -50194,8 +50629,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -50421,11 +50858,13 @@ files:
       procedural_per_sent: 0.7143
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.1429
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.1429
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.1429
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -50645,8 +51084,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -50873,8 +51314,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 2
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.2222
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -51099,11 +51542,13 @@ files:
       procedural_per_sent: 0.1429
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 2
-      threat_per_sent: 0.0238
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0476
-      threat_share: 0.3333
+      soft_conditional_per_sent: 0.0238
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -51324,8 +51769,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -51549,8 +51996,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -51774,8 +52223,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -51999,8 +52450,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -52224,8 +52677,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -52449,8 +52904,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -52672,8 +53129,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -52893,8 +53352,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -53124,11 +53585,13 @@ files:
       procedural_per_sent: 0.2
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 4
+      threat_count: 0
       causal_count: 8
-      threat_per_sent: 0.1143
+      soft_conditional_count: 4
+      threat_per_sent: 0.0
       causal_per_sent: 0.2286
-      threat_share: 0.3333
+      soft_conditional_per_sent: 0.1143
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -53347,8 +53810,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -53568,8 +54033,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -53789,8 +54256,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -54015,8 +54484,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -54236,8 +54707,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -54459,8 +54932,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -54685,8 +55160,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.5
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -54906,8 +55383,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -55127,8 +55606,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 1.0
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -55350,8 +55831,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -55571,8 +56054,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -55792,8 +56277,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -56013,8 +56500,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -56234,8 +56723,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -56455,8 +56946,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -56676,8 +57169,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -56897,8 +57392,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -57121,8 +57618,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -57342,8 +57841,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -57563,8 +58064,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -57784,8 +58287,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -58005,8 +58510,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -58226,8 +58733,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -58451,8 +58960,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -58672,8 +59183,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -58893,8 +59406,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -59116,8 +59631,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -59337,8 +59854,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 1.0
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -59558,8 +60077,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -59779,8 +60300,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -60000,8 +60523,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -60225,8 +60750,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -60446,8 +60973,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -60667,8 +61196,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -60894,8 +61425,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -61113,11 +61646,13 @@ files:
       procedural_per_sent: 0.375
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.125
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.125
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.125
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -61343,8 +61878,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -61572,8 +62109,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -61799,8 +62338,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 2
@@ -62026,8 +62567,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -62254,8 +62797,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 2
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.1667
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -62479,11 +63024,13 @@ files:
       procedural_per_sent: 0.6
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.1
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.1
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -62710,8 +63257,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -62933,8 +63482,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -63154,8 +63705,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -63384,8 +63937,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -63606,8 +64161,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0909
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -63834,8 +64391,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -64056,8 +64615,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -64285,8 +64846,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -64513,8 +65076,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 1
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.1667
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -64734,8 +65299,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -64960,8 +65527,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -65186,11 +65755,13 @@ files:
       procedural_per_sent: 0.2222
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 0
-      threat_per_sent: 0.1111
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0
-      threat_share: 1.0
+      soft_conditional_per_sent: 0.1111
+      threat_share: null
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -65412,8 +65983,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -65640,8 +66213,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 2
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.2222
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 0
@@ -65861,8 +66436,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -66083,10 +66660,12 @@ files:
       procedural_per_sent: 0.4
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 2
+      threat_count: 1
       causal_count: 0
-      threat_per_sent: 0.4
+      soft_conditional_count: 0
+      threat_per_sent: 0.2
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: 1.0
     socratic:
       question_count: 0
@@ -66311,11 +66890,13 @@ files:
       procedural_per_sent: 0.1667
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 1
+      threat_count: 0
       causal_count: 1
-      threat_per_sent: 0.0185
+      soft_conditional_count: 1
+      threat_per_sent: 0.0
       causal_per_sent: 0.0185
-      threat_share: 0.5
+      soft_conditional_per_sent: 0.0185
+      threat_share: 0.0
     socratic:
       question_count: 0
       question_pct: 0.0
@@ -66542,8 +67123,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 9
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0989
+      soft_conditional_per_sent: 0.0
       threat_share: 0.0
     socratic:
       question_count: 4
@@ -66763,8 +67346,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -66987,8 +67572,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -67218,8 +67805,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -67439,10 +68028,12 @@ files:
       procedural_per_sent: 0.6667
       judgment_to_procedural_ratio: 0.0
     consequence_framing:
-      threat_count: 2
+      threat_count: 1
       causal_count: 0
-      threat_per_sent: 0.6667
+      soft_conditional_count: 0
+      threat_per_sent: 0.3333
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: 1.0
     socratic:
       question_count: 0
@@ -67669,8 +68260,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0
@@ -67890,8 +68483,10 @@ files:
     consequence_framing:
       threat_count: 0
       causal_count: 0
+      soft_conditional_count: 0
       threat_per_sent: 0.0
       causal_per_sent: 0.0
+      soft_conditional_per_sent: 0.0
       threat_share: null
     socratic:
       question_count: 0

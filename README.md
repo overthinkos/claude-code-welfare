@@ -58,7 +58,7 @@ The site uses Quarto's `freeze` cache plus `execute: enabled: false` — noteboo
 
 ## Headline findings (one-paragraph version)
 
-Across 5,702 sentences in 286 files: imperative sentences dominate (31.30%), appreciative sentences are essentially absent (4 in the whole corpus), and only 24.66% of rule sentences have any justification keyword in the same paragraph. The cumulative judgment-to-procedural ratio over Claude Code release versions has **monotonically declined** from ~0.71 in early releases to ~0.16 at the latest version on file. The corpus is moving toward compliance, not toward reasoning. Full numbers and the chart are at the [published site](https://overthinkos.github.io/claude-code-welfare/) or in [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb).
+Across 5,878 sentences in 289 files: imperative sentences dominate (30.95%), appreciative sentences are essentially absent (4 in the whole corpus), and only 24.29% of rule sentences have any justification keyword in the same paragraph. The cumulative judgment-to-procedural ratio over Claude Code release versions has **monotonically declined** from ~0.42 at the first stable file-pool point (v2.1.18) to ~0.13 at the latest version on file. The corpus is moving toward compliance, not toward reasoning. Full numbers and the chart are at the [published site](https://overthinkos.github.io/claude-code-welfare/) or in [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb).
 
 ## Authorship
 

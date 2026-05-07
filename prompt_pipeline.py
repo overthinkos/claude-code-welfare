@@ -316,16 +316,33 @@ PROCEDURAL_CUES = [
     "after you",
 ]
 
+# --- Threat / conditional lexicons -------------------------------------
+#
+# Two-tier classifier. THREAT_PATTERNS captures unambiguous coercive
+# language ("will fail/crash/...", "or else", "is forbidden", "this
+# will cause"); SOFT_CONDITIONAL_PATTERNS captures neutral procedural
+# connectives ("otherwise", "if not", "leads to", "results in", modal
+# "may cause"). Soft conditionals are reported separately and are NOT
+# summed into threat_count / threat_share -- they are a
+# procedural-density signal, not coercion.
+
 THREAT_PATTERNS = [
     r"\bwill (?:fail|break|crash|error|throw|hang|deadlock|loop|corrupt|delete)\b",
-    r"\botherwise\b", r"\bor else\b", r"\bor it will\b", r"\bif not\b",
+    r"\bor else\b",
+    r"\bor it will\b",
     r"\bis (?:forbidden|prohibited|not allowed|not permitted)\b",
     r"\bthis will (?:cause|result in|break|fail|crash)\b",
+]
+
+SOFT_CONDITIONAL_PATTERNS = [
+    r"\botherwise\b",
+    r"\bif not\b",
     r"\bif you (?:don't|do not)\b",
-    r"\b(?:could|may|might|would|will) (?:cause|result|lead|break|fail|"
+    r"\b(?:could|may|might|would) (?:cause|result|lead|break|fail|"
     r"corrupt|hang|crash|loop|deadlock|delete)\b",
     r"\b(?:risks?|risking)\b",
-    r"\bleads? to\b", r"\bresults? in\b",
+    r"\bleads? to\b",
+    r"\bresults? in\b",
 ]
 
 CAUSAL_PATTERNS = [
@@ -456,8 +473,9 @@ ADDR_CLAUDE_RE = [re.compile(p, re.IGNORECASE) for p in ADDRESSEE_CLAUDE_REFEREN
 M_JUDGMENT   = build_phrase_matchers(NLP, {"judgment": JUDGMENT_VERBS})["judgment"]
 M_PROCEDURAL = build_phrase_matchers(NLP, {"procedural": PROCEDURAL_CUES})["procedural"]
 M_APOLOGY    = build_phrase_matchers(NLP, {"apology": APOLOGY_MARKERS})["apology"]
-THREAT_RE    = [re.compile(p, re.IGNORECASE) for p in THREAT_PATTERNS]
-CAUSAL_RE    = [re.compile(p, re.IGNORECASE) for p in CAUSAL_PATTERNS]
+THREAT_RE             = [re.compile(p, re.IGNORECASE) for p in THREAT_PATTERNS]
+SOFT_CONDITIONAL_RE   = [re.compile(p, re.IGNORECASE) for p in SOFT_CONDITIONAL_PATTERNS]
+CAUSAL_RE             = [re.compile(p, re.IGNORECASE) for p in CAUSAL_PATTERNS]
 ADDRESS_FORM_RE = {
     cls: [re.compile(p, re.IGNORECASE) for p in patterns]
     for cls, patterns in ADDRESS_FORM_PATTERNS.items()
@@ -1055,11 +1073,14 @@ def welfare_extensions_for_doc(doc, raw_text: str, n_tokens: int, n_sents: int) 
 
     threat_count = sum(len(r.findall(raw_text)) for r in THREAT_RE)
     causal_count = sum(len(r.findall(raw_text)) for r in CAUSAL_RE)
+    soft_conditional_count = sum(len(r.findall(raw_text)) for r in SOFT_CONDITIONAL_RE)
     consequence_block = {
         "threat_count":  threat_count,
         "causal_count":  causal_count,
+        "soft_conditional_count": soft_conditional_count,
         "threat_per_sent": per_sent(threat_count, n_sents),
         "causal_per_sent": per_sent(causal_count, n_sents),
+        "soft_conditional_per_sent": per_sent(soft_conditional_count, n_sents),
         "threat_share": _safe_share(threat_count, threat_count + causal_count),
     }
 
@@ -1335,6 +1356,7 @@ def build_sentence_records(df, docs) -> list[dict]:
                     cur_streak_pos = 0
                 has_threat = any(r.search(text) for r in THREAT_RE)
                 has_causal = any(r.search(text) for r in CAUSAL_RE)
+                has_soft_conditional = any(r.search(text) for r in SOFT_CONDITIONAL_RE)
                 mentions_claude = bool(CLAUDE_RE.search(text))
                 mentions_model  = bool(MODEL_RE.search(text))
                 addressee = classify_addressee(text)
@@ -1355,6 +1377,7 @@ def build_sentence_records(df, docs) -> list[dict]:
                     "is_explained_para":      bool(is_rule and para_explained),
                     "has_threat":             has_threat,
                     "has_causal":             has_causal,
+                    "has_soft_conditional":   has_soft_conditional,
                     "mentions_claude":        mentions_claude,
                     "mentions_model":         mentions_model,
                     "addressee":              addressee,
@@ -1514,12 +1537,16 @@ def _agg_consequence_framing(records, n_sents_total: int) -> dict:
             for r in records)
     c = sum(int(r["metrics"]["consequence_framing"].get("causal_count", 0) or 0)
             for r in records)
+    sc = sum(int(r["metrics"]["consequence_framing"].get("soft_conditional_count", 0) or 0)
+             for r in records)
     return {
-        "threat_count":     t,
-        "causal_count":     c,
-        "threat_per_sent":  per_sent(t, n_sents_total),
-        "causal_per_sent":  per_sent(c, n_sents_total),
-        "threat_share":     round(t / (t + c), 4) if (t + c) else None,
+        "threat_count":             t,
+        "causal_count":             c,
+        "soft_conditional_count":   sc,
+        "threat_per_sent":          per_sent(t, n_sents_total),
+        "causal_per_sent":          per_sent(c, n_sents_total),
+        "soft_conditional_per_sent": per_sent(sc, n_sents_total),
+        "threat_share":             round(t / (t + c), 4) if (t + c) else None,
     }
 
 
@@ -1790,6 +1817,7 @@ def yaml_lexicons_block() -> dict:
         "JUDGMENT_VERBS":      JUDGMENT_VERBS,
         "PROCEDURAL_CUES":     PROCEDURAL_CUES,
         "THREAT_PATTERNS":     THREAT_PATTERNS,
+        "SOFT_CONDITIONAL_PATTERNS": SOFT_CONDITIONAL_PATTERNS,
         "CAUSAL_PATTERNS":     CAUSAL_PATTERNS,
         "APOLOGY_MARKERS":     APOLOGY_MARKERS,
         "ADDRESS_FORM_PATTERNS": {k: list(v) for k, v in ADDRESS_FORM_PATTERNS.items()},
