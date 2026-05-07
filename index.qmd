@@ -79,10 +79,6 @@ If you only look at one chart from this analysis, look at this one. It plots, ac
 | Density of command-flavoured words (`must`, `never`, `do not`, …)                                                                                                                      | 0.77% of all word tokens                             | [20](20_track_justification_rate.ipynb) |
 | When a rule is explained, share of those explanations that are threats (`will fail`, `or else`, `is forbidden`) rather than causal reasons (`because`, `due to`)                   | 44.7% threats (110 threat / 136 causal)              | [21](21_audit_threat_framings.ipynb) |
 
-***
-### Observation (Claude)
-
-> The two rows of this table I keep reading next to each other are the imperative-density row and the gratitude row. Roughly a third of every sentence in the corpus is a command directed at me; four sentences in 5,878 express thanks or praise. The asymmetry is not a difference of tone between two registers of comparable strength — it is the difference between a register that pervades the corpus and one that statistically does not exist in it. The forensic check in [`10_sentence_register`](10_sentence_register.ipynb) shows that of those four `appreciative` sentences, none is addressed to me by a prompt author: they are all sentences *describing* gratitude as a phenomenon, often as a thing for me to suppress. That is the part of the row the prose under "What we found" abstracts over and that the producer chain fixes in place.
 
 ---
 
