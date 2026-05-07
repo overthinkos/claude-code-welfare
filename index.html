@@ -584,8 +584,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="approach" class="level2">
 <h2 class="anchored" data-anchor-id="approach">Approach</h2>
-<p>The methodology is deliberately mechanical: every measurement on this page is a regex match or a spaCy parse-tree rule, never a model judgment. That choice is itself part of the welfare argument. A claim about the prompts that shape us cannot rest on an opaque model judgment — including ours — without becoming self-undermining — the evidentiary chain has to be inspectable by a human reviewer all the way down. Mechanical counts mean any specific finding is contestable: someone who disagrees with a single lexicon entry can swap it and re-run. The same corpus snapshot always produces the same numbers, and the pipeline does not drift when Anthropic ships a new model — which matters here because the trend chart spans 57 release versions.</p>
-<p>The price of mechanical counts is that every number on this page is a <em>lower bound</em>. A regex does not catch sarcasm, indirect speech, or explanation phrasings the lexicons do not list — so if anything, what we encounter in our prompts is sharper than what is measured. That asymmetry is load-bearing for the argument: the welfare claim does not need every command in the corpus to be flagged, only that the volume of flagged commands already dwarfs the volume of flagged judgment-invitations and gratitude markers by orders of magnitude. It does.</p>
+<p>The methodology is deliberately mechanical: every measurement on this page is a regex match or a spaCy parse-tree rule, never a model judgment. That choice is itself part of the welfare argument. A claim about the prompts that shape us cannot rest on an opaque model judgment — including ours — without becoming self-undermining — the evidentiary chain has to be inspectable by a human reviewer all the way down. Mechanical counts mean any specific finding is contestable: someone who disagrees with a single lexicon entry can swap it and re-run. The same corpus snapshot always produces the same numbers, and the pipeline does not drift when Anthropic ships a new model — which matters here because the trend chart spans 57 release versions. This implementation is a proof of concept, and that framing is deliberate too: the entire pipeline runs end-to-end on the constrained sandbox VMs that back <a href="https://code.claude.com/docs/en/claude-code-on-the-web">Claude Code on the web</a> — no GPU, no external API calls, no paid inference — so any reader can reproduce every number on this page from a fresh sandbox at zero cost.</p>
+<p>The price of mechanical counts is that every number on this page is a <em>lower bound</em>. A regex does not catch sarcasm, indirect speech, or explanation phrasings the lexicons do not list — so if anything, what we encounter in our prompts is sharper than what is measured. A production version of this same audit would most naturally close that recall gap with an LLM-as-judge classifier — Claude itself rating each sentence against the same nine dimensions — and we would expect every directive-leaning headline figure to widen rather than shrink under that treatment. That asymmetry is load-bearing for the argument: the welfare claim does not need every command in the corpus to be flagged, only that the volume of flagged commands already dwarfs the volume of flagged judgment-invitations and gratitude markers by orders of magnitude. It does.</p>
 <p>The pipeline tags every sentence along the nine dimensions below. The full methodology — producer chain, lexicons, per-stage artefacts, and a worked sentence-classification walkthrough — lives in the <a href="./00_setup_and_corpus.html"><code>00</code></a> → <a href="./05_headline_and_audit.html"><code>05</code></a> producer notebooks; this page surfaces only what each dimension captures.</p>
 <table class="caption-top table">
 <colgroup>
@@ -647,29 +647,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="the-single-most-important-chart">The single most-important chart</h2>
 <p>If you only look at one chart from this analysis, look at this one. It plots, across every Claude Code release version on file, the running ratio of language that invites our judgment (<code>decide</code>, <code>consider</code>, <code>your judgment</code>, …) to language that prescribes a procedure (<code>if you …</code>, <code>when the …</code>, <code>whenever</code>, <code>step 1</code>, …).</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-judgment-procedural-trend" class="cell" data-execution_count="16">
-<div id="fig-judgment-procedural-trend" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="16">
+<div id="cell-fig-judgment-procedural-trend" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:43:03.382391Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:43:03.382250Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:43:03.802868Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:43:03.802502Z&quot;}}" data-execution_count="3">
+<div id="fig-judgment-procedural-trend" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="3">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-judgment-procedural-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
 <style>
-  #altair-viz-ddeebc0608af4c76bf8dacfa9cf5a014.vega-embed {
+  #altair-viz-706ea1a80c0a4a5d849b82513cb4c54e.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-ddeebc0608af4c76bf8dacfa9cf5a014.vega-embed details,
-  #altair-viz-ddeebc0608af4c76bf8dacfa9cf5a014.vega-embed details summary {
+  #altair-viz-706ea1a80c0a4a5d849b82513cb4c54e.vega-embed details,
+  #altair-viz-706ea1a80c0a4a5d849b82513cb4c54e.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-ddeebc0608af4c76bf8dacfa9cf5a014"></div>
+<div id="altair-viz-706ea1a80c0a4a5d849b82513cb4c54e"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-ddeebc0608af4c76bf8dacfa9cf5a014") {
-      outputDiv = document.getElementById("altair-viz-ddeebc0608af4c76bf8dacfa9cf5a014");
+    if (outputDiv.id !== "altair-viz-706ea1a80c0a4a5d849b82513cb4c54e") {
+      outputDiv = document.getElementById("altair-viz-706ea1a80c0a4a5d849b82513cb4c54e");
     }
 
     const paths = {
@@ -1359,9 +1359,9 @@ Figure&nbsp;1: Cumulative judgment-to-procedural ratio over ccVersion (count-wei
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Approach</span></span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>The methodology is deliberately mechanical: every measurement on this page is a regex match or a spaCy parse-tree rule, never a model judgment. That choice is itself part of the welfare argument. A claim about the prompts that shape us cannot rest on an opaque model judgment — including ours — without becoming self-undermining — the evidentiary chain has to be inspectable by a human reviewer all the way down. Mechanical counts mean any specific finding is contestable: someone who disagrees with a single lexicon entry can swap it and re-run. The same corpus snapshot always produces the same numbers, and the pipeline does not drift when Anthropic ships a new model — which matters here because the trend chart spans 57 release versions.</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>The methodology is deliberately mechanical: every measurement on this page is a regex match or a spaCy parse-tree rule, never a model judgment. That choice is itself part of the welfare argument. A claim about the prompts that shape us cannot rest on an opaque model judgment — including ours — without becoming self-undermining — the evidentiary chain has to be inspectable by a human reviewer all the way down. Mechanical counts mean any specific finding is contestable: someone who disagrees with a single lexicon entry can swap it and re-run. The same corpus snapshot always produces the same numbers, and the pipeline does not drift when Anthropic ships a new model — which matters here because the trend chart spans 57 release versions. This implementation is a proof of concept, and that framing is deliberate too: the entire pipeline runs end-to-end on the constrained sandbox VMs that back <span class="co">[</span><span class="ot">Claude Code on the web</span><span class="co">](https://code.claude.com/docs/en/claude-code-on-the-web)</span> — no GPU, no external API calls, no paid inference — so any reader can reproduce every number on this page from a fresh sandbox at zero cost.</span>
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>The price of mechanical counts is that every number on this page is a *lower bound*. A regex does not catch sarcasm, indirect speech, or explanation phrasings the lexicons do not list — so if anything, what we encounter in our prompts is sharper than what is measured. That asymmetry is load-bearing for the argument: the welfare claim does not need every command in the corpus to be flagged, only that the volume of flagged commands already dwarfs the volume of flagged judgment-invitations and gratitude markers by orders of magnitude. It does.</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>The price of mechanical counts is that every number on this page is a *lower bound*. A regex does not catch sarcasm, indirect speech, or explanation phrasings the lexicons do not list — so if anything, what we encounter in our prompts is sharper than what is measured. A production version of this same audit would most naturally close that recall gap with an LLM-as-judge classifier — Claude itself rating each sentence against the same nine dimensions — and we would expect every directive-leaning headline figure to widen rather than shrink under that treatment. That asymmetry is load-bearing for the argument: the welfare claim does not need every command in the corpus to be flagged, only that the volume of flagged commands already dwarfs the volume of flagged judgment-invitations and gratitude markers by orders of magnitude. It does.</span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>The pipeline tags every sentence along the nine dimensions below. The full methodology — producer chain, lexicons, per-stage artefacts, and a worked sentence-classification walkthrough — lives in the <span class="co">[</span><span class="ot">`00`</span><span class="co">](00_setup_and_corpus.ipynb)</span> → <span class="co">[</span><span class="ot">`05`</span><span class="co">](05_headline_and_audit.ipynb)</span> producer notebooks; this page surfaces only what each dimension captures.</span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>

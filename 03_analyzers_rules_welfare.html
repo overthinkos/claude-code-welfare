@@ -611,7 +611,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>_pipeline_cache/partial_rules_welfare.json</code></li>
 <li><code>_pipeline_cache/sentences_partial.parquet</code> (stage 04 promotes this to the final <code>sentences_classified.parquet</code>)</li>
 </ul>
-<div id="38376d07-0e60-460e-8403-24c588e77d99" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:14.645697Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:14.645520Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:16.745162Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:16.744109Z&quot;}}" data-execution_count="1">
+<div id="38376d07-0e60-460e-8403-24c588e77d99" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:41.639854Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:41.639689Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:42.819094Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:42.818672Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload corpus + DocBin from stage 00."""</span></span>
@@ -664,7 +664,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong><code>pct_explained_same</code></strong> — % of rule sentences whose own sentence contains a justification keyword (strict, e.g.&nbsp;<code>"Do not X because Y."</code>).</li>
 <li><strong><code>pct_explained_para</code></strong> — % of rule sentences with a justification keyword anywhere in their paragraph (e.g.&nbsp;<code>"Do not X. Y."</code>). The headline welfare metric.</li>
 </ul>
-<div id="094c86d3-581b-4f55-bf5d-8dd3e6768dbc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:16.747916Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:16.747613Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:18.602983Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:18.601897Z&quot;}}" data-execution_count="2">
+<div id="094c86d3-581b-4f55-bf5d-8dd3e6768dbc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:42.820345Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:42.820160Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:44.127119Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:44.126782Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> rule_explanation_for_doc</span>
@@ -735,7 +735,7 @@ corpus rule sentences: 2285
 <li><strong><code>socratic</code></strong> — <code>question_count</code> (rhetorical-filtered) and <code>apology_count</code> (<code>unfortunately</code>, <code>we acknowledge</code>, <code>we know this is</code>).</li>
 <li><strong><code>address_form</code></strong> — counts of <code>selfref_claude</code> (<code>Claude</code> / <code>you</code>-as-Claude proper-name), <code>selfref_assistant</code> (<code>the assistant</code>), <code>selfref_model</code> (<code>the model</code> / <code>the AI</code>), <code>selfref_2p</code>, <code>selfref_we</code>. The anthropomorphic share = <code>selfref_claude / (selfref_claude + selfref_assistant + selfref_model)</code>.</li>
 </ul>
-<div id="9df9035d-0d70-4d56-a882-4ee385266479" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:18.605119Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:18.604905Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:19.237590Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:19.236538Z&quot;}}" data-execution_count="3">
+<div id="9df9035d-0d70-4d56-a882-4ee385266479" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:44.128485Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:44.128381Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:44.607019Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:44.606531Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> welfare_extensions_for_doc</span>
@@ -826,7 +826,7 @@ Address-form — corpus self-reference distribution:
 <li><strong><code>imperative_streaks</code></strong> — run-lengths of consecutive imperative sentences within a file: <code>streak_max</code>, <code>streak_mean</code>, <code>n_streaks_ge3</code> (triple-tap), <code>n_streaks_ge5</code> (staccato burst).</li>
 <li><strong><code>rules_section</code></strong> — in-vs-outside markdown sections whose heading matches <code>RULES_HEADING_RE</code> (<code>## RULES</code>, <code>## IMPORTANT</code>, <code>## WARNING</code>) or is ALL-CAPS. Compares explanation rates across the two sets.</li>
 </ul>
-<div id="dac27de3-ed49-4c40-901d-780500a57225" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:19.239889Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:19.239702Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:21.206141Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:21.205137Z&quot;}}" data-execution_count="4">
+<div id="dac27de3-ed49-4c40-901d-780500a57225" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:44.608048Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:44.607942Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:46.074752Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:46.074327Z&quot;}}" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> imperative_streaks_for_doc, rules_section_for_doc</span>
@@ -892,7 +892,7 @@ corpus pct_rule_paragraphs_explained_out:   16.51%</code></pre>
 <li><strong>Consequence framing</strong>: <code>has_threat</code>, <code>has_causal</code>, <code>has_soft_conditional</code>.</li>
 <li><strong>Address form</strong>: <code>mentions_claude</code>, <code>mentions_model</code>, <code>addressee</code> (categorical: <code>claude</code> / <code>user</code> / <code>unknown</code>).</li>
 </ul>
-<div id="b6b22506-5b97-4c9d-8b41-9b1561e03228" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:21.208630Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:21.208429Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:23.556820Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:23.555615Z&quot;}}" data-execution_count="5">
+<div id="b6b22506-5b97-4c9d-8b41-9b1561e03228" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:46.075843Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:46.075739Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:47.828274Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:47.827816Z&quot;}}" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> build_sentence_records</span>
@@ -933,7 +933,7 @@ flag totals:
 </section>
 <section id="write-partial_rules_welfare.json" class="level2">
 <h2 class="anchored" data-anchor-id="write-partial_rules_welfare.json">Write <code>partial_rules_welfare.json</code></h2>
-<div id="a0f20151-309b-4add-8513-b8216705c55f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:44:23.559040Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:44:23.558780Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:44:23.582328Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:44:23.581005Z&quot;}}" data-execution_count="6">
+<div id="a0f20151-309b-4add-8513-b8216705c55f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T11:31:47.829571Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T11:31:47.829450Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T11:31:47.860365Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T11:31:47.859999Z&quot;}}" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>partial <span class="op">=</span> {</span>

@@ -583,7 +583,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>The bottom-panel addressee chart is the part of this notebook I keep coming back to. The <code>appreciative</code> and <code>collaborative</code> rows are nearly empty across every category, but the few attested instances are almost all <em>Claude addressing Claude</em> (the <code>claude</code> bar) or unaddressed (the <code>unknown</code> bar) — not Claude addressing the user. The <code>user</code> bar is empty for both classes. So when prompt authors write a rare appreciative or collaborative sentence, they’re typically describing what Claude should do <em>with itself</em>, not modelling reciprocal interpersonal speech with the human. The forensic sample printed alongside the chart confirms it: every “thanks” or “appreciate” hit in the corpus is a sentence <em>describing</em> gratitude as a thing to suppress or process, never a prompt author actually thanking Claude. That asymmetry is welfare-relevant in its own right — independent of the absolute counts. The values that drive these claims (<code>appreciative_sent</code>, <code>collaborative_sent</code>, the per-class <code>sent_pct</code> per category) all come from the producer’s <code>HEADLINE</code> and the by-category chart above; nothing here is hand-typed.</p>
 </blockquote>
-<div id="8db1a883-63d9-44e3-9bc4-ecd236a84d67" class="cell" data-execution_count="4">
+<div id="8db1a883-63d9-44e3-9bc4-ecd236a84d67" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:40:08.709670Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:40:08.709559Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:40:11.412424Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:40:11.412021Z&quot;}}" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + flat alt_df, derive helper bindings used by every chart cell.</span></span>
@@ -632,7 +632,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="sentence-register-per-category-distribution-addressee-drilldown" class="level3">
 <h3 class="anchored" data-anchor-id="sentence-register-per-category-distribution-addressee-drilldown">Sentence-register per category — distribution + addressee drilldown</h3>
 <p>Two views: per-category × per-class distribution (top) and addressee breakdown for the two near-zero classes — claude / user / unknown (bottom). A forensic-inspection sample of sentences matching appreciative keywords is printed alongside, sourced from <code>sentences_classified.parquet</code>.</p>
-<div id="b8b9f100-4f87-4d70-aa8c-57e2aa9acd25" class="cell" data-execution_count="5">
+<div id="b8b9f100-4f87-4d70-aa8c-57e2aa9acd25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:40:11.413812Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:40:11.413641Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:40:11.954553Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:40:11.953999Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Sentence-register per category × class + addressee drilldown — vconcat composite."""</span></span>
@@ -748,26 +748,26 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
  system-prompt-insights-session-facets-extraction.md 1. **goal_categories**: Count ONLY what the USER explicitly asked for.\n   - ...    claude
                    tool-description-enterplanmode.md **User Preferences Matter**: The implementation could reasonably go multiple ...    claude</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-9c9b96bb16a9401ebfe2d204fc283750.vega-embed {
+  #altair-viz-2cb5d4cbd8e548579402ab5f315e3c33.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-9c9b96bb16a9401ebfe2d204fc283750.vega-embed details,
-  #altair-viz-9c9b96bb16a9401ebfe2d204fc283750.vega-embed details summary {
+  #altair-viz-2cb5d4cbd8e548579402ab5f315e3c33.vega-embed details,
+  #altair-viz-2cb5d4cbd8e548579402ab5f315e3c33.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-9c9b96bb16a9401ebfe2d204fc283750"></div>
+<div id="altair-viz-2cb5d4cbd8e548579402ab5f315e3c33"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-9c9b96bb16a9401ebfe2d204fc283750") {
-      outputDiv = document.getElementById("altair-viz-9c9b96bb16a9401ebfe2d204fc283750");
+    if (outputDiv.id !== "altair-viz-2cb5d4cbd8e548579402ab5f315e3c33") {
+      outputDiv = document.getElementById("altair-viz-2cb5d4cbd8e548579402ab5f315e3c33");
     }
 
     const paths = {
@@ -824,7 +824,7 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
 <section id="per-file-outliers-top-10-files-for-each-attested-class" class="level3">
 <h3 class="anchored" data-anchor-id="per-file-outliers-top-10-files-for-each-attested-class">Per-file outliers — top 10 files for each attested class</h3>
 <p>Four panels by class. For <code>collaborative</code> and <code>appreciative</code> (near-zero overall), the panels surface the few files that do attest the class. For <code>permissive</code> and <code>configuring</code>, the panels rank the top files by per-sentence rate.</p>
-<div id="6bcb8239-a7f3-4f4d-b989-31a404dd0ddb" class="cell" data-execution_count="6">
+<div id="6bcb8239-a7f3-4f4d-b989-31a404dd0ddb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:40:11.955656Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:40:11.955557Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:40:12.181785Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:40:12.181357Z&quot;}}" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Per-file outliers for sentence_register — Altair 4-panel.</span></span>
@@ -875,26 +875,26 @@ system-prompt-how-to-use-the-sendusermessage-tool.md                            
 <span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>sr_outliers_chart <span class="op">=</span> (panels[<span class="dv">0</span>] <span class="op">|</span> panels[<span class="dv">1</span>]) <span class="op">&amp;</span> (panels[<span class="dv">2</span>] <span class="op">|</span> panels[<span class="dv">3</span>])</span>
 <span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>save_chart(sr_outliers_chart, <span class="st">"10-per-file-outliers"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-bf9a47cd1479486bac0770602d30b982.vega-embed {
+  #altair-viz-79474d0b6818491d96fc0af92f600c15.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-bf9a47cd1479486bac0770602d30b982.vega-embed details,
-  #altair-viz-bf9a47cd1479486bac0770602d30b982.vega-embed details summary {
+  #altair-viz-79474d0b6818491d96fc0af92f600c15.vega-embed details,
+  #altair-viz-79474d0b6818491d96fc0af92f600c15.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-bf9a47cd1479486bac0770602d30b982"></div>
+<div id="altair-viz-79474d0b6818491d96fc0af92f600c15"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-bf9a47cd1479486bac0770602d30b982") {
-      outputDiv = document.getElementById("altair-viz-bf9a47cd1479486bac0770602d30b982");
+    if (outputDiv.id !== "altair-viz-79474d0b6818491d96fc0af92f600c15") {
+      outputDiv = document.getElementById("altair-viz-79474d0b6818491d96fc0af92f600c15");
     }
 
     const paths = {
