@@ -82,7 +82,7 @@ website:
           - 13_correlation_directiveness.ipynb
           - 14_ccversion_trends.ipynb
           - 15_rule_explanation.ipynb
-      - section: "Proposals"
+      - section: "Proposal"
         contents:
           - 20_track_justification_rate.ipynb
           - 21_audit_threat_framings.ipynb
