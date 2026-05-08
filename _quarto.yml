@@ -21,8 +21,13 @@ project:
     - 21_audit_threat_framings.ipynb
     - 22_cross_product_audit.ipynb
 
+# Default: don't re-execute. Producer chain (00-05) runs via MCP cell_execute
+# in strict order; rendering them again here would defeat that. Surfaces that
+# need inline {python} resolution (index.qmd, consumer notebooks 10-22)
+# override per-file with `execute.enabled: true` in their own frontmatter.
 execute:
   enabled: false
+  freeze: auto
 
 website:
   title: "Claude Code · Prompt Welfare Analysis"

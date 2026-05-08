@@ -16,6 +16,7 @@ venv/
 # Quarto
 /_site/
 /.quarto/
+/_freeze/
 
 **/*.quarto_ipynb
 

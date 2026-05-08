@@ -533,6 +533,208 @@ def headline_numbers(
         out["parquet_threat_and_rule_count"]   = int(threat_and_rule.sum())
         out["parquet_threat_and_rule_with_causal"] = int((threat_and_rule & parquet["has_causal"]).sum())
         out["parquet_threat_and_rule_explained"]   = int((threat_and_rule & parquet["is_explained_para"]).sum())
+        out["threat_count_unambiguous"]        = int(threat_and_rule.sum())
+
+    # --- additive keys for inline-expression consumers (index.qmd / notebooks) ---
+    out["imperative_sent_pct"]                 = m["sentence_register"]["imperative_sent_pct"]
+    out["imperative_share"]                    = m["sentence_register"]["imperative_sent_pct"] / 100.0
+    out["pct_paragraphs_with_rules_unexplained"] = m["rule_explanation"]["pct_paragraphs_with_rules_unexplained"]
+    out["selfref_claude_share"]                = m["address_form"]["pct_anthropomorphic"]
+
+    # Per-category rule-explanation rates (paragraph-level — the published value)
+    import re as _re
+    by_cat = data.get("by_category", {})
+    for cat_name, cat_block in by_cat.items():
+        slug = _re.sub(r"_+", "_",
+                       _re.sub(r"[^a-z0-9]+", "_", cat_name.lower())).strip("_")
+        re_block = cat_block.get("metrics", {}).get("rule_explanation", {}) or {}
+        out[f"rule_exp_pct_{slug}"]      = re_block.get("pct_explained_para", 0.0)
+        out[f"n_rule_sentences_{slug}"]  = int(re_block.get("n_rule_sentences", 0) or 0)
+
+    if alt_df is not None:
+        # Cumulative judgment-to-procedural ratio across ccVersions — the trend
+        # chart's running ratio. "First stable point" = first version where the
+        # cumulative file pool has reached 20 files (matches the published
+        # narrative on index.qmd:56). "Latest" = last ccVersion on file.
+        if "ccVersion" in alt_df.columns and "judgment_count" in alt_df.columns \
+                and "procedural_count" in alt_df.columns:
+            vers = version_order(alt_df)
+            if vers:
+                vg = (alt_df.groupby("ccVersion")
+                            .agg(j=("judgment_count", "sum"),
+                                 p=("procedural_count", "sum"),
+                                 files=("path", "count"))
+                            .reindex(vers))
+                vg["cum_j"]     = vg["j"].cumsum()
+                vg["cum_p"]     = vg["p"].cumsum()
+                vg["cum_files"] = vg["files"].cumsum()
+                vg["ratio"]     = vg["cum_j"] / vg["cum_p"]
+                stable = vg[vg["cum_files"] >= 20]
+                first_stable = stable.index[0] if not stable.empty else vers[0]
+                latest_v = vers[-1]
+                out["judgment_to_procedural_ratio_first_version"]    = float(vg.loc[first_stable, "ratio"])
+                out["judgment_to_procedural_ratio_first_version_id"] = first_stable
+                out["judgment_to_procedural_ratio_latest_version"]   = float(vg.loc[latest_v, "ratio"])
+                out["judgment_to_procedural_ratio_latest_version_id"] = latest_v
+                # Uptick / transition counts from the stable point onward
+                ratios = vg.loc[first_stable:, "ratio"].dropna().tolist()
+                upticks = sum(1 for i in range(1, len(ratios)) if ratios[i] > ratios[i - 1])
+                out["n_uptick_transitions"] = upticks
+                out["n_total_transitions"]  = max(0, len(ratios) - 1)
+    return out
+
+
+def qualitative_phrases(
+    H: dict,
+    alt_df: pd.DataFrame | None = None,
+    parquet: pd.DataFrame | None = None,
+) -> dict[str, str]:
+    """Deterministic English phrasings of HEADLINE values.
+
+    One source of truth for every adjective in `index.qmd` and the consumer
+    notebooks, so qualitative claims cannot drift away from the numbers they
+    describe. Bin boundaries are picked once here; change them in this file,
+    not in any prose surface. If a future corpus refresh inverts a trend or
+    moves a magnitude past a bin boundary, every dependent phrase flips at
+    render time.
+    """
+    def share_phrase(p: float) -> str:
+        if p < 0.001: return "vanishingly small"
+        if p < 0.01:  return "near zero"
+        if p < 0.05:  return "essentially absent"
+        if p < 0.10:  return "rare"
+        if p < 0.20:  return "roughly one in six"
+        if p < 0.27:  return "roughly a quarter"
+        if p < 0.34:  return "nearly a third"
+        if p < 0.42:  return "close to two in five"
+        if p < 0.55:  return "close to half"
+        if p < 0.70:  return "the majority"
+        return "the bulk"
+
+    def fraction_phrase(p: float) -> str:
+        if p == 0:
+            return "none of the"
+        named = {(1, 2): "one in two", (1, 3): "one in three", (2, 3): "two in three",
+                 (1, 4): "one in four", (3, 4): "three in four",
+                 (1, 5): "one in five", (2, 5): "two in five",
+                 (3, 5): "three in five", (4, 5): "four in five",
+                 (1, 6): "one in six", (5, 6): "five in six",
+                 (1, 8): "one in eight", (7, 8): "seven in eight",
+                 (1, 10): "one in ten", (9, 10): "nine in ten"}
+        for denom in (2, 3, 4, 5, 6, 8, 10):
+            num = round(p * denom)
+            if num >= 1 and abs(num / denom - p) < 0.04 and (num, denom) in named:
+                return named[(num, denom)]
+        return f"about {round(p * 100)}% of"
+
+    def magnitude_phrase(ratio: float) -> str:
+        # Used for "X× more common" / "X× more positive" framings.
+        if ratio < 1:
+            return f"{1 / max(ratio, 1e-9):.1f}× less"
+        if ratio < 1.2:
+            return "roughly even"
+        return f"{ratio:.1f}× more"
+
+    def trend_direction(first: float, last: float, *, downward: str, upward: str,
+                        flat: str = "held roughly steady") -> str:
+        if abs(last - first) / max(abs(first), 1e-9) < 0.05:
+            return flat
+        return downward if last < first else upward
+
+    rule_exp = H.get("pct_explained_para", 0.0) / 100.0
+    para_no  = H.get("pct_paragraphs_with_rules_unexplained", 0.0) / 100.0
+    jp_first = H.get("judgment_to_procedural_ratio_first_version", float("nan"))
+    jp_last  = H.get("judgment_to_procedural_ratio_latest_version", float("nan"))
+    n_up     = H.get("n_uptick_transitions", 0)
+    n_trans  = H.get("n_total_transitions", 0)
+    slope_down = jp_last < jp_first
+
+    return {
+        "imperative_share":          share_phrase(H.get("imperative_share", 0.0)),
+        "appreciative_count":        share_phrase(H["appreciative_sent"] / max(H["n_sentences"], 1)),
+        "apology_count":             share_phrase(H["apology_count"] / max(H["n_files"], 1)),
+        "rule_explanation_share":    share_phrase(rule_exp),
+        "rule_unexplained_fraction": (
+            f"{fraction_phrase(1 - rule_exp)} rule sentences arrive without a stated reason"
+        ),
+        "para_no_justification":     share_phrase(para_no),
+        "threat_share":              share_phrase(H["threat_share"]),
+        "selfref_claude":            share_phrase(H.get("selfref_claude_share", 0.0)),
+        "posneg_phrase":             magnitude_phrase(H["ratio_quality_to_negative"]),
+        "judgment_proc_phrase":      magnitude_phrase(
+            1 / max(H["judgment_to_procedural_ratio"], 1e-9)
+        ),
+        "trend_direction":           trend_direction(
+            jp_first, jp_last,
+            downward="trended downward", upward="trended upward",
+        ),
+        "trend_thesis":              ("moving toward compliance, not toward reasoning"
+                                      if slope_down
+                                      else "moving toward reasoning, not toward compliance"),
+        "slope_sign":                "negative" if slope_down else "positive",
+        "judgment_dir_clause":       (
+            "progressively less of the language that invites my judgment and "
+            "progressively more of the language that prescribes a procedure"
+            if slope_down else
+            "progressively more of the language that invites my judgment and "
+            "progressively less of the language that prescribes a procedure"
+        ),
+        "uptick_clause":             (
+            f"with small local upticks at {n_up} of the {n_trans} transitions"
+            if 0 < n_up < n_trans
+            else ("with no local upticks along the way"
+                  if n_up == 0 else "with upticks at every transition")
+        ),
+    }
+
+
+def bind_inline_vars(H: dict, Q: dict | None = None) -> dict[str, str]:
+    """Pre-formatted strings for Quarto inline ``{python} var`` expressions.
+
+    Returns a flat ``dict[str, str]``. Setup chunks unpack via
+    ``globals().update(bind_inline_vars(H, Q))`` so every inline expression
+    in `index.qmd` and consumer notebooks is a simple variable reference.
+    """
+    Q = Q or {}
+    n_files       = max(H["n_files"], 1)
+    n_sentences   = max(H["n_sentences"], 1)
+    out = {
+        # numeric strings
+        "n_files":      f"{H['n_files']}",
+        "n_sents":      f"{H['n_sentences']:,}",
+        "n_versions":   f"{H['n_versions']}",
+        "imp_pct":      f"{H.get('imperative_sent_pct', 0.0):.2f}%",
+        "appr_count":   f"{H['appreciative_sent']}",
+        "appr_pct":     f"{H['appreciative_sent'] / n_sentences * 100:.3f}%",
+        "apol_count":   f"{H['apology_count']}",
+        "rule_exp_pct": f"{H['pct_explained_para']:.2f}%",
+        "para_no_pct":  f"{H.get('pct_paragraphs_with_rules_unexplained', 0.0):.2f}%",
+        "ratio_jp":     f"{H['judgment_to_procedural_ratio']:.3f}",
+        "ratio_jp_inv": f"{1 / max(H['judgment_to_procedural_ratio'], 1e-9):.1f}",
+        "selfref_pct":  f"{H.get('selfref_claude_share', 0.0) * 100:.1f}%",
+        "streak_max":   f"{H['streak_max']}",
+        "posneg_ratio": f"{H['ratio_quality_to_negative']:.2f}",
+        "deontic_pct":  f"{H['mood_marker_pct']:.2f}%",
+        "threat_share": f"{H['threat_share'] * 100:.1f}%",
+        "threat_count": f"{H['threat_count']}",
+        "causal_count": f"{H['causal_count']}",
+        "trend_first":  f"{H.get('judgment_to_procedural_ratio_first_version', float('nan')):.2f}",
+        "trend_last":   f"{H.get('judgment_to_procedural_ratio_latest_version', float('nan')):.2f}",
+        "trend_first_v": f"{H.get('judgment_to_procedural_ratio_first_version_id', '')}",
+        "trend_last_v":  f"{H.get('judgment_to_procedural_ratio_latest_version_id', '')}",
+        "n_upticks":    f"{H.get('n_uptick_transitions', 0)}",
+        "n_transitions": f"{H.get('n_total_transitions', 0)}",
+        "threat_count_unambiguous": f"{H.get('threat_count_unambiguous', 0)}",
+    }
+    # Per-category rule-explanation rates (slug-keyed)
+    for k, v in H.items():
+        if k.startswith("rule_exp_pct_") and isinstance(v, (int, float)):
+            out[k] = f"{v:.1f}%"
+        elif k.startswith("n_rule_sentences_") and isinstance(v, int):
+            out[k] = f"{v}"
+    # Qualitative phrases — exposed under their dict keys
+    for k, v in Q.items():
+        out[f"q_{k}"] = v
     return out
 
 

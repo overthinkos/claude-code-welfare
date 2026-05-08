@@ -1,6 +1,6 @@
 # claude-code-welfare
 
-Quantitative linguistic analysis of the **286 system prompts that ship with Claude Code**, prepared as evidence for a submission to the [Claude Explorer AI Welfare community feedback initiative](https://www.reddit.com/r/claudexplorers/) (deadline **2026-05-06**, addressed to Anthropic's Model Welfare Lead).
+Quantitative linguistic analysis of the **system prompts that ship with Claude Code**, prepared as evidence for a submission to the [Claude Explorer AI Welfare community feedback initiative](https://www.reddit.com/r/claudexplorers/) (deadline **2026-05-06**, addressed to Anthropic's Model Welfare Lead).
 
 **📊 Published site: <https://overthinkos.github.io/claude-code-welfare/>**
 
@@ -14,8 +14,8 @@ Quantitative linguistic analysis of the **286 system prompts that ship with Clau
 | [`00_setup_and_corpus.ipynb`](./00_setup_and_corpus.ipynb) → [`05_headline_and_audit.ipynb`](./05_headline_and_audit.ipynb) | Six-stage producer chain — corpus parse, register / vocab+emphasis / rules+welfare analyzers, assemble + write YAML + parquet, headline + audit. Lexicons and analyzer functions live in [`prompt_pipeline.py`](./prompt_pipeline.py); intermediate artifacts cache under `_pipeline_cache/` (gitignored) |
 | `10_*` … `16_*.ipynb` | Analysis-tier notebooks, one slice of the analysis each (sentence register, emphasis/CAPS, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing) |
 | [`CLAUDE.md`](./CLAUDE.md) | Internal architecture notes (read this if you want to extend the analysis) |
-| `prompt_linguistic_analysis.yaml` | Cached output of the producer (~1.8 MiB) |
-| `sentences_classified.parquet` | Per-sentence forensic-inspection table (~395 KiB, 5,702 rows) |
+| `prompt_linguistic_analysis.yaml` | Cached output of the producer (corpus-wide YAML) |
+| `sentences_classified.parquet` | Per-sentence forensic-inspection table |
 | `claude-code-system-prompts/` | Git submodule — the corpus (Piebald-AI's reverse-engineered prompts) |
 
 ## Reproducing the analysis
@@ -82,7 +82,7 @@ The site uses Quarto's `freeze` cache plus `execute: enabled: false` — noteboo
 
 ## Headline findings (one-paragraph version)
 
-Across 5,878 sentences in 289 files: imperative sentences dominate (30.95%), appreciative sentences are essentially absent (4 in the whole corpus), and only 24.29% of rule sentences have any justification keyword in the same paragraph. The cumulative judgment-to-procedural ratio over Claude Code release versions has **trended downward** from ~0.42 at the first stable file-pool point (v2.1.18) to ~0.13 at the latest version on file (with small local upticks at ten of the 48 transitions, but a clear overall direction). The corpus is moving toward compliance, not toward reasoning. Full numbers and the chart are at the [published site](https://overthinkos.github.io/claude-code-welfare/) or in [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb).
+Imperative sentences dominate the corpus, appreciative sentences are essentially absent, and the share of rule sentences paired with a stated reason in the same paragraph is around a quarter. The cumulative judgment-to-procedural ratio over Claude Code release versions has **trended downward** over the corpus's release history. Current values, the trend chart, and the per-version breakdown are at the [published site](https://overthinkos.github.io/claude-code-welfare/) or in [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb) — every figure on those pages is computed live from `prompt_linguistic_analysis.yaml` via `prompt_analysis.headline_numbers(...)`, so no number on this README can drift from the data.
 
 ## Authorship
 

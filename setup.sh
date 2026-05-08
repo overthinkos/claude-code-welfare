@@ -47,9 +47,11 @@ python -m pip install \
     vega_datasets \
     python-frontmatter \
     tqdm \
+    matplotlib \
     jupyter \
     nbconvert \
-    ipykernel
+    ipykernel \
+    jupyterlab-quarto
 
 echo "==> Downloading spaCy en_core_web_sm model"
 python -m spacy download en_core_web_sm
