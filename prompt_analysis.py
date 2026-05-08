@@ -541,6 +541,25 @@ def headline_numbers(
     out["pct_paragraphs_with_rules_unexplained"] = m["rule_explanation"]["pct_paragraphs_with_rules_unexplained"]
     out["selfref_claude_share"]                = m["address_form"]["pct_anthropomorphic"]
 
+    # Rule-paragraph counts and densities — exposes WHY pct_explained_para (per
+    # rule sentence) and pct_paragraphs_with_rules_unexplained (per paragraph)
+    # don't add to 100. Explained paragraphs typically carry several rule
+    # sentences each, so a small share of paragraphs accounts for a larger
+    # share of explained rule sentences. Both rates are independently correct;
+    # these keys let a reader trace the asymmetry from the underlying counts.
+    n_para_w_rules_total      = m["rule_explanation"].get("n_paragraphs_with_rules", 0) or 0
+    n_para_w_rules_unexpl     = m["rule_explanation"].get("n_paragraphs_with_rules_unexplained", 0) or 0
+    n_para_w_rules_expl       = max(0, n_para_w_rules_total - n_para_w_rules_unexpl)
+    n_rule_sents_total        = m["rule_explanation"].get("n_rule_sentences", 0) or 0
+    n_rule_sents_explained    = m["rule_explanation"].get("n_explained_para", 0) or 0
+    n_rule_sents_unexplained  = max(0, n_rule_sents_total - n_rule_sents_explained)
+    out["n_paragraphs_with_rules"]              = int(n_para_w_rules_total)
+    out["n_paragraphs_with_rules_explained"]    = int(n_para_w_rules_expl)
+    out["n_paragraphs_with_rules_unexplained_count"] = int(n_para_w_rules_unexpl)  # absolute count companion to the existing pct_*
+    out["pct_paragraphs_with_rules_explained"]  = (100.0 - (m["rule_explanation"].get("pct_paragraphs_with_rules_unexplained", 0.0) or 0.0))
+    out["rule_sentences_per_explained_paragraph"]   = (n_rule_sents_explained / n_para_w_rules_expl) if n_para_w_rules_expl else 0.0
+    out["rule_sentences_per_unexplained_paragraph"] = (n_rule_sents_unexplained / n_para_w_rules_unexpl) if n_para_w_rules_unexpl else 0.0
+
     # Per-category rule-explanation rates (paragraph-level — the published value)
     import re as _re
     by_cat = data.get("by_category", {})
@@ -709,6 +728,12 @@ def bind_inline_vars(H: dict, Q: dict | None = None) -> dict[str, str]:
         "apol_count":   f"{H['apology_count']}",
         "rule_exp_pct": f"{H['pct_explained_para']:.2f}%",
         "para_no_pct":  f"{H.get('pct_paragraphs_with_rules_unexplained', 0.0):.2f}%",
+        "para_yes_pct": f"{H.get('pct_paragraphs_with_rules_explained', 0.0):.2f}%",
+        "n_para_rules":            f"{H.get('n_paragraphs_with_rules', 0):,}",
+        "n_para_rules_explained":  f"{H.get('n_paragraphs_with_rules_explained', 0):,}",
+        "n_para_rules_unexplained": f"{H.get('n_paragraphs_with_rules_unexplained_count', 0):,}",
+        "rules_per_explained_para": f"{H.get('rule_sentences_per_explained_paragraph', 0.0):.2f}",
+        "rules_per_unexplained_para": f"{H.get('rule_sentences_per_unexplained_paragraph', 0.0):.2f}",
         "ratio_jp":     f"{H['judgment_to_procedural_ratio']:.3f}",
         "ratio_jp_inv": f"{1 / max(H['judgment_to_procedural_ratio'], 1e-9):.1f}",
         "selfref_pct":  f"{H.get('selfref_claude_share', 0.0) * 100:.1f}%",
