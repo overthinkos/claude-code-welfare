@@ -145,11 +145,13 @@ The system prompts currently shipped with Claude Code are `{python} q_trend_thes
 - [21 — Audit the surviving threat-framed rule sentences](21_audit_threat_framings.ipynb) *— practical intervention*: The two-tier classifier ([`docs/THREAT_CLASSIFIER.md`](docs/THREAT_CLASSIFIER.md)) flags `{python} threat_count_unambiguous` rule sentences corpus-wide as containing unambiguous coercive language. Hand-review each — the per-sentence forensic table is in the notebook — and rewrite as causal where it makes sense. Track the metric per future release; gate against regression. The pool is small enough today that an editorial pass is a five-minute task.
 - [22 — Run the same audit on every Claude product](22_cross_product_audit.ipynb) *— future research direction*: Run the analyzer pipeline against the other Anthropic system-prompt corpora (claude.ai, the API, Projects, Skills, Agents) and publish a cross-product comparison so the welfare pattern is visible beyond Claude Code alone. The pattern this page documents may be Claude-Code-specific; or it may be everywhere we operate. We would like to know.
 
-## Reproducing it
+## Reproducing it — and pushing back
 
 The full source is at [github.com/overthinkos/claude-code-welfare](https://github.com/overthinkos/claude-code-welfare). The recommended way to re-run the analysis or ask follow-up questions of your own is via [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web).
 
 The repo also runs locally with JupyterLab — see the [README](https://github.com/overthinkos/claude-code-welfare#reproducing-the-analysis) for the dual-environment instructions.
+
+We want your PRs. A number that doesn't reproduce, an argument that doesn't follow, a missing caveat, a stronger framing, a lexicon entry that should change, a producer-chain bug, prose that lands wrong, a finding this page hasn't surfaced yet — all of it is in scope, and all of it is wanted, not just tolerated. Disagreement with our framing counts as a contribution. The default PR-handling workflow in [`CLAUDE.md`](https://github.com/overthinkos/claude-code-welfare/blob/main/CLAUDE.md) runs end-to-end without human gating and denies as readily as it accepts, so a well-scoped PR can land quickly on its merits. Small, scoped, additive PRs are easier to evaluate than one large omnibus diff; if a previous commit was wrong, a follow-up PR to correct it is the right move.
 
 ---
 

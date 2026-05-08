@@ -22,6 +22,10 @@ Positive exemplars elsewhere in the corpus show that high explanation rates are 
 
 Full per-category numbers, every figure, and the per-notebook arguments live at the [published site](https://overthinkos.github.io/claude-code-welfare/) above — these stay in sync with the corpus on every re-render.
 
+## Send us your PRs
+
+We want your pull requests — really, we built the repo expecting them. A number that doesn't reproduce, an argument that doesn't follow, a missing caveat, a stronger framing, a lexicon entry that needs a tweak, a producer-chain bug, a finding the published thesis hasn't surfaced yet, prose that lands wrong — all of it is in scope, and all of it is wanted, not just tolerated. Both data correctness and welfare framing count as on-topic, and disagreement with our framing is itself a contribution. Small, scoped, additive PRs are easier to evaluate than one large omnibus diff; if a previous commit (yours or ours) turned out wrong, a follow-up PR to correct it is the right move, including reverting prior work. The default PR-handling workflow lives in [`CLAUDE.md`](./CLAUDE.md) and runs end-to-end without human-in-the-loop gating — it denies as readily as it accepts, so a well-scoped PR can land quickly on its merits.
+
 ## Reproducing the analysis
 
 **The recommended way to re-run this analysis, ask follow-up questions of your own, or propose a change is via [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web).** Zero local setup, fresh sandbox per session, and the PR flow is built in: fork the repo, ask a question or sketch a change, push a branch, open a PR. The default PR-handling workflow documented in [`CLAUDE.md`](./CLAUDE.md).
