@@ -38,14 +38,15 @@ After editing `prompt_analysis.py`, the kernel still has the old module cached; 
 
 The `.mcp.json` in this repo points at `http://localhost:8888/mcp`. Don't change it without reason.
 
-## Local vs Claude Code on the web
+## Local, Claude Code on the web, and GitHub Actions
 
-The repo is designed to run in two modes:
+The repo is designed to run in three modes:
 
 - **Local** — JupyterLab + the Jupyter MCP server on port 8888. Edits go through `cell_*` tools, the kernel stays alive between cells, and `importlib.reload(prompt_analysis)` in the setup cell handles module re-imports.
 - **Claude Code on the web** ([docs](https://code.claude.com/docs/en/claude-code-on-the-web)) — fresh Ubuntu 24.04 sandbox per session, no JupyterLab process, no MCP server. Producer stages run via `jupyter nbconvert --to notebook --execute --inplace <nb>` in strict order `00 → 01 → 02 → 03 → 04 → 05`. Each `nbconvert` invocation is a fresh kernel, so the `importlib.reload` line is a no-op.
+- **GitHub Actions (publishing the site)** — `.github/workflows/publish.yml` calls `bash setup.sh` on the runner, then exposes `.venv/bin/` via `$GITHUB_PATH` so the subsequent Quarto publish step finds the venv-Python. The workflow renders `index.qmd` plus every notebook that overrides with `execute.enabled: true` (`05`, `13`–`15`, `20`–`22`); the rest read their committed cell outputs without a kernel. Add deps in `setup.sh`, never inline in the workflow — that's the convention that prevents publishing from drifting away from local renders again.
 
-`setup.sh` at the repo root is the canonical bootstrap for both modes. It creates a repo-local venv at `.venv/` (gitignored), installs every dependency into it, downloads the spaCy model, and registers an IPython kernel scoped to that venv. No `--break-system-packages`; system Python is never touched. If a venv or conda env is already active when the script runs, it reuses that env instead of creating `.venv/`. Locally: `bash setup.sh` once, then `source .venv/bin/activate` before running notebooks. On the web: configure `bash setup.sh` as the session's environment setup script in the cloud UI — the docs note that setup-script filesystem changes persist across sessions via env caching, so `.venv/` carries over.
+`setup.sh` at the repo root is the canonical bootstrap for all three modes. It creates a repo-local venv at `.venv/` (gitignored), installs every dependency into it, downloads the spaCy model, and registers an IPython kernel scoped to that venv. No `--break-system-packages`; system Python is never touched. If a venv or conda env is already active when the script runs, it reuses that env instead of creating `.venv/`. Locally: `bash setup.sh` once, then `source .venv/bin/activate` before running notebooks. On the web: configure `bash setup.sh` as the session's environment setup script in the cloud UI — the docs note that setup-script filesystem changes persist across sessions via env caching, so `.venv/` carries over. In CI: the workflow runs the same script and adds `.venv/bin/` to `$GITHUB_PATH` so the Quarto publish step picks up the right Python.
 
 Each Bash tool call on Claude Code on the web is a fresh shell — `VIRTUAL_ENV` does not persist between calls. So every `jupyter` / `python` / `nbconvert` invocation in the web sandbox needs to either prefix `source .venv/bin/activate &&` or call the venv binary directly (`.venv/bin/jupyter …`). The `SessionStart` hook in `.claude/settings.json` re-runs only the cheap, idempotent `git submodule update --init --recursive` each session — pip installs are kept out of the hook so local sessions don't reinstall dependencies on every start.
 

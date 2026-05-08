@@ -5,9 +5,17 @@
 # Python dependencies into it — never touches system Python, never needs
 # `--break-system-packages`. Honours an already-active venv or conda env.
 #
-# Runs both locally (first-time setup) and on Claude Code on the web (configure
-# as the session's environment setup script — its filesystem changes carry over
-# across sessions via env caching, per the docs).
+# This script is the single canonical bootstrap for THREE environments:
+#   1. Local dev (run once, then `source .venv/bin/activate`).
+#   2. Claude Code on the web (configure as the session's environment setup
+#      script in the cloud UI — filesystem changes carry over across sessions
+#      via env caching, per the docs).
+#   3. GitHub Actions (called from `.github/workflows/publish.yml`; the venv
+#      is exposed to subsequent steps via `$GITHUB_PATH`).
+#
+# Adding a dep here is enough — it reaches all three environments on the next
+# push. Do NOT fork a CI-specific dependency list; that's how publishing
+# silently broke before (see commit history).
 #
 # Idempotent: re-runs are safe and fast.
 

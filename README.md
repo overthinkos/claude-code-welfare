@@ -52,7 +52,7 @@ quarto preview          # serves at http://localhost:4444
 quarto render           # writes _site/
 ```
 
-The site uses Quarto's `freeze` cache plus `execute: enabled: false` — notebook outputs are read directly from the committed `.ipynb` files, no kernel needed at render time. Re-execute notebooks in JupyterLab when the data changes, then `quarto render` picks up the new outputs.
+The producer chain (`00`–`04`) ships with `execute.enabled: false`, so Quarto reads its cell outputs directly from the committed `.ipynb` files. `index.qmd` and the consumer notebooks (`05`, `13`–`15`, `20`–`22`) override with `execute.enabled: true` and re-execute on every render — they need the deps in `setup.sh` available. The same `setup.sh` bootstrap runs locally, on Claude Code on the web, and in the GitHub Actions publish workflow.
 
 ## License
 

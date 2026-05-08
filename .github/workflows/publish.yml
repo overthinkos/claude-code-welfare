@@ -23,6 +23,24 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      # The remaining setup mirrors local + Claude Code on the web exactly:
+      # provision Python, then call the canonical bootstrap. Any dep added to
+      # setup.sh automatically reaches CI on the next push — no second list to
+      # keep in sync.
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: setup.sh
+
+      - name: Bootstrap via setup.sh (same script as local + Claude Code on the web)
+        run: bash setup.sh
+
+      - name: Expose .venv/ to subsequent steps
+        run: echo "$PWD/.venv/bin" >> $GITHUB_PATH
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
