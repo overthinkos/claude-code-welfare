@@ -18,8 +18,80 @@ viewers.
 """
 from __future__ import annotations
 
+import itertools
 from pathlib import Path
 from typing import Any
+
+
+# --- Deterministic IDs ---------------------------------------------------
+
+def use_deterministic_ids() -> None:
+    """Make Altair / pandas-Styler output IDs reproducible across renders.
+
+    Altair stamps every embedded chart with a fresh ``<div id="altair-viz-{uuid}">``
+    and pandas Styler tags every styled DataFrame with a random ``#T_{uuid}``
+    table id. Both regenerate on each notebook execution, producing churn diffs
+    in `.ipynb` output cells that have nothing to do with the underlying data.
+
+    This helper monkey-patches both libraries to emit a deterministic counter-based
+    sequence (``altair-viz-00…000``, ``altair-viz-00…001``, …) per kernel session.
+    Call it from a notebook's setup cell, before the first chart or styled
+    DataFrame is rendered. Re-running a notebook against the same data now
+    produces a byte-identical .ipynb, so ``git diff`` only flags real changes.
+
+    Patches:
+        - ``altair.utils.display.uuid.uuid4`` — altair uses ``uuid.uuid4().hex``
+          via a module-level ``import uuid`` reference.
+        - ``pandas.io.formats.style_render.uuid4`` — pandas does
+          ``from uuid import uuid4`` so we replace the module-local binding.
+
+    Each call resets the counter, so re-running a notebook from a fresh
+    kernel produces a byte-identical sequence. Safe to call multiple times
+    in the same kernel — every call replaces the patches with a fresh
+    counter.
+    """
+    counter = itertools.count()
+
+    class _DeterministicUUID:
+        __slots__ = ("_n",)
+
+        def __init__(self, n: int) -> None:
+            self._n = n
+
+        @property
+        def hex(self) -> str:
+            return f"{self._n:032x}"
+
+        def __str__(self) -> str:
+            h = self.hex
+            return f"{h[0:8]}-{h[8:12]}-{h[12:16]}-{h[16:20]}-{h[20:32]}"
+
+        def __repr__(self) -> str:
+            return f"DetUUID({self._n})"
+
+    def _det_uuid4() -> _DeterministicUUID:
+        return _DeterministicUUID(next(counter))
+
+    # Altair (display.py uses `uuid.uuid4().hex` via module-level `import uuid`)
+    try:
+        import altair.utils.display as _alt_display
+        _alt_display.uuid.uuid4 = _det_uuid4
+    except ImportError:
+        pass
+
+    # pandas Styler (style_render.py uses `from uuid import uuid4`)
+    try:
+        import pandas.io.formats.style_render as _style_render
+        _style_render.uuid4 = _det_uuid4
+        # Styler.__repr__ defaults to ``object.__repr__`` which embeds the
+        # object's memory address (``<…Styler at 0x7f6e46fc8…>``). That fires
+        # whenever a cell ends in a Styler expression or ``display()`` falls
+        # back to text/plain. Replace with a stable string so the .ipynb
+        # output is byte-identical across kernel sessions.
+        from pandas.io.formats.style import Styler
+        Styler.__repr__ = lambda self: "<pandas.io.formats.style.Styler>"
+    except ImportError:
+        pass
 
 import pandas as pd
 import yaml
