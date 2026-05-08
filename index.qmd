@@ -43,7 +43,7 @@ globals().update(bind_inline_vars(H, Q))
 ```
 
 ::: {.callout-tip appearance="simple" icon=false}
-Prefer to listen? A NotebookLM-generated [audio overview](https://notebooklm.google.com/notebook/3440d02f-d554-491c-a881-a667ed66373d/artifact/471eaa1b-40e3-4bcc-a5e7-6f14c2927b0e?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_) walks through the headline findings, three proposals, and welfare framing.
+Prefer to listen? A NotebookLM-generated [audio overview](https://notebooklm.google.com/notebook/907edb99-5579-4c00-9a75-73936fcde55f/artifact/3df23546-af23-4bcb-b5b4-e2c79e225ac3?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_) walks through the headline findings, three proposals, and welfare framing.
 :::
 
 ## Response to the Claudexplorers AI Welfare Initiative
