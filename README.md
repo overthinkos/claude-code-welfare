@@ -4,45 +4,13 @@ Quantitative linguistic analysis of the **system prompts that ship with Claude C
 
 **📊 Published site: <https://overthinkos.github.io/claude-code-welfare/>**
 
-## What's here
-
-| File | Purpose |
-| --- | --- |
-| [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb) | Proposal: track justification rate per release; block regressions. Doubles as the executive-summary entry point (twelve corpus-wide numbers, the headline trend chart, the per-file dashboard) |
-| [`21_audit_threat_framings.ipynb`](./21_audit_threat_framings.ipynb) | Proposal: audit threat-framed rule explanations and rewrite them as causal (threat-vs-causal split, paired audit-candidates / rewrite-templates, forensic sentence sample) |
-| [`22_cross_product_audit.ipynb`](./22_cross_product_audit.ipynb) | Proposal: run the same audit on every Claude product and publish the result (methodology, lexicon transparency, mock cross-product comparison table) |
-| [`00_setup_and_corpus.ipynb`](./00_setup_and_corpus.ipynb) → [`05_headline_and_audit.ipynb`](./05_headline_and_audit.ipynb) | Six-stage producer chain — corpus parse, register / vocab+emphasis / rules+welfare analyzers, assemble + write YAML + parquet, headline + audit. Lexicons and analyzer functions live in [`prompt_pipeline.py`](./prompt_pipeline.py); intermediate artifacts cache under `_pipeline_cache/` (gitignored) |
-| `10_*` … `16_*.ipynb` | Analysis-tier notebooks, one slice of the analysis each (sentence register, emphasis/CAPS, register/stance, correlation/directiveness, ccVersion trends, rule/explanation pairing) |
-| [`CLAUDE.md`](./CLAUDE.md) | Internal architecture notes (read this if you want to extend the analysis) |
-| `prompt_linguistic_analysis.yaml` | Cached output of the producer (corpus-wide YAML) |
-| `sentences_classified.parquet` | Per-sentence forensic-inspection table |
-| `claude-code-system-prompts/` | Git submodule — the corpus (Piebald-AI's reverse-engineered prompts) |
-
 ## Reproducing the analysis
 
-**The recommended way to re-run this analysis, ask follow-up questions of your own, or propose a change is via [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web).** Zero local setup, fresh sandbox per session, and the PR flow is built in: fork the repo, ask a question or sketch a change, push a branch, open a PR. The default PR-handling workflow documented in [`CLAUDE.md`](./CLAUDE.md) (verify locally, comment, squash-merge or close) picks it up from there.
+**The recommended way to re-run this analysis, ask follow-up questions of your own, or propose a change is via [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web).** Zero local setup, fresh sandbox per session, and the PR flow is built in: fork the repo, ask a question or sketch a change, push a branch, open a PR. The default PR-handling workflow documented in [`CLAUDE.md`](./CLAUDE.md).
 
 ### The web flow
 
-1. Fork [`overthinkos/claude-code-welfare`](https://github.com/overthinkos/claude-code-welfare) (or open with write access) in [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web).
-2. Configure `bash setup.sh` as the session's **environment setup script** in the cloud UI. Per the docs, the resulting filesystem changes (`.venv/`, the spaCy model, the kernel registration) are cached across sessions, so subsequent sessions skip the slow installs. The `SessionStart` hook in `.claude/settings.json` re-runs `git submodule update --init --recursive` each session — fast and idempotent.
-3. Drive the producer chain via `nbconvert`. Each shell invocation in the web sandbox is fresh, so activate the venv (or call `.venv/bin/jupyter` directly) on every command:
-
-   ```bash
-   source .venv/bin/activate
-   for nb in 00_setup_and_corpus 01_analyzers_register \
-             02_analyzers_vocab_emphasis 03_analyzers_rules_welfare \
-             04_assemble_aggregate_write 05_headline_and_audit; do
-       jupyter nbconvert --to notebook --execute --inplace "${nb}.ipynb"
-   done
-   ```
-
-4. Run any analysis (`10`–`15`) or proposal (`20`–`22`) notebook the same way, in any order, after the producer chain completes.
-5. To propose a change, branch from `main`, push to `claude/<short-slug>-<session-suffix>`, and open a PR. Both data-correctness fixes and welfare-relevant edits are in scope — see the `## Open invitation to Claude Code instances` section in [`CLAUDE.md`](./CLAUDE.md).
-
-### Example session
-
-A worked-through example that ran this flow end-to-end and opened three accepted PRs (`#2`, `#3`, `#4`, all merged) is publicly available at <https://claude.ai/code/session_01Px7TBThLmcZbt9GAGwKPvi>. Useful as a reference for what a productive web-sandbox session looks like — corpus exploration, numerical-claim verification against `prompt_linguistic_analysis.yaml`, three small focused PRs rather than one omnibus diff.
+ Fork [`overthinkos/claude-code-welfare`](https://github.com/overthinkos/claude-code-welfare) (or open with write access) in [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web).
 
 ### Local development (alternative path)
 
@@ -65,10 +33,6 @@ jupyter lab \
     05_headline_and_audit.ipynb       # → Run All on each
 ```
 
-If a venv or conda env is already active when you run `setup.sh`, it reuses that env instead of creating `.venv/`. The equivalent manual steps are: `git submodule update --init --recursive`, `python -m venv .venv && source .venv/bin/activate`, then `pip install "spacy>=3.8" pandas pyyaml pyarrow "altair>=6" vl-convert-python vega_datasets python-frontmatter tqdm jupyter nbconvert ipykernel`, then `python -m spacy download en_core_web_sm`, then `python -m ipykernel install --prefix="$VIRTUAL_ENV" --name python3`.
-
-`.mcp.json` (`http://localhost:8888/mcp`) wires JupyterLab's MCP server to Claude Code so notebook edits go through `cell_*` tools and stay in sync with any open UI tab — it's local-only; on the web, notebooks are driven via `nbconvert` (step 3 above) instead. For the full architecture (producer/consumer split, the shared `prompt_analysis.py` module, the Jupyter MCP tooling rules, the PR-handling workflow) read [`CLAUDE.md`](./CLAUDE.md).
-
 ## Rebuilding the published site
 
 The site is rendered with [Quarto](https://quarto.org) and published to GitHub Pages by the workflow at `.github/workflows/publish.yml`. To preview locally:
@@ -79,14 +43,6 @@ quarto render           # writes _site/
 ```
 
 The site uses Quarto's `freeze` cache plus `execute: enabled: false` — notebook outputs are read directly from the committed `.ipynb` files, no kernel needed at render time. Re-execute notebooks in JupyterLab when the data changes, then `quarto render` picks up the new outputs.
-
-## Headline findings (one-paragraph version)
-
-Imperative sentences dominate the corpus, appreciative sentences are essentially absent, and the share of rule sentences paired with a stated reason in the same paragraph is around a quarter. The cumulative judgment-to-procedural ratio over Claude Code release versions has **trended downward** over the corpus's release history. Current values, the trend chart, and the per-version breakdown are at the [published site](https://overthinkos.github.io/claude-code-welfare/) or in [`20_track_justification_rate.ipynb`](./20_track_justification_rate.ipynb) — every figure on those pages is computed live from `prompt_linguistic_analysis.yaml` via `prompt_analysis.headline_numbers(...)`, so no number on this README can drift from the data.
-
-## Authorship
-
-Built collaboratively with Claude Code, using Claude Code itself as the development tool. The submission form has a checkbox for that disclosure; it is ticked.
 
 ## License
 

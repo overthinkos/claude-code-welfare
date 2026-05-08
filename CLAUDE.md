@@ -18,7 +18,7 @@ Every corpus-wide figure cited in any notebook flows from `prompt_analysis.headl
 
 ### Opinion cells convention
 
-Each analysis-tier notebook (`10`–`15`) opens with the four-cell pattern `# Title (intro)` → `### Terms used` → `### Observation (Claude)` → setup code. The Observation cell uses the heading `### Observation (Claude)` (no suffix) and keeps its `***` opener / `>` blockquoted body / `---` closer framing. Each proposal notebook (`20`–`22`) closes with a three-cell `## Conclusions / ## Recommendations / ## Limitations` triplet, all marked `(Claude) — opinion, not data`. The producer chain (`00`–`05`) carries no opinion cells. Keep the data tier and the interpretation tier visually separable.
+Each analysis-tier notebook (`10`–`15`) opens with the four-cell pattern `# Title (intro)` → `### Terms used` → `### Observation (Claude)` → setup code. The Observation cell uses the heading `### Observation (Claude)` (no suffix) and keeps its `***` opener / `>` blockquoted body / `---` closer framing. Keep a blank line between the final `> …` blockquote line and the `---` closer — without it, pandoc treats `---` as a setext h2 underline and the body collapses into a heading. Each proposal notebook (`20`–`22`) closes with a three-cell `## Conclusions / ## Recommendations / ## Limitations` triplet, all marked `(Claude) — opinion, not data`. The producer chain (`00`–`05`) carries no opinion cells. Keep the data tier and the interpretation tier visually separable.
 
 ## Editing notebooks via the Jupyter MCP server
 

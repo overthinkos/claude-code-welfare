@@ -25,3 +25,6 @@ _pipeline_cache/
 
 # Baseline snapshots used during refactors
 *.baseline
+
+# Claude's local config
+settings.local.json

@@ -1,16 +1,4 @@
 {
-  "extraKnownMarketplaces": {
-    "ov-plugins": {
-      "source": {
-        "source": "github",
-        "repo": "overthinkos/overthink-plugins"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "ov-core@ov-plugins": true,
-    "ov-jupyter@ov-plugins": true
-  },
   "hooks": {
     "SessionStart": [
       {
