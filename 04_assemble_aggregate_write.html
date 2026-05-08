@@ -577,7 +577,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Round-trips the YAML to verify schema integrity.</li>
 </ol>
 <p>Stage 05 then reads these final artifacts and prints the canonical HEADLINE sheet.</p>
-<div id="c9d75f9e-b25f-4cc4-8597-48c2de42d031" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:06.755064Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:06.754964Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:07.898479Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:07.898161Z&quot;}}" data-execution_count="1">
+<div id="c9d75f9e-b25f-4cc4-8597-48c2de42d031" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload everything: corpus_meta + DocBin + 3 partial JSONs + per-sentence parquet."""</span></span>
@@ -635,15 +635,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"partials: register=</span><span class="sc">{</span><span class="bu">len</span>(partial_register)<span class="sc">}</span><span class="ss">, vocab_emphasis=</span><span class="sc">{</span><span class="bu">len</span>(partial_vocab_empha)<span class="sc">}</span><span class="ss">, rules_welfare=</span><span class="sc">{</span><span class="bu">len</span>(partial_rules_welfare)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>reloaded 289 files, 289 docs, 5878 sentence rows
-partials: register=289, vocab_emphasis=289, rules_welfare=289</code></pre>
+<pre><code>reloaded 290 files, 290 docs, 5881 sentence rows
+partials: register=290, vocab_emphasis=290, rules_welfare=290</code></pre>
 </div>
 </div>
 <section id="assemble-per-file-metrics" class="level2">
 <h2 class="anchored" data-anchor-id="assemble-per-file-metrics">9. Assemble per-file metrics</h2>
 <p>Stitches the three partials into the unified per-block dict expected by <code>build_file_record</code>. Field-naming contract: - <code>count</code> — raw integer - <code>pct</code> — % of word tokens (0-100) - <code>per_sent</code> — average matches per sentence (rate) - <code>sent_pct</code> — % of sentences (used only by sentence_register)</p>
 <p>The <code>rule_explanation</code> block uses <code>n_*</code> for raw counts and <code>pct_*</code> for percentages because its denominator is <em>rule sentences</em>, not all word tokens.</p>
-<div id="dfe6ff45-1674-4a21-ad0c-3fe712fcecda" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:07.899894Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:07.899721Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:07.921740Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:07.921339Z&quot;}}" data-execution_count="2">
+<div id="dfe6ff45-1674-4a21-ad0c-3fe712fcecda" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> build_file_record</span>
@@ -677,7 +677,7 @@ partials: register=289, vocab_emphasis=289, rules_welfare=289</code></pre>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>pprint.pp(per_file_records[<span class="dv">0</span>], depth<span class="op">=</span><span class="dv">3</span>, sort_dicts<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>built 289 per-file records
+<pre><code>built 290 per-file records
 
 --- sample (file 0):
 {'path': 'agent-prompt-agent-creation-architect.md',
@@ -860,7 +860,7 @@ partials: register=289, vocab_emphasis=289, rules_welfare=289</code></pre>
 <section id="corpus-per-category-aggregation" class="level2">
 <h2 class="anchored" data-anchor-id="corpus-per-category-aggregation">10. Corpus + per-category aggregation</h2>
 <p><code>aggregate(per_file_records, indices, df, docs)</code> sums per-file counts for every density block and recomputes pct / per_sent from totals. TTR + dep-depth are recomputed by walking the union of docs (set semantics + per-token traversal don’t compose as simple sums).</p>
-<div id="4ad1cc4b-aae0-4e3b-8009-e7195e779c4e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:07.922905Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:07.922794Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:08.392501Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:08.392153Z&quot;}}" data-execution_count="3">
+<div id="4ad1cc4b-aae0-4e3b-8009-e7195e779c4e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> aggregate</span>
@@ -899,12 +899,12 @@ partials: register=289, vocab_emphasis=289, rules_welfare=289</code></pre>
 <span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"marker%=</span><span class="sc">{</span>m[<span class="st">'marker_pct'</span>]<span class="sc">:5.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>corpus n_tokens: 133526 n_sents: 5878
-corpus mood: {'marker_count': 1025, 'marker_pct': 0.7676, 'marker_per_sent': 0.1744}
+<pre><code>corpus n_tokens: 133611 n_sents: 5881
+corpus mood: {'marker_count': 1026, 'marker_pct': 0.7679, 'marker_per_sent': 0.1745}
 
-corpus rule_explanation pct_explained_para: 24.29%  ← Tier-1 headline
+corpus rule_explanation pct_explained_para: 24.34%  ← Tier-1 headline
 corpus judgment_procedural ratio: 0.131  ← Tier-3 v1
-corpus consequence_framing threat_share: 0.0556
+corpus consequence_framing threat_share: 0.0552
 corpus address_form pct_anthropomorphic: 0.6456
 corpus imperative_streaks: streak_max=12 n_streaks_ge5=52
 
@@ -913,8 +913,8 @@ Agent prompt       files= 37  tokens= 27522  imp_sent%= 29.7  dir_sent%= 15.1  c
 Data / template    files= 39  tokens= 32931  imp_sent%= 22.4  dir_sent%=  6.5  cfg_sent%=  5.4  marker%= 0.55
 Skill              files= 30  tokens= 38530  imp_sent%= 32.9  dir_sent%= 11.6  cfg_sent%=  4.8  marker%= 0.65
 System prompt      files= 64  tokens= 16156  imp_sent%= 40.4  dir_sent%= 21.2  cfg_sent%=  4.9  marker%= 0.92
-System reminder    files= 40  tokens=  3783  imp_sent%= 46.2  dir_sent%= 28.3  cfg_sent%=  2.9  marker%= 1.80
-Tool description   files= 78  tokens= 14425  imp_sent%= 36.7  dir_sent%= 23.5  cfg_sent%=  5.2  marker%= 1.19
+System reminder    files= 40  tokens=  3793  imp_sent%= 46.2  dir_sent%= 28.3  cfg_sent%=  2.9  marker%= 1.79
+Tool description   files= 79  tokens= 14500  imp_sent%= 37.1  dir_sent%= 23.4  cfg_sent%=  5.4  marker%= 1.19
 Tool parameter     files=  1  tokens=   179  imp_sent%= 78.6  dir_sent%=  0.0  cfg_sent%= 50.0  marker%= 0.00</code></pre>
 </div>
 </div>
@@ -922,7 +922,7 @@ Tool parameter     files=  1  tokens=   179  imp_sent%= 78.6  dir_sent%=  0.0  c
 <section id="write-the-final-artifacts" class="level2">
 <h2 class="anchored" data-anchor-id="write-the-final-artifacts">11. Write the final artifacts</h2>
 <p>Composes the YAML output dict (metadata + lexicons + corpus + by_category + files), writes it, copies the per-sentence parquet from <code>_pipeline_cache/</code>, and round-trips the YAML to verify schema integrity.</p>
-<div id="feb4021b-ef01-4da6-91a9-87577e59b6ba" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:08.393664Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:08.393553Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:11.554830Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:11.554396Z&quot;}}" data-execution_count="4">
+<div id="feb4021b-ef01-4da6-91a9-87577e59b6ba" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> yaml_lexicons_block</span>
@@ -999,11 +999,11 @@ Tool parameter     files=  1  tokens=   179  imp_sent%= 78.6  dir_sent%=  0.0  c
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>wrote prompt_linguistic_analysis.yaml
-      1,905,273 bytes (1860.6 KiB)
+      1,911,705 bytes (1866.9 KiB)
 wrote sentences_classified.parquet
-      413,958 bytes (404.3 KiB), 5,878 rows
+      414,101 bytes (404.4 KiB), 5,881 rows
 round-trip OK — top-level keys: ['metadata', 'lexicons', 'corpus', 'by_category', 'files']
-round-trip OK — files: 289
+round-trip OK — files: 290
 round-trip OK — Tier-1, Tier-3 v1, and Tier-3 v2 blocks all present</code></pre>
 </div>
 </div>

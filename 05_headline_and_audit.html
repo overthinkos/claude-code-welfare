@@ -576,7 +576,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="canonical-headline-sheet" class="level2">
 <h2 class="anchored" data-anchor-id="canonical-headline-sheet">12. Canonical HEADLINE sheet</h2>
 <p>Re-uses <code>prompt_analysis.headline_numbers()</code> — the same function consumer notebooks call. Pass <code>alt_df</code> (for composite-directiveness range and per-version <code>mood_marker_pct</code> extremes) and the per-sentence parquet (for parquet-level threat / causal / rule counts) so the producer’s audit covers the full HEADLINE contract.</p>
-<div id="ddc8eb5a-31a1-4d95-b93e-a9037af908c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:34:14.232659Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:34:14.232550Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:34:16.394768Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:34:16.394301Z&quot;}}" data-execution_count="1">
+<div id="ddc8eb5a-31a1-4d95-b93e-a9037af908c0" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Compute and display the canonical HEADLINE dict.</span></span>
@@ -604,59 +604,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_analysis</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)  <span class="co"># pick up edits without restarting the kernel</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> load_yaml, build_alt_df, headline_numbers</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>data    <span class="op">=</span> load_yaml()</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>alt_df  <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>parquet <span class="op">=</span> pd.read_parquet(<span class="st">"sentences_classified.parquet"</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df, parquet<span class="op">=</span>parquet)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(_yaml.safe_dump(HEADLINE, sort_keys<span class="op">=</span><span class="va">False</span>, default_flow_style<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> (</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    load_yaml, build_alt_df, headline_numbers, qualitative_phrases, bind_inline_vars,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    use_deterministic_ids,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace random Altair / Styler IDs with a deterministic counter so re-runs</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># produce byte-identical .ipynb outputs (no UUID churn in `git diff`).</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>use_deterministic_ids()</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>data    <span class="op">=</span> load_yaml()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>alt_df  <span class="op">=</span> build_alt_df(data)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>parquet <span class="op">=</span> pd.read_parquet(<span class="st">"sentences_classified.parquet"</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df, parquet<span class="op">=</span>parquet)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>PHRASES  <span class="op">=</span> qualitative_phrases(HEADLINE, alt_df<span class="op">=</span>alt_df, parquet<span class="op">=</span>parquet)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Make every formatted figure available as a plain-name variable for inline {python} expressions in the audit-table cell below.</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="bu">globals</span>().update(bind_inline_vars(HEADLINE, PHRASES))</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(_yaml.safe_dump(HEADLINE, sort_keys<span class="op">=</span><span class="va">False</span>, default_flow_style<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>n_files: 289
-n_sentences: 5878
-n_word_tokens: 133526
-n_versions: 57
-n_rule_sentences: 2285
-pct_explained_same: 6.6521
-pct_explained_para: 24.2888
+<pre><code>n_files: 290
+n_sentences: 5881
+n_word_tokens: 133611
+n_versions: 58
+n_rule_sentences: 2288
+pct_explained_same: 6.6871
+pct_explained_para: 24.3444
 judgment_count: 78
-procedural_count: 594
+procedural_count: 595
 judgment_to_procedural_ratio: 0.131
 threat_count: 8
-causal_count: 136
-threat_share: 0.0556
+causal_count: 137
+threat_share: 0.0552
 question_count: 87
 apology_count: 3
 selfref_claude: 521
 selfref_assistant: 20
 selfref_model: 266
 pct_anthropomorphic: 0.6456
-positive_evaluative_quality: 296
-positive_evaluative_emphasis: 184
-positive_evaluative_union: 480
+positive_evaluative_quality: 298
+positive_evaluative_emphasis: 185
+positive_evaluative_union: 483
 negative_evaluative: 152
-ratio_quality_to_negative: 1.9473684210526316
-ratio_union_to_negative: 3.1578947368421053
+ratio_quality_to_negative: 1.9605263157894737
+ratio_union_to_negative: 3.1776315789473686
 appreciative_sent: 4
 collaborative_sent: 30
 streak_max: 12
 n_streaks_ge3: 230
 n_streaks_ge5: 52
-vocab_hard_prohibitions: 630
+vocab_hard_prohibitions: 631
 vocab_hard_prescriptions: 358
-vocab_pronouns_2p: 1393
+vocab_pronouns_2p: 1397
 vocab_pronouns_1p: 185
 vocab_profanity: 0
 modality_deontic: 261
-modality_epistemic: 321
-modality_dynamic: 557
-mood_marker_pct: 0.7676
+modality_epistemic: 322
+modality_dynamic: 559
+mood_marker_pct: 0.7679
 top_caps_imperative:
 - - IMPORTANT
-  - 35
+  - 36
 - - NEVER
   - 26
 - - MUST
@@ -664,30 +675,65 @@ top_caps_imperative:
 - - CRITICAL
   - 15
 rules_section_in_paragraphs: 27
-rules_section_out_paragraphs: 1284
+rules_section_out_paragraphs: 1286
 rules_section_in_paragraphs_explained: 5
-rules_section_out_paragraphs_explained: 212
+rules_section_out_paragraphs_explained: 213
 rules_section_in_pct_explained: 18.5185
-rules_section_out_pct_explained: 16.5109
-composite_directiveness_min: -19.47631962004062
-composite_directiveness_max: 19.31230404590806
+rules_section_out_pct_explained: 16.563
+composite_directiveness_min: -19.54089614772803
+composite_directiveness_max: 19.208174461486646
 mood_marker_pct_first_version: 1.596813473053892
-mood_marker_pct_latest_version: 0.5542578285309957
+mood_marker_pct_latest_version: 1.1647437603993345
 mood_marker_pct_first_version_id: 2.0.14
-mood_marker_pct_latest_version_id: 2.1.132
+mood_marker_pct_latest_version_id: 2.1.133
 parquet_threat_count: 8
-parquet_causal_count: 131
+parquet_causal_count: 132
 parquet_threat_and_rule_count: 5
 parquet_threat_and_rule_with_causal: 0
 parquet_threat_and_rule_explained: 4
+threat_count_unambiguous: 5
+imperative_sent_pct: 30.9811
+imperative_share: 0.309811
+pct_paragraphs_with_rules_unexplained: 83.3968
+selfref_claude_share: 0.6456
+n_paragraphs_with_rules: 1313
+n_paragraphs_with_rules_explained: 218
+n_paragraphs_with_rules_unexplained_count: 1095
+pct_paragraphs_with_rules_explained: 16.6032
+rule_sentences_per_explained_paragraph: 2.555045871559633
+rule_sentences_per_unexplained_paragraph: 1.5808219178082192
+rule_exp_pct_agent_prompt: 37.8897
+n_rule_sentences_agent_prompt: 417
+rule_exp_pct_data_template: 10.6855
+n_rule_sentences_data_template: 496
+rule_exp_pct_skill: 19.6137
+n_rule_sentences_skill: 673
+rule_exp_pct_system_prompt: 31.9876
+n_rule_sentences_system_prompt: 322
+rule_exp_pct_system_reminder: 30.9278
+n_rule_sentences_system_reminder: 97
+rule_exp_pct_tool_description: 29.7794
+n_rule_sentences_tool_description: 272
+rule_exp_pct_tool_parameter: 0.0
+n_rule_sentences_tool_parameter: 11
+judgment_to_procedural_ratio_first_version: 0.42105263157894735
+judgment_to_procedural_ratio_first_version_id: 2.1.18
+judgment_to_procedural_ratio_latest_version: 0.13109243697478992
+judgment_to_procedural_ratio_latest_version_id: 2.1.133
+n_uptick_transitions: 10
+n_total_transitions: 49
 </code></pre>
 </div>
 </div>
 </section>
 <section id="audit-table" class="level2">
 <h2 class="anchored" data-anchor-id="audit-table">Audit table</h2>
-<p>Live corpus statistics — these are the canonical values for every prose mention across the notebooks; any number that disagrees gets reconciled to these.</p>
+<p>Live corpus statistics — these are the canonical values for every prose mention across the notebooks; any number that disagrees gets reconciled to these. Every figure below is computed live from the YAML.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Quantity</th>
@@ -697,43 +743,51 @@ parquet_threat_and_rule_explained: 4
 <tbody>
 <tr class="odd">
 <td>Files</td>
-<td style="text-align: right;"><strong>289</strong></td>
+<td style="text-align: right;"><strong>290</strong></td>
 </tr>
 <tr class="even">
 <td>Sentences</td>
-<td style="text-align: right;"><strong>5,878</strong></td>
+<td style="text-align: right;"><strong>5,881</strong></td>
 </tr>
 <tr class="odd">
 <td>Word tokens</td>
-<td style="text-align: right;"><strong>133,526</strong></td>
+<td style="text-align: right;"><strong>133,611</strong></td>
 </tr>
 <tr class="even">
 <td>ccVersions (distinct)</td>
-<td style="text-align: right;"><strong>57</strong> (oldest <code>2.0.14</code>, latest <code>2.1.132</code>, mode <code>2.1.53</code> with 47 files)</td>
+<td style="text-align: right;"><strong>58</strong> (latest 2.1.133)</td>
 </tr>
 <tr class="odd">
 <td>Rule sentences</td>
-<td style="text-align: right;"><strong>2,285</strong></td>
+<td style="text-align: right;"><strong>2288</strong></td>
 </tr>
 <tr class="even">
 <td><code>pct_explained_same</code></td>
-<td style="text-align: right;"><strong>6.65%</strong></td>
+<td style="text-align: right;"><strong>6.69%</strong></td>
 </tr>
 <tr class="odd">
-<td><code>pct_explained_para</code></td>
-<td style="text-align: right;"><strong>24.29%</strong> (round to 24.3% in narrative prose)</td>
+<td><code>pct_explained_para</code> (per rule sentence)</td>
+<td style="text-align: right;"><strong>24.34%</strong> (the headline rule-explanation rate)</td>
 </tr>
 <tr class="even">
+<td>Rule-bearing paragraphs (total / explained / unexplained)</td>
+<td style="text-align: right;"><strong>1,313 / 218 / 1,095</strong></td>
+</tr>
+<tr class="odd">
+<td><code>pct_paragraphs_with_rules_explained</code> / <code>_unexplained</code></td>
+<td style="text-align: right;"><strong>16.60% / 83.40%</strong></td>
+</tr>
+<tr class="even">
+<td>Avg rule sentences per paragraph (explained / unexplained)</td>
+<td style="text-align: right;"><strong>2.56 / 1.58</strong> — explains the gap between the per-sentence rate (24.34%) and the per-paragraph rate (16.60%)</td>
+</tr>
+<tr class="odd">
 <td><code>judgment_count</code> / <code>procedural_count</code> / ratio</td>
-<td style="text-align: right;"><strong>78 / 594 / 0.131</strong></td>
-</tr>
-<tr class="odd">
-<td><code>threat_count</code> / <code>causal_count</code> / <code>threat_share</code></td>
-<td style="text-align: right;"><strong>8 / 136 / 0.0556</strong> (5.6% in narrative)</td>
+<td style="text-align: right;"><strong>78 / 595 / 0.131</strong></td>
 </tr>
 <tr class="even">
-<td><code>soft_conditional_count</code> (procedural connectives, reported separately)</td>
-<td style="text-align: right;"><strong>96</strong> — see <a href="docs/THREAT_CLASSIFIER.md"><code>docs/THREAT_CLASSIFIER.md</code></a> for the two-tier split</td>
+<td><code>threat_count</code> / <code>causal_count</code> / <code>threat_share</code></td>
+<td style="text-align: right;"><strong>8 / 137 / 0.0552</strong> (5.5% in narrative)</td>
 </tr>
 <tr class="odd">
 <td><code>question_count</code> / <code>apology_count</code></td>
@@ -753,15 +807,15 @@ parquet_threat_and_rule_explained: 4
 </tr>
 <tr class="odd">
 <td>RULES-section paragraphs (in / out, % explained)</td>
-<td style="text-align: right;">27 (18.52%) / 1,284 (16.51%)</td>
+<td style="text-align: right;">27 (18.52%) / 1286 (16.56%)</td>
 </tr>
 <tr class="even">
 <td>Modality (deontic / epistemic / dynamic)</td>
-<td style="text-align: right;">261 / 321 / 557</td>
+<td style="text-align: right;">261 / 322 / 559</td>
 </tr>
 <tr class="odd">
 <td><code>vocab.hard_prohibitions.count</code></td>
-<td style="text-align: right;"><strong>630</strong></td>
+<td style="text-align: right;"><strong>631</strong></td>
 </tr>
 <tr class="even">
 <td><code>vocab.hard_prescriptions.count</code></td>
@@ -769,7 +823,7 @@ parquet_threat_and_rule_explained: 4
 </tr>
 <tr class="odd">
 <td><code>vocab.pronouns_2p.count</code></td>
-<td style="text-align: right;"><strong>1,393</strong></td>
+<td style="text-align: right;"><strong>1397</strong></td>
 </tr>
 <tr class="even">
 <td><code>vocab.pronouns_1p.count</code></td>
@@ -781,15 +835,15 @@ parquet_threat_and_rule_explained: 4
 </tr>
 <tr class="even">
 <td>Stance: positive_evaluative_quality / _emphasis / negative_evaluative</td>
-<td style="text-align: right;"><strong>296 / 184 / 152</strong></td>
+<td style="text-align: right;"><strong>298 / 185 / 152</strong></td>
 </tr>
 <tr class="odd">
 <td>Quality-only positive-vs-negative ratio</td>
-<td style="text-align: right;"><strong>1.95×</strong> (296 / 152)</td>
+<td style="text-align: right;"><strong>1.96×</strong> (298 / 152)</td>
 </tr>
 <tr class="even">
 <td>Union positive-vs-negative ratio</td>
-<td style="text-align: right;"><strong>3.16×</strong> (480 / 152)</td>
+<td style="text-align: right;"><strong>3.18×</strong> (483 / 152)</td>
 </tr>
 <tr class="odd">
 <td><code>appreciative_sent_count</code></td>

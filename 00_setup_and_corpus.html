@@ -615,7 +615,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong><code>per_sent</code> (rate per sentence)</strong> — <code>count / total_sentences</code>. Can be &gt; 1 if a feature appears multiple times per sentence on average. Answers: “how often per sentence does this feature appear?” Use this when comparing categories where typical sentence length differs — a category with long, dense sentences will have similar <code>pct</code> but higher <code>per_sent</code>.</p></li>
 <li><p><strong><code>sent_pct</code> (% of sentences with this flag)</strong> — <code>sentences_with_flag / total_sentences × 100</code>. Used only for the <code>sentence_register</code> multi-label classifier (defined in <code>01_analyzers_register</code>); per-class values can sum to more than 100% across the six classes, since a single sentence can carry several flags simultaneously.</p></li>
 </ul>
-<div id="255f5730-c331-4d40-aaa3-4a1eef5e5eb4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:32.744274Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:32.744155Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:35.321040Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:35.320460Z&quot;}}" data-execution_count="1">
+<div id="255f5730-c331-4d40-aaa3-4a1eef5e5eb4" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">--</span>quiet spacy python<span class="op">-</span>frontmatter pyarrow altair vl<span class="op">-</span>convert<span class="op">-</span>python</span>
@@ -632,7 +632,7 @@ You can now load the package via spacy.load('en_core_web_sm')
 </div>
 </div>
 </div>
-<div id="1c84a1e9-d125-4dcf-9f57-73d9eb2d6c5c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:35.322754Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:35.322602Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:35.328487Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:35.328064Z&quot;}}" data-execution_count="2">
+<div id="1c84a1e9-d125-4dcf-9f57-73d9eb2d6c5c" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Path configuration. Notebook lives at the project root (claude-prompts-analysis/).</span></span>
@@ -668,10 +668,10 @@ You can now load the package via spacy.load('en_core_web_sm')
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"output:    </span><span class="sc">{</span>DOCBIN_OUT<span class="sc">.</span>name<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>META_OUT<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>cwd:       /home/atrawog/Atrapub/workspace/claude-prompts-analysis
-corpus:    /home/atrawog/Atrapub/workspace/claude-prompts-analysis/claude-code-system-prompts/system-prompts
-           289 .md files
-cache dir: /home/atrawog/Atrapub/workspace/claude-prompts-analysis/_pipeline_cache
+<pre><code>cwd:       /home/user/workspace/claude-prompts-analysis
+corpus:    /home/user/workspace/claude-prompts-analysis/claude-code-system-prompts/system-prompts
+           290 .md files
+cache dir: /home/user/workspace/claude-prompts-analysis/_pipeline_cache
 output:    corpus_docs.spacy, corpus_meta.parquet</code></pre>
 </div>
 </div>
@@ -716,7 +716,7 @@ output:    corpus_docs.spacy, corpus_meta.parquet</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="a82db2ba-3ccf-4a9d-9b9b-ae9102b224c4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:35.329897Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:35.329783Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:36.345821Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:36.345225Z&quot;}}" data-execution_count="3">
+<div id="a82db2ba-3ccf-4a9d-9b9b-ae9102b224c4" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Load every .md file: parse HTML-comment frontmatter, strip code, categorize.</span></span>
@@ -779,15 +779,15 @@ output:    corpus_docs.spacy, corpus_meta.parquet</code></pre>
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4d04dce3ea78412189c689c674e9245b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"9f8fcb75c87b4bcb86e835952eaaa5c2","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>loaded 289 prompts (289 with frontmatter, 29 via line-by-line fallback)
+<pre><code>loaded 290 prompts (290 with frontmatter, 29 via line-by-line fallback)
 
 category distribution:
 category
-Tool description    78
+Tool description    79
 System prompt       64
 System reminder     40
 Data / template     39
@@ -795,12 +795,12 @@ Agent prompt        37
 Skill               30
 Tool parameter       1
 
-unique ccVersions: 57
+unique ccVersions: 58
 top 5 ccVersions: {'2.1.53': 47, '2.1.18': 23, '2.1.128': 18, '2.1.132': 17, '2.1.118': 15}
 files with non-empty agentType: 5</code></pre>
 </div>
 </div>
-<div id="be05dc8e-00d8-431e-9e1c-c0fc3abe7ee1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:36.346910Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:36.346782Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:45.207044Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:45.206609Z&quot;}}" data-execution_count="4">
+<div id="be05dc8e-00d8-431e-9e1c-c0fc3abe7ee1" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Run the spaCy pipeline once, then cache:</span></span>
@@ -839,16 +839,16 @@ files with non-empty agentType: 5</code></pre>
 </details>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"0947b4754e8247ae9a9f76924909dee8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"d9bd3367f8d74e38ad83823bfc473c56","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>total tokens: 133,526
-total sentences: 5,878
-mean tokens/file: 462
+<pre><code>total tokens: 133,611
+total sentences: 5,881
+mean tokens/file: 461
 
-wrote _pipeline_cache/corpus_docs.spacy  (1,501,116 bytes, 1465.9 KiB)
-wrote _pipeline_cache/corpus_meta.parquet  (735,197 bytes, 718.0 KiB)
+wrote _pipeline_cache/corpus_docs.spacy  (1,501,457 bytes, 1466.3 KiB)
+wrote _pipeline_cache/corpus_meta.parquet  (735,737 bytes, 718.5 KiB)
 
 --- sample rows ---
                                                 path      category ccVersion  n_tokens  n_sents

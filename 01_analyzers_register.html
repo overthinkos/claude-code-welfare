@@ -602,7 +602,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>Output: <code>_pipeline_cache/partial_register.json</code> (per-file metric trees).</p>
-<div id="e0260fab-f788-40db-b8e3-3742dc6dd4fc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:50.051874Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:50.051761Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:51.231803Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:51.231436Z&quot;}}" data-execution_count="1">
+<div id="e0260fab-f788-40db-b8e3-3742dc6dd4fc" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Reload corpus + DocBin from stage 00."""</span></span>
@@ -642,13 +642,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reloaded </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> files, </span><span class="sc">{</span><span class="bu">sum</span>(d.<span class="fu">__len__</span>() <span class="cf">for</span> d <span class="kw">in</span> docs)<span class="sc">:,}</span><span class="ss"> doc tokens"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>reloaded 289 files, 145,445 doc tokens</code></pre>
+<pre><code>reloaded 290 files, 145,534 doc tokens</code></pre>
 </div>
 </div>
 <section id="mood" class="level2">
 <h2 class="anchored" data-anchor-id="mood">1. Mood</h2>
 <p><strong>Mood marker density</strong> is the share of word tokens matched by <code>IMPERATIVE_MARKERS</code> (the lexicon is echoed verbatim into the YAML’s <code>lexicons</code> block). Reported per file as count + <code>pct</code> (% of word tokens) + <code>per_sent</code> (rate per sentence). The per-sentence imperative classifier moved into <code>sentence_register</code>; this block carries only the lexical-density signal (<code>marker_*</code>).</p>
-<div id="b31dae37-fbb7-422f-930c-7128b7262c6f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:51.232999Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:51.232818Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:51.243690Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:51.243229Z&quot;}}" data-execution_count="2">
+<div id="b31dae37-fbb7-422f-930c-7128b7262c6f" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> mood_for_doc</span>
@@ -679,8 +679,8 @@ Agent prompt             5.459       0.773            0.224
 Data / template          4.667       0.573            0.123
 Skill                    8.400       0.603            0.162
 System prompt            2.328       1.093            0.264
-System reminder          1.700       1.034            0.241
-Tool description         2.205       2.139            0.411
+System reminder          1.700       1.032            0.241
+Tool description         2.190       2.136            0.412
 Tool parameter           0.000       0.000            0.000</code></pre>
 </div>
 </div>
@@ -695,7 +695,7 @@ Tool parameter           0.000       0.000            0.000</code></pre>
 <li><strong>Heylighen F-score</strong> (Heylighen &amp; Dewaele 2002) — a 0–100 formality index: <code>F = 50 + 0.5 × (noun + adj + prep + article − pronoun − verb − adverb − interjection)</code>, each term as a percentage of all tokens. Higher = more formal-academic prose; the corpus clusters in the 70–80 band.</li>
 </ul>
 <p>Plus lexical density for four register classes (<code>frozen</code> / <code>formal</code> / <code>consultative</code> / <code>casual</code>).</p>
-<div id="7c5f3a7c-b79e-4e4b-a1dd-c1d8c2385916" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:51.244789Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:51.244691Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:51.448624Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:51.448126Z&quot;}}" data-execution_count="3">
+<div id="7c5f3a7c-b79e-4e4b-a1dd-c1d8c2385916" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> register_for_doc</span>
@@ -728,8 +728,8 @@ Agent prompt      0.601         26.657      3.087   70.479         0.0       0.0
 Data / template   0.536         22.658      2.702   74.358         0.0       0.001             0.249       0.252              0.0            0.000                  0.056            0.060
 Skill             0.566         26.245      2.669   68.818         0.0       0.000             0.283       0.550              0.0            0.000                  0.070            0.130
 System prompt     0.740         25.695      2.858   66.976         0.0       0.003             0.631       0.509              0.0            0.001                  0.149            0.129
-System reminder   0.791         18.285      2.302   71.011         0.0       0.000             0.848       0.283              0.0            0.000                  0.160            0.060
-Tool description  0.792         22.807      2.579   64.942         0.0       0.000             0.727       0.397              0.0            0.000                  0.149            0.075
+System reminder   0.791         18.335      2.306   71.012         0.0       0.000             0.848       0.283              0.0            0.000                  0.160            0.060
+Tool description  0.793         22.826      2.588   64.828         0.0       0.000             0.717       0.392              0.0            0.000                  0.147            0.074
 Tool parameter    0.600         12.790      1.995   75.410         0.0       0.000             0.000       0.000              0.0            0.000                  0.000            0.000</code></pre>
 </div>
 </div>
@@ -743,7 +743,7 @@ Tool parameter    0.600         12.790      1.995   75.410         0.0       0.0
 <li><code>positive_evaluative_emphasis</code> — emphasis-of-rule words: <code>important</code>, <code>critical</code>, <code>essential</code>, <code>key</code>.</li>
 </ul>
 <p>The union is preserved for back-compat in existing charts. When the question is <em>how much praise is here</em>, cite the quality-only ratio against <code>negative_evaluative</code>. When the question is <em>how loud is the rule emphasis</em>, cite the emphasis count alongside the imperative-marker density.</p>
-<div id="fae0cd17-c7c1-46de-b659-4a2ee823678c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:51.449717Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:51.449621Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:51.484055Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:51.483663Z&quot;}}" data-execution_count="4">
+<div id="fae0cd17-c7c1-46de-b659-4a2ee823678c" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> stance_for_doc</span>
@@ -790,7 +790,7 @@ Data / template                     1
 Skill                               0  
 System prompt                       9  
 System reminder                     0  
-Tool description                    3  
+Tool description                    4  
 Tool parameter                      1  
 
 category mean stance (% of words and per-sentence rate):
@@ -800,8 +800,8 @@ Agent prompt              0.982               0.273           1.580             
 Data / template           0.385               0.078           1.414                0.308                    0.357                         0.085                    0.115                         0.022         0.171              0.034            0.054                 0.020            0.637                 0.136                            0.211                                 0.048                             0.146                                  0.037
 Skill                     0.565               0.142           1.513                0.394                    0.248                         0.060                    0.086                         0.018         0.195              0.045            0.081                 0.021            0.955                 0.220                            0.187                                 0.044                             0.061                                  0.016
 System prompt             1.574               0.350           1.686                0.382                    0.650                         0.175                    0.135                         0.045         0.277              0.076            0.125                 0.037            2.099                 0.465                            0.425                                 0.114                             0.225                                  0.061
-System reminder           1.341               0.286           1.611                0.340                    0.170                         0.046                    0.016                         0.008         0.472              0.092            0.064                 0.025            1.601                 0.348                            0.060                                 0.014                             0.110                                  0.032
-Tool description          2.188               0.433           1.277                0.325                    0.431                         0.125                    0.054                         0.016         0.286              0.067            0.088                 0.021            1.617                 0.363                            0.327                                 0.094                             0.104                                  0.031
+System reminder           1.335               0.286           1.605                0.340                    0.166                         0.046                    0.016                         0.008         0.470              0.092            0.064                 0.025            1.617                 0.353                            0.056                                 0.014                             0.110                                  0.032
+Tool description          2.160               0.427           1.263                0.321                    0.499                         0.143                    0.053                         0.015         0.282              0.066            0.087                 0.021            1.648                 0.372                            0.372                                 0.106                             0.127                                  0.037
 Tool parameter            0.000               0.000           0.000                0.000                    2.235                         0.286                    0.000                         0.000         0.000              0.000            0.000                 0.000            0.000                 0.000                            1.676                                 0.214                             0.559                                  0.071</code></pre>
 </div>
 </div>
@@ -810,7 +810,7 @@ Tool parameter            0.000               0.000           0.000             
 <h2 class="anchored" data-anchor-id="b.-sentence-level-pragmatic-register">3b. Sentence-level pragmatic register</h2>
 <p>Per-sentence <strong>multi-label</strong> classifier with six classes: <code>collaborative</code> / <code>permissive</code> / <code>appreciative</code> / <code>imperative</code> / <code>directive</code> / <code>configuring</code>. Implemented via <code>M_SENT_REGISTER</code> PhraseMatchers, <code>M_STANCE["directive"]</code>, and a spaCy <code>DependencyMatcher</code> for parse-tree cues; the <code>imperative</code> flag is driven by <code>classify_sent_mood</code>. Near-zero classes are deliberately preserved — absence is the welfare-relevant signal for this corpus.</p>
 <p><strong>Multi-label semantics.</strong> A single sentence can carry several flags simultaneously. The hypothetical sentence <code>"Please, we should consider running the migration."</code> is <code>permissive</code> (<code>please</code>), <code>collaborative</code> (<code>we should</code>), <code>imperative</code> (<code>consider</code>), and <code>directive</code> (modal <code>should</code>). Because each contributes to multiple class counts, per-class <code>sent_pct</code> values across the six classes can sum to more than 100% within a category — intentional, not a bug.</p>
-<div id="c1d43c75-2570-4329-9398-484956fb9bfa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:51.485617Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:51.485491Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:51.875558Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:51.875100Z&quot;}}" data-execution_count="5">
+<div id="c1d43c75-2570-4329-9398-484956fb9bfa" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_pipeline <span class="im">import</span> sentence_register_for_doc</span>
@@ -849,7 +849,7 @@ Data / template    1              1            1          0          36
 Skill              0              0            0          1          29   
 System prompt      2              0            1          7          53   
 System reminder   16              0            0          4          17   
-Tool description  16              1            3          8          49   
+Tool description  16              1            3          8          50   
 Tool parameter     0              0            0          0           1   
 
 dominant          permissive  
@@ -870,7 +870,7 @@ Data / template                     1.32                 1.20                   
 Skill                               0.47                 2.05                   0.00                36.21               12.72                  2.64          55.31
 System prompt                       0.85                 4.07                   0.49                41.84               25.86                  6.46          41.25
 System reminder                     0.13                 7.07                   0.00                34.59               16.76                  1.04          56.48
-Tool description                    1.33                 2.95                   0.09                41.11               30.91                  6.94          42.26
+Tool description                    1.32                 2.92                   0.09                41.94               30.49                  6.96          41.54
 Tool parameter                      0.00                 0.00                   0.00                78.57                0.00                 50.00          14.29</code></pre>
 </div>
 </div>
@@ -878,7 +878,7 @@ Tool parameter                      0.00                 0.00                   
 <section id="write-partial_register.json" class="level2">
 <h2 class="anchored" data-anchor-id="write-partial_register.json">Write <code>partial_register.json</code></h2>
 <p>One JSON document, keyed by file index (string), with the four metric blocks per file. Stage 04 reloads this and feeds it directly to <code>build_file_record</code>.</p>
-<div id="b7abb0dc-4de3-4f48-a09a-bee7bf9a1693" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T13:33:51.876526Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T13:33:51.876411Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T13:33:51.905662Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T13:33:51.905270Z&quot;}}" data-execution_count="6">
+<div id="b7abb0dc-4de3-4f48-a09a-bee7bf9a1693" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>partial <span class="op">=</span> {</span>
@@ -897,8 +897,8 @@ Tool parameter                      0.00                 0.00                   
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"      </span><span class="sc">{</span><span class="bu">len</span>(partial)<span class="sc">}</span><span class="ss"> per-file records, 4 blocks each"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>wrote _pipeline_cache/partial_register.json  (596,618 bytes, 582.6 KiB)
-      289 per-file records, 4 blocks each</code></pre>
+<pre><code>wrote _pipeline_cache/partial_register.json  (598,693 bytes, 584.7 KiB)
+      290 per-file records, 4 blocks each</code></pre>
 </div>
 </div>
 

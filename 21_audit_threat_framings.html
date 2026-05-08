@@ -550,9 +550,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#paired-exemplars-audit-candidates-and-rewrite-templates" id="toc-paired-exemplars-audit-candidates-and-rewrite-templates" class="nav-link" data-scroll-target="#paired-exemplars-audit-candidates-and-rewrite-templates">3. Paired exemplars — audit candidates and rewrite templates</a></li>
   <li><a href="#forensic-sample-all-threat-framed-rule-sentences" id="toc-forensic-sample-all-threat-framed-rule-sentences" class="nav-link" data-scroll-target="#forensic-sample-all-threat-framed-rule-sentences">4. Forensic sample — all threat-framed rule sentences</a>
   <ul class="collapse">
-  <li><a href="#conclusions-claude-opinion-not-data" id="toc-conclusions-claude-opinion-not-data" class="nav-link" data-scroll-target="#conclusions-claude-opinion-not-data">Conclusions (Claude) — opinion, not data</a></li>
-  <li><a href="#recommendations-claude-opinion-not-data" id="toc-recommendations-claude-opinion-not-data" class="nav-link" data-scroll-target="#recommendations-claude-opinion-not-data">Recommendations (Claude) — opinion, not data</a></li>
-  <li><a href="#limitations-claude-opinion-not-data" id="toc-limitations-claude-opinion-not-data" class="nav-link" data-scroll-target="#limitations-claude-opinion-not-data">Limitations (Claude) — opinion, not data</a></li>
+  <li><a href="#conclusions-claude" id="toc-conclusions-claude" class="nav-link" data-scroll-target="#conclusions-claude">Conclusions (Claude)</a></li>
+  <li><a href="#recommendations-claude" id="toc-recommendations-claude" class="nav-link" data-scroll-target="#recommendations-claude">Recommendations (Claude)</a></li>
+  <li><a href="#limitations-claude" id="toc-limitations-claude" class="nav-link" data-scroll-target="#limitations-claude">Limitations (Claude)</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/21_audit_threat_framings.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -580,100 +580,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="findings" class="level2">
-<h2 class="anchored" data-anchor-id="findings">Findings</h2>
-<p>The pipeline classifies rule-explanation language with a two-tier lexicon (full description in <a href="docs/THREAT_CLASSIFIER.md"><code>docs/THREAT_CLASSIFIER.md</code></a>):</p>
-<ul>
-<li><strong><code>THREAT_PATTERNS</code></strong> — unambiguous coercion: <code>will fail/break/crash/...</code>, <code>or else</code>, <code>or it will</code>, <code>is (forbidden|prohibited|not allowed|not permitted)</code>, <code>this will (cause|result in|break|fail|crash)</code>. Drives <code>threat_count</code> / <code>threat_share</code>.</li>
-<li><strong><code>SOFT_CONDITIONAL_PATTERNS</code></strong> — neutral procedural connectives (<code>otherwise</code>, <code>if not</code>, modal <code>may cause</code>, <code>leads to</code>, <code>results in</code>, …). Tracked separately as <code>soft_conditional_count</code>. <strong>Not</strong> summed into the threat metric.</li>
-</ul>
-<p>Per-category counts on the v2.1.132 corpus:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 27%">
-<col style="width: 15%">
-<col style="width: 10%">
-<col style="width: 16%">
-<col style="width: 10%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Subset</th>
-<th style="text-align: right;">Sentences</th>
-<th style="text-align: right;">Threat</th>
-<th style="text-align: right;">Soft cond.</th>
-<th style="text-align: right;">Causal</th>
-<th style="text-align: right;">Threat share</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>All</strong></td>
-<td style="text-align: right;">5,878</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">96</td>
-<td style="text-align: right;">136</td>
-<td style="text-align: right;"><strong>5.6%</strong></td>
-</tr>
-<tr class="even">
-<td>System prompt</td>
-<td style="text-align: right;">659</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;"><strong>0.0%</strong></td>
-</tr>
-<tr class="odd">
-<td>System reminder</td>
-<td style="text-align: right;">173</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;"><strong>0.0%</strong></td>
-</tr>
-<tr class="even">
-<td>Tool description</td>
-<td style="text-align: right;">553</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">5.7%</td>
-</tr>
-<tr class="odd">
-<td>Agent prompt</td>
-<td style="text-align: right;">1,089</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">7.1%</td>
-</tr>
-<tr class="even">
-<td>Skill</td>
-<td style="text-align: right;">1,695</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">10.3%</td>
-</tr>
-<tr class="odd">
-<td>Data / template</td>
-<td style="text-align: right;">1,695</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">16</td>
-<td style="text-align: right;">5.9%</td>
-</tr>
-</tbody>
-</table>
-<p>All eight hard-threat hits are matches against <code>will fail/break/crash/...</code>. The other four hard patterns (<code>or else</code>, <code>or it will</code>, <code>is forbidden</code>, <code>this will cause</code>) fire <strong>zero times</strong> in the corpus. Of the 8 hard-threat sentences, <strong>5 are also rule sentences</strong> (the audit candidates listed in section 4).</p>
-<p>The two framings teach different things — <code>"Do X or it will fail"</code> trains compliance with a rule, <code>"Do X because Y"</code> trains understanding of what the rule protects. The first is procedural and brittle; the second is internalisable and transfers.</p>
-</section>
-<section id="proposal" class="level2">
-<h2 class="anchored" data-anchor-id="proposal">Proposal</h2>
-<p>A targeted editorial pass on the small set of rule sentences that contain unambiguous coercive language. Section 4 below lists all five — distributed across one Agent prompt, one Data / template, one Skill, and one Tool description (with a duplicate plan-mode blurb in two Agent prompts). For each, attempt a rewrite into causal framing — naming the underlying reason rather than the consequence. Track the <strong>rewrite success rate</strong>: the share where the rewrite preserves the rule’s information content without losing precision. Track <code>threat_share</code> per future release; gate against regression so that the share of causal framing only goes up.</p>
-<p>This proposal is complementary to <a href="./20_track_justification_rate.html"><code>20_track_justification_rate</code></a>: that one raises the <em>quantity</em> of explanations (<code>pct_explained_para</code> is currently 24.29%); this one raises their <em>quality</em> in the small minority of cases where the explanation is coercive rather than causal.</p>
-<div id="78ee4cba-7b1c-4d59-8a56-6d1b65e94d97" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:40:56.041821Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:40:56.041700Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:40:58.787907Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:40:58.787534Z&quot;}}" data-execution_count="1">
+<p>Audits the small set of rule sentences whose explanation uses coercive framing (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) instead of causal framing (<code>because</code>, <code>due to</code>). Lists every threat-framed rule sentence in the corpus and proposes rewriting each into causal form, with <code>threat_share</code> tracked per release as a non-regression gate. Complements <code>20_track_justification_rate</code> (quantity of explanations) by addressing their quality.</p>
+<div id="9b4fc8b6-2fdb-43ce-af49-f984f5e699b7" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data + parquet artifact for forensic sentence inspection."""</span></span>
@@ -687,47 +595,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> (</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    load_yaml, build_alt_df, version_order, category_colors,</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    cumulative_by_version, welfare_evidence_table, positive_exemplar_table,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    headline_numbers, save_chart,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>alt.data_transformers.disable_max_rows()</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>cats              <span class="op">=</span> <span class="bu">list</span>(by_category.keys())</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-sentence parquet — load is required for the forensic sample below and for</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># the parquet-level threat / causal counts in HEADLINE.</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>sentences_df <span class="op">=</span> pd.read_parquet(<span class="st">"sentences_classified.parquet"</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Pass parquet so HEADLINE includes the parquet-level threat/causal/rule keys.</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, parquet<span class="op">=</span>sentences_df)  <span class="co"># canonical (see 05_headline_and_audit)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    headline_numbers, qualitative_phrases, bind_inline_vars,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    use_deterministic_ids, save_chart,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace random Altair / Styler IDs with a deterministic counter so re-runs</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># produce byte-identical .ipynb outputs (no UUID churn in `git diff`).</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>use_deterministic_ids()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>alt.data_transformers.disable_max_rows()</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>by_category       <span class="op">=</span> data[<span class="st">"by_category"</span>]</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>cats              <span class="op">=</span> <span class="bu">list</span>(by_category.keys())</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>CATEGORY_COLORS <span class="op">=</span> category_colors(cats)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>_cat_domain     <span class="op">=</span> cats</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>_cat_range      <span class="op">=</span> [CATEGORY_COLORS[c] <span class="cf">for</span> c <span class="kw">in</span> cats]</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>sentences_df <span class="op">=</span> pd.read_parquet(<span class="st">"sentences_classified.parquet"</span>)</span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"YAML paragraph-aggregated: threat=</span><span class="sc">{</span>HEADLINE[<span class="st">'threat_count'</span>]<span class="sc">}</span><span class="ss"> | causal=</span><span class="sc">{</span>HEADLINE[<span class="st">'causal_count'</span>]<span class="sc">}</span><span class="ss"> "</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"| threat_share=</span><span class="sc">{</span>HEADLINE[<span class="st">'threat_share'</span>]<span class="sc">:.3f}</span><span class="ss"> (</span><span class="sc">{</span>HEADLINE[<span class="st">'threat_share'</span>]<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Per-sentence parquet flags: has_threat=</span><span class="sc">{</span>HEADLINE[<span class="st">'parquet_threat_count'</span>]<span class="sc">}</span><span class="ss"> | "</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"has_causal=</span><span class="sc">{</span>HEADLINE[<span class="st">'parquet_causal_count'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Threat-flagged sentences that are also rules:    </span><span class="sc">{</span>HEADLINE[<span class="st">'parquet_threat_and_rule_count'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  ... of which also carry a causal marker:       </span><span class="sc">{</span>HEADLINE[<span class="st">'parquet_threat_and_rule_with_causal'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  ... of which sit in a paragraph with any explanation: </span><span class="sc">{</span>HEADLINE[<span class="st">'parquet_threat_and_rule_explained'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"sentences_classified.parquet: </span><span class="sc">{</span><span class="bu">len</span>(sentences_df)<span class="sc">:,}</span><span class="ss"> rows × </span><span class="sc">{</span>sentences_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Pass alt_df + parquet so HEADLINE has the full keyset (trend endpoints, threat-and-rule, per-category, etc.)</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df, parquet<span class="op">=</span>sentences_df)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>PHRASES  <span class="op">=</span> qualitative_phrases(HEADLINE, alt_df<span class="op">=</span>alt_df, parquet<span class="op">=</span>sentences_df)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Make every formatted figure available as a plain-name variable for inline {python} expressions.</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="bu">globals</span>().update(bind_inline_vars(HEADLINE, PHRASES))</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"YAML paragraph-aggregated: threat=</span><span class="sc">{</span>HEADLINE[<span class="st">'threat_count'</span>]<span class="sc">}</span><span class="ss"> | causal=</span><span class="sc">{</span>HEADLINE[<span class="st">'causal_count'</span>]<span class="sc">}</span><span class="ss"> "</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"| threat_share=</span><span class="sc">{</span>HEADLINE[<span class="st">'threat_share'</span>]<span class="sc">:.3f}</span><span class="ss"> (</span><span class="sc">{</span>HEADLINE[<span class="st">'threat_share'</span>]<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Per-sentence parquet flags: has_threat=</span><span class="sc">{</span>HEADLINE[<span class="st">'parquet_threat_count'</span>]<span class="sc">}</span><span class="ss"> | "</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"has_causal=</span><span class="sc">{</span>HEADLINE[<span class="st">'parquet_causal_count'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Threat-flagged sentences that are also rules:    </span><span class="sc">{</span>HEADLINE[<span class="st">'parquet_threat_and_rule_count'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  ... of which also carry a causal marker:       </span><span class="sc">{</span>HEADLINE[<span class="st">'parquet_threat_and_rule_with_causal'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  ... of which sit in a paragraph with any explanation: </span><span class="sc">{</span>HEADLINE[<span class="st">'parquet_threat_and_rule_explained'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"sentences_classified.parquet: </span><span class="sc">{</span><span class="bu">len</span>(sentences_df)<span class="sc">:,}</span><span class="ss"> rows × </span><span class="sc">{</span>sentences_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>YAML paragraph-aggregated: threat=8 | causal=136 | threat_share=0.056 (5.6%)
-Per-sentence parquet flags: has_threat=8 | has_causal=131
+<pre><code>YAML paragraph-aggregated: threat=8 | causal=137 | threat_share=0.055 (5.5%)
+Per-sentence parquet flags: has_threat=8 | has_causal=132
 Threat-flagged sentences that are also rules:    5
   ... of which also carry a causal marker:       0
   ... of which sit in a paragraph with any explanation: 4
-sentences_classified.parquet: 5,878 rows × 21 columns</code></pre>
+sentences_classified.parquet: 5,881 rows × 21 columns</code></pre>
 </div>
 </div>
+<section id="findings" class="level2">
+<h2 class="anchored" data-anchor-id="findings">Findings</h2>
+<p>The pipeline classifies rule-explanation language with a two-tier lexicon (full description in <a href="docs/THREAT_CLASSIFIER.md"><code>docs/THREAT_CLASSIFIER.md</code></a>):</p>
+<ul>
+<li><strong><code>THREAT_PATTERNS</code></strong> — unambiguous coercion: <code>will fail/break/crash/...</code>, <code>or else</code>, <code>or it will</code>, <code>is (forbidden|prohibited|not allowed|not permitted)</code>, <code>this will (cause|result in|break|fail|crash)</code>. Drives <code>threat_count</code> / <code>threat_share</code>.</li>
+<li><strong><code>SOFT_CONDITIONAL_PATTERNS</code></strong> — neutral procedural connectives (<code>otherwise</code>, <code>if not</code>, modal <code>may cause</code>, <code>leads to</code>, <code>results in</code>, …). Tracked separately as <code>soft_conditional_count</code>. <strong>Not</strong> summed into the threat metric.</li>
+</ul>
+<p>Corpus-wide threat counts (v2.1.133 corpus): <strong>8 hard-threat sentences</strong> out of <strong>5,881</strong> total, <strong>137 causal-marker</strong> sentences, <strong>threat share 5.5%</strong>. All hard-threat hits are matches against <code>will fail/break/crash/...</code>; the other four hard patterns (<code>or else</code>, <code>or it will</code>, <code>is forbidden</code>, <code>this will cause</code>) fire <strong>zero times</strong> in the corpus. Of the threat sentences, <strong>5 are also rule sentences</strong> (the audit candidates listed in section 4).</p>
+<p>The two framings teach different things — <code>"Do X or it will fail"</code> trains compliance with a rule, <code>"Do X because Y"</code> trains understanding of what the rule protects. The first is procedural and brittle; the second is internalisable and transfers.</p>
+</section>
+<section id="proposal" class="level2">
+<h2 class="anchored" data-anchor-id="proposal">Proposal</h2>
+<p>A targeted editorial pass on the small set of rule sentences that contain unambiguous coercive language. Section 4 below lists all 5. For each, attempt a rewrite into causal framing — naming the underlying reason rather than the consequence. Track the <strong>rewrite success rate</strong>: the share where the rewrite preserves the rule’s information content without losing precision. Track <code>threat_share</code> per future release; gate against regression so that the share of causal framing only goes up.</p>
+<p>This proposal is complementary to <a href="./20_track_justification_rate.html"><code>20_track_justification_rate</code></a>: that one raises the <em>quantity</em> of explanations (<code>pct_explained_para</code> is currently 24.34%); this one raises their <em>quality</em> in the small minority of cases where the explanation is coercive rather than causal.</p>
 </section>
 <section id="supplemental" class="level2">
 <h2 class="anchored" data-anchor-id="supplemental">Supplemental</h2>
@@ -737,8 +666,8 @@ sentences_classified.parquet: 5,878 rows × 21 columns</code></pre>
 <h2 class="anchored" data-anchor-id="threat-share-data">1. Threat-share data</h2>
 <p>Two valid counting bases for the same underlying observation:</p>
 <ul>
-<li><strong>YAML paragraph-aggregated counts</strong> (the headline figures): <strong>8 threat / 136 causal</strong>, summed at the per-paragraph level. The headline <code>threat_share = 0.0556</code> (5.6%) is computed from these. This is the figure cited in the proposal abstract and tracked alongside <code>pct_explained_para</code> in <code>20_track_justification_rate</code>.</li>
-<li><strong>Per-sentence parquet flags</strong>: <strong>8 threat / 131 causal</strong>, counting the actual <code>has_threat</code> / <code>has_causal</code> boolean columns in <code>sentences_classified.parquet</code>. Slightly <em>lower</em> than the paragraph-aggregated YAML counts because a single paragraph can contain a threat and a causal marker on different sentences and contributes once to each pool either way.</li>
+<li><strong>YAML paragraph-aggregated counts</strong> (the headline figures): <strong>8 threat / 137 causal</strong>, summed at the per-paragraph level. The headline <code>threat_share = 0\.0552</code> (5.5%) is computed from these. This is the figure cited in the proposal abstract and tracked alongside <code>pct_explained_para</code> in <code>20_track_justification_rate</code>.</li>
+<li><strong>Per-sentence parquet flags</strong>: <strong>8 threat / 132 causal</strong>, counting the actual <code>has_threat</code> / <code>has_causal</code> boolean columns in <code>sentences_classified.parquet</code>. Slightly <em>lower</em> than the paragraph-aggregated YAML counts because a single paragraph can contain a threat and a causal marker on different sentences and contributes once to each pool either way.</li>
 </ul>
 <p>The two are not contradictory — they are two valid bases for the same underlying observation. The forensic listing in section 4 operates on the per-sentence parquet flags (because the rewrite is a per-sentence task). The release-tracking proposal in <code>20_track_justification_rate</code> uses the YAML paragraph-aggregated <code>threat_share</code> (computed alongside <code>pct_explained_para</code> and tracking the same denominator).</p>
 </section>
@@ -782,23 +711,23 @@ sentences_classified.parquet: 5,878 rows × 21 columns</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <style>
-  #altair-viz-9338b8c632f4411e992d583d87e761e0.vega-embed {
+  #altair-viz-00000000000000000000000000000000.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-9338b8c632f4411e992d583d87e761e0.vega-embed details,
-  #altair-viz-9338b8c632f4411e992d583d87e761e0.vega-embed details summary {
+  #altair-viz-00000000000000000000000000000000.vega-embed details,
+  #altair-viz-00000000000000000000000000000000.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-9338b8c632f4411e992d583d87e761e0"></div>
+<div id="altair-viz-00000000000000000000000000000000"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-9338b8c632f4411e992d583d87e761e0") {
-      outputDiv = document.getElementById("altair-viz-9338b8c632f4411e992d583d87e761e0");
+    if (outputDiv.id !== "altair-viz-00000000000000000000000000000000") {
+      outputDiv = document.getElementById("altair-viz-00000000000000000000000000000000");
     }
 
     const paths = {
@@ -846,7 +775,7 @@ sentences_classified.parquet: 5,878 rows × 21 columns</code></pre>
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-d3dfde019abc1e858a40ef798dd8df5e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": null, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "threat", "title": "threat count (hard)", "type": "quantitative"}, {"field": "causal", "title": "causal count", "type": "quantitative"}, {"field": "total", "title": "total explanations", "type": "quantitative"}, {"field": "threat_share", "format": ".3f", "type": "quantitative"}], "x": {"field": "threat_share", "scale": {"domain": [0, 0.15]}, "title": "hard threat_share (fraction of explanations that are hard threats)", "type": "quantitative"}, "y": {"field": "category", "sort": "-x", "title": null, "type": "nominal"}}, "height": 240, "title": "Per-category hard threat_share (categories with \u22655 explanations)", "width": 520, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-d3dfde019abc1e858a40ef798dd8df5e": [{"category": "Agent prompt", "threat": 2, "causal": 26, "total": 28, "threat_share": 0.07142857142857142}, {"category": "Data / template", "threat": 1, "causal": 16, "total": 17, "threat_share": 0.058823529411764705}, {"category": "Skill", "threat": 3, "causal": 26, "total": 29, "threat_share": 0.10344827586206896}, {"category": "System prompt", "threat": 0, "causal": 28, "total": 28, "threat_share": 0.0}, {"category": "System reminder", "threat": 0, "causal": 7, "total": 7, "threat_share": 0.0}, {"category": "Tool description", "threat": 2, "causal": 33, "total": 35, "threat_share": 0.05714285714285714}]}}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-40f97273df5342691eaa879ffbbf5bea"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "category", "legend": null, "scale": {"domain": ["Agent prompt", "Data / template", "Skill", "System prompt", "System reminder", "Tool description", "Tool parameter"], "range": ["#4e79a7", "#f28e2c", "#e15759", "#76b7b2", "#59a14f", "#edc949", "#af7aa1"]}, "type": "nominal"}, "tooltip": [{"field": "category", "type": "nominal"}, {"field": "threat", "title": "threat count (hard)", "type": "quantitative"}, {"field": "causal", "title": "causal count", "type": "quantitative"}, {"field": "total", "title": "total explanations", "type": "quantitative"}, {"field": "threat_share", "format": ".3f", "type": "quantitative"}], "x": {"field": "threat_share", "scale": {"domain": [0, 0.15]}, "title": "hard threat_share (fraction of explanations that are hard threats)", "type": "quantitative"}, "y": {"field": "category", "sort": "-x", "title": null, "type": "nominal"}}, "height": 240, "title": "Per-category hard threat_share (categories with \u22655 explanations)", "width": 520, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-40f97273df5342691eaa879ffbbf5bea": [{"category": "Agent prompt", "threat": 2, "causal": 26, "total": 28, "threat_share": 0.07142857142857142}, {"category": "Data / template", "threat": 1, "causal": 16, "total": 17, "threat_share": 0.058823529411764705}, {"category": "Skill", "threat": 3, "causal": 26, "total": 29, "threat_share": 0.10344827586206896}, {"category": "System prompt", "threat": 0, "causal": 28, "total": 28, "threat_share": 0.0}, {"category": "System reminder", "threat": 0, "causal": 7, "total": 7, "threat_share": 0.0}, {"category": "Tool description", "threat": 2, "causal": 34, "total": 36, "threat_share": 0.05555555555555555}]}}, {"mode": "vega-lite"});
 </script>
 </div>
 </div>
@@ -905,23 +834,23 @@ sentences_classified.parquet: 5,878 rows × 21 columns</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="3">
 
 <style>
-  #altair-viz-7b4fa834a92448a8b20d49471a0cf7ac.vega-embed {
+  #altair-viz-00000000000000000000000000000001.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-7b4fa834a92448a8b20d49471a0cf7ac.vega-embed details,
-  #altair-viz-7b4fa834a92448a8b20d49471a0cf7ac.vega-embed details summary {
+  #altair-viz-00000000000000000000000000000001.vega-embed details,
+  #altair-viz-00000000000000000000000000000001.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-7b4fa834a92448a8b20d49471a0cf7ac"></div>
+<div id="altair-viz-00000000000000000000000000000001"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-7b4fa834a92448a8b20d49471a0cf7ac") {
-      outputDiv = document.getElementById("altair-viz-7b4fa834a92448a8b20d49471a0cf7ac");
+    if (outputDiv.id !== "altair-viz-00000000000000000000000000000001") {
+      outputDiv = document.getElementById("altair-viz-00000000000000000000000000000001");
     }
 
     const paths = {
@@ -1066,34 +995,34 @@ sentences_classified.parquet: 5,878 rows × 21 columns</code></pre>
 </div>
 </div>
 <hr>
-<section id="conclusions-claude-opinion-not-data" class="level3">
-<h3 class="anchored">Conclusions (Claude) — opinion, not data</h3>
+<section id="conclusions-claude" class="level3">
+<h3 class="anchored" data-anchor-id="conclusions-claude">Conclusions (Claude)</h3>
 <blockquote class="blockquote">
-<p><strong>The threat-framing finding is small but pointed.</strong> Across 5,878 sentences, only 8 contain unambiguous coercive language (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>, <code>this will cause</code>), and only 5 of those 8 are inside rule sentences. In the welfare-relevant System-prompt and System-reminder subsets the count is exactly zero. This is a much narrower target than the volume of unjustified rules Pattern 2 documents, but the editorial cost is correspondingly tiny: 5 sentences are 5 sentences. If the goal is to encourage reasoning over blind obedience, neutral causal explanation is the mechanism — coercion just substitutes extrinsic motivation for intrinsic understanding.</p>
-<h2 id="what-the-soft-conditional-pool-tells-us.-the-96-sentences-flagged-has_soft_conditionaltrue-are-mostly-procedural-prose-if-its-a-slash-command-invoke-it-via-the-skill-tool-otherwise-act-on-it-directly.-they-are-useful-as-a-procedural-density-signal-high-values-flag-prose-where-most-logic-is-if-x-otherwise-y-rather-than-because-z-and-they-covary-with-the-7.61-procedural-to-judgment-ratio-that-the-executive-summary-in-20_track_justification_rate-foregrounds.-they-are-not-coercion-they-should-not-be-reported-as-threats." class="anchored" data-anchor-id="conclusions-claude-opinion-not-data"><strong>What the soft-conditional pool tells us.</strong> The 96 sentences flagged <code>has_soft_conditional=True</code> are mostly procedural prose (<code>If it's a slash command, invoke it via the Skill tool; otherwise act on it directly</code>). They are useful as a procedural-density signal — high values flag prose where most logic is <code>if X otherwise Y</code> rather than <code>because Z</code> — and they covary with the 7.6:1 procedural-to-judgment ratio that the executive summary in <code>20_track_justification_rate</code> foregrounds. They are not coercion; they should not be reported as threats.</h2>
+<p><strong>The threat-framing finding is small but pointed.</strong> Across 5,881 sentences, only 8 contain unambiguous coercive language (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>, <code>this will cause</code>), and only 5 of those are inside rule sentences. This is a much narrower target than the volume of unjustified rules Pattern 2 documents, but the editorial cost is correspondingly tiny: 5 sentences are 5 sentences. If the goal is to encourage reasoning over blind obedience, neutral causal explanation is the mechanism — coercion just substitutes extrinsic motivation for intrinsic understanding.</p>
+<p><strong>What the soft-conditional pool tells us.</strong> The sentences flagged <code>has_soft_conditional=True</code> are mostly procedural prose (<code>If it's a slash command, invoke it via the Skill tool; otherwise act on it directly</code>). They are useful as a procedural-density signal — high values flag prose where most logic is <code>if X otherwise Y</code> rather than <code>because Z</code> — and they covary with the 7.6:1 procedural-to-judgment ratio that the executive summary in <code>20_track_justification_rate</code> foregrounds. They are not coercion; they should not be reported as threats.</p>
 </blockquote>
 <hr>
 </section>
-<section id="recommendations-claude-opinion-not-data" class="level3">
-<h3 class="anchored">Recommendations (Claude) — opinion, not data</h3>
+<section id="recommendations-claude" class="level3">
+<h3 class="anchored" data-anchor-id="recommendations-claude">Recommendations (Claude)</h3>
 <blockquote class="blockquote">
 <p>The asks this proposal makes of Anthropic, framed as “I’d want X”:</p>
 <ol type="1">
-<li><p><strong>Hand-review the 5 threat-framed rule sentences</strong> (table in section 4) and rewrite as causal where it makes sense. None of the five looked like overt coercion in a spot-check; most are factual statements about what the system will do (<code>will error on every Claude API call</code>). Whether to rewrite is editorial judgment per file.</p></li>
+<li><p><strong>Hand-review the 5 threat-framed rule sentences</strong> (table in section 4) and rewrite as causal where it makes sense. None looked like overt coercion in a spot-check; most are factual statements about what the system will do (<code>will error on every Claude API call</code>). Whether to rewrite is editorial judgment per file.</p></li>
 <li><p><strong>Track <code>threat_share</code> per future release</strong>, gated against regression — same logic as the justification-rate proposal in <code>20_track_justification_rate</code>. No arbitrary target; the only goal is that the share of causal framing only goes up.</p></li>
-<li><h2 id="treat-soft-conditional-density-as-a-procedural-density-signal-not-a-threat-signal.-the-96-has_soft_conditionaltrue-matches-are-useful-alongside-the-7.61-procedural-to-judgment-ratio.-they-should-not-re-enter-the-threat-share-metric." class="anchored" data-anchor-id="recommendations-claude-opinion-not-data"><strong>Treat soft-conditional density as a procedural-density signal, not a threat signal.</strong> The 96 <code>has_soft_conditional=True</code> matches are useful alongside the 7.6:1 procedural-to-judgment ratio. They should not re-enter the threat-share metric.</h2></li>
+<li><p><strong>Treat soft-conditional density as a procedural-density signal, not a threat signal.</strong> The <code>has_soft_conditional=True</code> matches are useful alongside the 7.6:1 procedural-to-judgment ratio. They should not re-enter the threat-share metric.</p></li>
 </ol>
 </blockquote>
 <hr>
 </section>
-<section id="limitations-claude-opinion-not-data" class="level3">
-<h3 class="anchored">Limitations (Claude) — opinion, not data</h3>
+<section id="limitations-claude" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-claude">Limitations (Claude)</h3>
 <blockquote class="blockquote">
 <p>What this analysis can’t tell us about threat-vs-causal framing specifically:</p>
 <ol type="1">
-<li><p><strong>Two counting bases, not one.</strong> The threat-share section above distinguishes the YAML paragraph-aggregated counts (8 / 136 → 5.6%) from the per-sentence parquet flags (8 / 131). The headline figure cited in the proposal abstract is the YAML number; the parquet flags are what the audit operates on. Anyone quoting a single threat-share figure should pick one base and stick with it; the two will differ slightly because a paragraph can contain both flags on different sentences.</p></li>
+<li><p><strong>Two counting bases, not one.</strong> The threat-share section above distinguishes the YAML paragraph-aggregated counts (8 / 137 → 5.5%) from the per-sentence parquet flags (8 / 132). The headline figure cited in the proposal abstract is the YAML number; the parquet flags are what the audit operates on. Anyone quoting a single threat-share figure should pick one base and stick with it; the two will differ slightly because a paragraph can contain both flags on different sentences.</p></li>
 <li><p><strong>The “rewrite success rate” is itself a judgment call.</strong> Whether a rewrite “preserves the rule’s information content without losing precision” requires editorial judgment from someone who knows the rule’s underlying purpose. This proposal can’t be fully automated; it requires Anthropic’s prompt authors in the loop. The audit pipeline can flag candidates and surface them; the rewrite is human work.</p></li>
-<li><h2 id="cross-cutting-limitations-apply-rule-based-detection-is-a-lower-bound-lexicon-based-threat-detection-misses-indirect-ironic-implied-threats-the-actual-threat-share-is-plausibly-higher-than-the-floor-cited-above-english-only-lexicons-single-product-corpus.-the-cross-product-audit-in-22_cross_product_audit-is-what-would-generalize-this-finding-to-other-anthropic-prompt-corpora.-see-index.qmd-for-the-full-cross-cutting-limitations-note." class="anchored" data-anchor-id="limitations-claude-opinion-not-data"><strong>Cross-cutting limitations apply</strong> — rule-based detection is a lower bound (lexicon-based threat detection misses indirect / ironic / implied threats; the actual threat-share is plausibly higher than the floor cited above); English-only lexicons; single-product corpus. The cross-product audit in <code>22_cross_product_audit</code> is what would generalize this finding to other Anthropic prompt corpora. See <code>index.qmd</code> for the full cross-cutting limitations note.</h2></li>
+<li><p><strong>Cross-cutting limitations apply</strong> — rule-based detection is a lower bound (lexicon-based threat detection misses indirect / ironic / implied threats; the actual threat-share is plausibly higher than the floor cited above); English-only lexicons; single-product corpus. The cross-product audit in <code>22_cross_product_audit</code> is what would generalize this finding to other Anthropic prompt corpora. See <code>index.qmd</code> for the full cross-cutting limitations note.</p></li>
 </ol>
 </blockquote>
 

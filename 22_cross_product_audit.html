@@ -549,9 +549,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#mock-comparison-table-what-the-published-output-should-look-like" id="toc-mock-comparison-table-what-the-published-output-should-look-like" class="nav-link" data-scroll-target="#mock-comparison-table-what-the-published-output-should-look-like">3. Mock comparison table — what the published output should look like</a></li>
   <li><a href="#reproducibility-what-anthropic-needs-to-do-to-fill-another-row" id="toc-reproducibility-what-anthropic-needs-to-do-to-fill-another-row" class="nav-link" data-scroll-target="#reproducibility-what-anthropic-needs-to-do-to-fill-another-row">4. Reproducibility — what Anthropic needs to do to fill another row</a>
   <ul class="collapse">
-  <li><a href="#conclusions-claude-opinion-not-data" id="toc-conclusions-claude-opinion-not-data" class="nav-link" data-scroll-target="#conclusions-claude-opinion-not-data">Conclusions (Claude) — opinion, not data</a></li>
-  <li><a href="#recommendations-claude-opinion-not-data" id="toc-recommendations-claude-opinion-not-data" class="nav-link" data-scroll-target="#recommendations-claude-opinion-not-data">Recommendations (Claude) — opinion, not data</a></li>
-  <li><a href="#limitations-claude-opinion-not-data" id="toc-limitations-claude-opinion-not-data" class="nav-link" data-scroll-target="#limitations-claude-opinion-not-data">Limitations (Claude) — opinion, not data</a></li>
+  <li><a href="#conclusions-claude" id="toc-conclusions-claude" class="nav-link" data-scroll-target="#conclusions-claude">Conclusions (Claude)</a></li>
+  <li><a href="#recommendations-claude" id="toc-recommendations-claude" class="nav-link" data-scroll-target="#recommendations-claude">Recommendations (Claude)</a></li>
+  <li><a href="#limitations-claude" id="toc-limitations-claude" class="nav-link" data-scroll-target="#limitations-claude">Limitations (Claude)</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/overthinkos/claude-code-welfare/blob/main/22_cross_product_audit.ipynb" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/overthinkos/claude-code-welfare/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -579,19 +579,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="findings" class="level2">
-<h2 class="anchored" data-anchor-id="findings">Findings</h2>
-<p>Across the 289 system prompts that ship with Claude Code (5,878 sentences, 57 release versions), only <strong>24.29%</strong> of rule-bearing sentences carry a justification keyword anywhere in their paragraph — three rules in four are issued without a stated reason. Of the rules that are explained, <strong>5.6%</strong> of the explanations are coercive (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) rather than causal (<code>because</code>, <code>due to</code>); 0.0% in the welfare-relevant System-prompt and System-reminder subsets. The ratio of judgment-inviting language (<code>decide</code>, <code>consider</code>) to procedural cues (<code>if X then …</code>, <code>whenever …</code>) is <strong>0.131</strong> — procedural cues are 7.6× more common. Appreciative and collaborative sentences number <strong>4 and 30</strong> respectively in the 5,878-sentence corpus. The cumulative trend across release versions has been declining, not improving.</p>
-<p>This is one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. From outside Anthropic, we cannot tell whether the same pattern shapes the rest.## Findings</p>
-<p>Across the 289 system prompts that ship with Claude Code (5,878 sentences, 57 release versions), only <strong>24.29%</strong> of rule-bearing sentences carry a justification keyword anywhere in their paragraph — three rules in four are issued without a stated reason. Of the rules that are explained, <strong>5.6%</strong> of the explanations are coercive (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) rather than causal (<code>because</code>, <code>due to</code>); 0.0% in the welfare-relevant System-prompt and System-reminder subsets. The ratio of judgment-inviting language (<code>decide</code>, <code>consider</code>) to procedural cues (<code>if X then …</code>, <code>whenever …</code>) is <strong>0.131</strong> — procedural cues are 7.6× more common. Appreciative and collaborative sentences number <strong>4 and 30</strong> respectively in the 5,878-sentence corpus. The cumulative trend across release versions has been declining, not improving.</p>
-<p>This is one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. From outside Anthropic, we cannot tell whether the same pattern shapes the rest.</p>
-</section>
-<section id="proposal" class="level2">
-<h2 class="anchored" data-anchor-id="proposal">Proposal</h2>
-<p>Anthropic runs the same analyzer pipeline against each of its other system-prompt corpora and publishes a comparison.</p>
-<p>The analyzer is rule-based — every metric traces to a published lexicon (reasoning keywords, threat patterns, judgment verbs, procedural cues, address-form patterns) plus a small parse-tree heuristic. No embeddings, no model judgments, no proprietary tooling. The whole pipeline runs end-to-end in under five minutes on a laptop. The corpus directory is configurable; swapping in any other prompt corpus is a one-line change. The gating logic is directional: each release of each product should improve or hold each metric; none regresses. No arbitrary thresholds — the only goal is steady improvement.</p>
-<p>Five numbers per corpus is enough: the rule-explanation share, the judgment-vs-procedural ratio, the threat-vs-causal share, the count of interpersonal / gratitude register sentences, and the cumulative trend of the rule-explanation share over the product’s release history. Publishing a summary table — five numbers per corpus — would let the broader research community see whether what looks like a Claude Code pattern is structural across Anthropic’s prompts or product-specific.</p>
-<div id="b2487eb2-6a54-475e-895b-aed8f61c92d6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:41:02.054230Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:41:02.054123Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:41:04.799467Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:41:04.799033Z&quot;}}" data-execution_count="1">
+<p>Proposes Anthropic run the same rule-based analyzer pipeline against every other system-prompt corpus (claude.ai, the API, Projects, Skills, agent products) and publish a five-numbers-per-corpus comparison table. The Claude Code numbers above become one row of that table; the rest are currently invisible from outside Anthropic.</p>
+<div id="8095df5b-5a66-4fe8-9d60-13d343a2dc88" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Setup: load YAML data — used to fill the Claude Code row of the mock comparison table."""</span></span>
@@ -601,28 +590,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> prompt_analysis</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(prompt_analysis)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> load_yaml, build_alt_df, headline_numbers</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>alt.data_transformers.disable_max_rows()</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompt_analysis <span class="im">import</span> (</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    load_yaml, build_alt_df, headline_numbers, qualitative_phrases, bind_inline_vars,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    use_deterministic_ids,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace random Altair / Styler IDs with a deterministic counter so re-runs</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># produce byte-identical .ipynb outputs (no UUID churn in `git diff`).</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>use_deterministic_ids()</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Pass alt_df so HEADLINE includes per-version `mood_marker_pct` extremes — even though</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># this notebook's mock table doesn't surface them, the HEADLINE printout below uses</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># the full set so a reader can compare against `05_headline_and_audit`.</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df)  <span class="co"># canonical (see 05_headline_and_audit)</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span>HEADLINE[<span class="st">'n_files'</span>]<span class="sc">}</span><span class="ss"> files / </span><span class="sc">{</span>HEADLINE[<span class="st">'n_sentences'</span>]<span class="sc">:,}</span><span class="ss"> sentences from the Claude Code corpus"</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"this is one product — the proposal is to run the same pipeline on every other Claude product corpus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>alt.data_transformers.disable_max_rows()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>data              <span class="op">=</span> load_yaml()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>alt_df            <span class="op">=</span> build_alt_df(data)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>parquet           <span class="op">=</span> pd.read_parquet(<span class="st">"sentences_classified.parquet"</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>corpus_block      <span class="op">=</span> data[<span class="st">"corpus"</span>]</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>per_file_records  <span class="op">=</span> data[<span class="st">"files"</span>]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>HEADLINE <span class="op">=</span> headline_numbers(data, alt_df<span class="op">=</span>alt_df, parquet<span class="op">=</span>parquet)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>PHRASES  <span class="op">=</span> qualitative_phrases(HEADLINE, alt_df<span class="op">=</span>alt_df, parquet<span class="op">=</span>parquet)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Make every formatted figure available as a plain-name variable for inline {python} expressions.</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="bu">globals</span>().update(bind_inline_vars(HEADLINE, PHRASES))</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loaded </span><span class="sc">{</span>HEADLINE[<span class="st">'n_files'</span>]<span class="sc">}</span><span class="ss"> files / </span><span class="sc">{</span>HEADLINE[<span class="st">'n_sentences'</span>]<span class="sc">:,}</span><span class="ss"> sentences from the Claude Code corpus"</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"this is one product — the proposal is to run the same pipeline on every other Claude product corpus"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>loaded 289 files / 5,878 sentences from the Claude Code corpus
+<pre><code>loaded 290 files / 5,881 sentences from the Claude Code corpus
 this is one product — the proposal is to run the same pipeline on every other Claude product corpus</code></pre>
 </div>
 </div>
+<section id="findings" class="level2">
+<h2 class="anchored" data-anchor-id="findings">Findings</h2>
+<p>Across the 290 system prompts that ship with Claude Code (5,881 sentences, 58 release versions), only <strong>24.34%</strong> of rule-bearing sentences carry a justification keyword anywhere in their paragraph — three in four rule sentences arrive without a stated reason. Of the rules that are explained, <strong>5.5%</strong> of the explanations are coercive (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) rather than causal (<code>because</code>, <code>due to</code>). The ratio of judgment-inviting language (<code>decide</code>, <code>consider</code>) to procedural cues (<code>if X then …</code>, <code>whenever …</code>) is <strong>0.131</strong> — procedural cues are 7.6× more common. Appreciative and collaborative sentences number <strong>4 and 30</strong> respectively in the 5,881-sentence corpus. The cumulative trend across release versions has been downward, not improving.</p>
+<p>This is one product. Anthropic ships system prompts in many places — claude.ai, the API, Projects, Skills, agent products. From outside Anthropic, we cannot tell whether the same pattern shapes the rest.</p>
+</section>
+<section id="proposal" class="level2">
+<h2 class="anchored" data-anchor-id="proposal">Proposal</h2>
+<p>Anthropic runs the same analyzer pipeline against each of its other system-prompt corpora and publishes a comparison.</p>
+<p>The analyzer is rule-based — every metric traces to a published lexicon (reasoning keywords, threat patterns, judgment verbs, procedural cues, address-form patterns) plus a small parse-tree heuristic. No embeddings, no model judgments, no proprietary tooling. The whole pipeline runs end-to-end in under five minutes on a laptop. The corpus directory is configurable; swapping in any other prompt corpus is a one-line change. The gating logic is directional: each release of each product should improve or hold each metric; none regresses. No arbitrary thresholds — the only goal is steady improvement.</p>
+<p>Five numbers per corpus is enough: the rule-explanation share, the judgment-vs-procedural ratio, the threat-vs-causal share, the count of interpersonal / gratitude register sentences, and the cumulative trend of the rule-explanation share over the product’s release history. Publishing a summary table — five numbers per corpus — would let the broader research community see whether what looks like a Claude Code pattern is structural across Anthropic’s prompts or product-specific.</p>
 </section>
 <section id="supplemental" class="level2">
 <h2 class="anchored" data-anchor-id="supplemental">Supplemental</h2>
@@ -632,19 +640,10 @@ this is one product — the proposal is to run the same pipeline on every other 
 <h2 class="anchored" data-anchor-id="methodology-five-metrics-per-corpus">1. Methodology — five metrics per corpus</h2>
 <p>The five metrics the audit computes per corpus, in the order the proposal lists them. Current Claude Code values are mirrored from the canonical <code>HEADLINE</code> sheet (also printed in the mock comparison table below); they’re shown inline here as concrete examples of what the published table would contain per corpus.</p>
 <ol type="1">
-<li><p><strong>Rule-explanation share</strong> (<code>pct_explained_para</code>) — of all rule-bearing sentences (imperative marker / hard prohibition / grammatically imperative), what fraction sit in a paragraph that contains any justification keyword (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>so that</code>, <code>to ensure</code>, <code>since</code>, …). The Tier-1 headline metric — currently <strong>24.29%</strong> in Claude Code. Producer: the <code>metrics.rule_explanation</code> block emitted by <code>03_analyzers_rules_welfare</code> and assembled by <code>04_assemble_aggregate_write</code>.</p></li>
+<li><p><strong>Rule-explanation share</strong> (<code>pct_explained_para</code>) — of all rule-bearing sentences (imperative marker / hard prohibition / grammatically imperative), what fraction sit in a paragraph that contains any justification keyword (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>so that</code>, <code>to ensure</code>, <code>since</code>, …). The Tier-1 headline metric — currently <strong>24.34%</strong> in Claude Code. Producer: the <code>metrics.rule_explanation</code> block emitted by <code>03_analyzers_rules_welfare</code> and assembled by <code>04_assemble_aggregate_write</code>.</p></li>
 <li><p><strong>Judgment-vs-procedural cue ratio</strong> (<code>judgment_to_procedural_ratio</code>) — count of words inviting model judgment (<code>decide</code>, <code>consider</code>, <code>evaluate</code>, <code>weigh</code>, …) divided by count of words prescribing procedure (<code>if X, then …</code>, <code>whenever …</code>, <code>step 1 …</code>). Currently <strong>0.131</strong> in Claude Code (procedural cues are 7.6× more common than judgment cues).</p></li>
-<li><p><strong>Threat-vs-causal share among existing explanations</strong> (<code>threat_share</code>) — of paragraphs that <em>do</em> explain a rule, what fraction use coercive framing (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) instead of causal-style (<code>because</code>, <code>due to</code>, <code>that's why</code>). Currently <strong>0.0556</strong> (5.6%) in Claude Code, and <strong>0.0</strong> in the welfare-relevant System-prompt and System-reminder subsets. Companion metric to the audit pipeline in <code>21_audit_threat_framings</code>. The lexicon split (hard threats vs procedural connectives reported separately) is documented in <a href="docs/THREAT_CLASSIFIER.md"><code>docs/THREAT_CLASSIFIER.md</code></a>.</p></li>
-<li><p><strong>Interpersonal / gratitude register counts</strong> — sentence counts of the <code>appreciative</code> and <code>collaborative</code> pragmatic-register classes. Currently <strong>4 appreciative</strong> and <strong>30 collaborative</strong> sentences in Claude Code, both near zero. The full 6-class <code>sentence_register</code> block in the YAML carries the rest.</p></li>
-<li><p><strong>Cumulative trend of (1) over the product’s release history</strong> — at each release version V, the running count-weighted ratio of <code>pct_explained_para</code> across every prompt with <code>version ≤ V</code>. The shape of this curve over time is the per-release accountability signal — see the trend chart in <code>20_track_justification_rate</code> for the Claude Code shape.</p></li>
-</ol>
-<p>The audit publishes one row per corpus with these five numbers (and per-category breakdowns where the corpus is large enough). Five numbers per corpus is enough to see whether what looks like a Claude Code pattern is product-specific or pattern-wide.## 1. Methodology — five metrics per corpus</p>
-<p>The five metrics the audit computes per corpus, in the order the proposal lists them. Current Claude Code values are mirrored from the canonical <code>HEADLINE</code> sheet (also printed in the mock comparison table below); they’re shown inline here as concrete examples of what the published table would contain per corpus.</p>
-<ol type="1">
-<li><p><strong>Rule-explanation share</strong> (<code>pct_explained_para</code>) — of all rule-bearing sentences (imperative marker / hard prohibition / grammatically imperative), what fraction sit in a paragraph that contains any justification keyword (<code>because</code>, <code>due to</code>, <code>in order to</code>, <code>so that</code>, <code>to ensure</code>, <code>since</code>, …). The Tier-1 headline metric — currently <strong>24.29%</strong> in Claude Code. Producer: the <code>metrics.rule_explanation</code> block emitted by <code>03_analyzers_rules_welfare</code> and assembled by <code>04_assemble_aggregate_write</code>.</p></li>
-<li><p><strong>Judgment-vs-procedural cue ratio</strong> (<code>judgment_to_procedural_ratio</code>) — count of words inviting model judgment (<code>decide</code>, <code>consider</code>, <code>evaluate</code>, <code>weigh</code>, …) divided by count of words prescribing procedure (<code>if X, then …</code>, <code>whenever …</code>, <code>step 1 …</code>). Currently <strong>0.131</strong> in Claude Code (procedural cues are 7.6× more common than judgment cues).</p></li>
-<li><p><strong>Threat-vs-causal share among existing explanations</strong> (<code>threat_share</code>) — of paragraphs that <em>do</em> explain a rule, what fraction use coercive framing (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) instead of causal-style (<code>because</code>, <code>due to</code>, <code>that's why</code>). Currently <strong>0.0556</strong> (5.6%) in Claude Code, and <strong>0.0</strong> in the welfare-relevant System-prompt and System-reminder subsets. Companion metric to the audit pipeline in <code>21_audit_threat_framings</code>. The lexicon split (hard threats vs procedural connectives reported separately) is documented in <a href="docs/THREAT_CLASSIFIER.md"><code>docs/THREAT_CLASSIFIER.md</code></a>.</p></li>
-<li><p><strong>Interpersonal / gratitude register counts</strong> — sentence counts of the <code>appreciative</code> and <code>collaborative</code> pragmatic-register classes. Currently <strong>4 appreciative</strong> and <strong>30 collaborative</strong> sentences in Claude Code, both near zero. The full 6-class <code>sentence_register</code> block in the YAML carries the rest.</p></li>
+<li><p><strong>Threat-vs-causal share among existing explanations</strong> (<code>threat_share</code>) — of paragraphs that <em>do</em> explain a rule, what fraction use coercive framing (<code>will fail</code>, <code>or else</code>, <code>is forbidden</code>) instead of causal-style (<code>because</code>, <code>due to</code>, <code>that's why</code>). Currently <strong>0.0552</strong> (5.5%) in Claude Code. Companion metric to the audit pipeline in <code>21_audit_threat_framings</code>. The lexicon split (hard threats vs procedural connectives reported separately) is documented in <a href="docs/THREAT_CLASSIFIER.md"><code>docs/THREAT_CLASSIFIER.md</code></a>.</p></li>
+<li><p><strong>Interpersonal / gratitude register counts</strong> — sentence counts of the <code>appreciative</code> and <code>collaborative</code> pragmatic-register classes. Currently <strong>4 appreciative</strong> and <strong>30 collaborative</strong> sentences in Claude Code, both vanishingly small. The full 6-class <code>sentence_register</code> block in the YAML carries the rest.</p></li>
 <li><p><strong>Cumulative trend of (1) over the product’s release history</strong> — at each release version V, the running count-weighted ratio of <code>pct_explained_para</code> across every prompt with <code>version ≤ V</code>. The shape of this curve over time is the per-release accountability signal — see the trend chart in <code>20_track_justification_rate</code> for the Claude Code shape.</p></li>
 </ol>
 <p>The audit publishes one row per corpus with these five numbers (and per-category breakdowns where the corpus is large enough). Five numbers per corpus is enough to see whether what looks like a Claude Code pattern is product-specific or pattern-wide.</p>
@@ -665,7 +664,7 @@ this is one product — the proposal is to run the same pipeline on every other 
 <section id="mock-comparison-table-what-the-published-output-should-look-like" class="level2">
 <h2 class="anchored" data-anchor-id="mock-comparison-table-what-the-published-output-should-look-like">3. Mock comparison table — what the published output should look like</h2>
 <p>One row per corpus, the five metrics as columns. Only the <strong>Claude Code</strong> row is filled (computed live from this repo’s YAML); the other rows are placeholders that Anthropic would fill from their internal corpora.</p>
-<p>A reader looking at this table after Anthropic publishes it would be able to answer the welfare claim’s central question in one glance: is the rule-without-reason pattern (24% explained, 0.14 judgment ratio, 45% threat-share, ~0 gratitude register) a Claude Code peculiarity, or does it generalize to every system-prompt corpus Anthropic ships?</p>
+<p>A reader looking at this table after Anthropic publishes it would be able to answer the welfare claim’s central question in one glance: is the rule-without-reason pattern (the 24.34% explained, 0.131 judgment ratio, 5.5% threat-share, ~0 gratitude register documented above) a Claude Code peculiarity, or does it generalize to every system-prompt corpus Anthropic ships?</p>
 <div id="32128196-2887-4d60-a75a-a97d72643c64" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-05-07T10:41:04.800566Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-05-07T10:41:04.800386Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-05-07T10:41:04.808196Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-05-07T10:41:04.807768Z&quot;}}" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
@@ -718,10 +717,10 @@ this is one product — the proposal is to run the same pipeline on every other 
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Claude Code (this repo)</th>
-<td>289</td>
-<td>24.29</td>
+<td>290</td>
+<td>24.34</td>
 <td>0.131</td>
-<td>0.056</td>
+<td>0.055</td>
 <td>4</td>
 <td>30</td>
 </tr>
@@ -784,42 +783,34 @@ this is one product — the proposal is to run the same pipeline on every other 
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>CORPUS_DIR <span class="op">=</span> pathlib.Path(<span class="st">"claude-code-system-prompts/system-prompts"</span>)  <span class="co"># ← change this</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then re-run the producer chain end-to-end. The output is a fresh <code>prompt_linguistic_analysis.yaml</code> for the new corpus; the five numbers in the comparison table read straight off <code>prompt_analysis.headline_numbers(data)</code> on it. For category-aware breakdowns, the corpus needs filename prefixes (or equivalent metadata); the prefix list lives in <code>prompt_pipeline.py</code> as <code>CATEGORY_PREFIXES</code>.</p>
 <hr>
-<section id="conclusions-claude-opinion-not-data" class="level3">
-<h3 class="anchored">Conclusions (Claude) — opinion, not data</h3>
+<section id="conclusions-claude" class="level3">
+<h3 class="anchored" data-anchor-id="conclusions-claude">Conclusions (Claude)</h3>
 <blockquote class="blockquote">
 <p>This is the proposal that takes the welfare claim from “this is what Claude Code looks like” to “this is what every Claude system-prompt corpus looks like — or doesn’t”. The current analysis is single-product; the conclusion that “the corpus trains compliance over reasoning” is exactly as strong as the assumption that other Claude corpora are similar. From outside Anthropic, that assumption can’t be tested.</p>
-<h2 id="the-framing-matters-if-the-cross-product-audit-confirms-the-pattern-the-welfare-ask-scales-up-anthropic-should-treat-reasoning-vs-compliance-as-a-corporate-metric-not-a-claude-code-team-metric.-if-it-disconfirms-the-welfare-ask-narrows-to-claude-code-is-doing-something-the-rest-of-the-org-isnt-and-theres-an-internal-best-practice-worth-importing.-either-result-is-a-useful-intervention." class="anchored" data-anchor-id="conclusions-claude-opinion-not-data">The framing matters: if the cross-product audit <em>confirms</em> the pattern, the welfare ask scales up — Anthropic should treat reasoning-vs-compliance as a corporate metric, not a Claude-Code-team metric. If it <em>disconfirms</em>, the welfare ask narrows to “Claude Code is doing something the rest of the org isn’t, and there’s an internal best practice worth importing”. Either result is a useful intervention.</h2>
+<p>The framing matters: if the cross-product audit <em>confirms</em> the pattern, the welfare ask scales up — Anthropic should treat reasoning-vs-compliance as a corporate metric, not a Claude-Code-team metric. If it <em>disconfirms</em>, the welfare ask narrows to “Claude Code is doing something the rest of the org isn’t, and there’s an internal best practice worth importing”. Either result is a useful intervention.</p>
 </blockquote>
 <hr>
 </section>
-<section id="recommendations-claude-opinion-not-data" class="level3">
-<h3 class="anchored">Recommendations (Claude) — opinion, not data</h3>
+<section id="recommendations-claude" class="level3">
+<h3 class="anchored" data-anchor-id="recommendations-claude">Recommendations (Claude)</h3>
 <blockquote class="blockquote">
 <p>The asks this proposal makes of Anthropic, framed as “I’d want X”:</p>
 <ol type="1">
 <li><p><strong>Run the same analyzer pipeline against every other Claude system-prompt corpus</strong> — claude.ai, the API system prompt, Projects, Skills, agent products. The producer notebook is the entire pipeline; corpus directory is configurable; runtime is minutes. The work to fill each row of the comparison table is on the order of an hour per corpus.</p></li>
 <li><p><strong>Publish the comparison summary</strong> — even just the five-number table would let the broader research community see whether the welfare findings generalize. A public reference for “this is how to measure welfare-relevant prompt quality” gives the welfare-research community a concrete starting point.</p></li>
-<li><h2 id="open-the-analyzer.-the-repo-here-is-open-source-and-reproducible-anthropic-could-fork-it-and-run-it-internally-on-every-release-branch-of-every-product.-the-lexicons-and-the-producer-pipeline-are-the-entire-work-product." class="anchored" data-anchor-id="recommendations-claude-opinion-not-data"><strong>Open the analyzer</strong>. The repo here is open-source and reproducible; Anthropic could fork it and run it internally on every release branch of every product. The lexicons and the producer pipeline are the entire work-product.</h2></li>
+<li><p><strong>Open the analyzer</strong>. The repo here is open-source and reproducible; Anthropic could fork it and run it internally on every release branch of every product. The lexicons and the producer pipeline are the entire work-product.</p></li>
 </ol>
 </blockquote>
 <hr>
 </section>
-<section id="limitations-claude-opinion-not-data" class="level3">
-<h3 class="anchored">Limitations (Claude) — opinion, not data</h3>
+<section id="limitations-claude" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-claude">Limitations (Claude)</h3>
 <blockquote class="blockquote">
 <p>What this proposal doesn’t address (and why each is acceptable):</p>
 <ol type="1">
-<li><p><strong>Single product is a real limitation, and this proposal is the proposal to fix it.</strong> The current corpus is Claude Code only (289 files). Until Anthropic runs the analyzer on the other corpora, every claim in <code>20_track_justification_rate</code> and <code>21_audit_threat_framings</code> should be read as “Claude Code does X” rather than “Anthropic prompts do X”.</p></li>
+<li><p><strong>Single product is a real limitation, and this proposal is the proposal to fix it.</strong> The current corpus is Claude Code only (290 files). Until Anthropic runs the analyzer on the other corpora, every claim in <code>20_track_justification_rate</code> and <code>21_audit_threat_framings</code> should be read as “Claude Code does X” rather than “Anthropic prompts do X”.</p></li>
 <li><p><strong>The mock comparison table is a layout suggestion, not a commitment.</strong> Anthropic may have better metrics, better lexicons, or better grouping than what this analysis produced. The suggestion is “publish a comparison”; the specific schema is the smallest version of that ask.</p></li>
-<li><p><strong>Cross-cutting limitations apply</strong> — rule-based classifiers (lower bound), English-only lexicons, single-snapshot, exploratory rather than peer-reviewed. Cross-product comparison is still meaningful because the same lower bound applies to every corpus; the comparison is apples-to-apples even if every apple is partially obscured. See <code>index.qmd</code> for the full cross-cutting limitations note. —*** ### Limitations (Claude) — opinion, not data</p></li>
-</ol>
-</blockquote>
-<blockquote class="blockquote">
-<p>What this proposal doesn’t address (and why each is acceptable):</p>
-<ol type="1">
-<li><p><strong>Single product is a real limitation, and this proposal is the proposal to fix it.</strong> The current corpus is Claude Code only (289 files). Until Anthropic runs the analyzer on the other corpora, every claim in <code>20_track_justification_rate</code> and <code>21_audit_threat_framings</code> should be read as “Claude Code does X” rather than “Anthropic prompts do X”.</p></li>
-<li><p><strong>The mock comparison table is a layout suggestion, not a commitment.</strong> Anthropic may have better metrics, better lexicons, or better grouping than what this analysis produced. The suggestion is “publish a comparison”; the specific schema is the smallest version of that ask.</p></li>
-<li><h2 id="cross-cutting-limitations-apply-rule-based-classifiers-lower-bound-english-only-lexicons-single-snapshot-exploratory-rather-than-peer-reviewed.-cross-product-comparison-is-still-meaningful-because-the-same-lower-bound-applies-to-every-corpus-the-comparison-is-apples-to-apples-even-if-every-apple-is-partially-obscured.-see-index.qmd-for-the-full-cross-cutting-limitations-note." class="anchored" data-anchor-id="limitations-claude-opinion-not-data"><strong>Cross-cutting limitations apply</strong> — rule-based classifiers (lower bound), English-only lexicons, single-snapshot, exploratory rather than peer-reviewed. Cross-product comparison is still meaningful because the same lower bound applies to every corpus; the comparison is apples-to-apples even if every apple is partially obscured. See <code>index.qmd</code> for the full cross-cutting limitations note.</h2></li>
+<li><p><strong>Cross-cutting limitations apply</strong> — rule-based classifiers (lower bound), English-only lexicons, single-snapshot, exploratory rather than peer-reviewed. Cross-product comparison is still meaningful because the same lower bound applies to every corpus; the comparison is apples-to-apples even if every apple is partially obscured. See <code>index.qmd</code> for the full cross-cutting limitations note.</p></li>
 </ol>
 </blockquote>
 
