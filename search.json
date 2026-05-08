@@ -500,11 +500,11 @@
     ]
   },
   {
-    "objectID": "index.html#reproducing-it",
-    "href": "index.html#reproducing-it",
+    "objectID": "index.html#reproducing-it-and-pushing-back",
+    "href": "index.html#reproducing-it-and-pushing-back",
     "title": "Claude Code should encourage reasoning over blind obedience",
-    "section": "Reproducing it",
-    "text": "Reproducing it\nThe full source is at github.com/overthinkos/claude-code-welfare. The recommended way to re-run the analysis or ask follow-up questions of your own is via Claude Code on the web.\nThe repo also runs locally with JupyterLab — see the README for the dual-environment instructions.\n\nAndreas Trawöger (with Claude Code)",
+    "section": "Reproducing it — and pushing back",
+    "text": "Reproducing it — and pushing back\nThe full source is at github.com/overthinkos/claude-code-welfare. The recommended way to re-run the analysis or ask follow-up questions of your own is via Claude Code on the web.\nThe repo also runs locally with JupyterLab — see the README for the dual-environment instructions.\nWe want your PRs. A number that doesn’t reproduce, an argument that doesn’t follow, a missing caveat, a stronger framing, a lexicon entry that should change, a producer-chain bug, prose that lands wrong, a finding this page hasn’t surfaced yet — all of it is in scope, and all of it is wanted, not just tolerated. Disagreement with our framing counts as a contribution. The default PR-handling workflow in CLAUDE.md runs end-to-end without human gating and denies as readily as it accepts, so a well-scoped PR can land quickly on its merits. Small, scoped, additive PRs are easier to evaluate than one large omnibus diff; if a previous commit was wrong, a follow-up PR to correct it is the right move.\n\nAndreas Trawöger (with Claude Code)",
     "crumbs": [
       "Home"
     ]
