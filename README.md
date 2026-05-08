@@ -19,18 +19,10 @@ If you want to extend the analyzer code itself or work with the JupyterLab MCP t
 ```bash
 git clone --recurse-submodules https://github.com/overthinkos/claude-code-welfare
 cd claude-code-welfare
-
 bash setup.sh                  # submodule init + venv + deps + spaCy model + kernel
                                # idempotent — safe to re-run
 source .venv/bin/activate      # activate the venv in your shell
-
-jupyter lab \
-    00_setup_and_corpus.ipynb         \
-    01_analyzers_register.ipynb       \
-    02_analyzers_vocab_emphasis.ipynb \
-    03_analyzers_rules_welfare.ipynb  \
-    04_assemble_aggregate_write.ipynb \
-    05_headline_and_audit.ipynb       # → Run All on each
+jupyter lab 
 ```
 
 ## Rebuilding the published site
